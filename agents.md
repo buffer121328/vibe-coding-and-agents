@@ -71,7 +71,7 @@ vibe_coding/
 │   ├── 07_工具调用_MCP与A2A协议.md                    # 2.7 Function Calling 与万能插头标准
 │   ├── 08_RAG知识库与向量存储.md                      # 2.8 开卷参考书模式与向量数据库
 │   ├── 09_MultiAgent多智能体范式.md                   # 2.9 监工/流水线/层级/辩论/蜂群五大范式
-│   ├── 10_模型微调与量化技术.md                       # 2.10 SFT 专科深造 vs RAG 选型与 4-bit 量化
+│   ├── 10_模型微调与量化技术.md                       # 2.10 SFT 深造 vs RAG 选型与 4-bit 量化
 │   ├── 11_Harness工程与Loop工程.md                    # 2.11 运行评测支架 (SWE-bench) 与死循环熔断
 │   ├── 12_主流开发框架全景.md                         # 2.12 LangChain、LangGraph、AutoGen、CrewAI 盘点
 │   └── 13_AI时代最值得读的论文和项目.md               # 2.13 8 篇神级论文 + 4 大前沿项目 + Skills + MCP
