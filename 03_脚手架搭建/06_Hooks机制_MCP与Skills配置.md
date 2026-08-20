@@ -1,8 +1,8 @@
-# 3.6 Hooks 机制、MCP 万能插件与 Skills 技能配置
+# 3.6 Hooks 机制、MCP 万能插件与 Skills 技能
 
-> **大白话一句话概括**：Hooks（钩子）就像“进门自动感应换鞋的门禁保安”，在关键操作前后自动拦截把关；MCP 是连接外部世界的“万能 Type-C 拓展坞”；而 Skills 则是给 Agent 一键安装的“专家作业技能包”！
+> Hooks（钩子）就像“进门自动感应换鞋的门禁保安”，在关键操作前后自动拦截把关；MCP 是连接外部世界的“万能 Type-C 拓展坞”；而 Skills 则是给 Agent 一键安装的“专家作业技能包”！
 
----
+***
 
 ## 🪝 一、先搞懂什么是 Hooks（钩子机制）？
 
@@ -23,16 +23,18 @@ graph LR
 ```
 
 ### 编程与 Agent 中最常见的两大 Hooks
-1. **Git Hooks (如 [Husky](https://typicode.github.io/husky/))**：在执行 `git commit` 时，自动运行 Pre-commit Hook，如果代码有报错红字，直接拒绝提交，保证推送到 GitHub 的永远是健康代码；
+
+1. **Git Hooks (如** **[Husky](https://typicode.github.io/husky/))**：在执行 `git commit` 时，自动运行 Pre-commit Hook，如果代码有报错红字，直接拒绝提交，保证推送到 GitHub 的永远是健康代码；
 2. **Agent 安全 Hooks**：在 Agent 执行 `rm`、`drop table` 或向外发送网络请求前，自动弹出危险拦截提示，必须人类授权才可放行。
 
----
+***
 
 ## 🔌 二、手把手配置 MCP（Model Context Protocol）万能插头
 
-- **官方网站**: [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
+- **官方网站**: <https://modelcontextprotocol.io>
 
 ### 在 Cursor / Claude Desktop 中配置 MCP
+
 在你的项目根目录 `.cursor/mcp.json` 或 Claude Desktop 配置文件中加入以下配置：
 
 ```json
@@ -59,7 +61,7 @@ graph LR
 
 保存后重启编辑器，你的 Agent 瞬间拥有了**直接读写本地指定目录、查询数据库表、以及在 GitHub 上自动提 PR 的物理手脚！**
 
----
+***
 
 ## 🧰 三、如何下载与挂载 Agent Skills 技能包？
 
@@ -73,13 +75,14 @@ graph TD
 ```
 
 ### 实战步骤（以安全审计技能为例）：
+
 1. **访问技能大市场**：打开 [Agent Skills Hub (GitHub)](https://github.com/legendaryabhi/agent-skills-hub)；
 2. **下载标准技能文件**：找到 `security-audit/SKILL.md`；
 3. **放入项目规范目录**：在项目中创建 `.skills/security-audit/SKILL.md`；
 4. **对 Agent 说一句话触发**：“请调用 security-audit 技能，对当前项目的所有 API 接口进行漏洞排查”。
-Agent 就会完全按照专家的 SOP 步骤，逐一排查 SQL 注入、跨站脚本和权限漏洞！
+   Agent 就会完全按照专家的 SOP 步骤，逐一排查 SQL 注入、跨站脚本和权限漏洞！
 
----
+***
 
 ## 🔗 相关开源工具与官方平台
 
@@ -87,3 +90,4 @@ Agent 就会完全按照专家的 SOP 步骤，逐一排查 SQL 注入、跨站�
 - [Awesome MCP Servers 社区精选资源库](https://github.com/punkpeye/awesome-mcp-servers)
 - [Agent Skills Hub 官方开源仓库](https://github.com/legendaryabhi/agent-skills-hub)
 - [Husky 现代 Git Hooks 官方文档](https://typicode.github.io/husky/)
+

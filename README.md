@@ -8,7 +8,7 @@
 > **“There's a new kind of coding I call 'vibe coding', where you entirely give in to the vibes, embrace every AI, and forget that the code even exists... I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.”**
 > —— *Andrej Karpathy (前 OpenAI 联合创始人、前 Tesla AI 总监)*
 
----
+***
 
 ## 📖 项目简介 (About The Project)
 
@@ -17,21 +17,13 @@
 本项目是一个**完全开源、面向零基础到进阶开发者的现代 AI 辅助编程与 Agent 智能体全景指南**。
 
 在 2026 年，软件开发的范式正在经历半个世纪以来最深刻的重塑：
+
 - **从“苦力搬砖码农”跃迁为“交响乐指挥官”**：开发者不再需要死记硬背繁琐的语法、分号和死板配置，而是以架构师与产品总监的视角，用自然语言意图（Intent）驱动 AI 进行软件工程创造；
 - **AI 智能体自治闭环**：AI 负责跨文件读写代码、安装依赖、在沙箱中运行测试、自我反思排错；人类负责享受纯粹的创造乐趣！
 
 本项目旨在打破技术黑话壁垒，用**生动通俗的大白话、日常生活比喻、严谨架构图与全套权威官方资料**，带你从底层原理到工程落地彻底通关！
 
----
-
-## 🌟 项目核心特色 (Key Highlights)
-
-1. **💡 零门槛大白话精讲**：拒绝晦涩黑话，用“餐厅大厨”、“快递打包”、“嘈杂派对注意力”、“做大餐自愈试错”等生活化比喻，小白一读就懂；
-2. **🚀 2026 顶尖前沿生态**：全面涵盖 **DeerFlow**（字节开源）、**DeepAgents**（LangChain 官方）、**Claude Code CLI**、**Cursor Composer**、**Bolt.new**、**Dify** 等最新生产力利器；
-3. **🏛️ 理论 + 手搓实战 + 工业级 Harness**：从 Transformer 与 ReAct 论文第一性原理，到 **Hello-Agents** 与 **Learn-Claude-Code** 手搓架构，再到工业级评测体系 **SWE-bench**；
-4. **🔗 100% 真实权威引用**：所有提到的前沿大模型、开源代码仓库、学术论文与技术标准（MCP / Agent Skills）均配有可直达的官方链接。
-
----
+***
 
 ## 🗂️ 知识库完整目录体系 (Table of Contents)
 
@@ -63,26 +55,33 @@ vibe_coding/
 │   ├── 11_Harness工程与Loop工程.md                    # 2.11 赛车底盘与标准化考场 (SWE-bench) + 死循环熔断防护
 │   ├── 12_主流开发框架全景.md                         # 2.12 LangChain、LangGraph、AutoGen、CrewAI 压轴盘点
 │   └── 13_AI时代最值得读的论文和项目.md               # 2.13 8 篇神级论文 + DeerFlow/DeepAgents + Skills + MCP
-└── 03_脚手架搭建/                                     # 第三章：脚手架搭建（从内功修炼到工具链实战）
-    ├── README.md                                      # 第三章导读与全景知识图谱
-    ├── 01_Python编程核心内功.md                       # 3.1 告别 YES 工程师！Python 核心语法与免费名校宝库
-    ├── 02_APIKey原理申请与安全防泄露.md               # 3.2 VIP 门禁卡、主流平台申请与 .env 防盗刷铁律
-    ├── 03_IDE开发环境配置_VSCode与PyCharm.md          # 3.3 VS Code 必备插件天梯榜与 Python 虚拟环境 (venv/uv)
-    ├── 04_主流Agent工具链下载与配置.md                # 3.4 Trae、Claude Code CLI、Cursor、Cline 安装与调优
-    ├── 05_Spec驱动开发与OpenSpec实战.md               # 3.5 终结 AI 瞎猜！OpenSpec 规范与 Qoder 编译器实战
-    ├── 06_Hooks机制_MCP与Skills配置.md                # 3.6 门禁保安 Hooks 机制、mcp.json 配置与技能包挂载
-    └── 07_中转上游与代理配置_以Codex为例.md           # 3.7 CC-Switch 极速中转网关、.codex 与环境变量配置
+├── 03_脚手架搭建/                                     # 第三章：脚手架搭建（从内功修炼到工具链实战）
+│   ├── README.md                                      # 第三章导读与全景知识图谱
+│   ├── 01_Python编程核心内功.md                       # 3.1 告别 YES 工程师！Python 核心语法与免费名校宝库
+│   ├── 02_APIKey原理申请与安全防泄露.md               # 3.2 VIP 门禁卡、主流平台申请与 .env 防盗刷铁律
+│   ├── 03_IDE开发环境配置_VSCode与PyCharm.md          # 3.3 VS Code 必备插件天梯榜与 Python 虚拟环境 (venv/uv)
+│   ├── 04_主流Agent工具链下载与配置.md                # 3.4 Trae、Claude Code CLI、Cursor、Cline 安装与调优
+│   ├── 05_Spec驱动开发与OpenSpec实战.md               # 3.5 终结 AI 瞎猜！OpenSpec 规范与 Qoder 编译器实战
+│   ├── 06_Hooks机制_MCP与Skills配置.md                # 3.6 门禁保安 Hooks 机制、mcp.json 配置与技能包挂载
+│   └── 07_中转上游与代理配置_以Codex为例.md           # 3.7 CC-Switch 极速中转网关、.codex 与环境变量配置
+├── 04_Dify实战/                                       # 第四章：Dify 实战（低代码与可视化工作流编排）
+├── 05_OpenCode实战/                                   # 第五章：OpenCode 实战（开源与开放式 AI 编程智能体）
+├── 06_Trae实战/                                       # 第六章：Trae 实战（自适应原生 AI IDE 与全自主编程）
+├── 07_Codex实战/                                      # 第七章：Codex 实战（OpenAI 编程大脑与代码生成工程）
+├── 08_手搓Agent/                                      # 第八章：手搓 Agent（从零手写 ReAct 最小闭环智能体）
+├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent（工业级框架与生态实战）
+└── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流（图状态机与多智能体编排）
 ```
 
----
+***
 
 ## 🚧 后续章节火热更新中 (Roadmap & WIP)
 
 > 📢 **提示**：本项目是一个**长期演进、持续更新的活体开源项目**！
 
-当前已完成前三章的演进史、底层概念扫盲与开发脚手架搭建，后续章节正在紧锣密鼓地打磨中：
+当前已完成全套十个核心章节的目录体系规划与全景知识图谱构建，各章节实战小节文档正在紧锣密鼓地持续打磨中！
 
----
+***
 
 ## 🤝 共同学习，欢迎贡献！(Join Us & Contributing)
 
@@ -99,7 +98,7 @@ vibe_coding/
 3. 提交 PR 并描述你的贡献，我们会在第一时间审核合并！
 ```
 
----
+***
 
 ## 📄 开源许可证 (License)
 
@@ -107,6 +106,6 @@ vibe_coding/
 
 你可以自由地阅读、学习、分享、修改甚至商业化使用本项目的全部内容，只需保留原作者版权与许可声明即可。
 
----
+***
 
 **🌊 Happy Vibe Coding! 愿每个人都能在 AI 时代享受创造软件的纯粹心流与快乐！**
