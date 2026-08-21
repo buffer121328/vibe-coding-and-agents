@@ -35,42 +35,46 @@ vibe_coding/
 ├── 01_发展之路/                                       # 第一章：发展之路（编程进化五代史）
 │   ├── README.md                                      # 第一章导读与五代演进脉络
 │   ├── 01_传统手写代码时代.md                         # 1.1 纯手工打铁与让人秃头的规则
-│   ├── 02_AI网页对话时代.md                           # 1.2 人肉搬运工与上下文割裂 (Claude 5/GPT-5.6/DeepSeek V4)
-│   ├── 03_AI插件辅助时代.md                           # 1.3 住在编辑器里的超级联想输入法 (Copilot/Continue)
-│   ├── 04_Agent自主编程时代.md                        # 1.4 自带手脚能跑腿排错的实习生 (Cursor/Devin/Claude Code)
-│   ├── 05_低代码与工作流平台.md                       # 1.5 搭积木与动动嘴出 App (Dify/Coze & Bolt.new/Lovable)
-│   └── 06_VibeCoding心智模型与终极演进.md              # 1.6 从苦力码农到交响乐指挥官 (Karpathy 核心心法)
-├── 02_概念扫盲/                                       # 第二章：核心概念扫盲（基建到智能体）
+│   ├── 02_AI网页对话时代.md                           # 1.2 人肉搬运工与上下文割裂 
+│   ├── 03_AI插件辅助时代.md                           # 1.3 住在编辑器里的超级联想输入法 
+│   ├── 04_Agent自主编程时代.md                        # 1.4 自带手脚能跑腿排错的实习生
+│   ├── 05_低代码与工作流平台.md                       # 1.5 搭积木与动动嘴出 App
+│   └── 06_VibeCoding心智模型与终极演进.md              # 1.6 从苦力码农到交响乐指挥官 
+├── 02_概念扫盲/                                       # 第二章：核心概念扫盲
 │   ├── README.md                                      # 第二章导读与全景图谱
-│   ├── 01_软件架构基础.md                             # 2.1 前端/后端/数据库/中间件/微服务/同步与异步 (餐厅大比喻)
+│   ├── 01_软件架构基础.md                             # 2.1 前端/后端/数据库/中间件/微服务/同步与异步
 │   ├── 02_Git与GitHub极速入门.md                      # 2.2 时光机存盘、GitHub 注册与国内代理配置指南
 │   ├── 03_大模型本质与Transformer.md                  # 2.3 超级文字接龙、高维压缩与自注意力机制
-│   ├── 04_Agent机制与运行原理.md                      # 2.4 Agent 四大支柱、做大餐比喻与 ReAct 闭环
-│   ├── 05_提示词与上下文工程.md                       # 2.5 Prompt vs Context Engineering，KV Cache 预制菜心法
+│   ├── 04_Agent机制与运行原理.md                      # 2.4 Agent 四大支柱与 ReAct 闭环
+│   ├── 05_提示词与上下文工程.md                       # 2.5 Prompt vs Context Engineering，KV Cache 
 │   ├── 06_记忆管理与AgentSkills.md                    # 2.6 人类三大记忆映射、短期滑动窗口与技能安装包
-│   ├── 07_工具调用_MCP与A2A协议.md                    # 2.7 Function Calling 递小票原理与 MCP 万能接口
-│   ├── 08_RAG知识库与向量存储.md                      # 2.8 开卷参考书模式、相亲角打分与海选决赛重排
+│   ├── 07_工具调用_MCP与A2A协议.md                    # 2.7 Function Calling 与 MCP 万能接口
+│   ├── 08_RAG知识库与向量存储.md                      # 2.8 开卷参考书模式
 │   ├── 09_MultiAgent多智能体范式.md                   # 2.9 团队作战！监工/流水线/层级/辩论/蜂群五大范式
-│   ├── 10_模型微调与量化技术.md                       # 2.10 SFT/LoRA 专科深造 vs RAG 选型与 4-bit 量化
+│   ├── 10_模型微调与量化技术.md                       # 2.10 SFT/LoRA 深造 vs RAG 选型与量化
 │   ├── 11_Harness工程与Loop工程.md                    # 2.11 赛车底盘与标准化考场 (SWE-bench) + 死循环熔断防护
-│   ├── 12_主流开发框架全景.md                         # 2.12 LangChain、LangGraph、AutoGen、CrewAI 压轴盘点
+│   ├── 12_主流开发框架全景.md                         # 2.12 LangChain、LangGraph、AutoGen、CrewAI 盘点
 │   └── 13_AI时代最值得读的论文和项目.md               # 2.13 8 篇神级论文 + DeerFlow/DeepAgents + Skills + MCP
-├── 03_脚手架搭建/                                     # 第三章：脚手架搭建（从内功修炼到工具链实战）
+├── 03_脚手架搭建/                                     # 第三章：脚手架搭建
 │   ├── README.md                                      # 第三章导读与全景知识图谱
 │   ├── 01_Python编程核心内功.md                       # 3.1 告别 YES 工程师！Python 核心语法与免费名校宝库
 │   ├── 02_APIKey原理申请与安全防泄露.md               # 3.2 VIP 门禁卡、主流平台申请与 .env 防盗刷铁律
 │   ├── 03_IDE开发环境配置_VSCode与PyCharm.md          # 3.3 VS Code 必备插件天梯榜与 Python 虚拟环境 (venv/uv)
 │   ├── 04_主流Agent工具链下载与配置.md                # 3.4 Trae、Claude Code CLI、Cursor、Cline 安装与调优
-│   ├── 05_Spec驱动开发与OpenSpec实战.md               # 3.5 终结 AI 瞎猜！OpenSpec 规范与 Qoder 编译器实战
+│   ├── 05_Spec驱动开发与OpenSpec实战.md               # 3.5 终结 AI 瞎猜！
 │   ├── 06_Hooks机制_MCP与Skills配置.md                # 3.6 门禁保安 Hooks 机制、mcp.json 配置与技能包挂载
-│   └── 07_中转上游与代理配置_以Codex为例.md           # 3.7 CC-Switch 极速中转网关、.codex 与环境变量配置
+│   └── 07_中转上游与代理配置_以Codex为例.md           # 3.7 CC-Switch 极速中转网关、.codex 与环境变量
 ├── 04_Dify实战/                                       # 第四章：Dify 实战（低代码与可视化工作流编排）
-├── 05_OpenCode实战/                                   # 第五章：OpenCode 实战（开源与开放式 AI 编程智能体）
-├── 06_Trae实战/                                       # 第六章：Trae 实战（自适应原生 AI IDE 与全自主编程）
-├── 07_Codex实战/                                      # 第七章：Codex 实战（OpenAI 编程大脑与代码生成工程）
-├── 08_手搓Agent/                                      # 第八章：手搓 Agent（从零手写 ReAct 最小闭环智能体）
-├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent（工业级框架与生态实战）
-└── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流（图状态机与多智能体编排）
+│   ├── README.md                                      # 第四章导读与全景知识图谱
+│   ├── 01_Dify核心概念与平台全貌.md                   # 4.1 控制台功能拆解、四大应用形态与核心节点体系
+│   ├── 02_创建工作流与工作室实操.md                   # 4.2 探索工作室、三大创建应用姿势与形态选型指南
+│   └── 03_模型供应商与工具插件生态.md                 # 4.3 全球模型矩阵、多Key密钥池、5大能力与MCP插件
+├── 05_OpenCode实战/                                   # 第五章：OpenCode 实战
+├── 06_Trae实战/                                       # 第六章：Trae 实战
+├── 07_Codex实战/                                      # 第七章：Codex 实战
+├── 08_手搓Agent/                                      # 第八章：手搓 Agent
+├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent
+└── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流
 ```
 
 ***
