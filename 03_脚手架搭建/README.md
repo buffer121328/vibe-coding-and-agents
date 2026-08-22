@@ -28,8 +28,13 @@ graph TD
         C3["07 中转上游与代理配置：以 Codex 为例<br/>(CC-Switch 工具 / .codex 配置 / 极速网关)"]
     end
 
+    subgraph Step4 ["第四步：调兵遣将心法"]
+        D1["08 如何选择 AI：主流大模型全景评测<br/>(6大业务场景 / 国内外全家桶 / 黄金组合矩阵)"]
+    end
+
     Step1 --> Step2
     Step2 --> Step3
+    Step3 --> Step4
 ```
 
 ---
@@ -58,3 +63,6 @@ graph TD
 
 7. **[3.7 中转上游与代理配置：以 Codex / CC-Switch 为例](./07_中转上游与代理配置_以Codex为例.md)**
    - 国内网络加速方案，使用 CC-Switch 一键管理多供应商与 MCP，`.codex` 配置文件详解。
+
+8. **[3.8 如何选择 AI：主流大模型全景评测与多场景选型指南](./08_如何选择AI.md)**
+   - 不迷信单点屠榜！覆盖编程、工作、创作、办公、对话与 Agent 6 大场景，深度评测 DeepSeek、GLM、Kimi、Qwen、MIMO、MiniMax、豆包、GPT、Claude、Gemini、Grok 并奉上实战黄金组合。

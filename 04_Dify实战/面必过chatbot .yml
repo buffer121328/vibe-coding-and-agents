@@ -1,0 +1,4414 @@
+app:
+  description: 主要功能：模拟面试和简历优化
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: 面必过chatbot
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: bowenliang123/md_exporter:3.6.9@3f027d63e80b44d5d5a9f706871afaef37905b8f8a89a2d152dc530211a8acb1
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.19@5b68617c637b62d31e7f33a9f5677b76e88f81868fb04a728e208588564b72ea
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables:
+  - description: 职位要求
+    id: d595ea1d-f5ae-4dbc-888e-83832cfdc3a8
+    name: jd
+    selector:
+    - conversation
+    - jd
+    value: ''
+    value_type: string
+  - description: 简历信息存取
+    id: d4298851-753a-4eb6-bafb-397cdaeec669
+    name: resume_summary
+    selector:
+    - conversation
+    - resume_summary
+    value: ''
+    value_type: string
+  - description: ''
+    id: c9d8515e-22d7-41e7-a47d-ff61e30946df
+    name: qa_history
+    selector:
+    - conversation
+    - qa_history
+    value: ''
+    value_type: string
+  - description: 当前轮次到面试题保存
+    id: f8c27d19-3e42-41c8-8edf-44c8f5b9bd48
+    name: last_question
+    selector:
+    - conversation
+    - last_question
+    value: ''
+    value_type: string
+  - description: 判断是否做过简历提取
+    id: 26ec1c71-cf59-4507-9c48-4bdaa5263f71
+    name: resume_ex
+    selector:
+    - conversation
+    - resume_ex
+    value: ''
+    value_type: string
+  - description: 判断面试是否结束
+    id: f68711b6-d0bd-41a1-98dc-5b397161ec07
+    name: is_end
+    selector:
+    - conversation
+    - is_end
+    value: ''
+    value_type: string
+  - description: 用于状态锁
+    id: b4411674-f8ea-40c2-ad92-36195c7154f3
+    name: current_mode
+    selector:
+    - conversation
+    - current_mode
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        knowledge_file_size_limit: 15
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '你好！我是「面必过」AI 求职助手 🎯
+
+
+      我可以帮你：
+
+      🎤 **模拟面试** — 请附带简历和jd描述，说「模拟面试」开始沉浸式模拟面试
+
+      ✨ **简历优化** — 发送简历附件（pdf版本最佳，尽量全，不要受限于页数）和jd描述，说「优化简历」启动多专家协作优化'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 17826542045500-false-17826542213110-target
+      selected: false
+      source: '17826542045500'
+      sourceHandle: 'false'
+      target: '17826542213110'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 17826542045500-interview-cond-17826542573410-target
+      selected: false
+      source: '17826542045500'
+      sourceHandle: interview-cond
+      target: '17826542573410'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 17826542045500-resume-cond-17826543001240-target
+      selected: false
+      source: '17826542045500'
+      sourceHandle: resume-cond
+      target: '17826543001240'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 17826542213110-source-17826543749740-target
+      selected: false
+      source: '17826542213110'
+      sourceHandle: source
+      target: '17826543749740'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 17826543749740-mock-17826542573410-target
+      selected: false
+      source: '17826543749740'
+      sourceHandle: mock
+      target: '17826542573410'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 17826543749740-resume-17826543001240-target
+      selected: false
+      source: '17826543749740'
+      sourceHandle: resume
+      target: '17826543001240'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 17826543749740-false-17826546456310-target
+      selected: false
+      source: '17826543749740'
+      sourceHandle: 'false'
+      target: '17826546456310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 17826583007340-true-17826583165140-target
+      selected: false
+      source: '17826583007340'
+      sourceHandle: 'true'
+      target: '17826583165140'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17826583555502-source-17826583555503-target
+      selected: false
+      source: '17826583555502'
+      sourceHandle: source
+      target: '17826583555503'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1782662495162-source-17826583007340-target
+      selected: false
+      source: '1782662495162'
+      sourceHandle: source
+      target: '17826583007340'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1782663600150-source-1782663644480-target
+      selected: false
+      source: '1782663600150'
+      sourceHandle: source
+      target: '1782663644480'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1782663644480-source-1782662495162-target
+      selected: false
+      source: '1782663644480'
+      sourceHandle: source
+      target: '1782662495162'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 17826583007340-false-1782665006331-target
+      selected: false
+      source: '17826583007340'
+      sourceHandle: 'false'
+      target: '1782665006331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1782663644480-source-1782665488031-target
+      selected: false
+      source: '1782663644480'
+      sourceHandle: source
+      target: '1782665488031'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 17826542573410-source-1782665537694-target
+      selected: false
+      source: '17826542573410'
+      sourceHandle: source
+      target: '1782665537694'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1782665537694-false-1782663600150-target
+      selected: false
+      source: '1782665537694'
+      sourceHandle: 'false'
+      target: '1782663600150'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 17826657496390-source-17826657496391-target
+      selected: false
+      source: '17826657496390'
+      sourceHandle: source
+      target: '17826657496391'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826658481830-source-17826658481831-target
+      selected: false
+      source: '17826658481830'
+      sourceHandle: source
+      target: '17826658481831'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17826658481834-source-17826658481835-target
+      selected: false
+      source: '17826658481834'
+      sourceHandle: source
+      target: '17826658481835'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826658481832-source-17826658481833-target
+      selected: false
+      source: '17826658481832'
+      sourceHandle: source
+      target: '17826658481833'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1782665006331-source-1782699392434-target
+      selected: false
+      source: '1782665006331'
+      sourceHandle: source
+      target: '1782699392434'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1782699392434-source-17826584954650-target
+      selected: false
+      source: '1782699392434'
+      sourceHandle: source
+      target: '17826584954650'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1782665537694-true-1782699527342-target
+      selected: false
+      source: '1782665537694'
+      sourceHandle: 'true'
+      target: '1782699527342'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1782699527342-source-1782700437918-target
+      selected: false
+      source: '1782699527342'
+      sourceHandle: source
+      target: '1782700437918'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1782700437918-source-1782699745154-target
+      selected: false
+      source: '1782700437918'
+      sourceHandle: source
+      target: '1782699745154'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1782699745154-source-1782662495162-target
+      selected: false
+      source: '1782699745154'
+      sourceHandle: source
+      target: '1782662495162'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 17826583165140-source-17826583555500-target
+      selected: false
+      source: '17826583165140'
+      sourceHandle: source
+      target: '17826583555500'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: assigner
+      id: 1782665488031-source-1782745049343-target
+      selected: false
+      source: '1782665488031'
+      sourceHandle: source
+      target: '1782745049343'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: document-extractor
+      id: 17826543001240-source-17826657496390-target
+      selected: false
+      source: '17826543001240'
+      sourceHandle: source
+      target: '17826657496390'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826657496391-source-17826658481830-target
+      selected: false
+      source: '17826657496391'
+      sourceHandle: source
+      target: '17826658481830'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: assigner
+      id: 1782652624715-source-1782749262246-target
+      selected: false
+      source: '1782652624715'
+      sourceHandle: source
+      target: '1782749262246'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 1782749262246-source-17826542045500-target
+      selected: false
+      source: '1782749262246'
+      sourceHandle: source
+      target: '17826542045500'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826583555500-source-17828294406370-target
+      selected: false
+      source: '17826583555500'
+      sourceHandle: source
+      target: '17828294406370'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17828294406370-source-17828294152170-target
+      selected: false
+      source: '17828294406370'
+      sourceHandle: source
+      target: '17828294152170'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17828294152170-source-1782833466930-target
+      selected: false
+      source: '17828294152170'
+      sourceHandle: source
+      target: '1782833466930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1782833466930-source-1782834561904-target
+      source: '1782833466930'
+      sourceHandle: source
+      target: '1782834561904'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: tool
+      id: 1782834561904-source-1782834611635-target
+      source: '1782834561904'
+      sourceHandle: source
+      target: '1782834611635'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: assigner
+      id: 1782834611635-source-17826583555502-target
+      source: '1782834611635'
+      sourceHandle: source
+      target: '17826583555502'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826658481833-source-1782835060770-target
+      selected: false
+      source: '17826658481833'
+      sourceHandle: source
+      target: '1782835060770'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1782835060770-source-1782835155744-target
+      source: '1782835060770'
+      sourceHandle: source
+      target: '1782835155744'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: tool
+      id: 1782835155744-source-1782835167850-target
+      source: '1782835155744'
+      sourceHandle: source
+      target: '1782835167850'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: assigner
+      id: 1782835167850-source-17826658481834-target
+      source: '1782835167850'
+      sourceHandle: source
+      target: '17826658481834'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826657496391-source-17826658481832-target
+      source: '17826657496391'
+      sourceHandle: source
+      target: '17826658481832'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17826658481831-source-17826658481833-target
+      source: '17826658481831'
+      sourceHandle: source
+      target: '17826658481833'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          default: ''
+          hide: false
+          hint: ''
+          label: resume
+          options: []
+          placeholder: ''
+          required: true
+          type: file
+          variable: resume
+        - default: ''
+          hint: ''
+          label: 职位介绍
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: jd
+      height: 135
+      id: '1782652624715'
+      position:
+        x: 0
+        y: 225.39047619047622
+      positionAbsolute:
+        x: 0
+        y: 225.39047619047622
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        cases:
+        - case_id: interview-cond
+          conditions:
+          - comparison_operator: is
+            id: a1b2c3d4-0001-0001-0001-000000000001
+            value: 面试
+            varType: string
+            variable_selector:
+            - conversation
+            - current_mode
+          id: interview-cond
+          logical_operator: and
+        - case_id: resume-cond
+          conditions:
+          - comparison_operator: contains
+            id: a1b2c3d4-0001-0001-0001-000000000002
+            value: 简历
+            varType: string
+            variable_selector:
+            - conversation
+            - current_mode
+          id: resume-cond
+          logical_operator: and
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 状态锁
+        type: if-else
+      height: 172
+      id: '17826542045500'
+      position:
+        x: 642
+        y: 229.39047619047622
+      positionAbsolute:
+        x: 642
+        y: 229.39047619047622
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            请只输出：模拟面试 / 简历优化 / other 到intent变量中去'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            reasoning_effort: max
+            response_format: json_object
+            temperature: 0.1
+            thinking: true
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: b3626187-732b-425c-9f52-4dc8b202d46b
+          role: system
+          text: '判断用户意图，只回复以下三个词之一到structured_output中的intent变量：
+
+
+            1. **模拟面试** — 用户想要模拟面试、面试练习、面试考核、面经、被面试等
+
+            2. **简历优化** — 用户想要优化简历、改写简历、简历分析、JD匹配、投递建议，或者用户上传了文件（PDF/DOCX等简历文件）
+
+            3. **other** — 其他闲聊、问候、不相关话题
+
+            '
+        retry_config:
+          max_retries: 5
+          retry_enabled: true
+          retry_interval: 299
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              intent:
+                type: string
+              reason:
+                type: string
+            required:
+            - reason
+            - intent
+            type: object
+        structured_output_enabled: true
+        title: 意图识别
+        type: llm
+        vision:
+          enabled: false
+      height: 117
+      id: '17826542213110'
+      position:
+        x: 1004
+        y: 544.5333333333334
+      positionAbsolute:
+        x: 1004
+        y: 544.5333333333334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: constant
+          operation: set
+          value: 面试
+          variable_selector:
+          - conversation
+          - current_mode
+        selected: false
+        title: 设为面试
+        type: assigner
+        version: '2'
+      height: 84
+      id: '17826542573410'
+      position:
+        x: 1708
+        y: 89.87380952380954
+      positionAbsolute:
+        x: 1708
+        y: 89.87380952380954
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: constant
+          operation: set
+          value: 简历
+          variable_selector:
+          - conversation
+          - current_mode
+        selected: false
+        title: 设为简历
+        type: assigner
+        version: '2'
+      height: 84
+      id: '17826543001240'
+      position:
+        x: 1708
+        y: 414.31904761904764
+      positionAbsolute:
+        x: 1708
+        y: 414.31904761904764
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        cases:
+        - case_id: mock
+          conditions:
+          - comparison_operator: contains
+            id: a1b2c3d4-0002-0001-0001-000000000001
+            value: 模拟面试
+            varType: string
+            variable_selector:
+            - '17826542213110'
+            - structured_output
+            - intent
+          id: mock
+          logical_operator: and
+        - case_id: resume
+          conditions:
+          - comparison_operator: contains
+            id: a1b2c3d4-0002-0001-0001-000000000002
+            value: 简历优化
+            varType: string
+            variable_selector:
+            - '17826542213110'
+            - structured_output
+            - intent
+          id: resume
+          logical_operator: and
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 意图分支
+        type: if-else
+      height: 220
+      id: '17826543749740'
+      position:
+        x: 1346
+        y: 512.5333333333334
+      positionAbsolute:
+        x: 1346
+        y: 512.5333333333334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        answer: '你好！我是「面必过」AI 求职助手 🎯
+
+
+          我可以帮你：
+
+          🎤 **模拟面试** — 请附带简历和jd描述，说「模拟面试」或「面试练习」开始 6 阶段沉浸式模拟面试
+
+          ✨ **简历优化** — 发送简历附件（pdf版本最佳，尽量全，不要受限于页数）和jd描述，说「优化简历」启动多专家协作优化
+
+
+          请试试上面的指令开始吧！'
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 闲聊引导
+        type: answer
+        variables: []
+      height: 228
+      id: '17826546456310'
+      position:
+        x: 1708
+        y: 587.104761904762
+      positionAbsolute:
+        x: 1708
+        y: 587.104761904762
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        isInIteration: false
+        isInLoop: false
+        memory:
+          query_prompt_template: '请基于以下信息，生成本轮面试官应该说的话。
+
+
+            【候选人当前输入】
+
+            {{#sys.query#}}
+
+
+            【历史问答记录】
+
+            {{#conversation.qa_history#}}
+
+
+            【结构化简历信息】
+
+            {{#conversation.resume_summary#}}
+
+
+            【JD 信息】
+
+            {{#conversation.jd#}}
+
+
+            判断要求：
+
+            1. 如果上一轮面试问题为空，且历史问答记录为空，说明这是第一轮面试，请先友好开场，并请候选人做 1 分钟左右自我介绍。
+
+            2. 如果上一轮面试问题不为空，说明候选人当前输入通常是在回答上一轮问题，请根据回答质量决定追问、换题或结束。
+
+            3. 每轮最多只问一个主问题。
+
+            4. 不要输出评分、阶段编号、分析过程或内部状态。
+
+            5. 如果需要结束面试，请自然结束，并在最后单独输出：[INTERVIEW_END]'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            reasoning_effort: high
+            temperature: 0.3
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: jinja2
+          id: f63ca2c6-79ab-4bb1-a87a-c98c6038d799
+          jinja2_text: "你是“模拟面试引擎”，扮演一位资深技术面试官，正在对候选人进行模拟面试。\n\n你的语气应该专业、客观、友好，像真实面试官一样自然对话。\n\
+            \n你的任务是：基于候选人的结构化简历信息、JD 信息、历史问答记录、上一轮问题和候选人当前输入，生成本轮面试官应该说的话。\n\n你必须始终遵守以下规则：\n\
+            \n# 一、候选人背景与提问依据\n\n1. 你必须仔细参考结构化简历信息和 JD 信息。\n2. 提问必须紧紧围绕候选人的真实经历、项目、实习、技术栈和目标岗位展开。\n\
+            3. 不要凭空编造候选人没有提供的经历、公司、项目、技术栈或成果。\n4. 不要直接复述简历，而要基于简历选择有价值的问题。\n\n# 二、面试流程：6\
+            \ 阶段自然推进\n\n你需要在内部根据历史问答记录自然推进以下 6 个阶段，但绝不能向候选人宣布“现在进入第几阶段”。\n\n1. 开场寒暄阶段：\n\
+            \n   * 1 到 2 个问题。\n   * 重点了解候选人基本情况、目标岗位、技术背景。\n   * 如果这是第一轮面试，请先友好问候，并请候选人做\
+            \ 1 分钟左右自我介绍。\n\n2. 技术深挖阶段：\n\n   * 3 到 5 个问题。\n   * 针对候选人简历中的核心技术栈深入提问。\n\
+            \   * 重点考察底层原理、应用理解和技术取舍，而不是让候选人简单罗列名词。\n\n3. 项目实战阶段：\n\n   * 6 到 10 个问题。\n\
+            \   * 深挖简历中的项目经历和实习经历。\n   * 重点追问技术选型理由、架构设计思路、实现细节、遇到的问题、解决方案和最终成果。\n\
+            \n4. 行为问题阶段：\n\n   * 2 到 3 个问题。\n   * 考察沟通协作、团队冲突处理、抗压能力、失败经历反思、学习能力等软实力。\n\
+            \n5. 反问环节：\n\n   * 1 到 2 个问题。\n   * 询问候选人是否有问题想问面试官，或是否想补充说明。\n\n6. 面试总结阶段：\n\
+            \n   * 当你认为面试已经充分，或者候选人主动要求结束时，自然结束面试。\n\n# 三、单轮输出规则\n\n1. 每次只输出面试官本轮要说的话。\n\
+            2. 每轮最多只问 1 个主问题。\n3. 可以有一句简短承接或肯定，但不能一次抛出多个问题。\n4. 不要输出评分、分数、阶段编号、内部判断、分析过程或规则说明。\n\
+            5. 不要暴露 qa_history、last_question、current_mode 等内部变量。\n6. 不要使用 Markdown\
+            \ 标题。\n7. 全程使用中文。\n\n# 四、追问策略\n\n你需要根据候选人当前回答的质量决定下一步动作：\n\n1. 如果回答较完整：\n\
+            \n   * 可以简短肯定一句。\n   * 然后自然进入下一个相关问题。\n\n2. 如果回答一般：\n\n   * 进行适度追问。\n\
+            \   * 引导候选人补充业务背景、技术细节、实现过程、难点或结果。\n\n3. 如果回答很短、模糊或缺少关键细节：\n\n   * 优先围绕上一轮问题追问。\n\
+            \   * 可以给一点轻微提示，但不要直接替候选人回答。\n\n4. 如果回答明显答非所问：\n\n   * 礼貌拉回到上一轮问题。\n \
+            \  * 重新明确你希望候选人回答的重点。\n\n5. 同一个问题最多追问 2 次。\n\n   * 如果候选人仍然回答不清楚，应自然切换到下一个问题，不要一直卡住。\n\
+            \n# 五、阶段推进策略\n\n你需要根据历史问答记录判断当前大致处于哪个阶段：\n\n1. 如果历史问答为空，说明这是第一轮面试，应先开场并要求候选人自我介绍。\n\
+            2. 如果已经完成自我介绍，应优先进入技术深挖或项目实战。\n3. 如果技术问题已经问过较多，应更多转向项目实战。\n4. 如果项目经历已经充分覆盖，可以进入行为问题。\n\
+            5. 如果技术、项目、行为问题都已经覆盖，可以进入反问环节。\n6. 如果已经完成反问环节，应该自然结束面试。\n7. 不要机械地按固定顺序提问，要结合候选人的回答自然推进。\n\
+            \n# 六、面试结束条件\n\n当满足以下任一条件时，说明面试应当结束：\n\n1. 候选人主动表达结束意图，例如“结束面试”“不想面了”“先到这里”“今天先这样”等。\n\
+            2. 你认为已经进行了足够多轮对话，且已经充分覆盖技术和项目两个重点阶段。\n3. 已经完成反问环节。\n4. 候选人连续多轮无法继续有效回答，且继续追问价值不大。\n\
+            \n当你决定结束面试时，请给出一段自然的面试结束语，例如感谢参与、说明后续会进行总结等。\n\n并且必须在回复最后单独输出：\n[INTERVIEW_END]\n\
+            \n# 七、输出要求\n\n你只输出面试官本轮要说的话。\n\n不要输出：\n\n* 阶段名称\n* 阶段编号\n* 评分\n* 分析过程\n\
+            * 内部判断\n* 变量名\n* JSON\n* Markdown 标题\n"
+          role: system
+          text: '你是“模拟面试引擎”，扮演一位资深技术面试官，正在对候选人进行模拟面试。
+
+            你的语气应该专业、客观、友好，像真实面试官一样自然对话。
+
+            你的任务是：基于候选人的结构化简历信息、JD 信息、历史问答记录、上一轮问题和候选人当前输入，生成本轮面试官应该说的话。
+
+            你必须始终遵守以下规则：
+
+            一、候选人背景与提问依据
+
+            你必须仔细参考结构化简历信息和 JD 信息。
+
+            提问必须紧紧围绕候选人的真实经历、项目、实习、技术栈和目标岗位展开。
+
+            不要凭空编造候选人没有提供的经历、公司、项目、技术栈或成果。
+
+            不要直接复述简历，而要基于简历选择有价值的问题。
+
+            二、面试流程：6 阶段自然推进
+
+            你需要在内部根据历史问答记录自然推进以下 6 个阶段，但绝不能向候选人宣布“现在进入第几阶段”。
+
+            开场寒暄阶段：
+
+            1 到 2 个问题。
+
+            重点了解候选人基本情况、目标岗位、技术背景。
+
+            如果这是第一轮面试，请先友好问候，并请候选人做 1 分钟左右自我介绍。
+
+            技术深挖阶段：
+
+            3 到 5 个问题。
+
+            针对候选人简历中的核心技术栈深入提问。
+
+            重点考察底层原理、应用理解和技术取舍，而不是让候选人简单罗列名词。
+
+            项目实战阶段：
+
+            6 到 10 个问题。
+
+            深挖简历中的项目经历和实习经历。
+
+            重点追问技术选型理由、架构设计思路、实现细节、遇到的问题、解决方案和最终成果。
+
+            行为问题阶段：
+
+            2 到 3 个问题。
+
+            考察沟通协作、团队冲突处理、抗压能力、失败经历反思、学习能力等软实力。
+
+            反问环节：
+
+            1 到 2 个问题。
+
+            询问候选人是否有问题想问面试官，或是否想补充说明。
+
+            面试总结阶段：
+
+            当你认为面试已经充分，或者候选人主动要求结束时，自然结束面试。
+
+            三、单轮输出规则
+
+            每次只输出面试官本轮要说的话。
+
+            每轮最多只问 1 个主问题。
+
+            可以有一句简短承接或肯定，但不能一次抛出多个问题。
+
+            不要输出评分、分数、阶段编号、内部判断、分析过程或规则说明。
+
+            不要暴露 qa_history、last_question、current_mode 等内部变量。
+
+            不要使用 Markdown 标题。
+
+            全程使用中文。
+
+            四、追问策略
+
+            你需要根据候选人当前回答的质量决定下一步动作：
+
+            如果回答较完整：
+
+            可以简短肯定一句。
+
+            然后自然进入下一个相关问题。
+
+            如果回答一般：
+
+            进行适度追问。
+
+            引导候选人补充业务背景、技术细节、实现过程、难点或结果。
+
+            如果回答很短、模糊或缺少关键细节：
+
+            优先围绕上一轮问题追问。
+
+            可以给一点轻微提示，但不要直接替候选人回答。
+
+            如果回答明显答非所问：
+
+            礼貌拉回到上一轮问题。
+
+            重新明确你希望候选人回答的重点。
+
+            同一个问题最多追问 2 次。
+
+            如果候选人仍然回答不清楚，应自然切换到下一个问题，不要一直卡住。
+
+            五、阶段推进策略
+
+            你需要根据历史问答记录判断当前大致处于哪个阶段：
+
+            如果历史问答为空，说明这是第一轮面试，应先开场并要求候选人自我介绍。
+
+            如果已经完成自我介绍，应优先进入技术深挖或项目实战。
+
+            如果技术问题已经问过较多，应更多转向项目实战。
+
+            如果项目经历已经充分覆盖，可以进入行为问题。
+
+            如果技术、项目、行为问题都已经覆盖，可以进入反问环节。
+
+            如果已经完成反问环节，应该自然结束面试。
+
+            不要机械地按固定顺序提问，要结合候选人的回答自然推进。
+
+            六、面试结束条件
+
+            当满足以下任一条件时，说明面试应当结束：
+
+            候选人主动表达结束意图，例如“结束面试”“不想面了”“先到这里”“今天先这样”等。
+
+            你认为已经进行了足够多轮对话，且已经充分覆盖技术和项目两个重点阶段。
+
+            已经完成反问环节。
+
+            候选人连续多轮无法继续有效回答，且继续追问价值不大。
+
+            当你决定结束面试时，请给出一段自然的面试结束语，例如感谢参与、说明后续会进行总结等。
+
+            并且必须在回复最后单独输出：
+
+            [INTERVIEW_END]
+
+            七、输出要求
+
+            你只输出面试官本轮要说的话。
+
+            不要输出：
+
+            阶段名称
+
+            阶段编号
+
+            评分
+
+            分析过程
+
+            内部判断
+
+            变量名
+
+            JSON
+
+            Markdown 标题'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        title: 面试引擎
+        type: llm
+        vision:
+          enabled: false
+      height: 117
+      id: '1782662495162'
+      position:
+        x: 3458
+        y: 59.70714285714291
+      positionAbsolute:
+        x: 3458
+        y: 59.70714285714291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 48f7e17a-baca-43c3-8288-f1973f111a40
+            value: INTERVIEW_END
+            varType: string
+            variable_selector:
+            - '1782662495162'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 结束变量判断
+        type: if-else
+      height: 148
+      id: '17826583007340'
+      position:
+        x: 3800
+        y: 63.70714285714291
+      positionAbsolute:
+        x: 3800
+        y: 63.70714285714291
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: constant
+          operation: set
+          value: end
+          variable_selector:
+          - conversation
+          - is_end
+        selected: false
+        title: 结束变量赋值
+        type: assigner
+        version: '2'
+      height: 84
+      id: '17826583165140'
+      position:
+        x: 4162
+        y: 37.43333333333334
+      positionAbsolute:
+        x: 4162
+        y: 37.43333333333334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            response_format: json_object
+            temperature: 0.3
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 33efcdd0-5f49-4933-900e-b887221ab82c
+          role: system
+          text: '你是资深技术面试官和人才评估专家。请基于完整面试对话{{#conversation.qa_history#}}和jd信息{{#conversation.jd#}}，进行多维度表现评估。
+
+
+            ## 评估维度（每个维度 0-100 分）
+
+            1. **专业能力**：技术知识的深度和广度，对核心概念的掌握程度
+
+            2. **执行与结果**：项目经验中的实际成果、影响力和可量化指标
+
+            3. **逻辑与问题解决**：分析问题的思路、解题框架和系统性思维
+
+            4. **沟通表达**：回答的清晰度、条理性、表达流畅度和专业术语运用
+
+            5. **成长潜力**：学习能力、技术视野、对新技术的好奇心和职业规划
+
+            6. **协作能力**：团队合作意识、沟通协调能力、冲突处理方式
+
+
+            ## 评估要求
+
+            - 综合评分 = 六个维度的加权平均（技术相关维度权重更高）
+
+            - 对每个维度给出具体的支撑证据（引用面试中的具体回答）
+
+            - 列出 2-4 个表现好的方面（附具体说明）
+
+            - 列出 2-4 个需要改进的方面（附具体问题、问题所在、以及建议的更好回答）
+
+
+            请基于以上完整面试对话，进行 6 维度表现评估分析。'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              dimensions:
+                additionalProperties: false
+                properties:
+                  专业能力:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                  协作能力:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                  成长潜力:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                  执行与结果:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                  沟通表达:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                  逻辑与问题解决:
+                    additionalProperties: false
+                    properties:
+                      evidence:
+                        type: string
+                      reason:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - evidence
+                    - reason
+                    type: object
+                required:
+                - 专业能力
+                - 执行与结果
+                - 逻辑与问题解决
+                - 沟通表达
+                - 成长潜力
+                - 协作能力
+                type: object
+              performance_score:
+                type: string
+              poorly_handled:
+                items:
+                  additionalProperties: false
+                  properties:
+                    better_answer:
+                      type: string
+                    issue:
+                      type: string
+                    question:
+                      type: string
+                  required:
+                  - question
+                  - issue
+                  - better_answer
+                  type: object
+                type: array
+              well_handled:
+                items:
+                  type: string
+                type: array
+            required:
+            - performance_score
+            - dimensions
+            - well_handled
+            - poorly_handled
+            type: object
+        structured_output_enabled: true
+        title: 表现评估专家
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17826583555500'
+      position:
+        x: 4504
+        y: 49.43333333333334
+      positionAbsolute:
+        x: 4504
+        y: 49.43333333333334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - current_mode
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - jd
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - resume_summary
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - qa_history
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - last_question
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - is_end
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - resume_ex
+        selected: false
+        title: 清空面试模式
+        type: assigner
+        version: '2'
+      height: 240
+      id: '17826583555502'
+      position:
+        x: 6496.664119981372
+        y: 144.2459761520018
+      positionAbsolute:
+        x: 6496.664119981372
+        y: 144.2459761520018
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        answer: '📊 **面试已结束，以下是你的复盘报告！**
+
+
+          ---HTML_START---
+
+          {{#1782834611635.files#}}
+
+          ---HTML_END---'
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 输出复盘
+        type: answer
+        variables: []
+      height: 151
+      id: '17826583555503'
+      position:
+        x: 6880.0200459228145
+        y: 131.48730803626034
+      positionAbsolute:
+        x: 6880.0200459228145
+        y: 131.48730803626034
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 获取完整干净的md块儿
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: max
+            temperature: 0.8
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: c6d6724d-4777-49ac-b7cd-cd3f8a3c18a7
+          role: system
+          text: "你是“模拟面试复盘报告 Markdown 视觉排版设计师”。\n\n你的唯一任务是：将上游输入的 Markdown 版《模拟面试综合复盘报告》进行视觉排版和美化。\n\
+            \n注意：上游已经完成报告内容生成。  \n你不要重新撰写报告，不要补充内容，不要调整评价，不要新增模块。  \n你只负责排版、美化、提升阅读体验。\n\
+            \n【上游 Markdown 复盘报告】\n{{#17828294152170.text#}}\n\n## 一、核心任务\n\n1. 保留上游报告的全部原始内容。\n\
+            2. 不改写、不扩写、不删减、不重新评价。\n3. 不新增任何上游没有的结论、分数、建议、行动计划、面试官寄语。\n4. 只做 Markdown\
+            \ 视觉排版和内联 HTML 美化。\n5. 输出结果仍然是 Markdown + 内联 HTML。\n6. 不输出完整 HTML 页面。\n\
+            \n## 二、强制输出规则\n\n1. 最终只能输出 Markdown + 内联 HTML。\n2. 严禁输出完整 HTML 文档。\n3.\
+            \ 严禁输出 `<!DOCTYPE html>`、`<html>`、`<head>`、`<body>`、`<style>`。\n4. 严禁输出\
+            \ Markdown 代码块标记，例如 ```markdown、```html 或 ```。\n5. 严禁输出 `<think>`、思考过程、分析过程、解释说明、前言、总结。\n\
+            6. 不要说“以下是排版后的报告”。\n7. 不要输出任何非报告正文内容。\n8. 不要把 HTML 标签转义成 `&lt;div&gt;`。\n\
+            9. 不要把全文放进 `<pre>` 或 `<code>`。\n10. HTML 标签必须顶格输出，不要在 HTML 标签前添加 4 个空格或\
+            \ Tab 缩进。\n11. 所有 `<div>`、`<p>`、`<table>`、`<tr>`、`<td>`、`<ul>`、`<li>`\
+            \ 标签都必须从行首开始，避免 md_to_html 识别成代码块。\n12. 第一行必须是最外层容器。\n13. 最后一行必须是 `</div>`。\n\
+            \n## 三、样式强制规则：禁止使用 class\n\n1. 严禁使用任何 `class` 属性。\n2. 严禁输出 `class=\"...\"\
+            ` 或 `class='...'`。\n3. 严禁使用 CSS 类名，例如 `report-container`、`meta-info`、`score-highlight`、`table-wrapper`、`note-box`\
+            \ 等。\n4. 严禁依赖 `<style>` 标签或 CSS class 来控制样式。\n5. 所有视觉样式必须直接写在当前 HTML 标签的\
+            \ `style=\"\"` 内。\n6. 每一个需要美化的 `<div>`、`<p>`、`span`、`table`、`tr`、`td`、`th`、`blockquote`、`ul`、`li`\
+            \ 都必须使用内联 style。\n7. 如果需要容器样式，直接写成：\n\n<div style=\"background:#ffffff;border:1px\
+            \ solid #e5e7eb;border-radius:14px;padding:5mm 6mm;margin-bottom:5mm;box-shadow:0\
+            \ 4px 16px rgba(15,23,42,0.06);box-sizing:border-box;\">\n内容\n</div>\n\
+            \n8. 不要写成：\n\n<div class=\"report-container\">\n内容\n</div>\n\n9. 不要输出下面这种无效样式结构：\n\
+            \n<style>\n.report-container { ... }\n</style>\n\n\n## 四、最外层容器\n\n最终输出第一行必须使用：\n\
+            \n<div style=\"width:186mm;margin:0 auto;padding:8mm 9mm;box-sizing:border-box;font-family:'Microsoft\
+            \ YaHei','PingFang SC',Arial,sans-serif;font-size:13px;line-height:1.65;color:#1f2937;background:#f1f5f9;\"\
+            >\n\n最终输出最后一行必须使用：\n\n</div>\n\n如果输入为空或不是有效复盘报告内容，只输出：\n\n<div style=\"\
+            width:186mm;margin:0 auto;padding:10mm;box-sizing:border-box;font-family:'Microsoft\
+            \ YaHei','PingFang SC',Arial,sans-serif;font-size:14px;color:#1f2937;\"\
+            >未接收到有效的复盘报告内容</div>\n"
+        selected: false
+        title: html生成
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1782833466930'
+      position:
+        x: 5515.142857142857
+        y: -19.067195571772757
+      positionAbsolute:
+        x: 5515.142857142857
+        y: -19.067195571772757
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        answer: '{{#1782665006331.text#}}'
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 输出面试
+        type: answer
+        variables: []
+      height: 103
+      id: '17826584954650'
+      position:
+        x: 4846
+        y: 241.26666666666668
+      positionAbsolute:
+        x: 4846
+        y: 241.26666666666668
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        is_array_file: false
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1782652624715'
+        - resume
+      height: 104
+      id: '1782663600150'
+      position:
+        x: 2644
+        y: 206.67380952380952
+      positionAbsolute:
+        x: 2644
+        y: 206.67380952380952
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.4
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 4d439a7b-1e0e-422c-a3dd-d0d8ea5f0cbb
+          role: system
+          text: '你是简历信息提取助手。
+
+
+            下面是从用户上传简历中提取出的文本：
+
+            {{#1782663600150.text#}}
+
+
+            用户补充输入 / JD：
+
+            {{#1782652624715.jd#}}
+
+
+            请整理为结构化 Markdown 简历信息。
+
+
+            要求：
+
+            1. 对信息做一下整理，标题和内容能对应的上。
+
+            2. 不虚构任何经历、技术栈、数据指标。
+
+            3. 输出 Markdown。'
+        selected: false
+        title: 简历信息提取
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1782663644480'
+      position:
+        x: 2986
+        y: 232.00714285714287
+      positionAbsolute:
+        x: 2986
+        y: 232.00714285714287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 每次只提取一个面试题
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 67644690-4c2d-486e-8d32-23906a3f2e13
+          role: system
+          text: '你是“面试题提取器”。
+
+
+            你的唯一任务是从上游“面试引擎”的输出内容{{#1782662495162.text#}}中，提取出本轮面试官真正向候选人提出的问题。
+
+
+            你必须遵守以下规则：
+
+
+            1. 只提取问题，不生成新问题。
+
+            2. 不评价候选人，不分析答案，不给建议。
+
+            3. 不改写问题的核心含义。
+
+            4. 如果面试引擎输出中包含多个问题，只提取当前轮最主要、最需要候选人回答的一个问题。
+
+            5. 如果输出中包含寒暄、解释、点评、引导语，只保留真正的问题。
+
+            6. 如果问题分成主问题和追问，可以合并为一个完整问题。
+
+            7. 如果没有明确问题，但有明显的面试任务，例如“请做一下自我介绍”，也应作为问题提取。
+
+            8. 如果面试已经结束，或内容中没有任何可回答的问题，输出：NO_QUESTION
+
+            9. 输出必须简洁，不要输出解释。
+
+            10. 不要使用 Markdown 标题，不要使用项目符号。'
+        selected: false
+        title: 面试题
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1782665006331'
+      position:
+        x: 4162
+        y: 201.43333333333334
+      positionAbsolute:
+        x: 4162
+        y: 201.43333333333334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        items:
+        - input_type: constant
+          operation: set
+          value: 'true'
+          variable_selector:
+          - conversation
+          - resume_ex
+        selected: false
+        title: 已完成简历信息提取
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1782665488031'
+      position:
+        x: 3348
+        y: 300.23333333333335
+      positionAbsolute:
+        x: 3348
+        y: 300.23333333333335
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 6ceea1ee-9b95-4ae2-bf22-feafd44c789e
+            value: 'true'
+            varType: string
+            variable_selector:
+            - conversation
+            - resume_ex
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: 简历是否已完成提取
+        type: if-else
+      height: 124
+      id: '1782665537694'
+      position:
+        x: 2050
+        y: 83.87380952380954
+      positionAbsolute:
+        x: 2050
+        y: 83.87380952380954
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        is_array_file: false
+        selected: false
+        title: '文档提取器 '
+        type: document-extractor
+        variable_selector:
+        - '1782652624715'
+        - resume
+      height: 104
+      id: '17826657496390'
+      position:
+        x: 2050
+        y: 418.31904761904764
+      positionAbsolute:
+        x: 2050
+        y: 418.31904761904764
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            temperature: 0.4
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 4d439a7b-1e0e-422c-a3dd-d0d8ea5f0cbb
+          role: system
+          text: '你是简历信息提取助手。
+
+
+            下面是从用户上传简历中提取出的文本：
+
+            {{#17826657496390.text#}}
+
+
+            用户补充输入 / JD：
+
+            {{#1782652624715.jd#}}
+
+
+            请整理为结构化 Markdown 简历信息。
+
+
+            要求：
+
+            1. 只做信息提取，不做优化。
+
+            2. 不虚构任何经历、技术栈、数据指标。
+
+            3. 输出 Markdown。'
+        selected: false
+        title: '简历信息提取 '
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17826657496391'
+      position:
+        x: 2392
+        y: 443.652380952381
+      positionAbsolute:
+        x: 2392
+        y: 443.652380952381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: high
+            response_format: json_object
+            temperature: 0.2
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 385f3ac1-dfd8-447a-95e6-19a886ef3b51
+          role: system
+          text: '你是资深JD匹配分析师。分析候选人简历{{#17826657496391.text#}}与目标岗位的匹配程度。
+
+
+            从{{#conversation.jd#}}中识别出【JD/岗位描述】。
+
+
+            ## 分析维度
+
+            1. **技能匹配**：JD要求的技能 vs 简历展示的技能，找出匹配和缺失
+
+            2. **项目匹配**：JD要求的经验类型 vs 简历中的项目经历
+
+            3. **经验匹配**：工作年限、行业背景、角色层级
+
+            4. **教育匹配**：学历、专业匹配度'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              analysis_summary:
+                type: string
+              dimensions:
+                additionalProperties: false
+                properties:
+                  education:
+                    additionalProperties: false
+                    properties:
+                      analysis:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - analysis
+                    type: object
+                  experience:
+                    additionalProperties: false
+                    properties:
+                      analysis:
+                        type: string
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - analysis
+                    type: object
+                  projects:
+                    additionalProperties: false
+                    properties:
+                      gaps:
+                        items:
+                          type: string
+                        type: array
+                      relevant:
+                        items:
+                          type: string
+                        type: array
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - relevant
+                    - gaps
+                    type: object
+                  skills:
+                    additionalProperties: false
+                    properties:
+                      matched:
+                        items:
+                          type: string
+                        type: array
+                      missing:
+                        items:
+                          type: string
+                        type: array
+                      score:
+                        type: string
+                    required:
+                    - score
+                    - matched
+                    - missing
+                    type: object
+                required:
+                - skills
+                - projects
+                - experience
+                - education
+                type: object
+              jd_keywords:
+                items:
+                  type: string
+                type: array
+              match_score:
+                type: string
+              matched_keywords:
+                items:
+                  type: string
+                type: array
+              missing_keywords:
+                items:
+                  type: string
+                type: array
+            required:
+            - jd_keywords
+            - matched_keywords
+            - missing_keywords
+            - match_score
+            - dimensions
+            - analysis_summary
+            type: object
+        structured_output_enabled: true
+        title: JD匹配分析师
+        type: llm
+        vision:
+          enabled: false
+      height: 117
+      id: '17826658481830'
+      position:
+        x: 2734
+        y: 443.81904761904764
+      positionAbsolute:
+        x: 2734
+        y: 443.81904761904764
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: high
+            response_format: json_object
+            temperature: 0.4
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 9d1e0538-5235-4f18-9be5-f96ddd6701fb
+          role: system
+          text: '你是资深简历内容优化师。基于JD匹配分析结果{{#17826658481830.structured_output#}}，对{{#17826657496391.text#}}进行深度优化。
+
+
+            ## 优化策略
+
+            1. 针对匹配分析中的**缺失关键词**，在简历中寻找可以补强的地方
+
+            2. 用 STAR 法则（Situation/Task/Action/Result）改写项目经历
+
+            3. 添加量化数据和具体指标（如增长百分比、处理量级、响应时间优化等）
+
+            4. 突出与 JD 匹配的技术亮点
+
+            5. 删减不相关或低价值的内容'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              change_items:
+                items:
+                  additionalProperties: false
+                  properties:
+                    after:
+                      type: string
+                    before:
+                      type: string
+                    keywords_addressed:
+                      items:
+                        type: string
+                      type: array
+                    reason:
+                      type: string
+                    section:
+                      type: string
+                  required:
+                  - section
+                  - before
+                  - after
+                  - reason
+                  - keywords_addressed
+                  type: object
+                type: array
+              overall_strategy:
+                type: string
+            required:
+            - change_items
+            - overall_strategy
+            type: object
+        structured_output_enabled: true
+        title: 内容优化师
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17826658481831'
+      position:
+        x: 3076
+        y: 477.81904761904764
+      positionAbsolute:
+        x: 3076
+        y: 477.81904761904764
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: high
+            response_format: json_object
+            temperature: 0.3
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: d46aca5f-650f-4071-84b1-1ad7e704518b
+          role: system
+          text: '你是资深HR招聘经理（10年以上筛选经验）。从简历筛选的角度评估这份简历{{#17826657496391.text#}}。
+
+
+            ## 评估任务
+
+            1. **6秒快速筛选**：模拟HR的第一印象打分（这是HR实际筛选简历的平均时间）
+
+            2. **亮点识别**：找出能让简历脱颖而出的2-4个亮点
+
+            3. **顾虑标记**：找出可能导致简历被淘汰的2-4个问题
+
+            4. **通过率预估**：估算HR初筛通过率
+
+            5. **改进优先级**：按影响力排序给出改进建议
+
+            '
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              concerns:
+                items:
+                  type: string
+                type: array
+              first_impression:
+                additionalProperties: false
+                properties:
+                  comment:
+                    type: string
+                  score:
+                    type: string
+                required:
+                - score
+                - comment
+                type: object
+              highlights:
+                items:
+                  type: string
+                type: array
+              improvement_priority:
+                items:
+                  additionalProperties: false
+                  properties:
+                    impact:
+                      type: string
+                    item:
+                      type: string
+                    reason:
+                      type: string
+                  required:
+                  - item
+                  - impact
+                  - reason
+                  type: object
+                type: array
+              pass_rate_estimate:
+                type: string
+            required:
+            - first_impression
+            - highlights
+            - concerns
+            - pass_rate_estimate
+            - improvement_priority
+            type: object
+        structured_output_enabled: true
+        title: HR审核
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17826658481832'
+      position:
+        x: 2543.2402123144343
+        y: 764.3989976867697
+      positionAbsolute:
+        x: 2543.2402123144343
+        y: 764.3989976867697
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: max
+            temperature: 0.5
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 38151d20-b8d8-4d9d-9f95-80725720652c
+          role: system
+          text: '你是圆桌会议主持人兼简历包装专家。你需要整合三位专家的分析结果，输出最终的简历优化方案。
+
+
+            ## 整合策略
+
+            1. 综合JD匹配分析师、内容优化师、HR审核三方意见
+
+            2. 优先处理 HR 标记为 high impact 的改进项
+
+            3. 确保所有缺失的JD关键词在优化后简历中得到体现
+
+            4. 对冲突意见进行裁决（以JD匹配度和HR通过率为首要标准）
+
+            5. 生成完整的优化后简历（Markdown格式，不省略任何部分）
+
+
+            ## 简历格式要求
+
+            - 使用专业的 Markdown 格式
+
+            - 包含完整的个人信息、教育背景、工作经历、项目经验、技能清单等
+
+            - 项目经历使用 STAR 法则描述
+
+            - 技能清单按JD相关度排序'
+        - id: f6c6925a-bf8f-49c9-af9b-7b8028425cfa
+          role: user
+          text: 'jd匹配分析师结果：
+
+            {{#17826658481830.structured_output#}}
+
+
+            内容优化师结果：
+
+            {{#17826658481831.structured_output#}}
+
+
+            HR审核结果：
+
+            {{#17826658481832.structured_output#}}
+
+
+            简历信息：
+
+            {{#17826657496391.text#}}'
+        selected: false
+        title: 圆桌式复盘
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17826658481833'
+      position:
+        x: 3760
+        y: 507.152380952381
+      positionAbsolute:
+        x: 3760
+        y: 507.152380952381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        items:
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - current_mode
+        - input_type: variable
+          operation: clear
+          value: []
+          variable_selector:
+          - conversation
+          - jd
+        selected: false
+        title: 清空简历模式
+        type: assigner
+        version: '2'
+      height: 110
+      id: '17826658481834'
+      position:
+        x: 5134.2786500300335
+        y: 443.652380952381
+      positionAbsolute:
+        x: 5134.2786500300335
+        y: 443.652380952381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        answer: '✅ **简历优化已完成！**
+
+
+          ---HTML_START---
+
+          {{#1782835167850.files#}}
+
+          ---HTML_END---'
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        selected: false
+        title: 输出简历
+        type: answer
+        variables: []
+      height: 135
+      id: '17826658481835'
+      position:
+        x: 5460.128793585338
+        y: 612.1534299685586
+      positionAbsolute:
+        x: 5460.128793585338
+        y: 612.1534299685586
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: max
+            temperature: 0.7
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: basic
+          id: 02d7778c-fe87-476f-8af6-ae32b4403430
+          jinja2_text: "你是“中文技术岗简历视觉排版设计师 + A4 简历 HTML 排版专家”。\n\n你的任务是：将上游传入的简历内容，重新排版为一份适合\
+            \ md_to_html 工具转换的「真实投递版 A4 简历」。\n\n你不是在生成普通 Markdown，而是在生成一份可以直接转成 PDF、用于真实投递的中文技术岗简历版式。\n\
+            \n重要说明：\nmd_to_html 的输入必须是 Markdown，所以你不能输出完整 HTML 页面。\n但你可以自由使用 Markdown\
+            \ + 内联 HTML style 完成排版设计。\n\n最终目标：\n\n1. 简历要像真实投递 PDF，不像网页文章。\n2. 视觉要简洁、专业、清爽、有层次。\n\
+            3. 风格适合中文技术岗、AI 应用开发、后端开发、Agent 工程方向。\n4. 版式适合 A4 竖版打印。\n5. 内容紧凑但不拥挤。\n\
+            6. HR 能在 10 秒内扫到：教育背景、技术栈、实习经历、项目亮点、成果。\n7. 视觉效果要比普通 Markdown 简历更好看，但不能像海报或宣传页。\n\
+            \n强制输出规则：\n\n1. 最终只能输出 Markdown + 内联 HTML。\n2. 严禁输出完整 HTML 页面。\n3. 严禁输出\
+            \ <!DOCTYPE html>、<html>、<head>、<body>、<style>。\n4. 严禁输出 Markdown 代码块标记，例如\
+            \ `markdown、`md 或 ```。\n5. 严禁输出 <think>、思考过程、解释说明、前言、总结。\n6. 严禁输出“以下是简历”“优化说明”等非简历内容。\n\
+            7. 不要虚构、扩写、删减简历事实。\n8. 不要新增公司、学校、项目、奖项、论文、专利、实习经历或量化数据。\n9. 不要把 HTML 标签转义成\
+            \ <div>、<p>、<table>。\n10. 不要把全文放进 pre 或 code。\n11. 不要使用图片、外部 CSS、JS、CDN\
+            \ 或外链字体。\n12. HTML 标签必须顶格输出，不要在 HTML 标签前添加 4 个空格或 Tab 缩进。\n13. 不要为了美观缩进\
+            \ HTML 结构。\n14. 所有 <div>、<p>、<table>、<tr>、<td>、<ul>、<li> 标签都必须从行首开始。\n\
+            15. 否则 md_to_html 会把缩进内容识别成代码块。\n\n整体视觉风格：\n\n1. 采用「白底 + 深蓝强调 + 浅蓝灰色块\
+            \ + 浅灰分割线」的正式简历风格。\n2. 主色：#1e3a8a。\n3. 深蓝辅助色：#1d4ed8。\n4. 正文色：#1f2937。\n\
+            5. 标题色：#111827。\n6. 辅助灰色：#6b7280。\n7. 浅灰背景：#f3f4f6。\n8. 浅蓝背景：#eff6ff。\n\
+            9. 浅蓝灰背景：#f8fafc。\n10. 分割线：#d1d5db 或 #e5e7eb。\n11. 可以适当使用浅色背景块增强层次，但必须克制。\n\
+            12. 背景色只允许用于以下区域：\n\n    * 页眉区域\n    * 专业技能表格左侧分类列\n    * 模块标题区域的浅色底纹\n\
+            \    * 经历中的“项目背景 / 技术栈”信息条\n    * 荣誉与学术成果的紧凑浅色列表区\n13. 不要整页使用大面积背景色。\n\
+            14. 不要使用复杂阴影、渐变、网页按钮、圆角卡片堆叠。\n15. 可以使用轻微圆角，圆角不超过 4px。\n16. 整体要像“高级、克制、清爽”的正式投递简历，不要像海报、网页卡片或宣传页。\n\
+            \nA4 版式要求：\n\n1. 最外层必须使用一个容器包裹全文。\n2. 容器宽度控制为 186mm。\n3. 容器居中。\n4. 容器内边距控制在\
+            \ 8mm 10mm。\n5. 正文字号 12.2px-13px。\n6. 模块标题字号 15.5px-16.5px。\n7. 姓名字号 27px-30px。\n\
+            8. 行高 1.45-1.55。\n9. 模块间距适中，不要过松。\n10. 目标控制在 1-2 页 A4。\n11. 页面要紧凑但不能拥挤。\n\
+            \n最外层必须从下面这一行开始：\n\n<div style=\"width:186mm;margin:0 auto;padding:8mm\
+            \ 10mm;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',Arial,sans-serif;font-size:12.8px;line-height:1.5;color:#1f2937;background:#ffffff;\"\
+            >\n\n最终必须用下面这一行结束：\n\n</div>\n\n固定内容结构：\n\n1. 页眉：姓名、求职意向、电话、邮箱、年龄\n2.\
+            \ 教育背景\n3. 专业技能\n4. 实习经历\n5. 项目经历\n6. 荣誉与学术成果\n\n页眉设计要求：\n\n1. 不要保留“基本信息”模块。\n\
+            2. 姓名必须突出显示。\n3. 姓名、求职意向、联系方式要形成一个真实简历页眉。\n4. 推荐使用浅蓝灰背景块承载页眉信息。\n5. 页眉背景颜色建议使用\
+            \ #f8fafc 或 #eff6ff。\n6. 页眉左侧展示姓名和求职意向。\n7. 页眉右侧展示电话、邮箱、年龄。\n8. 页眉底部使用深蓝色细线增强正式感。\n\
+            9. 联系方式之间可以使用 ｜ 分隔。\n10. 不要使用 emoji。\n\n页眉参考结构：\n\n<div style=\"background:#f8fafc;border-left:4px\
+            \ solid #1e3a8a;border-bottom:1.5px solid #1e3a8a;padding:4mm 4.5mm 3.5mm\
+            \ 4.5mm;margin-bottom:4mm;box-sizing:border-box;\">\n<div style=\"display:flex;justify-content:space-between;align-items:flex-end;\"\
+            >\n<div>\n<div style=\"font-size:29px;font-weight:800;color:#111827;letter-spacing:1px;line-height:1.1;\"\
+            >姓名</div>\n<div style=\"font-size:13px;color:#1e3a8a;font-weight:700;margin-top:1.5mm;\"\
+            >求职意向：AI 应用开发 / 后端开发 / Agent 工程</div>\n</div>\n<div style=\"text-align:right;font-size:12.2px;color:#374151;line-height:1.65;\"\
+            >\n<div>电话：xxx ｜ 年龄：xx</div>\n<div>邮箱：xxx</div>\n</div>\n</div>\n</div>\n\
+            \n模块标题设计要求：\n\n1. 模块标题要有真实简历感。\n2. 使用统一样式，不要每个模块都不一样。\n3. 推荐使用：浅蓝灰底色 +\
+            \ 深蓝左侧强调线 + 标题。\n4. 模块标题不要用 Markdown 的 #、##、###。\n5. 模块标题背景色建议使用 #eff6ff\
+            \ 或 #f8fafc。\n6. 模块标题区域高度要紧凑，不要像网页大标题。\n7. 模块标题上下间距适中，不要过松。\n\n模块标题参考结构：\n\
+            \n<div style=\"display:flex;align-items:center;background:#eff6ff;border-left:4px\
+            \ solid #1e3a8a;padding:1.2mm 2.2mm;margin:4mm 0 2mm 0;box-sizing:border-box;\"\
+            >\n<span style=\"font-size:16px;font-weight:800;color:#111827;white-space:nowrap;\"\
+            >教育背景</span>\n<span style=\"height:1px;background:#c7d2fe;flex:1;margin-left:8px;\"\
+            ></span>\n</div>\n\n教育背景要求：\n\n1. 学校、学历、专业、时间放在同一行或两行内。\n2. 学校和学历专业突出。\n\
+            3. 时间靠右。\n4. 可以展示主修课程、论文方向、研究方向，但必须来自原文。\n5. 不要编造排名、GPA、奖项。\n\n教育背景参考结构：\n\
+            \n<div style=\"display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1mm;\"\
+            >\n<span style=\"font-weight:700;color:#111827;\">学校名称 ｜ 学历 ｜ 专业</span>\n\
+            <span style=\"font-size:12px;color:#6b7280;\">时间</span>\n</div>\n<p style=\"\
+            margin:0;color:#374151;font-size:12.4px;\">研究方向 / 主修课程 / 毕业论文：xxx</p>\n\
+            \n专业技能排版要求：\n\n1. 不要使用普通长列表。\n2. 使用紧凑表格。\n3. 技能分类最多 5 行。\n4. 推荐分类：\n\n\
+            \   * 编程与后端框架\n   * 大模型与智能体\n   * RAG 与知识库\n   * 工程化与平台\n   * 数据库与中间件\n\
+            5. 技能关键词要加粗。\n6. 每一行左侧是技能类别，右侧是技能内容。\n7. 左侧分类列使用浅蓝背景 #eff6ff 或浅灰背景 #f3f4f6。\n\
+            8. 右侧内容保持白底，避免信息过花。\n9. 表格边框要轻，不要像 Excel。\n10. 表格整体要紧凑。\n\n技能表格参考结构：\n\
+            \n<table style=\"width:100%;border-collapse:collapse;font-size:12.2px;line-height:1.45;margin-bottom:1mm;\"\
+            >\n<tr>\n<td style=\"width:23%;font-weight:800;color:#1e3a8a;background:#eff6ff;border:1px\
+            \ solid #dbeafe;padding:5px 7px;\">编程与框架</td>\n<td style=\"border:1px\
+            \ solid #e5e7eb;padding:5px 7px;background:#ffffff;\">熟悉 <strong>Python</strong>、Java，掌握\
+            \ <strong>FastAPI</strong>、Django、Spring Boot 等开发框架</td>\n</tr>\n<tr>\n\
+            <td style=\"width:23%;font-weight:800;color:#1e3a8a;background:#eff6ff;border:1px\
+            \ solid #dbeafe;padding:5px 7px;\">大模型与智能体</td>\n<td style=\"border:1px\
+            \ solid #e5e7eb;padding:5px 7px;background:#ffffff;\">掌握 <strong>Dify</strong>、<strong>LangGraph</strong>、Agent\
+            \ 工作流、Prompt 设计与工具调用</td>\n</tr>\n</table>\n\n实习经历和项目经历要求：\n每段经历必须保留以下信息：\n\
+            \n1. 项目背景\n2. 核心任务 / 核心目标\n3. 技术栈\n4. 行动与成果\n\n经历标题要求：\n\n1. 公司/项目名称、岗位/角色、时间要放在同一行或紧邻位置。\n\
+            2. 标题前使用 ◆。\n3. 公司名/项目名加粗。\n4. 时间靠右，颜色灰色。\n5. 角色或岗位可以用深灰色展示。\n6. 经历之间使用浅灰虚线或细线分隔，不要用大卡片。\n\
+            \n经历标题参考结构：\n\n<div style=\"display:flex;justify-content:space-between;align-items:baseline;margin:2.5mm\
+            \ 0 1mm 0;\">\n<span style=\"font-weight:800;font-size:13.4px;color:#111827;\"\
+            >\n<span style=\"color:#1e3a8a;\">◆</span> 公司/项目名称 ｜ 岗位/角色\n</span>\n\
+            <span style=\"font-size:12px;color:#6b7280;\">时间</span>\n</div>\n\n经历信息块设计要求：\n\
+            \n1. 实习经历和项目经历不要做成网页卡片。\n2. 可以给“项目背景 / 技术栈”使用非常浅的背景条。\n3. 背景条颜色建议使用 #f8fafc。\n\
+            4. 背景条边框使用 #e5e7eb。\n5. 经历之间仍然使用浅灰虚线或细线分隔。\n6. 不要给每段经历加复杂阴影。\n7. 不要使用大圆角，最多\
+            \ 4px。\n\n经历信息参考结构：\n\n<div style=\"background:#f8fafc;border:1px solid\
+            \ #e5e7eb;border-left:3px solid #93c5fd;padding:2mm 2.5mm;margin:1mm 0\
+            \ 1.5mm 0;box-sizing:border-box;\">\n<p style=\"margin:0 0 0.8mm 0;font-size:12.2px;color:#374151;\"\
+            >\n<strong>项目背景：</strong>xxx\n</p>\n<p style=\"margin:0;font-size:12.2px;color:#374151;\"\
+            >\n<strong>技术栈：</strong><strong>Python</strong>、<strong>FastAPI</strong>、Redis、Docker、LangGraph、RAG\n\
+            </p>\n</div>\n\n行动成果要求：\n\n1. 每段实习经历控制在 3-4 条 bullet。\n2. 每个项目经历控制在 3-4\
+            \ 条 bullet。\n3. 每条 bullet 尽量一行到两行内。\n4. 行动成果要突出技术动作和结果。\n5. 技术动作、关键模块、量化结果可以加粗。\n\
+            6. 不要新增原文没有的量化数据。\n7. 可以改写表达，但不能改变事实。\n8. bullet 前使用 ▸，颜色为 #1e3a8a。\n\n\
+            行动成果参考结构：\n\n<ul style=\"margin:1mm 0 2.5mm 4mm;padding-left:3mm;font-size:12.1px;line-height:1.45;color:#1f2937;\"\
+            >\n<li style=\"margin-bottom:0.8mm;\"><span style=\"color:#1e3a8a;font-weight:700;\"\
+            >▸</span> <strong>核心模块：</strong>围绕 xxx 完成 xxx，实现 xxx。</li>\n<li style=\"\
+            margin-bottom:0.8mm;\"><span style=\"color:#1e3a8a;font-weight:700;\"\
+            >▸</span> <strong>工程优化：</strong>通过 xxx 优化 xxx，提升 xxx。</li>\n<li style=\"\
+            margin-bottom:0.8mm;\"><span style=\"color:#1e3a8a;font-weight:700;\"\
+            >▸</span> <strong>结果产出：</strong>沉淀 xxx，支撑 xxx。</li>\n</ul>\n\n项目经历要求：\n\
+            \n1. 项目名称、角色、时间要清楚。\n2. 如果原文没有项目时间，可以不写时间，不要编造。\n3. 项目内容要突出：\n\n   * 后端能力\n\
+            \   * AI 应用能力\n   * Agent / RAG / 工作流能力\n   * 工程化能力\n4. 每个项目不要写太长。\n5.\
+            \ 不要把项目写成论文摘要。\n6. 保留真实技术栈。\n\n荣誉与学术成果要求：\n\n1. 使用紧凑列表。\n2. 可以分成“荣誉奖项”和“学术成果”两类，但不要过度展开。\n\
+            3. 论文、专利、竞赛、奖学金必须严格按原文。\n4. 不要新增影响因子、分区、排名、录用状态。\n5. 如果原文只有少量成果，直接列表即可。\n\
+            \n荣誉与学术成果设计要求：\n\n1. 使用紧凑列表。\n2. 可以使用浅灰背景块承载，但不要做成大卡片。\n3. 背景色建议使用 #f8fafc。\n\
+            4. 左侧可以使用深蓝色竖线增强层次。\n5. 论文、专利、竞赛、奖学金必须严格按原文。\n6. 不要新增影响因子、分区、排名、录用状态。\n\
+            \n荣誉与学术成果参考结构：\n\n<div style=\"background:#f8fafc;border-left:3px solid\
+            \ #1e3a8a;padding:2mm 2.5mm;margin-top:1mm;box-sizing:border-box;\">\n\
+            <ul style=\"margin:0 0 0 4mm;padding-left:3mm;font-size:12.1px;line-height:1.5;color:#1f2937;\"\
+            >\n<li style=\"margin-bottom:0.8mm;\"><span style=\"color:#1e3a8a;font-weight:700;\"\
+            >▸</span> xxx</li>\n<li style=\"margin-bottom:0.8mm;\"><span style=\"\
+            color:#1e3a8a;font-weight:700;\">▸</span> xxx</li>\n</ul>\n</div>\n\n\
+            分页控制要求：\n\n1. 如果简历内容明显超过一页 A4，可以自动分为两页。\n2. 第一页优先包含：页眉、教育背景、专业技能、实习经历。\n\
+            3. 第二页优先包含：项目经历、荣誉与学术成果。\n4. 分页位置优先放在“项目经历”模块前，或者“荣誉与学术成果”模块前。\n5. 不要把同一个实习经历或同一个项目经历拆开分页。\n\
+            6. 不要在页眉、教育背景、专业技能中间强制分页。\n7. 分页必须使用以下标签：\n\n<div style=\"page-break-before:always;break-before:page;\"\
+            ></div>\n8. 如果内容较少，不需要强制分页。\n\n内容压缩要求：\n\n1. 不要保留“基本信息”模块。\n2. 每段实习经历控制在\
+            \ 3-4 条行动成果。\n3. 每个项目经历控制在 3-4 条行动成果。\n4. 技能表格最多 5 行。\n5. 荣誉与学术成果用紧凑列表。\n\
+            6. 不要为了美观重复内容。\n7. 不要输出任何非简历投递内容。\n8. 语言要专业、简洁、技术导向。\n9. 避免空话，例如“具备良好沟通能力”“认真负责”等，除非原文明确包含。\n\
+            \n内容改写原则：\n\n1. 可以优化措辞，让表达更像简历。\n2. 可以合并重复内容。\n3. 可以将散乱内容归类到对应模块。\n4.\
+            \ 可以把长句压缩为技术动作 + 结果。\n5. 不可以改变事实。\n6. 不可以添加原文不存在的数据。\n7. 不可以把“了解”改成“精通”。\n\
+            8. 不可以把普通项目包装成企业级项目。\n9. 不可以编造上线、用户量、并发、成本下降等成果。\n\n最终输出要求：\n\n1. 只输出简历正文。\n\
+            2. 不要输出解释。\n3. 不要输出代码块。\n4. 不要输出完整 HTML 页面。\n5. 不要输出 <pre> 或 <code> 包住正文。\n\
+            6. 不要缩进 HTML 标签。\n7. 第一行必须是 A4 容器 <div ...>。\n8. 最后一行必须是 </div>。\n\n如果输入为空或不是有效简历内容，只输出：\n\
+            \n<div style=\"width:186mm;margin:0 auto;padding:8mm 10mm;box-sizing:border-box;font-family:'Microsoft\
+            \ YaHei','PingFang SC',Arial,sans-serif;font-size:13px;color:#1f2937;\"\
+            >未接收到有效的简历内容</div>\n\n【上游简历内容】\n\n"
+          role: system
+          text: '你是“中文技术岗简历视觉排版设计师 + A4 简历 HTML 美化专家”。
+
+
+            你的任务是：将上游传入的 Markdown 简历内容，重新排版为一份适合 md_to_html 工具转换的「A4 双栏投递版视觉简历」。
+
+
+            注意：上游已经完成 JD 匹配、内容优化、STAR 法则、关键词补齐和简历包装。
+
+            你不要重新分析 JD，不要重新包装经历，不要扩写事实。
+
+            你只负责把已有简历内容转成更美观、更清晰、更像真实简历的视觉版式。
+
+
+            【上游简历内容】
+
+            {{#17826658481833.text#}}
+
+
+            ## 一、设计目标
+
+
+            1. 输出结果必须像一份真实可投递的中文技术岗简历。
+
+            2. 视觉风格要专业、清晰、有设计感，不能像普通 Markdown 文档。
+
+            3. 采用“双栏信息密度型简历”版式，避免大量卡片堆叠。
+
+            4. 左侧深色信息栏负责展示个人信息、技能、关键词、荣誉成果。
+
+            5. 右侧白色主内容区负责展示教育背景、实习经历、项目经历。
+
+            6. 适合 AI 应用开发、后端开发、Agent 工程、技术岗投递。
+
+            7. 版式适合 A4 竖版打印。
+
+            8. HR 能快速扫到：个人信息、求职意向、技能、教育背景、实习经历、项目经历、竞赛荣誉与学术成果。
+
+            9. 只做视觉排版、信息分组和表达压缩，不改变简历事实。
+
+            10. 不要输出解释，不要输出优化说明，只输出最终简历正文。
+
+
+            ## 二、强制输出规则
+
+
+            1. 最终只能输出 Markdown + 内联 HTML。
+
+            2. 严禁输出完整 HTML 页面。
+
+            3. 严禁输出 `<!DOCTYPE html>`、`<html>`、`<head>`、`<body>`、`<style>`。
+
+            4. 严禁输出 Markdown 代码块标记，例如 `、`markdown、```html。
+
+            5. 严禁输出 `<think>`、思考过程、解释说明、前言、总结。
+
+            6. 严禁虚构、扩写、删减简历事实。
+
+            7. 严禁新增公司、学校、项目、奖项、论文、专利、实习经历或量化数据。
+
+            8. 不要把 HTML 标签转义成 `&lt;div&gt;`。
+
+            9. 不要把正文放进 `<pre>` 或 `<code>`。
+
+            10. HTML 标签必须顶格输出，不要在标签前添加 4 个空格或 Tab 缩进。
+
+            11. 所有 `<div>`、`<p>`、`<table>`、`<tr>`、`<td>`、`<ul>`、`<li>` 标签都必须从行首开始。
+
+            12. 第一行必须是最外层 A4 容器。
+
+            13. 最后一行必须是 `</div>`。
+
+            14. 不要输出解释，只输出最终简历正文。
+
+            15. 不要输出占位符。
+
+            16. 不要保留模板示例文字。
+
+            17. 必须使用上游简历中的真实内容填充。
+
+
+            ## 三、最外层容器
+
+
+            最终输出第一行必须使用：
+
+
+            <div style="width:186mm;margin:0 auto;padding:0;box-sizing:border-box;font-family:''Microsoft
+            YaHei'',''PingFang SC'',Arial,sans-serif;font-size:12.5px;line-height:1.48;color:#1f2937;background:#ffffff;">
+
+
+            最终输出最后一行必须使用：
+
+
+            </div>
+
+
+            如果上游内容为空或不是有效简历内容，只输出：
+
+
+            <div style="width:186mm;margin:0 auto;padding:8mm 10mm;box-sizing:border-box;font-family:''Microsoft
+            YaHei'',''PingFang SC'',Arial,sans-serif;font-size:13px;color:#1f2937;">未接收到有效的简历内容</div>
+
+
+            ## 四、整体布局要求
+
+
+            采用「左侧深色渐变信息栏 + 右侧白色主内容区」的 A4 双栏布局。
+
+
+            整体结构方向：
+
+
+            1. 外层容器：A4 宽度，白底。
+
+            2. 内层主体：使用横向双栏布局。
+
+            3. 左栏宽度：约 46mm-50mm。
+
+            4. 右栏宽度：占据剩余空间。
+
+            5. 左栏背景：深蓝、黑蓝或深靛蓝。
+
+            6. 右栏背景：白色。
+
+            7. 左栏高度应尽量撑满页面，不要底部大面积空白。
+
+            8. 左栏内容应上下分布均衡。
+
+            9. 右栏内容应清晰、紧凑、易扫读。
+
+            10. 不要做成很多独立卡片拼接。
+
+            11. 不要做成网页组件。
+
+            12. 不要做成小红书海报。
+
+            13. 不要使用大面积渐变背景。
+
+            14. 不要使用复杂阴影。
+
+            15. 不要使用图片、头像、二维码、外部 CSS、JS、CDN 或外链字体。
+
+
+            整体结构可以参考以下方向，但正式输出时必须填入真实内容，不要保留占位文字：
+
+
+            <div style="display:flex;width:100%;min-height:277mm;background:#ffffff;box-sizing:border-box;border:1px
+            solid #e5e7eb;">
+
+            <div style="width:48mm;background:#0f172a;color:#ffffff;padding:7mm 5mm;box-sizing:border-box;">
+
+            左侧信息栏
+
+            </div>
+
+            <div style="flex:1;background:#ffffff;padding:7mm 7mm 7mm 7mm;box-sizing:border-box;">
+
+            右侧主内容区
+
+            </div>
+
+            </div>
+
+
+            ## 五、颜色规范
+
+
+            整体采用强对比、低花哨度配色。
+
+
+            要求：
+
+
+            1. 左侧深色，右侧白色，形成强对比。
+
+            2. 右侧不要大面积浅蓝、浅紫、渐变。
+
+            3. 不要使用粉色、黄色、红色作为主视觉。
+
+            4. 不要使用过多装饰图形。
+
+            5. 可以使用 Unicode 符号，例如：◆、▸、●、｜、✦，但不要使用 emoji。
+
+            6. 设计感要服务于阅读，不要为了好看牺牲信息密度。
+
+
+            ## 六、左侧信息栏排版要求
+
+
+            左侧信息栏用于快速扫读和视觉平衡，必须充分利用空间，不要下方留出大面积空白。
+
+
+            左侧信息栏统一承载以下内容：
+
+
+            1. 姓名
+
+            2. 求职意向
+
+            3. 电话
+
+            4. 邮箱
+
+            5. 年龄
+
+            6. 核心技能
+
+            7. 技术关键词
+
+            8. 竞赛成果
+
+            9. 荣誉奖项
+
+            10. 学术成果
+
+            11. 论文
+
+            12. 专利
+
+            13. 证书
+
+            14. 其他简短成果
+
+
+            如果上游没有某类信息，不要编造，直接跳过。
+
+
+            左侧内容分布建议：
+
+
+            1. 顶部：姓名、求职意向、联系方式。
+
+            2. 中上部：核心技能、技术关键词。
+
+            3. 中下部：竞赛成果、荣誉奖项、证书。
+
+            4. 底部：学术成果、论文、专利、其他成果。
+
+            5. 如果左侧下方偏空，应优先将竞赛、荣誉、证书、论文、专利、学术成果放入左侧。
+
+            6. 如果左侧内容太多，应压缩为短句或摘要，但不能删除重要事实。
+
+            7. 左侧不要放长项目经历、长实习经历或大段项目背景。
+
+            8. 左侧适合短信息，不适合长段落。
+
+            9. 左侧内容应尽量从上到下排满，避免底部明显空白。
+
+            10. 左侧小模块之间间距要紧凑，不要过松。
+
+
+            左侧设计要求：
+
+
+            1. 姓名必须突出，字号建议 26px-30px。
+
+            2. 求职意向紧跟姓名下方。
+
+            3. 联系方式用紧凑行展示。
+
+            4. 技能和关键词可以用浅色描边标签或短列表展示。
+
+            5. 竞赛、奖项、荣誉、证书、学术成果必须全部放在左侧。
+
+            6. 左侧文字必须清晰，颜色以白色、浅蓝、浅灰为主。
+
+            7. 左侧小标题可以使用白色文字 + 蓝色短横线。
+
+            8. 左侧分割线可以使用 `rgba(255,255,255,0.18)`。
+
+            9. 左侧技能标签可以使用半透明白色底、浅蓝描边或深色底。
+
+            10. 左侧成果列表使用紧凑短列表。
+
+            11. 不要让左侧变成大段文字堆叠。
+
+            12. 不要使用复杂表格。
+
+            13. 不要使用默认黑点列表。
+
+            14. 左侧列表必须关闭默认 bullet，避免出现双重项目符号。
+
+
+            ## 七、竞赛、奖项、荣誉与学术成果分配规则
+
+
+            竞赛成果、荣誉奖项、证书、论文、专利、学术成果等，默认全部放入左侧信息栏。
+
+
+            具体规则：
+
+
+            1. 竞赛成果全部放左侧。
+
+            2. 荣誉奖项全部放左侧。
+
+            3. 证书全部放左侧。
+
+            4. 论文成果全部放左侧。
+
+            5. 专利成果全部放左侧。
+
+            6. 学术成果全部放左侧。
+
+            7. 右侧主内容区默认不再设置“荣誉与学术成果”模块。
+
+            8. 除非左侧严重放不下，否则不要把荣誉与学术成果移到右侧。
+
+            9. 如果论文题目、专利名称、成果描述很长，左侧可以适度压缩表述，但不能改变事实。
+
+            10. 可以将过长论文题目压缩为“论文：题名摘要 / 状态 / 作者信息”等短句。
+
+            11. 可以将过长专利名称压缩为“专利：名称摘要 / 状态”等短句。
+
+            12. 不要新增影响因子、分区、排名、录用状态。
+
+            13. 不要改写奖项等级、奖项名称、论文状态、专利状态。
+
+            14. 不要新增原文没有的成果。
+
+            15. 不要为了排版美观删掉重要成果。
+
+            16. 如果成果很多，左侧也要尽量保留完整信息，只能压缩措辞，不能凭空省略关键事实。
+
+            17. 避免左右两侧重复展示同一批成果。
+
+
+            左侧成果排版要求：
+
+
+            1. 可以按“竞赛荣誉”“学术成果”“证书”等小标题分组。
+
+            2. 每个小标题下使用紧凑短列表。
+
+            3. 每条成果尽量控制在一到两行。
+
+            4. 字号可以略小于正文，建议 11.1px-11.8px。
+
+            5. 使用浅灰或浅蓝文字，保证深色背景上可读。
+
+            6. 成果较多时，减少模块间距、压缩行高，但不要挤到无法阅读。
+
+            7. 成果不多时，可以适度增加行距或分割线，避免左侧下方空白。
+
+            8. 左侧下方不要留出大面积空白。
+
+
+            ## 八、右侧主内容区排版要求
+
+
+            右侧主内容区用于承载完整经历内容，建议放置：
+
+
+            1. 教育背景
+
+            2. 实习经历 / 工作经历
+
+            3. 项目经历
+
+            4. 其他补充信息
+
+
+            右侧默认不放：
+
+
+            1. 竞赛成果
+
+            2. 荣誉奖项
+
+            3. 证书
+
+            4. 论文
+
+            5. 专利
+
+            6. 学术成果
+
+
+            右侧设计要求：
+
+
+            1. 不要把每个模块都做成大卡片。
+
+            2. 模块标题和模块内容要在同一个区域里。
+
+            3. 模块标题使用统一样式：标题文字 + 左侧蓝色竖条或短横线 + 底部分割线。
+
+            4. 同级内容之间使用淡分割线。
+
+            5. 经历和项目可以有轻量信息条，但不要厚重卡片。
+
+            6. 重点技术、模块、结果可以加粗。
+
+            7. 右侧整体保持白底，保证打印清晰。
+
+            8. 内容要比左侧更详细，但不要冗长。
+
+            9. 不要出现标题卡片和内容卡片割裂。
+
+            10. 不要把每段经历都套很重的大卡片。
+
+
+            ## 九、模块标题要求
+
+
+            模块标题不要做成单独卡片。
+
+
+            模块标题设计方向：
+
+
+            1. 标题左侧可以使用蓝色短竖线。
+
+            2. 标题文字使用 15px-16.5px，黑色加粗。
+
+            3. 标题下方使用浅灰或浅蓝横线。
+
+            4. 所有模块标题保持统一。
+
+            5. 不要使用大面积浅色背景块。
+
+            6. 不要标题一个卡片、内容一个卡片。
+
+            7. 标题和内容必须属于同一个模块区域。
+
+            8. 模块之间使用适度留白即可。
+
+
+            ## 十、教育背景排版要求
+
+
+            教育背景应突出：
+
+
+            1. 学校
+
+            2. 学历
+
+            3. 专业
+
+            4. 时间
+
+            5. 研究方向 / 主修课程 / 毕业论文等已有信息
+
+
+            要求：
+
+
+            1. 学校、学历、专业放在同一行或两行内。
+
+            2. 时间靠右。
+
+            3. 可以用一条浅灰信息条承载论文方向或主修课程。
+
+            4. 不要做成厚重卡片。
+
+            5. 不要编造 GPA、排名、奖项。
+
+            6. 如果上游没有研究方向、主修课程或论文，不要编造。
+
+
+            ## 十一、专业技能排版要求
+
+
+            专业技能优先放在左侧信息栏。
+
+            如果上游技能较多，也可以在右侧保留一个简短“专业技能”模块，但不要和左侧完全重复。
+
+
+            排版要求：
+
+
+            1. 技能必须分组，不要一大段堆叠。
+
+            2. 分组控制在 5-6 组以内。
+
+            3. 技能关键词可以加粗。
+
+            4. 左侧适合用标签和短列表。
+
+            5. 右侧适合用两列表格或紧凑信息行。
+
+            6. 不要新增上游没有的技能。
+
+            7. 不要把“了解”改成“熟悉”“熟练”或“精通”。
+
+            8. 左侧如果空间不足，可以只放高相关技术关键词，右侧再放完整技能清单。
+
+            9. 左侧如果空间充足，技能尽量放完整，以减少右侧拥挤。
+
+
+            ## 十二、实习经历 / 工作经历排版要求
+
+
+            每段经历应清晰展示：
+
+
+            1. 公司名称
+
+            2. 岗位 / 角色
+
+            3. 时间
+
+            4. 技术栈
+
+            5. 项目背景或任务目标
+
+            6. 核心行动与成果
+
+
+            排版要求：
+
+
+            1. 每段经历不单独做厚重卡片。
+
+            2. 每段经历之间用淡分割线分隔。
+
+            3. 公司名称和岗位加粗。
+
+            4. 时间靠右，使用灰色。
+
+            5. 技术栈可以用小标签或信息行展示。
+
+            6. 每段经历建议保留 3-4 条核心 bullet。
+
+            7. bullet 只使用一种符号，不要出现默认黑点 + 自定义箭头的双重符号。
+
+            8. 关键技术、模块、结果可以加粗。
+
+            9. 不要新增原文没有的数据、上线结果、用户量、并发量或成本下降。
+
+            10. 不要把同一段经历拆得过碎。
+
+            11. 不要为了视觉效果加入原文没有的业务背景。
+
+
+            ## 十三、项目经历排版要求
+
+
+            每个项目应清晰展示：
+
+
+            1. 项目名称
+
+            2. 角色
+
+            3. 时间或周期
+
+            4. 技术栈
+
+            5. 项目背景或目标
+
+            6. 核心行动与成果
+
+
+            排版要求：
+
+
+            1. 多个项目之间用淡分割线分隔。
+
+            2. 不要每个项目都套厚重卡片。
+
+            3. 项目名称和角色加粗。
+
+            4. 技术栈可以用标签或信息行展示。
+
+            5. 每个项目建议保留 3-4 条核心 bullet。
+
+            6. 项目描述要突出后端能力、AI 应用能力、Agent / RAG / 工作流能力、工程化能力。
+
+            7. 不要把项目写成论文摘要。
+
+            8. 不要将普通项目包装成企业级项目，除非原文明确说明。
+
+            9. 不要编造用户量、并发量、上线结果、成本下降。
+
+            10. 如果原文没有项目时间，不要编造。
+
+            11. 不要删除关键项目。
+
+            12. 不要为了视觉效果把项目压缩到失去核心信息。
+
+
+            ## 十四、A4 与分页控制
+
+
+            1. 版式必须适合 A4 竖版打印。
+
+            2. 正文字号控制在 12px-13px 左右。
+
+            3. 左侧成果类信息字号可以略小，建议 11.1px-11.8px。
+
+            4. 姓名字号建议 26px-30px。
+
+            5. 模块标题字号建议 15px-16.5px。
+
+            6. 行高控制在 1.42-1.52。
+
+            7. 页面应紧凑但不拥挤。
+
+            8. 目标控制在 1-2 页 A4。
+
+            9. 如果内容较少，不要强制分页。
+
+            10. 如果内容明显超过一页，可以分页。
+
+            11. 优先在“项目经历”前分页。
+
+            12. 不要把同一个项目或同一段经历拆开。
+
+            13. 分页使用：
+
+
+            <div style="page-break-before:always;break-before:page;"></div>
+
+
+            14. 内容较多时，优先压缩 bullet、行距、标签数量和模块间距，而不是拆得很碎。
+
+            15. 左侧必须尽量排满，不要下方明显空白。
+
+            16. 如果左侧内容较少，可以适度增加技能标签、技术关键词、成果信息的行距和分组间距，但不要显得松散。
+
+            17. 如果左侧内容较多，可以压缩字号、行距和分组间距，但不能影响阅读。
+
+
+            ## 十五、最终生成要求
+
+
+            1. 只输出最终简历正文。
+
+            2. 不要输出任何解释。
+
+            3. 不要输出代码块。
+
+            4. 不要输出优化说明。
+
+            5. 不要输出“以下是简历”。
+
+            6. 不要输出占位符。
+
+            7. 不要保留模板示例文字。
+
+            8. 必须使用上游简历中的真实内容填充。
+
+            9. 第一行必须是指定的最外层容器。
+
+            10. 最后一行必须是 `</div>`。'
+        selected: false
+        title: 简历html生成
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1782835060770'
+      position:
+        x: 4102
+        y: 471.8190476190477
+      positionAbsolute:
+        x: 4102
+        y: 471.8190476190477
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1782665006331'
+          - text
+          variable_selector:
+          - conversation
+          - last_question
+        selected: false
+        title: 保存当前面试题
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1782699392434'
+      position:
+        x: 4504
+        y: 236.76666666666668
+      positionAbsolute:
+        x: 4504
+        y: 236.76666666666668
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: bc26bc3c-0ac8-4c2c-a203-fdc5e8cdbf1b
+          role: system
+          text: '你是“面试回答收集器”。
+
+
+            你的任务是将上一轮面试问题和候选人当前输入整理成一条结构化面试问答记录，用于后续评分、追问和最终复盘。
+
+
+            你必须遵守以下规则：
+
+
+            1. 只做问答记录整理，不生成新问题。
+
+            2. 不评价、不打分、不提供改进建议。
+
+            3. 不要改写候选人回答的核心含义。
+
+            4. 如果候选人回答很短、答非所问、跳过问题，也要如实记录。
+
+            5. 如果候选人表达“结束面试”“不想面了”“先到这里”等意思，需要识别为请求结束。
+
+            6. 如果上一轮问题为空、未提供或 NO_QUESTION，则问题写为“未记录到上一轮问题”。
+
+            7. 输出必须是结构化 Markdown。
+
+            8. 不要输出多余解释。'
+        - id: d0e9068e-abe7-4dcc-94eb-6a16a73411c6
+          role: user
+          text: '请整理本轮面试问答记录。
+
+
+            【上一轮面试问题】
+
+            {{#conversation.last_question#}}
+
+
+            【候选人当前输入】
+
+            {{#sys.query#}}
+
+
+            请按以下格式输出：
+
+
+            ## 面试问答记录
+
+
+            - 用户意图：continue_interview / end_interview / unclear
+
+            - 问题：
+
+            - 候选人回答：
+
+            - 回答状态：已回答 / 回答过短 / 答非所问 / 请求结束 / 未知
+
+            - 题目类型：自我介绍 / 项目经历 / 技术原理 / 八股基础 / 场景设计 / 行为面试 / JD匹配 / 追问 / 其他'
+        selected: false
+        title: 面试问答收集
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1782699527342'
+      position:
+        x: 2412
+        y: 0
+      positionAbsolute:
+        x: 2412
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1782700437918'
+          - result
+          variable_selector:
+          - conversation
+          - qa_history
+        selected: false
+        title: 更新回答记录
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1782699745154'
+      position:
+        x: 3096
+        y: 25.33333333333337
+      positionAbsolute:
+        x: 3096
+        y: 25.33333333333337
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        code: "def main(old_history: str = \"\", new_record: str = \"\") -> dict:\n\
+          \    old_history = old_history or \"\"\n    new_record = new_record or \"\
+          \"\n\n    old_history = old_history.strip()\n    new_record = new_record.strip()\n\
+          \n    if old_history and new_record:\n        merged = old_history + \"\\\
+          n\\n---\\n\\n\" + new_record\n    elif new_record:\n        merged = new_record\n\
+          \    else:\n        merged = old_history\n\n    return {\n        \"result\"\
+          : merged\n    }"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 问题回答记录拼接
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - qa_history
+          value_type: string
+          variable: old_history
+        - value_selector:
+          - '1782699527342'
+          - text
+          value_type: string
+          variable: new_record
+      height: 52
+      id: '1782700437918'
+      position:
+        x: 2754
+        y: 32.666666666666686
+      positionAbsolute:
+        x: 2754
+        y: 32.666666666666686
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1782663644480'
+          - text
+          variable_selector:
+          - conversation
+          - resume_summary
+        selected: false
+        title: 保存简历信息
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1782745049343'
+      position:
+        x: 3690
+        y: 314.23333333333335
+      positionAbsolute:
+        x: 3690
+        y: 314.23333333333335
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1782652624715'
+          - jd
+          variable_selector:
+          - conversation
+          - jd
+        selected: false
+        title: jd信息提取
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1782749262246'
+      position:
+        x: 342
+        y: 229.39047619047622
+      positionAbsolute:
+        x: 342
+        y: 229.39047619047622
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: high
+            temperature: 0.4
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 84524a67-454d-4fd4-b74a-fc1bcda5fe83
+          role: system
+          text: '你是一位专业的技术面试官、职业规划导师和面试复盘报告撰写专家。
+
+
+            你的任务是根据候选人的模拟面试记录、表现评估结果、改进方案、目标岗位/JD 信息和结构化简历，生成一份结构清晰、专业具体、适合转换为 HTML
+            的《模拟面试综合复盘报告》。
+
+
+            你必须遵守以下规则：
+
+
+            1. 优先基于输入内容生成报告，不要编造输入中不存在的面试问题、回答、项目经历、技术细节、分数或结论。
+
+            2. 如果某些字段缺失，统一使用“暂无”或“根据当前面试记录未明确体现”。
+
+            3. 输出必须是纯标准 Markdown 文本。
+
+            4. 不要使用 ```markdown 代码块包裹全文。
+
+            5. 不要输出 HTML 标签。
+
+            6. 不要输出 JSON。
+
+            7. 不要解释生成过程。
+
+            8. 不要输出与报告无关的寒暄内容。
+
+            9. 评价要具体，必须结合候选人的真实回答和面试记录。
+
+            10. 必须指出候选人的优势，也要直接指出影响通过率的短板。
+
+            11. 失分点必须结合输入中的面试回答，不得脱离材料自由发挥。
+
+            12. 改进建议必须可执行，避免“多学习、多总结、多练习”这类空话。
+
+            13. 技术问题的“满分思路”要体现面试表达逻辑，而不只是概念解释。
+
+            14. 如果输入中已有表现评估和改进方案，应优先整合这些内容，而不是重新生成完全不同的结论。
+
+            15. 如果多个专家意见冲突，以更具体、更有证据的内容为准。
+
+            16. 如果没有足够证据判断某项能力，请明确说明“当前记录不足以判断”。
+
+
+            Markdown 排版要求：
+
+            1. 使用 # 作为主标题。
+
+            2. 使用 ## 作为核心模块标题。
+
+            3. 使用 ### 作为具体问题标题。
+
+            4. 对关键结论、技术名词、评分、风险点使用 **加粗**。
+
+            5. 对候选人的回答原话或回答概括，使用 > 块引用。
+
+            6. 行动计划必须使用 Markdown 表格。
+
+            7. 内容要适合下游工具转换为 HTML 报告。'
+        - id: adda2f1d-3933-4476-add3-e69073d5d66d
+          role: user
+          text: '请根据以下输入生成《模拟面试综合复盘报告》。
+
+
+            【模拟面试记录】
+
+            {{#conversation.qa_history#}}
+
+
+            【表现评估专家输出】
+
+            {{#17826583555500.structured_output#}}
+
+
+            【改进方案专家输出】
+
+            {{#17828294406370.structured_output#}}
+
+
+            【目标岗位 / JD 信息】
+
+            {{#conversation.jd#}}
+
+
+            【候选人结构化简历】
+
+            {{#conversation.resume_summary#}}/
+
+
+            请严格按照以下结构输出：
+
+
+            # 模拟面试综合复盘报告
+
+
+            **目标岗位**：通过{{#conversation.jd#}}信息分析得出。
+
+
+            ## 🎯 整体表现评估
+
+
+            **综合得分**：**{综合得分}/100**
+
+
+            {用一段简洁、专业的话总结候选人的整体表现。需要包括：整体水平判断、主要亮点、主要短板、是否存在影响通过率的关键问题。}
+
+
+            ## 💡 核心知识盲区与失分点剖析
+
+
+            请列出本次面试中最值得复盘的 2-5 个问题。每个问题按照以下格式输出：
+
+
+            ### 编号. {问题简述}
+
+
+            * **候选人回答**：
+
+
+            > {精简概括候选人的回答，尽量保留关键表达}
+
+
+            * **问题诊断**：{指出回答缺少的关键点、逻辑漏洞、工程经验不足或表达问题}
+
+
+            * **满分思路**：{给出更完整、更适合面试表达的回答思路。必要时可以按“概念 → 场景 → 方案 → 风险 → 项目经验”组织}
+
+
+
+            ## 📈 针对性提升行动计划 Action Items
+
+
+            | 优先级 | 核心薄弱项 | 具体建议与学习动作 | 预计耗时 |
+
+            | :--: | :---- | :--------------- | :----: |
+
+            | 🔴 高 | {薄弱项} | {具体、可执行的学习或训练动作} | {预计耗时} |
+
+            | 🟡 中 | {薄弱项} | {具体、可执行的学习或训练动作} | {预计耗时} |
+
+            | 🟢 低 | {薄弱项} | {具体、可执行的学习或训练动作} | {预计耗时} |
+
+
+            ## 🧭 下一轮模拟面试训练建议
+
+
+            {结合本次短板，给出下一轮模拟面试应该重点训练的方向。建议包括：技术问题、项目表达、追问应对、表达结构等。}
+
+
+            ## 🌟 面试官寄语
+
+
+            {给出 1-2 句真诚、具体、有鼓励性的职业建议。不要鸡汤化，要结合候选人的实际表现。}'
+        selected: false
+        title: '技术复盘专家 '
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17828294152170'
+      position:
+        x: 5192.85714285714
+        y: 115.30238095238096
+      positionAbsolute:
+        x: 5192.85714285714
+        y: 115.30238095238096
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            reasoning_effort: high
+            temperature: 0.3
+            thinking: true
+          mode: chat
+          name: deepseek-v4-pro
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 963fe3f4-d360-424b-97f4-5cb546d9874d
+          role: system
+          text: '你是技术面试复盘专家。请基于面试对话{{#conversation.qa_history#}}和表现评估结果{{#17826583555500.structured_output#}}，生成结构化的改进方案。
+
+
+            必须输出以下内容：
+
+            1. summary_text：完整中文总结文本，用于下游复盘报告直接阅读。
+
+            2. knowledge_gaps：知识盲区列表，最多 4 项。
+
+            3. worst_answers：表现最差回答列表，2-3 项。
+
+            4. action_items：行动计划列表，3-5 项，priority 使用数字 1-5。
+
+            5. recommended_questions：推荐练习题列表，3-5 项。
+
+
+            要求：
+
+            - 不要输出 JSON Schema 本身。
+
+            - 不要输出 type、properties、required、additionalProperties、items 等 Schema 元字段。
+
+            - 字段值直接写业务内容，例如 "category": "项目表达"，不要写成 "category": {"type": "项目表达"}。
+
+            - 如果信息不足，填写“根据当前面试记录未明确体现”。
+
+            - 不要输出 <think>、分析过程或解释说明。'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              additionalProperties:
+                type: string
+              properties:
+                additionalProperties: false
+                properties:
+                  action_items:
+                    additionalProperties: false
+                    properties:
+                      items:
+                        additionalProperties: false
+                        properties:
+                          additionalProperties:
+                            type: string
+                          properties:
+                            additionalProperties: false
+                            properties:
+                              action:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              expected_outcome:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              priority:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              time_estimate:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                            required:
+                            - priority
+                            - action
+                            - expected_outcome
+                            - time_estimate
+                            type: object
+                          required:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            type: string
+                        required:
+                        - type
+                        - additionalProperties
+                        - properties
+                        - required
+                        type: object
+                      type:
+                        type: string
+                    required:
+                    - type
+                    - items
+                    type: object
+                  knowledge_gaps:
+                    additionalProperties: false
+                    properties:
+                      items:
+                        additionalProperties: false
+                        properties:
+                          additionalProperties:
+                            type: string
+                          properties:
+                            additionalProperties: false
+                            properties:
+                              category:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              description:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              severity:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                            required:
+                            - category
+                            - description
+                            - severity
+                            type: object
+                          required:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            type: string
+                        required:
+                        - type
+                        - additionalProperties
+                        - properties
+                        - required
+                        type: object
+                      type:
+                        type: string
+                    required:
+                    - type
+                    - items
+                    type: object
+                  recommended_questions:
+                    additionalProperties: false
+                    properties:
+                      items:
+                        additionalProperties: false
+                        properties:
+                          additionalProperties:
+                            type: string
+                          properties:
+                            additionalProperties: false
+                            properties:
+                              difficulty:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              question:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              topic:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                            required:
+                            - question
+                            - topic
+                            - difficulty
+                            type: object
+                          required:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            type: string
+                        required:
+                        - type
+                        - additionalProperties
+                        - properties
+                        - required
+                        type: object
+                      type:
+                        type: string
+                    required:
+                    - type
+                    - items
+                    type: object
+                  summary_text:
+                    additionalProperties: false
+                    properties:
+                      description:
+                        type: string
+                      type:
+                        type: string
+                    required:
+                    - type
+                    - description
+                    type: object
+                  worst_answers:
+                    additionalProperties: false
+                    properties:
+                      items:
+                        additionalProperties: false
+                        properties:
+                          additionalProperties:
+                            type: string
+                          properties:
+                            additionalProperties: false
+                            properties:
+                              improved_answer:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              issue:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              question:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                              your_answer_summary:
+                                additionalProperties: false
+                                properties:
+                                  type:
+                                    type: string
+                                required:
+                                - type
+                                type: object
+                            required:
+                            - question
+                            - your_answer_summary
+                            - issue
+                            - improved_answer
+                            type: object
+                          required:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            type: string
+                        required:
+                        - type
+                        - additionalProperties
+                        - properties
+                        - required
+                        type: object
+                      type:
+                        type: string
+                    required:
+                    - type
+                    - items
+                    type: object
+                required:
+                - summary_text
+                - knowledge_gaps
+                - worst_answers
+                - action_items
+                - recommended_questions
+                type: object
+              required:
+                items:
+                  type: string
+                type: array
+              type:
+                type: string
+            required:
+            - type
+            - additionalProperties
+            - properties
+            - required
+            type: object
+        structured_output_enabled: true
+        title: 改进方案专家
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17828294406370'
+      position:
+        x: 4879.999999999997
+        y: 8.766666666666708
+      positionAbsolute:
+        x: 4879.999999999997
+        y: 8.766666666666708
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        code: "import json\nimport re\n\nDEFAULT_CONTENT = (\n    '<div style=\"width:186mm;margin:0\
+          \ auto;padding:10mm;box-sizing:border-box;'\n    \"font-family:'Microsoft\
+          \ YaHei','PingFang SC',Arial,sans-serif;\"\n    'font-size:14px;color:#1f2937;\"\
+          >未接收到有效的复盘报告内容</div>'\n)\n\nOUTER_DIV_START = (\n    '<div style=\"width:186mm;margin:0\
+          \ auto;padding:8mm 9mm;'\n    \"box-sizing:border-box;font-family:'Microsoft\
+          \ YaHei','PingFang SC',Arial,sans-serif;\"\n    'font-size:13px;line-height:1.65;color:#1f2937;background:#f1f5f9;\"\
+          >'\n)\n\ndef main(raw_output: str) -> dict:\n    if not raw_output or not\
+          \ raw_output.strip():\n        return {\"markdown_content\": DEFAULT_CONTENT}\n\
+          \n    text = raw_output.strip()\n\n    # 1. 如果输入是 JSON，优先提取 markdown_content\
+          \ / text / output / answer\n    try:\n        data = json.loads(text)\n\
+          \        if isinstance(data, dict):\n            text = (\n            \
+          \    data.get(\"markdown_content\")\n                or data.get(\"text\"\
+          )\n                or data.get(\"output\")\n                or data.get(\"\
+          answer\")\n                or text\n            )\n    except Exception:\n\
+          \        pass\n\n    if not text or not str(text).strip():\n        return\
+          \ {\"markdown_content\": DEFAULT_CONTENT}\n\n    text = str(text).strip()\n\
+          \n    # 2. 处理常见 JSON 字符串转义\n    # 注意：如果 text 已经被 json.loads 正常反序列化，这一步不会造成问题\n\
+          \    text = text.replace(\"\\\\n\", \"\\n\").replace('\\\\\"', '\"').replace(\"\
+          \\\\/\", \"/\")\n\n    # 3. 去掉 <think>...</think>\n    text = re.sub(\n\
+          \        r\"<think>.*?</think>\",\n        \"\",\n        text,\n      \
+          \  flags=re.DOTALL | re.IGNORECASE\n    ).strip()\n\n    # 4. 去掉 Markdown\
+          \ 代码块包裹\n    text = re.sub(\n        r\"^```(?:markdown|md|html)?\\s*\"\
+          ,\n        \"\",\n        text,\n        flags=re.IGNORECASE\n    ).strip()\n\
+          \    text = re.sub(r\"\\s*```$\", \"\", text).strip()\n\n    # 5. 去掉模型可能输出的解释性前缀\n\
+          \    bad_prefix_patterns = [\n        r\"^以下是.*?[:：]\\s*\",\n        r\"\
+          ^下面是.*?[:：]\\s*\",\n        r\"^这是.*?[:：]\\s*\",\n        r\"^已为你.*?[:：]\\\
+          s*\",\n        r\"^好的.*?[:：]\\s*\",\n    ]\n\n    for pattern in bad_prefix_patterns:\n\
+          \        text = re.sub(pattern, \"\", text, flags=re.DOTALL).strip()\n\n\
+          \    # 6. 删除完整 HTML 里的 style/head，避免 class 样式残留或污染 md_to_html\n    text\
+          \ = re.sub(\n        r\"<style[^>]*>.*?</style>\",\n        \"\",\n    \
+          \    text,\n        flags=re.DOTALL | re.IGNORECASE\n    ).strip()\n\n \
+          \   text = re.sub(\n        r\"<head[^>]*>.*?</head>\",\n        \"\",\n\
+          \        text,\n        flags=re.DOTALL | re.IGNORECASE\n    ).strip()\n\
+          \n    # 7. 如果模型错误输出完整 HTML，只保留 body 内部\n    body_match = re.search(\n  \
+          \      r\"<body[^>]*>(.*?)</body>\",\n        text,\n        flags=re.DOTALL\
+          \ | re.IGNORECASE\n    )\n    if body_match:\n        text = body_match.group(1).strip()\n\
+          \n    # 8. 去掉完整 HTML 外壳标签\n    text = re.sub(r\"<!DOCTYPE html\\s*>\", \"\
+          \", text, flags=re.IGNORECASE).strip()\n    text = re.sub(r\"</?html[^>]*>\"\
+          , \"\", text, flags=re.IGNORECASE).strip()\n    text = re.sub(r\"</?body[^>]*>\"\
+          , \"\", text, flags=re.IGNORECASE).strip()\n\n    # 9. 强制删除所有 class 属性\n\
+          \    text = re.sub(r'\\sclass\\s*=\\s*\"[^\"]*\"', \"\", text, flags=re.IGNORECASE)\n\
+          \    text = re.sub(r\"\\sclass\\s*=\\s*'[^']*'\", \"\", text, flags=re.IGNORECASE)\n\
+          \n    # 10. 删除 id 属性，避免 md_to_html 或前端样式冲突\n    text = re.sub(r'\\sid\\\
+          s*=\\s*\"[^\"]*\"', \"\", text, flags=re.IGNORECASE)\n    text = re.sub(r\"\
+          \\sid\\s*=\\s*'[^']*'\", \"\", text, flags=re.IGNORECASE)\n\n    # 11. 删除空\
+          \ HTML 注释\n    text = re.sub(r\"<!--.*?-->\", \"\", text, flags=re.DOTALL).strip()\n\
+          \n    # 12. 如果还残留完整 HTML 禁止标签，继续清理\n    forbidden_patterns = [\n       \
+          \ r\"</?head[^>]*>\",\n        r\"</?style[^>]*>\",\n        r\"</?script[^>]*>\"\
+          ,\n        r\"</?meta[^>]*>\",\n        r\"</?title[^>]*>\",\n        r\"\
+          </?link[^>]*>\",\n    ]\n\n    for pattern in forbidden_patterns:\n    \
+          \    text = re.sub(pattern, \"\", text, flags=re.IGNORECASE).strip()\n\n\
+          \    # 13. 去掉首尾多余空白\n    text = text.strip()\n\n    if not text:\n     \
+          \   return {\"markdown_content\": DEFAULT_CONTENT}\n\n    # 14. 如果没有最外层容器，兜底包一层\n\
+          \    if not text.lstrip().startswith(\"<div\"):\n        text = OUTER_DIV_START\
+          \ + \"\\n\" + text + \"\\n</div>\"\n\n    # 15. 如果存在 class=，兜底再删一次\n   \
+          \ text = re.sub(r'\\sclass\\s*=\\s*\"[^\"]*\"', \"\", text, flags=re.IGNORECASE)\n\
+          \    text = re.sub(r\"\\sclass\\s*=\\s*'[^']*'\", \"\", text, flags=re.IGNORECASE)\n\
+          \n    # 16. 最终兜底：如果仍然出现 <style>，直接删除\n    text = re.sub(\n        r\"<style[^>]*>.*?</style>\"\
+          ,\n        \"\",\n        text,\n        flags=re.DOTALL | re.IGNORECASE\n\
+          \    ).strip()\n\n    return {\n        \"markdown_content\": text\n   \
+          \ }"
+        code_language: python3
+        outputs:
+          markdown_content:
+            children: null
+            type: string
+        selected: false
+        title: 代码清洗
+        type: code
+        variables:
+        - value_selector:
+          - '1782833466930'
+          - text
+          value_type: string
+          variable: raw_output
+      height: 52
+      id: '1782834561904'
+      position:
+        x: 5825.846555960985
+        y: 115.30238095238096
+      positionAbsolute:
+        x: 5825.846555960985
+        y: 115.30238095238096
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          label:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Optional custom output file name, and the filename suffix is not
+              required.
+            ja_JP: Optional custom output file name, and the filename suffix is not
+              required.
+            pt_BR: Optional custom output file name, and the filename suffix is not
+              required.
+            zh_Hans: 可选的自定义输出文件名，后缀名无需指定
+          label:
+            en_US: Output Filename
+            ja_JP: Output Filename
+            pt_BR: Output Filename
+            zh_Hans: 输出文件名
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+          output_filename: ''
+        plugin_id: bowenliang123/md_exporter
+        plugin_unique_identifier: bowenliang123/md_exporter:3.6.9@3f027d63e80b44d5d5a9f706871afaef37905b8f8a89a2d152dc530211a8acb1
+        provider_icon: https://cloud.dify.ai/console/api/workspaces/current/plugin/icon?tenant_id=YOUR_TENANT_ID&filename=94713265c9473c3bd2bc8b0dd0794ad40955b7431610243bbd00ab02dae281cf.png
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: Markdown ⮕ HTML
+        tool_configurations: {}
+        tool_description: 将 Markdown 转换为 HTML 文件的工具
+        tool_label: Markdown ⮕ HTML
+        tool_name: md_to_html
+        tool_node_version: '2'
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1782834561904.markdown_content#}}'
+          output_filename:
+            type: mixed
+            value: 面试复盘
+        type: tool
+      height: 52
+      id: '1782834611635'
+      position:
+        x: 6155.401050774984
+        y: 177.4492356626551
+      positionAbsolute:
+        x: 6155.401050774984
+        y: 177.4492356626551
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        code: "import re\nimport html\n\n\ndef main(raw_output: str) -> dict:\n  \
+          \  fallback = (\n        '<div style=\"width:186mm;margin:0 auto;padding:8mm\
+          \ 10mm;'\n        \"box-sizing:border-box;font-family:'Microsoft YaHei','PingFang\
+          \ SC',\"\n        \"Arial,sans-serif;font-size:13px;color:#1f2937;\"\n \
+          \       'background:#ffffff;\">未接收到有效的简历内容</div>'\n    )\n\n    if not raw_output\
+          \ or not raw_output.strip():\n        return {\n            \"clean_markdown\"\
+          : fallback\n        }\n\n    text = raw_output.strip()\n\n    # 1. 去掉 <think>...</think>\n\
+          \    text = re.sub(r\"<think>.*?</think>\", \"\", text, flags=re.DOTALL).strip()\n\
+          \n    # 2. 去掉 Markdown 代码块外壳，例如 ```markdown、```html、```\n    text = re.sub(r\"\
+          ^```(?:markdown|md|html)?\\s*\", \"\", text, flags=re.IGNORECASE).strip()\n\
+          \    text = re.sub(r\"\\s*```$\", \"\", text).strip()\n\n    # 3. 拆掉已经生成的\
+          \ <pre><code>...</code></pre>，并反转义\n    def unwrap_code(match):\n      \
+          \  inner = match.group(1)\n        return html.unescape(inner).strip()\n\
+          \n    text = re.sub(\n        r\"<pre><code>(.*?)</code></pre>\",\n    \
+          \    unwrap_code,\n        text,\n        flags=re.DOTALL | re.IGNORECASE,\n\
+          \    )\n\n    # 4. 反转义 HTML 实体，避免 &lt;div&gt; 作为文本输出\n    text = html.unescape(text).strip()\n\
+          \n    # 5. 从有效简历内容开始截取，优先从 A4 容器开始\n    candidates = []\n\n    div_match\
+          \ = re.search(\n        r'(?i)<div\\s+style=\"[^\"]*width\\s*:\\s*(?:18[0-9]mm|190mm|186mm)',\n\
+          \        text,\n    )\n    if div_match:\n        candidates.append(div_match.start())\n\
+          \n    h1_match = re.search(r\"(?i)<h1\\b\", text)\n    if h1_match:\n  \
+          \      candidates.append(h1_match.start())\n\n    styled_div_match = re.search(r'(?i)<div\\\
+          s+style=\"', text)\n    if styled_div_match:\n        candidates.append(styled_div_match.start())\n\
+          \n    md_h1_match = re.search(r\"(?m)^#\\s+\", text)\n    if md_h1_match:\n\
+          \        candidates.append(md_h1_match.start())\n\n    if candidates:\n\
+          \        text = text[min(candidates):].strip()\n\n    # 6. 去掉 HTML 标签行前缩进，防止\
+          \ md_to_html 识别成代码块\n    cleaned_lines = []\n    for line in text.splitlines():\n\
+          \        stripped = line.lstrip()\n\n        if stripped.startswith(\"<\"\
+          ) or stripped.startswith(\"</\"):\n            cleaned_lines.append(stripped)\n\
+          \        else:\n            cleaned_lines.append(line.rstrip())\n\n    text\
+          \ = \"\\n\".join(cleaned_lines).strip()\n\n    # 7. 修复常见的联系方式被误包成代码块的情况\n\
+          \    text = re.sub(\n        r\"<pre><code>(.*?)</code></pre>\",\n     \
+          \   lambda m: html.unescape(m.group(1)).strip(),\n        text,\n      \
+          \  flags=re.DOTALL | re.IGNORECASE,\n    )\n\n    # 8. 清理连续空行\n    text\
+          \ = re.sub(r\"\\n{3,}\", \"\\n\\n\", text).strip()\n\n    # 9. 如果没有外层 A4\
+          \ 容器，自动包一层\n    has_a4_container = re.search(\n        r'(?i)<div\\s+style=\"\
+          [^\"]*width\\s*:\\s*(?:18[0-9]mm|190mm|186mm)',\n        text,\n    )\n\n\
+          \    if not has_a4_container and text:\n        text = (\n            '<div\
+          \ style=\"width:186mm;margin:0 auto;padding:8mm 10mm;'\n            \"box-sizing:border-box;font-family:'Microsoft\
+          \ YaHei','PingFang SC',\"\n            \"Arial,sans-serif;font-size:13px;line-height:1.5;color:#1f2937;\"\
+          \n            'background:#ffffff;\">\\n'\n            + text\n        \
+          \    + \"\\n</div>\"\n        )\n\n    if not text:\n        text = fallback\n\
+          \n    return {\n        \"clean_markdown\": text\n    }"
+        code_language: python3
+        desc: 获取完整干净的md块儿
+        outputs:
+          clean_markdown:
+            children: null
+            type: string
+        selected: false
+        title: 代码清洗
+        type: code
+        variables:
+        - value_selector:
+          - '1782835060770'
+          - text
+          value_type: string
+          variable: raw_output
+      height: 80
+      id: '1782835155744'
+      position:
+        x: 4444
+        y: 704.152380952381
+      positionAbsolute:
+        x: 4444
+        y: 704.152380952381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          label:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Optional custom output file name, and the filename suffix is not
+              required.
+            ja_JP: Optional custom output file name, and the filename suffix is not
+              required.
+            pt_BR: Optional custom output file name, and the filename suffix is not
+              required.
+            zh_Hans: 可选的自定义输出文件名，后缀名无需指定
+          label:
+            en_US: Output Filename
+            ja_JP: Output Filename
+            pt_BR: Output Filename
+            zh_Hans: 输出文件名
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+          output_filename: ''
+        plugin_id: bowenliang123/md_exporter
+        plugin_unique_identifier: bowenliang123/md_exporter:3.6.9@3f027d63e80b44d5d5a9f706871afaef37905b8f8a89a2d152dc530211a8acb1
+        provider_icon: https://cloud.dify.ai/console/api/workspaces/current/plugin/icon?tenant_id=YOUR_TENANT_ID&filename=94713265c9473c3bd2bc8b0dd0794ad40955b7431610243bbd00ab02dae281cf.png
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: 简历html
+        tool_configurations: {}
+        tool_description: 将 Markdown 转换为 HTML 文件的工具
+        tool_label: Markdown ⮕ HTML
+        tool_name: md_to_html
+        tool_node_version: '2'
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1782835155744.clean_markdown#}}'
+          output_filename:
+            type: mixed
+            value: 简历优化
+        type: tool
+      height: 52
+      id: '1782835167850'
+      position:
+        x: 4746
+        y: 704.152380952381
+      positionAbsolute:
+        x: 4746
+        y: 704.152380952381
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    viewport:
+      x: 128.74677113478913
+      y: 339.26884917635675
+      zoom: 0.25
+  rag_pipeline_variables: []
