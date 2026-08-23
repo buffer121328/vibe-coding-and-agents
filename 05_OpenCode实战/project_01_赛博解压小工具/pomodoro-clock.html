@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>心流番茄钟 - Pomodoro Clock</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0a0a0f;
+      overflow: hidden;
+    }
+
+    .matrix-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .scanline {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.01) 2px,
+        rgba(0, 255, 255, 0.01) 4px
+      );
+      pointer-events: none;
+    }
+
+    .timer-ring {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      stroke: rgba(255, 255, 255, 0.05);
+    }
+
+    .ring-progress {
+      transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+
+    .time-display {
+      font-family: 'Orbitron', monospace;
+    }
+
+    .glow-focus {
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8),
+                   0 0 40px rgba(0, 255, 255, 0.4),
+                   0 0 80px rgba(0, 255, 255, 0.2);
+    }
+
+    .glow-rest {
+      text-shadow: 0 0 20px rgba(139, 92, 246, 0.8),
+                   0 0 40px rgba(139, 92, 246, 0.4),
+                   0 0 80px rgba(139, 92, 246, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(139, 92, 246, 0.2));
+      border-color: rgba(0, 255, 255, 0.6);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.95);
+    }
+
+    .status-label {
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 0.3em;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .counter-badge {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(255, 0, 255, 0.1));
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#0a0a0f',
+              dark: '#12121a',
+              cyan: '#00ffff',
+              purple: '#8b5cf6',
+              pink: '#ff00ff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen antialiased relative">
+  <div class="matrix-bg"></div>
+  <div class="scanline"></div>
+
+  <div id="app" class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+    <div class="text-center mb-8">
+      <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2"
+          style="font-family: 'Orbitron', monospace; background: linear-gradient(135deg, #00ffff 0%, #8b5cf6 50%, #ff00ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        FLOW CLOCK
+      </h1>
+      <p class="text-cyan-400/50 text-xs tracking-[0.3em] uppercase">
+        心流番茄钟 · 专注每一刻
+      </p>
+    </div>
+
+    <div class="relative mb-8">
+      <svg class="timer-ring w-64 h-64 sm:w-80 sm:h-80" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="focusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffff"/>
+            <stop offset="100%" style="stop-color:#06b6d4"/>
+          </linearGradient>
+          <linearGradient id="restGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#a855f7"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="100" cy="100" r="90" fill="none" stroke-width="4"/>
+        <circle id="progressRing" class="ring-progress" cx="100" cy="100" r="90"
+                fill="none" stroke="url(#focusGrad)" stroke-width="4" stroke-linecap="round"
+                stroke-dasharray="565.48" stroke-dashoffset="0"/>
+      </svg>
+
+      <div class="absolute inset-0 flex flex-col items-center justify-center">
+        <div id="statusLabel" class="status-label text-xs sm:text-sm text-cyan-400/70 mb-2 pulse-glow">
+          专注中
+        </div>
+        <div id="timeDisplay" class="time-display text-5xl sm:text-6xl font-black text-white glow-focus">
+          25:00
+        </div>
+        <div id="sessionInfo" class="text-xs text-slate-500 mt-2">
+          第 <span id="sessionCount">1</span> 轮
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-4 mb-6">
+      <button id="startBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium flex items-center gap-2">
+        <i data-lucide="play" class="w-5 h-5" id="playIcon"></i>
+        <span id="btnLabel">开始专注</span>
+      </button>
+      <button id="resetBtn" class="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-slate-400 hover:text-white transition-all duration-200">
+        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="counter-badge px-6 py-3 rounded-xl flex items-center gap-3">
+      <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+      <span class="text-slate-400 text-xs tracking-wider">今日专注</span>
+      <span class="text-purple-400 font-bold text-lg" id="todayCount">0</span>
+      <span class="text-slate-500 text-xs">次</span>
+    </div>
+
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4">
+      <button id="soundToggle" class="text-slate-500 hover:text-cyan-400 transition-colors">
+        <i data-lucide="volume-2" class="w-4 h-4" id="soundIcon"></i>
+      </button>
+      <span class="text-cyan-400/20 text-[10px] tracking-[0.5em] uppercase">
+        pomodoro technique
+      </span>
+    </div>
+  </div>
+
+  <script>
+    const FOCUS_TIME = 25 * 60;
+    const REST_TIME = 5 * 60;
+    const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * 90;
+
+    let state = {
+      mode: 'focus',
+      timeLeft: FOCUS_TIME,
+      isRunning: false,
+      intervalId: null,
+      sessionCount: 1,
+      todayPomodoros: 0
+    };
+
+    let soundEnabled = true;
+
+    const progressRing = document.getElementById('progressRing');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const statusLabel = document.getElementById('statusLabel');
+    const startBtn = document.getElementById('startBtn');
+    const btnLabel = document.getElementById('btnLabel');
+    const playIcon = document.getElementById('playIcon');
+    const sessionCount = document.getElementById('sessionCount');
+    const todayCount = document.getElementById('todayCount');
+
+    function loadState() {
+      const saved = localStorage.getItem('pomodoroState');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          if (data.date === new Date().toDateString()) {
+            state.todayPomodoros = data.todayPomodoros || 0;
+          }
+        } catch(e) {}
+      }
+      todayCount.textContent = state.todayPomodoros;
+    }
+
+    function saveState() {
+      localStorage.setItem('pomodoroState', JSON.stringify({
+        date: new Date().toDateString(),
+        todayPomodoros: state.todayPomodoros
+      }));
+    }
+
+    function updateDisplay() {
+      const minutes = Math.floor(state.timeLeft / 60);
+      const seconds = state.timeLeft % 60;
+      timeDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      const totalTime = state.mode === 'focus' ? FOCUS_TIME : REST_TIME;
+      const progress = (totalTime - state.timeLeft) / totalTime;
+      const offset = CIRCLE_CIRCUMFERENCE * (1 - progress);
+      progressRing.style.strokeDashoffset = offset;
+
+      if (state.mode === 'focus') {
+        progressRing.style.stroke = 'url(#focusGrad)';
+        statusLabel.textContent = '专注中';
+        statusLabel.className = 'status-label text-xs sm:text-sm text-cyan-400/70 mb-2 pulse-glow';
+        timeDisplay.className = 'time-display text-5xl sm:text-6xl font-black text-white glow-focus';
+      } else {
+        progressRing.style.stroke = 'url(#restGrad)';
+        statusLabel.textContent = '休息中';
+        statusLabel.className = 'status-label text-xs sm:text-sm text-purple-400/70 mb-2 pulse-glow';
+        timeDisplay.className = 'time-display text-5xl sm:text-6xl font-black text-white glow-rest';
+      }
+
+      sessionCount.textContent = state.sessionCount;
+    }
+
+    function playNotification() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const notes = state.mode === 'focus' ? [523, 659, 784] : [392, 330, 262];
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.15);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.15);
+          osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+        });
+      } catch(e) {}
+    }
+
+    function tick() {
+      if (state.timeLeft <= 0) {
+        playNotification();
+        if (state.mode === 'focus') {
+          state.todayPomodoros++;
+          todayCount.textContent = state.todayPomodoros;
+          saveState();
+          state.mode = 'rest';
+          state.timeLeft = REST_TIME;
+        } else {
+          state.sessionCount++;
+          state.mode = 'focus';
+          state.timeLeft = FOCUS_TIME;
+        }
+        updateDisplay();
+        return;
+      }
+      state.timeLeft--;
+      updateDisplay();
+    }
+
+    function toggleTimer() {
+      if (state.isRunning) {
+        clearInterval(state.intervalId);
+        state.isRunning = false;
+        btnLabel.textContent = state.mode === 'focus' ? '继续专注' : '继续休息';
+        playIcon.setAttribute('data-lucide', 'play');
+      } else {
+        state.intervalId = setInterval(tick, 1000);
+        state.isRunning = true;
+        btnLabel.textContent = '暂停';
+        playIcon.setAttribute('data-lucide', 'pause');
+      }
+      lucide.createIcons();
+    }
+
+    function resetTimer() {
+      clearInterval(state.intervalId);
+      state.isRunning = false;
+      state.mode = 'focus';
+      state.timeLeft = FOCUS_TIME;
+      state.sessionCount = 1;
+      btnLabel.textContent = '开始专注';
+      playIcon.setAttribute('data-lucide', 'play');
+      updateDisplay();
+      lucide.createIcons();
+    }
+
+    startBtn.addEventListener('click', toggleTimer);
+    document.getElementById('resetBtn').addEventListener('click', resetTimer);
+
+    document.getElementById('soundToggle').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundIcon').setAttribute('data-lucide', soundEnabled ? 'volume-2' : 'volume-x');
+      lucide.createIcons();
+    });
+
+    loadState();
+    updateDisplay();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

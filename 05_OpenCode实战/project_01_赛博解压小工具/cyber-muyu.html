@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>赛博木鱼 - Cyber Muyu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: #0a0a0f;
+      overflow: hidden;
+    }
+
+    .cyber-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      perspective: 500px;
+      pointer-events: none;
+    }
+
+    .scanline {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.015) 2px,
+        rgba(0, 255, 255, 0.015) 4px
+      );
+      pointer-events: none;
+    }
+
+    .muyu-glow {
+      filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.4))
+              drop-shadow(0 0 60px rgba(139, 92, 246, 0.3));
+      transition: filter 0.1s ease;
+    }
+
+    .muyu-glow:active {
+      filter: drop-shadow(0 0 40px rgba(0, 255, 255, 0.8))
+              drop-shadow(0 0 100px rgba(139, 92, 246, 0.6));
+    }
+
+    .muyu-container {
+      transition: transform 0.08s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    .muyu-container:active {
+      transform: scale(0.92);
+    }
+
+    .counter-text {
+      font-family: 'Orbitron', monospace;
+      background: linear-gradient(135deg, #00ffff, #8b5cf6, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glitch {
+      animation: glitch 0.3s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .pulse-ring {
+      animation: pulse-ring 0.8s ease-out forwards;
+    }
+
+    .floating-text {
+      position: absolute;
+      pointer-events: none;
+      animation: float-up 1.5s ease-out forwards;
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    @keyframes float-up {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-150px) scale(1.2); }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#0a0a0f',
+              dark: '#12121a',
+              cyan: '#00ffff',
+              purple: '#8b5cf6',
+              pink: '#ff00ff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen antialiased relative">
+  <div class="cyber-grid"></div>
+  <div class="scanline"></div>
+
+  <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+  <div id="app" class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-2"
+          style="font-family: 'Orbitron', monospace; background: linear-gradient(135deg, #00ffff 0%, #8b5cf6 50%, #ff00ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        CYBER MUYU
+      </h1>
+      <p class="text-cyan-400/60 text-xs sm:text-sm tracking-[0.3em] uppercase">
+        赛博功德 · 电子修行
+      </p>
+    </div>
+
+    <div class="relative muyu-container cursor-pointer select-none" id="muyuBtn" role="button" aria-label="敲木鱼">
+      <div id="pulseRing" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-48 h-48 sm:w-64 sm:h-64 rounded-full border-2 border-cyan-400/50 opacity-0"></div>
+      </div>
+
+      <svg class="muyu-glow w-48 h-48 sm:w-64 sm:h-64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="muyuGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a2e"/>
+            <stop offset="50%" style="stop-color:#16213e"/>
+            <stop offset="100%" style="stop-color:#0f0f23"/>
+          </linearGradient>
+          <linearGradient id="neonStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffff"/>
+            <stop offset="50%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#ff00ff"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <ellipse cx="100" cy="115" rx="70" ry="55" fill="url(#muyuGrad)" stroke="url(#neonStroke)" stroke-width="2" filter="url(#glow)"/>
+
+        <path d="M65 95 Q100 40 135 95" fill="none" stroke="url(#neonStroke)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+
+        <ellipse cx="100" cy="65" rx="12" ry="8" fill="#0f0f23" stroke="url(#neonStroke)" stroke-width="1.5"/>
+
+        <line x1="100" y1="73" x2="100" y2="100" stroke="url(#neonStroke)" stroke-width="2" stroke-linecap="round"/>
+
+        <path d="M80 115 Q100 130 120 115" fill="none" stroke="url(#neonStroke)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <div class="mt-8 text-center">
+      <p class="text-cyan-400/50 text-xs mb-2 tracking-widest uppercase">功德值</p>
+      <div class="counter-text text-5xl sm:text-7xl font-black" id="counter">0</div>
+    </div>
+
+    <div class="mt-6 flex gap-4">
+      <button id="resetBtn" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/30 text-slate-400 hover:text-cyan-400 text-xs tracking-wider transition-all duration-200 uppercase">
+        重置
+      </button>
+      <button id="soundBtn" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/30 text-slate-400 hover:text-cyan-400 text-xs tracking-wider transition-all duration-200 uppercase flex items-center gap-2">
+        <i data-lucide="volume-2" class="w-4 h-4"></i>
+        <span id="soundLabel">音效开</span>
+      </button>
+    </div>
+
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-cyan-400/20 text-[10px] tracking-[0.5em] uppercase">
+      powered by web audio api
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let counter = 0;
+    let soundEnabled = true;
+    let comboCount = 0;
+    let lastTapTime = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function loadCounter() {
+      const saved = localStorage.getItem('cyberMuyuCounter');
+      if (saved) {
+        counter = parseInt(saved, 10) || 0;
+        updateDisplay();
+      }
+    }
+
+    function saveCounter() {
+      localStorage.setItem('cyberMuyuCounter', counter.toString());
+    }
+
+    function updateDisplay() {
+      document.getElementById('counter').textContent = counter.toLocaleString();
+    }
+
+    function playTapSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(180 + Math.random() * 40, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.6, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch(e) {}
+    }
+
+    function playComboSound(combo) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440 + combo * 20, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.15);
+      } catch(e) {}
+    }
+
+    class Particle {
+      constructor(x, y, text) {
+        this.x = x;
+        this.y = y;
+        this.text = text;
+        this.opacity = 1;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = -2 - Math.random() * 2;
+        this.life = 1;
+        this.decay = 0.015 + Math.random() * 0.01;
+        const colors = ['#00ffff', '#8b5cf6', '#ff00ff', '#ff6b6b', '#4ecdc4'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy *= 0.98;
+        this.life -= this.decay;
+        this.opacity = this.life;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.font = 'bold 16px "Noto Sans SC", sans-serif';
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+        ctx.textAlign = 'center';
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    function spawnParticles(x, y, text) {
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle(x + (Math.random() - 0.5) * 40, y, text));
+      }
+    }
+
+    function spawnBurst(x, y) {
+      const colors = ['#00ffff', '#8b5cf6', '#ff00ff'];
+      for (let i = 0; i < 30; i++) {
+        const angle = (Math.PI * 2 / 30) * i;
+        const speed = 3 + Math.random() * 3;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          decay: 0.02 + Math.random() * 0.02,
+          opacity: 1,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 3,
+          isBurst: true,
+          draw() {
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 15;
+            ctx.fill();
+            ctx.restore();
+          },
+          update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.1;
+            this.life -= this.decay;
+            this.opacity = this.life;
+          }
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(p => p.life > 0);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    const muyuBtn = document.getElementById('muyuBtn');
+    const pulseRing = document.getElementById('pulseRing');
+
+    function triggerPulse() {
+      const ring = pulseRing.querySelector('div');
+      ring.classList.remove('pulse-ring');
+      void ring.offsetWidth;
+      ring.classList.add('pulse-ring');
+    }
+
+    function spawnFloatingText(x, y) {
+      const div = document.createElement('div');
+      div.className = 'floating-text';
+      div.style.left = x + 'px';
+      div.style.top = y + 'px';
+      div.style.color = Math.random() > 0.5 ? '#00ffff' : '#ff00ff';
+      const texts = ['+1 功德', '赛博功德 +1', '功德 +1', '+1', '电子木鱼 +1'];
+      div.textContent = texts[Math.floor(Math.random() * texts.length)];
+      document.getElementById('app').appendChild(div);
+      setTimeout(() => div.remove(), 1500);
+    }
+
+    function handleTap(e) {
+      e.preventDefault();
+      const rect = muyuBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      const now = Date.now();
+      if (now - lastTapTime < 300) {
+        comboCount++;
+        if (comboCount >= 3) {
+          playComboSound(comboCount);
+          spawnBurst(x, y);
+        }
+      } else {
+        comboCount = 1;
+      }
+      lastTapTime = now;
+
+      counter++;
+      updateDisplay();
+      saveCounter();
+      playTapSound();
+      triggerPulse();
+      spawnParticles(x, y - 40, '+1 功德');
+      spawnFloatingText(x - 30, y - 80);
+
+      if (counter % 100 === 0) {
+        const el = document.getElementById('counter');
+        el.classList.add('glitch');
+        setTimeout(() => el.classList.remove('glitch'), 300);
+      }
+    }
+
+    muyuBtn.addEventListener('click', handleTap);
+    muyuBtn.addEventListener('touchstart', handleTap, { passive: false });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('确定要清空功德吗？')) {
+        counter = 0;
+        updateDisplay();
+        saveCounter();
+      }
+    });
+
+    document.getElementById('soundBtn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundLabel').textContent = soundEnabled ? '音效开' : '音效关';
+    });
+
+    loadCounter();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

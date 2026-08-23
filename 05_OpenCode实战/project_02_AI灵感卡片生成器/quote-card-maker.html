@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 灵感金句卡片工坊 - Quote -> Poster -> Export</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2canvas for HD export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              500: '#f59e0b',
+              600: '#d97706'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    
+    /* Theme Gradients */
+    .theme-starry {
+      background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+      color: #f8fafc;
+    }
+    .theme-cyber {
+      background: linear-gradient(135deg, #0d0221 0%, #0f051d 50%, #240046 100%);
+      color: #00f0ff;
+    }
+    .theme-ink {
+      background: linear-gradient(180deg, #2b2d42 0%, #1a1a24 100%);
+      color: #edf2f4;
+    }
+    .theme-sunrise {
+      background: linear-gradient(135deg, #4a0e17 0%, #2b0938 50%, #150050 100%);
+      color: #ffedd5;
+    }
+    .theme-minimal {
+      background: linear-gradient(180deg, #18181b 0%, #09090b 100%);
+      color: #fafafa;
+    }
+
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-[#090a0f] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 bg-slate-950/60 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
+        <i data-lucide="sparkles" class="w-5 h-5 text-black"></i>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+          AI 灵感金句卡片工坊
+          <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">v1.0 Pro</span>
+        </h1>
+        <p class="text-xs text-slate-400">Quote → Poster → Export</p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button id="historyBtn" class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors" title="历史记录">
+        <i data-lucide="history" class="w-4 h-4"></i>
+      </button>
+      <button id="helpBtn" class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors" title="使用说明">
+        <i data-lucide="help-circle" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+    <!-- Left Control Panel (5 cols) -->
+    <div class="lg:col-span-5 space-y-5">
+      
+      <!-- Quote Input Box -->
+      <div class="glass-panel p-5 rounded-2xl shadow-xl">
+        <div class="flex items-center justify-between mb-3">
+          <label class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+            <i data-lucide="feather" class="w-4 h-4 text-amber-400"></i>
+            输入你的灵感
+          </label>
+          <div class="flex items-center gap-2">
+            <button id="randomQuoteBtn" class="text-xs px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 flex items-center gap-1 transition-all">
+              <i data-lucide="shuffle" class="w-3 h-3 text-amber-400"></i>
+              随机金句
+            </button>
+            <button id="clearBtn" class="text-xs px-2 py-1 rounded-md bg-slate-800/60 hover:bg-red-500/20 text-slate-400 hover:text-red-300 border border-slate-700/60 flex items-center gap-1 transition-all">
+              <i data-lucide="trash-2" class="w-3 h-3"></i>
+              清空
+            </button>
+          </div>
+        </div>
+        <textarea id="quoteInput" rows="4" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl p-3.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm leading-relaxed transition-all resize-none" placeholder="输入触动人心的金句、感悟或诗词..."></textarea>
+        <div class="mt-2 text-right">
+          <span id="charCount" class="text-xs text-slate-500">字数: 0</span>
+        </div>
+      </div>
+
+      <!-- Author / Signature -->
+      <div class="glass-panel p-4 rounded-2xl shadow-xl">
+        <label class="text-xs font-semibold text-slate-400 flex items-center gap-2 mb-2">
+          <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+          署名 (选填)
+        </label>
+        <input id="authorInput" type="text" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500 text-sm transition-all" placeholder="如：木心 / 灵感金句 / 匿名" value="灵感金句">
+      </div>
+
+      <!-- Theme Selector -->
+      <div class="glass-panel p-5 rounded-2xl shadow-xl">
+        <label class="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-3">
+          <i data-lucide="palette" class="w-4 h-4 text-purple-400"></i>
+          选择海报主题
+        </label>
+        <div class="grid grid-cols-5 gap-3" id="themeButtons">
+          <button data-theme="starry" class="theme-btn active group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-slate-900 border-2 border-amber-500 transition-all">
+            <div class="w-10 h-10 rounded-full border border-slate-600 shadow-inner overflow-hidden flex items-center justify-center font-bold text-xs" style="background: radial-gradient(#1B2735, #090A0F); color: #fff;">
+              星空
+            </div>
+          </button>
+          <button data-theme="cyber" class="theme-btn group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 transition-all">
+            <div class="w-10 h-10 rounded-full border border-slate-600 shadow-inner overflow-hidden flex items-center justify-center font-bold text-xs" style="background: linear-gradient(135deg, #00f0ff, #ff007f); color: #fff;">
+              赛博
+            </div>
+          </button>
+          <button data-theme="ink" class="theme-btn group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 transition-all">
+            <div class="w-10 h-10 rounded-full border border-slate-600 shadow-inner overflow-hidden flex items-center justify-center font-bold text-xs" style="background: linear-gradient(180deg, #495057, #1a1a24); color: #fff;">
+              水墨
+            </div>
+          </button>
+          <button data-theme="sunrise" class="theme-btn group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 transition-all">
+            <div class="w-10 h-10 rounded-full border border-slate-600 shadow-inner overflow-hidden flex items-center justify-center font-bold text-xs" style="background: linear-gradient(135deg, #f59e0b, #ec4899); color: #fff;">
+              日出
+            </div>
+          </button>
+          <button data-theme="minimal" class="theme-btn group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-600 transition-all">
+            <div class="w-10 h-10 rounded-full border border-slate-600 shadow-inner overflow-hidden flex items-center justify-center font-bold text-xs" style="background: linear-gradient(180deg, #27272a, #09090b); color: #fff;">
+              极简
+            </div>
+          </button>
+        </div>
+        <div class="mt-3 text-xs text-slate-400 text-center" id="currentThemeLabel">当前主题：星空梦幻</div>
+      </div>
+
+      <!-- Typography & Visual Controls -->
+      <div class="glass-panel p-5 rounded-2xl shadow-xl space-y-4">
+        <label class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+          <i data-lucide="type" class="w-4 h-4 text-cyan-400"></i>
+          样式调整
+        </label>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="text-xs text-slate-400 mb-1.5 block">字号大小</span>
+            <input id="fontSizeRange" type="range" min="16" max="36" value="22" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 mb-1.5 block">字体粗细</span>
+            <select id="fontWeightSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500">
+              <option value="font-normal">常规</option>
+              <option value="font-medium">中等</option>
+              <option value="font-semibold">半粗</option>
+              <option value="font-bold" selected>粗体</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+          <span class="text-xs text-slate-300">粒子动效</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="particleToggle" class="sr-only peer" checked>
+            <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button id="exportBtn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all transform active:scale-95">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        一键导出高清 PNG 海报
+      </button>
+
+    </div>
+
+    <!-- Right Live Preview Card (7 cols) -->
+    <div class="lg:col-span-7 flex flex-col items-center">
+      <div class="w-full flex items-center justify-between mb-3 px-2">
+        <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+          <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i>
+          实时预览
+        </span>
+        <span class="text-xs text-slate-500">3:4 竖版海报</span>
+      </div>
+
+      <!-- Poster Container (Ratio 3:4) -->
+      <div class="relative w-full max-w-[420px] aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 flex flex-col justify-between p-8 theme-starry transition-all duration-500" id="posterCard">
+        <!-- Dynamic Background Canvas for Particles -->
+        <canvas id="starCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- Card Header Meta -->
+        <div class="relative z-10 flex items-center justify-between text-xs opacity-60 font-mono tracking-widest uppercase">
+          <span>DAILY INSPIRATION</span>
+          <span id="dateLabel">2026.08</span>
+        </div>
+
+        <!-- Quote Body -->
+        <div class="relative z-10 my-auto text-center px-4">
+          <div class="inline-block mb-3 opacity-40">
+            <i data-lucide="quote" class="w-8 h-8 mx-auto"></i>
+          </div>
+          <p id="posterText" class="text-[22px] leading-relaxed font-bold tracking-wide transition-all drop-shadow-md">
+            生活不是等待暴风雨过去，而是学会在雨中跳舞。
+          </p>
+          <div class="mt-6 flex items-center justify-center gap-2 opacity-75 text-xs tracking-wider">
+            <span class="w-6 h-[1px] bg-current opacity-40"></span>
+            <span id="posterAuthor">灵感金句</span>
+            <span class="w-6 h-[1px] bg-current opacity-40"></span>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[10px] opacity-50">
+          <span>DESIGNED BY OMO-SLIM</span>
+          <span>AI CARD STUDIO</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Script Logic -->
+  <script>
+    // Lucide Init
+    lucide.createIcons();
+
+    // Default Quotes
+    const sampleQuotes = [
+      "生活不是等待暴风雨过去，而是学会在雨中跳舞。",
+      "心之所向，素履以往；生如逆旅，一苇以航。",
+      "代码是写出来给人看的，附带能在机器上运行。",
+      "每一个不曾起舞的日子，都是对生命的辜负。",
+      "星光不问赶路人，时光不负有心人。",
+      "流水不争先，争的是滔滔不绝。"
+    ];
+
+    // Theme Configurations
+    const themes = {
+      starry: { class: 'theme-starry', label: '星空梦幻', particleColor: 'rgba(255, 255, 255, 0.7)' },
+      cyber: { class: 'theme-cyber', label: '赛博霓虹', particleColor: 'rgba(0, 240, 255, 0.8)' },
+      ink: { class: 'theme-ink', label: '水墨丹青', particleColor: 'rgba(200, 200, 220, 0.5)' },
+      sunrise: { class: 'theme-sunrise', label: '朝阳日出', particleColor: 'rgba(255, 200, 100, 0.8)' },
+      minimal: { class: 'theme-minimal', label: '极简黑白', particleColor: 'rgba(150, 150, 150, 0.4)' }
+    };
+
+    let currentThemeKey = 'starry';
+    let particlesEnabled = true;
+
+    // DOM Elements
+    const quoteInput = document.getElementById('quoteInput');
+    const authorInput = document.getElementById('authorInput');
+    const posterText = document.getElementById('posterText');
+    const posterAuthor = document.getElementById('posterAuthor');
+    const charCount = document.getElementById('charCount');
+    const randomQuoteBtn = document.getElementById('randomQuoteBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const fontSizeRange = document.getElementById('fontSizeRange');
+    const fontWeightSelect = document.getElementById('fontWeightSelect');
+    const particleToggle = document.getElementById('particleToggle');
+    const posterCard = document.getElementById('posterCard');
+    const currentThemeLabel = document.getElementById('currentThemeLabel');
+    const exportBtn = document.getElementById('exportBtn');
+    const starCanvas = document.getElementById('starCanvas');
+    const dateLabel = document.getElementById('dateLabel');
+
+    // Set Date
+    const now = new Date();
+    dateLabel.textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+    // Init with first quote
+    quoteInput.value = sampleQuotes[0];
+    updateCharCount();
+
+    // Input Events
+    quoteInput.addEventListener('input', () => {
+      posterText.textContent = quoteInput.value.trim() || '在这里写下你的灵感...';
+      updateCharCount();
+    });
+
+    authorInput.addEventListener('input', () => {
+      posterAuthor.textContent = authorInput.value.trim() || '匿名';
+    });
+
+    function updateCharCount() {
+      charCount.textContent = `字数: ${quoteInput.value.length}`;
+    }
+
+    randomQuoteBtn.addEventListener('click', () => {
+      const randomIdx = Math.floor(Math.random() * sampleQuotes.length);
+      quoteInput.value = sampleQuotes[randomIdx];
+      posterText.textContent = quoteInput.value;
+      updateCharCount();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      quoteInput.value = '';
+      posterText.textContent = '在这里写下你的灵感...';
+      updateCharCount();
+    });
+
+    // Font Controls
+    fontSizeRange.addEventListener('input', (e) => {
+      posterText.style.fontSize = `${e.target.value}px`;
+    });
+
+    fontWeightSelect.addEventListener('change', (e) => {
+      posterText.className = posterText.className.replace(/font-\w+/g, '');
+      posterText.classList.add(e.target.value);
+    });
+
+    // Theme Switch
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.theme-btn').forEach(b => {
+          b.classList.remove('active', 'border-amber-500', 'border-2');
+          b.classList.add('border-slate-800');
+        });
+        btn.classList.add('active', 'border-amber-500', 'border-2');
+        btn.classList.remove('border-slate-800');
+
+        const theme = btn.getAttribute('data-theme');
+        currentThemeKey = theme;
+        posterCard.className = posterCard.className.replace(/theme-\w+/g, '');
+        posterCard.classList.add(themes[theme].class);
+        currentThemeLabel.textContent = `当前主题：${themes[theme].label}`;
+      });
+    });
+
+    // Particle Canvas Animation
+    const ctx = starCanvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+
+    function resizeCanvas() {
+      starCanvas.width = posterCard.clientWidth;
+      starCanvas.height = posterCard.clientHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * starCanvas.width;
+        this.y = Math.random() * starCanvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.8 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > starCanvas.width || this.y < 0 || this.y > starCanvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.fillStyle = themes[currentThemeKey].particleColor;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 40; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      if (particlesEnabled) {
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+      }
+      animationFrameId = requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    particleToggle.addEventListener('change', (e) => {
+      particlesEnabled = e.target.checked;
+      if (!particlesEnabled) {
+        ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      }
+    });
+
+    // Export Poster as PNG
+    exportBtn.addEventListener('click', async () => {
+      exportBtn.disabled = true;
+      const originalContent = exportBtn.innerHTML;
+      exportBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 正在渲染超清海报...`;
+      lucide.createIcons();
+
+      try {
+        const canvas = await html2canvas(posterCard, {
+          scale: 2, // 2x for Retina sharp output
+          useCORS: true,
+          backgroundColor: null
+        });
+
+        const link = document.createElement('a');
+        link.download = `AI-Quote-Poster-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (err) {
+        console.error('Export failed:', err);
+        alert('海报导出失败，请重试！');
+      } finally {
+        exportBtn.disabled = false;
+        exportBtn.innerHTML = originalContent;
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

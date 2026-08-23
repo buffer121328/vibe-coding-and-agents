@@ -1,0 +1,84 @@
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  // 当前激活的预设名称
+  "preset": "mimo-free",
+  "presets": {
+    "mimo-free": {
+      // 1. 总指挥官：负责拆解全局需求、统筹调度
+      "orchestrator": {
+        "model": "opencode/mimo-v2.5-free",
+        "skills": ["*"],                    // 允许使用所有已挂载技能
+        "mcps": ["*", "!context7"]          // 挂载所有 MCP 工具，但排除 context7
+      },
+      // 2. 智囊顾问：攻克疑难算法、架构设计与高难度推导
+      "oracle": {
+        "model": "opencode/mimo-v2.5-free",
+        "variant": "max",                   // 开启最高思考强度
+        "skills": ["simplify"],             // 专门挂载代码精简技能
+        "mcps": []
+      },
+      // 3. 图书管理员：专职查阅文档、全库检索、外部资料搜索
+      "librarian": {
+        "model": "opencode/mimo-v2.5-free",
+        "skills": [],
+        "mcps": ["websearch", "grep_app"]   // 赋予联网搜索与全网代码检索权限
+      },
+      // 4. 代码探路者：极速扫描项目结构、定位文件与梳理依赖关系
+      "explorer": {
+        "model": "opencode/mimo-v2.5-free",
+        "skills": [],
+        "mcps": []
+      },
+      // 5. 前端/UI 设计师：负责页面布局、交互设计与样式美化
+      "designer": {
+        "model": "opencode/mimo-v2.5-free",
+        "variant": "high",
+        "skills": ["agent-browser"],        // 挂载浏览器端到端测试技能
+        "mcps": []
+      },
+      // 6. Bug 修复专家：针对编译报错、单测失败精准打补丁
+      "fixer": {
+        "model": "opencode/mimo-v2.5-free",
+        "variant": "high",
+        "skills": [],
+        "mcps": []
+      }
+    },
+    // 备用预设：使用多个免费模型
+    "multi-free": {
+      "orchestrator": {
+        "model": "opencode/mimo-v2.5-free",
+        "skills": ["*"],
+        "mcps": ["*", "!context7"]
+      },
+      "oracle": {
+        "model": "opencode/hy3-free",
+        "variant": "max",
+        "skills": ["simplify"],
+        "mcps": []
+      },
+      "librarian": {
+        "model": "opencode/muse-spark-1.2-contributor-free",
+        "skills": [],
+        "mcps": ["websearch", "grep_app"]
+      },
+      "explorer": {
+        "model": "opencode/nemotron-3.5-lightning-free",
+        "skills": [],
+        "mcps": []
+      },
+      "designer": {
+        "model": "opencode/mimo-v2.5-free",
+        "variant": "high",
+        "skills": ["agent-browser"],
+        "mcps": []
+      },
+      "fixer": {
+        "model": "opencode/hy3-free",
+        "variant": "high",
+        "skills": [],
+        "mcps": []
+      }
+    }
+  }
+}

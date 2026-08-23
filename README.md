@@ -75,7 +75,13 @@ vibe_coding/
 │   ├── 06_模拟面试流与多专家技术复盘.md               # 4.6 简历懒加载、Python问答记忆拼接、面试引擎与HTML报告导出
 │   ├── 07_多专家圆桌式简历优化流水线.md               # 4.7 JD匹配+HR审核+内容优化师、圆桌收敛与精修简历HTML
 │   └── 08_工作流调试发布与端到端自测.md               # 4.8 单节点调试、高频避坑清单、发布API集成与Agent节点局限性反思
-├── 05_OpenCode实战/                                   # 第五章：OpenCode 实战
+├── 05_OpenCode实战/                                   # 第五章：OpenCode 实战（开源终端与多智能体意图编排）
+│   ├── README.md                                      # 第五章导读与全景知识图谱
+│   ├── 01_OpenCode双端下载与主界面设置指南.md         # 5.1 CLI/Desktop 双端安装、主界面拆解与通用提供商设置
+│   ├── 02_高级配置_MCP与Skills及omo_slim实战.md       # 5.2 opencode.jsonc 核心拆解、MCP/Skills 挂载与 omo-slim 实战
+│   ├── 03_极速破冰_意图驱动单文件小工具实战.md        # 5.3 5分钟破冰、单文件免依赖应用规范与赛博木鱼实战
+│   ├── 04_进阶实战_动态交互网页与AI灵感卡片生成器.md  # 5.4 omo-slim 专家协同、高审美 UI 与灵感卡片工坊
+│   └── 05_极简全栈_FastAPI与SQLite个人博客实战.md     # 5.5 极简全栈、FastAPI RESTful API、原生 SQLite 与个人博客
 ├── 06_Trae实战/                                       # 第六章：Trae 实战
 ├── 07_Codex实战/                                      # 第七章：Codex 实战
 ├── 08_手搓Agent/                                      # 第八章：手搓 Agent
