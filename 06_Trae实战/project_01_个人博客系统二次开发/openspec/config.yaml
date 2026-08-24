@@ -1,0 +1,37 @@
+schema: spec-driven
+
+context: |
+  项目：个人博客系统（FastAPI + SQLite + 单文件 HTML 前端）
+  技术栈：
+    - 后端：Python 3.12, FastAPI, SQLAlchemy, SQLite, uvicorn
+    - 前端：单文件 index.html, TailwindCSS CDN, Marked.js, Highlight.js, Lucide Icons
+    - 依赖管理：uv
+    - 测试：pytest + TestClient（后端），agent-browser（前端）
+  约定：
+    - RESTful API：/api/posts, /api/categories
+    - 单文件前端，零 npm 依赖，CDN 引入
+    - 深色主题 + 玻璃拟态 UI
+    - ATDD：验收测试先行
+  当前状态：阶段一二已完成（后端 CRUD + 测试全绿），需要实现阶段三（前端）和阶段四（联调）
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

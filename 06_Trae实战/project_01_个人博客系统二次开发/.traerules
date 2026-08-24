@@ -1,0 +1,13 @@
+# Trae Project Rules (.traerules)
+
+## 项目基础信息
+- 项目名称：个人博客系统（二次开发实战版）
+- 技术栈：FastAPI + SQLite + SQLAlchemy 2.0 + HTML5/TailwindCSS + uv
+- 运行命令：`uv run uvicorn main:app --reload --port 8000`
+- 测试命令：`uv run pytest -v`
+
+## 开发与二次开发原则
+1. 保持分层清晰：`models.py`（ORM 表结构）、`schemas.py`（Pydantic DTO）、`database.py`（会话与引擎）、`main.py`（路由与接口）、`index.html`（前端单页面）。
+2. 安全规范：涉及用户注册登录必须采用密码哈希（bcrypt）与 JWT 鉴权，保护私有操作。
+3. 遵循 ATDD：新增或改造接口必须在 `test_main.py` 中编写/更新对应的单元与集成测试。
+4. UI 规范：维持深色玻璃拟态质感（`bg-white/5 backdrop-blur-md border-white/10`）与丝滑交互。
