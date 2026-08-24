@@ -40,7 +40,9 @@ graph TD
     end
 
     subgraph Step5 ["第五步：经典轻量全栈与数据库实战"]
-        E1["05 极简全栈：FastAPI 与 SQLite 个人博客实战<br/>(经典 RESTful API / 原生 SQLite 存储 / 完整 CRUD 闭环 / Markdown 渲染)"]
+        E1["05 极简全栈实战（上）：基建准备与阶段拆分规划<br/>(OpenSpec / CodeGraph / uv / 阶段拆分心智 / docs 规划)"]
+        E2["06 极简全栈实战（下）：前后端编码落地与全链路交付<br/>(FastAPI CRUD / SQLite 持久化 / TailwindCSS / Markdown 渲染)"]
+        E1 --> E2
     end
 
     Step1 --> Step2
@@ -60,7 +62,7 @@ graph TD
    - macOS / Windows / Linux 跨平台双端一键安装指南；
    - 桌面主界面结构深度拆解与功能分区全景图；
    - 设置中心保姆级实操（通用布局、语言、自动权限、思考模型推理摘要、模型提供商接入与 API 绑定）。
-2. **[5.2 高级配置：`opencode.jsonc`](./02_高级配置_MCP与Skills及omo_slim实战.md)** **[核心拆解、MCP、Skills 与](./02_高级配置_MCP与Skills及omo_slim实战.md)** **[`omo-slim`进阶](./02_高级配置_MCP与Skills及omo_slim实战.md)**&#x20;
+2. **[5.2 高级配置：`opencode.jsonc` 核心拆解、MCP、Skills 与 `omo-slim` 进阶](./02_高级配置：MCP、Skills及omo_slim.md)** 
    - 揭秘 OpenCode 的中枢控制脑：`opencode.jsonc` 字段逐行解析与超时调优防坑秘籍；
    - MCP（Model Context Protocol）工具扩展协议本地与远程配置；
    - Agent Skills 技能即插即用战术包挂载；
@@ -69,8 +71,14 @@ graph TD
    - 体验“一句话动嘴即交付”，通过 Plan/Build 双模对齐与交付，利用 `.opencode/skills/` 中的 `single-file-app` 与 `html5-canvas-artist` 打造兼具 Web Audio 原生合成音效、60fps Canvas 霓虹粒子与 LocalStorage 本地持久化的免依赖单文件交互小工具。
 4. **[5.4 进阶实战：动态交互网页与 AI 灵感卡片生成器](./04_进阶实战_动态交互网页与AI灵感卡片生成器.md)**
    - 玩转 `omo-slim` 专家多智能体协同，借力免费模型零成本配置，结合 `tailwind-ui-master` 与 `html5-canvas-artist` 打造集金句提炼、5 大主题切换、Canvas 粒子动效与一键导出 Retina 高清海报于一体的高质感动态交互作品。
-5. **[5.5 极简全栈：FastAPI 与 SQLite 个人博客系统实战](./05_极简全栈_FastAPI与SQLite个人博客实战.md)** 🚧
-   - 经典传统全栈原型，利用 OpenCode 自动化生成 FastAPI 后端 API、原生 SQLite 数据持久化与现代响应式 Markdown 文章管理前端，打通完整 CRUD 闭环。
+5. **[5.5 极简全栈实战（上）：基建准备与 OpenSpec 阶段拆分规划](./05_极简全栈_FastAPI与SQLite个人博客实战(上).md)**
+   - 工业级轻量全栈基础设施：OpenSpec（规格驱动框架）、CodeGraph（代码语义图谱精准检索）、uv（超极速包管理）与项目专属规则大脑 `AGENTS.md`；
+   - 深度剖析**为什么全栈项目必须进行阶段拆分**（降低试错排错成本与秒级回滚、突破 200k 上下文窗口限制与大型工程习惯养成）；
+   - 在 `project_03_个人博客系统/docs/` 下沉淀 4 大阶段工程蓝图与极简 5 文件目录结构。
+6. **[5.6 极简全栈实战（下）：前后端编码落地与全链路交付](./06_极简全栈_FastAPI与SQLite个人博客实战(下).md)**
+   - 依照 `docs/` 推进路线图全面落地编码：分层构建 FastAPI RESTful API 与 SQLite 持久化；
+   - 编写单文件 `index.html`，实现 TailwindCSS 暗黑玻璃拟态、Marked.js Markdown 实时双栏预览与详情阅读器；
+   - 完成前后端全链路联调与 CRUD 全套业务闭环自测。
 
 ***
 
@@ -80,7 +88,7 @@ graph TD
 - **[.opencode/skills/](./.opencode/skills/)**：内置 5 大前端交互神级技能包（`tailwind-ui-master`、`agent-browser`、`single-file-app`、`html5-canvas-artist`、`simplify`）；
 - **[project\_01\_赛博解压小工具/](./project_01_赛博解压小工具/)**：5.3 节配套项目代码目录；
 - **[project\_02\_AI灵感卡片生成器/](./project_02_AI灵感卡片生成器/)**：5.4 节配套项目代码目录；
-- **[project\_03\_个人博客系统/](./project_03_个人博客系统/)**：5.5 节配套全栈项目代码目录。
+- **[project\_03\_个人博客系统/](./project_03_个人博客系统/)**：5.5 与 5.6 节配套全栈项目代码目录。
 
 ***
 

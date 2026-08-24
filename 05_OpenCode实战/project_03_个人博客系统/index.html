@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人博客系统</title>
+
+  <!-- CDN 依赖 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Noto Serif SC"', 'serif'],
+            body: ['"Noto Sans SC"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== 基础样式 ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: #030712;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ========== 背景动态网格 ========== */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ========== 背景光晕 ========== */
+    .bg-glow {
+      position: fixed; z-index: 0; pointer-events: none;
+      width: 600px; height: 600px; border-radius: 50%;
+      filter: blur(120px); opacity: 0.15;
+    }
+    .bg-glow-1 { top: -200px; left: -100px; background: #6366f1; }
+    .bg-glow-2 { bottom: -200px; right: -100px; background: #a855f7; }
+    .bg-glow-3 { top: 40%; left: 50%; transform: translateX(-50%); background: #ec4899; opacity: 0.08; }
+
+    /* ========== 滚动条 ========== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* ========== 模态框过渡 ========== */
+    .modal-overlay {
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-panel {
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.active .modal-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    /* ========== 卡片悬浮 ========== */
+    .post-card {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.15), 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    /* ========== 分类药丸 ========== */
+    .cat-pill {
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    .cat-pill:hover { background: rgba(255,255,255,0.12); }
+    .cat-pill.active {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+
+    /* ========== Markdown 内容样式 ========== */
+    .md-content { line-height: 1.8; color: #e2e8f0; }
+    .md-content h1 { font-size: 1.8rem; font-weight: 700; margin: 1.5rem 0 1rem; color: #f1f5f9; }
+    .md-content h2 { font-size: 1.4rem; font-weight: 600; margin: 1.2rem 0 0.8rem; color: #f1f5f9; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+    .md-content h3 { font-size: 1.2rem; font-weight: 600; margin: 1rem 0 0.6rem; color: #f1f5f9; }
+    .md-content p { margin: 0.6rem 0; }
+    .md-content ul, .md-content ol { margin: 0.6rem 0; padding-left: 1.5rem; }
+    .md-content li { margin: 0.3rem 0; }
+    .md-content a { color: #818cf8; text-decoration: underline; text-underline-offset: 2px; }
+    .md-content a:hover { color: #a5b4fc; }
+    .md-content blockquote {
+      border-left: 3px solid #6366f1; padding: 0.8rem 1rem; margin: 1rem 0;
+      background: rgba(99,102,241,0.05); border-radius: 0 0.5rem 0.5rem 0;
+      color: #94a3b8;
+    }
+    .md-content code:not(pre code) {
+      background: rgba(255,255,255,0.08); padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem; font-size: 0.88em; color: #c4b5fd;
+    }
+    .md-content pre {
+      background: #0d1117; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem; padding: 1rem 1.2rem; overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .md-content pre code { font-size: 0.88rem; color: #e2e8f0; }
+    .md-content img { max-width: 100%; border-radius: 0.75rem; margin: 1rem 0; }
+    .md-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .md-content th, .md-content td {
+      border: 1px solid rgba(255,255,255,0.08); padding: 0.6rem 0.8rem; text-align: left;
+    }
+    .md-content th { background: rgba(255,255,255,0.05); font-weight: 600; }
+    .md-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 0; }
+
+    /* ========== Toast 通知 ========== */
+    .toast-container {
+      position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .toast {
+      padding: 0.8rem 1.2rem; border-radius: 0.75rem;
+      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.88rem; color: #f1f5f9; min-width: 220px;
+      animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .toast.success { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); }
+    .toast.error { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); }
+    .toast.info { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); }
+    .toast.removing { animation: toastOut 0.3s ease forwards; }
+
+    @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(40px); } }
+
+    /* ========== 骨架屏 ========== */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 0.5rem;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ========== 编辑器分栏 ========== */
+    .editor-pane {
+      display: flex; flex-direction: column;
+    }
+    .editor-textarea {
+      background: #0d1117; color: #e2e8f0; border: none; outline: none;
+      resize: none; font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.9rem; line-height: 1.7; padding: 1rem; width: 100%; height: 100%;
+    }
+    .editor-textarea::placeholder { color: #475569; }
+
+    /* ========== 入场动画 ========== */
+    .fade-up {
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+
+    /* ========== 响应式全屏模态（移动端） ========== */
+    @media (max-width: 640px) {
+      .reader-modal-panel, .editor-modal-panel {
+        width: 100% !important; max-width: 100% !important;
+        height: 100% !important; max-height: 100% !important;
+        border-radius: 0 !important; margin: 0 !important;
+      }
+      .editor-split { flex-direction: column !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-200 antialiased">
+
+  <!-- ========== 背景装饰 ========== -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- ========== 主内容区 ========== -->
+  <div class="relative z-10 min-h-screen flex flex-col">
+
+    <!-- ===== 顶部导航 ===== -->
+    <nav class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/70 border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+
+          <!-- 左侧：标题 + 统计 -->
+          <div class="flex items-center gap-4 min-w-0">
+            <h1 class="text-lg sm:text-xl font-bold font-display bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent truncate">
+              个人博客
+            </h1>
+            <div id="navStats" class="hidden sm:flex items-center gap-3 text-xs text-slate-500">
+              <span class="flex items-center gap-1">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                <span id="statArticles">0 篇文章</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span id="statViews">0 次浏览</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 中间：搜索框 -->
+          <div class="hidden md:flex flex-1 max-w-md mx-8">
+            <div class="relative w-full">
+              <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="搜索文章标题或内容..."
+                class="w-full pl-10 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 transition-all"
+              />
+            </div>
+          </div>
+
+          <!-- 右侧：写文章按钮 -->
+          <button
+            id="btnNewPost"
+            class="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            <i data-lucide="pen-line" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">写文章</span>
+          </button>
+        </div>
+
+        <!-- 移动端搜索框 -->
+        <div class="md:hidden pb-3">
+          <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+            <input
+              id="searchInputMobile"
+              type="text"
+              placeholder="搜索文章..."
+              class="w-full pl-10 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all"
+            />
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== 分类筛选 ===== -->
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+      <div id="categoryBar" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide" style="-ms-overflow-style:none; scrollbar-width:none;">
+        <!-- 分类药丸由 JS 动态渲染 -->
+        <div class="skeleton h-9 w-16 rounded-full shrink-0"></div>
+        <div class="skeleton h-9 w-20 rounded-full shrink-0"></div>
+        <div class="skeleton h-9 w-14 rounded-full shrink-0"></div>
+        <div class="skeleton h-9 w-24 rounded-full shrink-0"></div>
+      </div>
+    </div>
+
+    <!-- ===== 文章卡片网格 ===== -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div id="postsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- 骨架屏占位 -->
+        <div class="skeleton h-52 rounded-2xl"></div>
+        <div class="skeleton h-52 rounded-2xl"></div>
+        <div class="skeleton h-52 rounded-2xl"></div>
+      </div>
+
+      <!-- 空状态 -->
+      <div id="emptyState" class="hidden text-center py-20">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/5 border border-white/10 mb-6">
+          <i data-lucide="inbox" class="w-10 h-10 text-slate-600"></i>
+        </div>
+        <h3 class="text-lg font-medium text-slate-400 mb-2">暂无文章</h3>
+        <p class="text-sm text-slate-600 mb-6">点击「写文章」开始创作你的第一篇博客吧</p>
+        <button
+          onclick="openEditor()"
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 transition-all"
+        >
+          ✍️ 写第一篇文章
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== Markdown 阅读器模态框 ===== -->
+  <div id="readerModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="reader-modal-panel modal-panel w-full max-w-3xl max-h-[85vh] bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <!-- 顶部栏 -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/5 shrink-0">
+        <div class="min-w-0">
+          <span id="readerCategory" class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 mb-1"></span>
+          <h2 id="readerTitle" class="text-xl font-bold text-slate-100 truncate font-display"></h2>
+        </div>
+        <button onclick="closeReader()" class="shrink-0 p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <!-- 元信息 -->
+      <div id="readerMeta" class="flex flex-wrap items-center gap-4 px-6 py-3 text-xs text-slate-500 border-b border-white/5 shrink-0"></div>
+      <!-- 内容区 -->
+      <div id="readerContent" class="flex-1 overflow-y-auto px-6 py-5 md-content"></div>
+    </div>
+  </div>
+
+  <!-- ===== 编辑器模态框 ===== -->
+  <div id="editorModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="editor-modal-panel modal-panel w-full max-w-5xl h-[90vh] bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <!-- 顶部栏 -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/5 shrink-0">
+        <h2 id="editorHeading" class="text-lg font-bold text-slate-100 font-display">写文章</h2>
+        <button onclick="closeEditor()" class="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- 元信息输入 -->
+      <div class="px-6 py-4 border-b border-white/5 space-y-3 shrink-0">
+        <input
+          id="editorTitle"
+          type="text"
+          placeholder="文章标题"
+          class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm font-medium transition-all"
+        />
+        <div class="flex gap-3 flex-wrap sm:flex-nowrap">
+          <input
+            id="editorCategory"
+            type="text"
+            placeholder="分类（如：技术、生活）"
+            class="flex-1 min-w-0 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all"
+          />
+          <input
+            id="editorTags"
+            type="text"
+            placeholder="标签（逗号分隔，如：Python, FastAPI）"
+            class="flex-1 min-w-0 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all"
+          />
+        </div>
+      </div>
+
+      <!-- 分栏编辑器 -->
+      <div class="editor-split flex flex-1 min-h-0">
+        <!-- 左：Markdown 源码 -->
+        <div class="editor-pane flex-1 border-r border-white/5 min-w-0">
+          <div class="px-4 py-2 text-xs text-slate-500 font-medium border-b border-white/5 flex items-center gap-1.5">
+            <i data-lucide="code-2" class="w-3.5 h-3.5"></i> Markdown
+          </div>
+          <textarea
+            id="editorTextarea"
+            class="editor-textarea"
+            placeholder="在此输入 Markdown 内容...&#10;&#10;# 标题&#10;&#10;正文内容，支持 **加粗**、*斜体*、`代码` 等语法。"
+          ></textarea>
+        </div>
+        <!-- 右：实时预览 -->
+        <div class="editor-pane flex-1 min-w-0">
+          <div class="px-4 py-2 text-xs text-slate-500 font-medium border-b border-white/5 flex items-center gap-1.5">
+            <i data-lucide="eye" class="w-3.5 h-3.5"></i> 预览
+          </div>
+          <div id="editorPreview" class="flex-1 overflow-y-auto px-5 py-4 md-content" style="background: #0f1318;"></div>
+        </div>
+      </div>
+
+      <!-- 底部操作栏 -->
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-white/5 shrink-0">
+        <button
+          onclick="saveDraft()"
+          class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-sm font-medium transition-all"
+        >
+          💾 保存草稿
+        </button>
+        <button
+          onclick="publishPost()"
+          class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+        >
+          🚀 发布
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 删除确认模态框 ===== -->
+  <div id="deleteModal" class="modal-overlay fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="modal-panel w-full max-w-sm bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 mb-4">
+        <i data-lucide="trash-2" class="w-7 h-7 text-red-400"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-100 mb-2">确认删除</h3>
+      <p class="text-sm text-slate-400 mb-6">删除后无法恢复，确定要继续吗？</p>
+      <div class="flex gap-3">
+        <button
+          onclick="closeDeleteModal()"
+          class="flex-1 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-sm font-medium transition-all"
+        >
+          取消
+        </button>
+        <button
+          id="btnConfirmDelete"
+          onclick="confirmDelete()"
+          class="flex-1 px-4 py-2.5 rounded-xl bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium shadow-lg transition-all"
+        >
+          确认删除
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Toast 容器 ===== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===== JavaScript ===== -->
+  <script>
+    // ========================================================
+    // 全局状态
+    // ========================================================
+    const API_BASE = '';  // 同源，无需前缀
+    let allPosts = [];          // 缓存所有文章
+    let categories = [];        // 分类列表
+    let currentCategory = '';   // 当前选中的分类（空 = 全部）
+    let currentSearch = '';     // 当前搜索关键词
+    let editingPostId = null;   // 编辑中的文章 ID（null = 新建）
+    let deleteTargetId = null;  // 待删除的文章 ID
+    let searchTimer = null;     // 搜索防抖计时器
+
+    // ========================================================
+    // 工具函数
+    // ========================================================
+
+    // Toast 通知
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const icons = { success: 'check-circle', error: 'alert-circle', info: 'info' };
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i data-lucide="${icons[type]}" class="w-4 h-4 shrink-0"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons({ nodes: [toast] });
+      setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // 通用 fetch 封装
+    async function apiFetch(path, options = {}) {
+      try {
+        const url = API_BASE + path;
+        const config = {
+          headers: { 'Content-Type': 'application/json' },
+          ...options,
+        };
+        if (config.body && typeof config.body === 'object') {
+          config.body = JSON.stringify(config.body);
+        }
+        const res = await fetch(url, config);
+        if (res.status === 204) return null;
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || `请求失败 (${res.status})`);
+        }
+        return data;
+      } catch (err) {
+        if (err.name === 'TypeError' && err.message.includes('fetch')) {
+          throw new Error('网络连接失败，请检查后端是否启动');
+        }
+        throw err;
+      }
+    }
+
+    // 纯文本截取（去除 Markdown 标记）
+    function stripMd(text) {
+      return text
+        .replace(/```[\s\S]*?```/g, '')
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/!\[.*?\]\(.*?\)/g, '')
+        .replace(/\[([^\]]+)\]\(.*?\)/g, '$1')
+        .replace(/[#*_~>\-|]/g, '')
+        .replace(/\n+/g, ' ')
+        .trim();
+    }
+
+    // 格式化日期
+    function fmtDate(dateStr) {
+      const d = new Date(dateStr);
+      const now = new Date();
+      const diff = now - d;
+      if (diff < 60000) return '刚刚';
+      if (diff < 3600000) return `${Math.floor(diff / 60000)} 分钟前`;
+      if (diff < 86400000) return `${Math.floor(diff / 3600000)} 小时前`;
+      if (diff < 604800000) return `${Math.floor(diff / 86400000)} 天前`;
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    // ========================================================
+    // 数据加载
+    // ========================================================
+
+    // 加载分类
+    async function loadCategories() {
+      try {
+        categories = await apiFetch('/api/categories');
+        renderCategories();
+      } catch (err) {
+        console.error('加载分类失败:', err);
+      }
+    }
+
+    // 加载文章列表
+    async function loadPosts() {
+      try {
+        const params = new URLSearchParams();
+        if (currentCategory) params.set('category', currentCategory);
+        if (currentSearch) params.set('search', currentSearch);
+        const qs = params.toString();
+        allPosts = await apiFetch('/api/posts' + (qs ? '?' + qs : ''));
+        renderPosts();
+        updateStats();
+      } catch (err) {
+        showToast('加载文章失败: ' + err.message, 'error');
+      }
+    }
+
+    // 更新导航栏统计
+    function updateStats() {
+      document.getElementById('statArticles').textContent = allPosts.length + ' 篇文章';
+      const totalViews = allPosts.reduce((sum, p) => sum + (p.views || 0), 0);
+      document.getElementById('statViews').textContent = totalViews + ' 次浏览';
+    }
+
+    // ========================================================
+    // 渲染函数
+    // ========================================================
+
+    // 渲染分类药丸
+    function renderCategories() {
+      const bar = document.getElementById('categoryBar');
+      let html = `<button class="cat-pill ${!currentCategory ? 'active' : ''} px-4 py-2 rounded-full text-sm border border-white/10 bg-white/5 text-slate-300" data-cat="">全部</button>`;
+      categories.forEach(c => {
+        const active = currentCategory === c.category;
+        html += `<button class="cat-pill ${active ? 'active' : ''} px-4 py-2 rounded-full text-sm border border-white/10 bg-white/5 text-slate-300" data-cat="${c.category}">
+          ${c.category} <span class="ml-1 text-xs opacity-60">${c.count}</span>
+        </button>`;
+      });
+      bar.innerHTML = html;
+      // 绑定点击
+      bar.querySelectorAll('.cat-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          currentCategory = pill.dataset.cat;
+          renderCategories();
+          loadPosts();
+        });
+      });
+    }
+
+    // 渲染文章卡片
+    function renderPosts() {
+      const grid = document.getElementById('postsGrid');
+      const empty = document.getElementById('emptyState');
+
+      if (allPosts.length === 0) {
+        grid.classList.add('hidden');
+        empty.classList.remove('hidden');
+        lucide.createIcons({ nodes: [empty] });
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      empty.classList.add('hidden');
+
+      grid.innerHTML = allPosts.map((post, i) => {
+        const excerpt = stripMd(post.content).slice(0, 100);
+        const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+        return `
+          <article class="post-card fade-up stagger-${(i % 5) + 1} bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <!-- 卡片顶部渐变条 -->
+            <div class="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+
+            <div class="p-5 flex flex-col flex-1">
+              <!-- 分类标签 -->
+              <div class="flex items-center gap-2 mb-3">
+                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/20">${post.category || '未分类'}</span>
+                ${post.status === 'draft' ? '<span class="inline-block px-2 py-0.5 rounded-full text-xs bg-amber-500/15 text-amber-300 border border-amber-500/20">草稿</span>' : ''}
+              </div>
+
+              <!-- 标题 -->
+              <h3
+                class="text-lg font-bold text-slate-100 mb-2 cursor-pointer hover:text-indigo-300 transition-colors line-clamp-2 font-display"
+                onclick="openReader(${post.id})"
+                title="点击查看全文"
+              >${post.title}</h3>
+
+              <!-- 摘要 -->
+              <p class="text-sm text-slate-400 mb-4 line-clamp-3 flex-1">${excerpt || '暂无内容'}</p>
+
+              <!-- 标签 -->
+              ${tags.length ? `<div class="flex flex-wrap gap-1.5 mb-4">${tags.map(t => `<span class="px-2 py-0.5 rounded-md text-xs bg-white/5 text-slate-400 border border-white/5">#${t}</span>`).join('')}</div>` : ''}
+
+              <!-- 底部元信息 -->
+              <div class="flex items-center justify-between pt-3 border-t border-white/5 mt-auto">
+                <div class="flex items-center gap-3 text-xs text-slate-500">
+                  <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i>${post.views || 0}</span>
+                  <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${fmtDate(post.created_at)}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button
+                    onclick="openEditor(${post.id})"
+                    class="p-1.5 rounded-lg hover:bg-white/10 text-slate-500 hover:text-indigo-400 transition-colors"
+                    title="编辑"
+                  ><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
+                  <button
+                    onclick="openDeleteModal(${post.id})"
+                    class="p-1.5 rounded-lg hover:bg-white/10 text-slate-500 hover:text-red-400 transition-colors"
+                    title="删除"
+                  ><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      lucide.createIcons({ nodes: [grid] });
+    }
+
+    // ========================================================
+    // 阅读器
+    // ========================================================
+
+    async function openReader(id) {
+      const modal = document.getElementById('readerModal');
+      const content = document.getElementById('readerContent');
+      const title = document.getElementById('readerTitle');
+      const category = document.getElementById('readerCategory');
+      const meta = document.getElementById('readerMeta');
+
+      // 显示加载状态
+      content.innerHTML = `<div class="flex items-center justify-center py-20"><div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div></div>`;
+      title.textContent = '加载中...';
+      category.textContent = '';
+      meta.innerHTML = '';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      try {
+        const post = await apiFetch(`/api/posts/${id}?increment_views=true`);
+        title.textContent = post.title;
+        category.textContent = post.category || '未分类';
+
+        const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+        meta.innerHTML = `
+          <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i>${post.views} 次浏览</span>
+          <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i>${fmtDate(post.created_at)}</span>
+          ${post.updated_at !== post.created_at ? `<span class="flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>更新于 ${fmtDate(post.updated_at)}</span>` : ''}
+          ${tags.length ? tags.map(t => `<span class="px-2 py-0.5 rounded-md text-xs bg-white/5 text-slate-400">#${t}</span>`).join('') : ''}
+        `;
+
+        // 渲染 Markdown
+        content.innerHTML = `<div class="md-content">${marked.parse(post.content || '')}</div>`;
+        // 代码高亮
+        content.querySelectorAll('pre code').forEach(block => {
+          hljs.highlightElement(block);
+        });
+        lucide.createIcons({ nodes: [meta] });
+      } catch (err) {
+        content.innerHTML = `<div class="text-center py-16 text-red-400">加载失败: ${err.message}</div>`;
+      }
+    }
+
+    function closeReader() {
+      document.getElementById('readerModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ========================================================
+    // 编辑器
+    // ========================================================
+
+    function openEditor(postId = null) {
+      editingPostId = postId;
+      const modal = document.getElementById('editorModal');
+      const heading = document.getElementById('editorHeading');
+      const titleInput = document.getElementById('editorTitle');
+      const catInput = document.getElementById('editorCategory');
+      const tagsInput = document.getElementById('editorTags');
+      const textarea = document.getElementById('editorTextarea');
+      const preview = document.getElementById('editorPreview');
+
+      // 清空表单
+      titleInput.value = '';
+      catInput.value = '';
+      tagsInput.value = '';
+      textarea.value = '';
+      preview.innerHTML = '<p class="text-slate-600 text-sm">在左侧输入 Markdown，这里实时预览...</p>';
+
+      if (postId) {
+        heading.textContent = '编辑文章';
+        // 加载已有文章数据
+        apiFetch(`/api/posts/${postId}`).then(post => {
+          titleInput.value = post.title || '';
+          catInput.value = post.category || '';
+          tagsInput.value = post.tags || '';
+          textarea.value = post.content || '';
+          updatePreview();
+        }).catch(err => {
+          showToast('加载文章失败: ' + err.message, 'error');
+        });
+      } else {
+        heading.textContent = '写文章';
+      }
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons({ nodes: [modal] });
+    }
+
+    function closeEditor() {
+      document.getElementById('editorModal').classList.remove('active');
+      document.body.style.overflow = '';
+      editingPostId = null;
+    }
+
+    // 实时预览
+    function updatePreview() {
+      const textarea = document.getElementById('editorTextarea');
+      const preview = document.getElementById('editorPreview');
+      const md = textarea.value;
+      if (!md.trim()) {
+        preview.innerHTML = '<p class="text-slate-600 text-sm">在左侧输入 Markdown，这里实时预览...</p>';
+        return;
+      }
+      preview.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
+      preview.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+      });
+    }
+
+    // 绑定实时预览
+    document.getElementById('editorTextarea').addEventListener('input', updatePreview);
+
+    // 发布文章
+    async function publishPost() {
+      const title = document.getElementById('editorTitle').value.trim();
+      const content = document.getElementById('editorTextarea').value.trim();
+      const category = document.getElementById('editorCategory').value.trim();
+      const tags = document.getElementById('editorTags').value.trim();
+
+      if (!title) { showToast('请输入文章标题', 'error'); return; }
+      if (!content) { showToast('请输入文章内容', 'error'); return; }
+
+      const body = { title, content, category, tags, status: 'published' };
+
+      try {
+        if (editingPostId) {
+          await apiFetch(`/api/posts/${editingPostId}`, { method: 'PUT', body });
+          showToast('文章更新成功！', 'success');
+        } else {
+          await apiFetch('/api/posts', { method: 'POST', body });
+          showToast('文章发布成功！', 'success');
+        }
+        closeEditor();
+        loadPosts();
+        loadCategories();
+      } catch (err) {
+        showToast('操作失败: ' + err.message, 'error');
+      }
+    }
+
+    // 保存草稿
+    async function saveDraft() {
+      const title = document.getElementById('editorTitle').value.trim();
+      const content = document.getElementById('editorTextarea').value.trim();
+      const category = document.getElementById('editorCategory').value.trim();
+      const tags = document.getElementById('editorTags').value.trim();
+
+      if (!title) { showToast('请输入文章标题', 'error'); return; }
+
+      const body = { title, content, category, tags, status: 'draft' };
+
+      try {
+        if (editingPostId) {
+          await apiFetch(`/api/posts/${editingPostId}`, { method: 'PUT', body });
+          showToast('草稿已更新', 'success');
+        } else {
+          await apiFetch('/api/posts', { method: 'POST', body });
+          showToast('草稿已保存', 'success');
+        }
+        closeEditor();
+        loadPosts();
+        loadCategories();
+      } catch (err) {
+        showToast('保存失败: ' + err.message, 'error');
+      }
+    }
+
+    // ========================================================
+    // 删除确认
+    // ========================================================
+
+    function openDeleteModal(id) {
+      deleteTargetId = id;
+      document.getElementById('deleteModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons({ nodes: [document.getElementById('deleteModal')] });
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+      document.body.style.overflow = '';
+      deleteTargetId = null;
+    }
+
+    async function confirmDelete() {
+      if (!deleteTargetId) return;
+      const btn = document.getElementById('btnConfirmDelete');
+      btn.disabled = true;
+      btn.textContent = '删除中...';
+
+      try {
+        await apiFetch(`/api/posts/${deleteTargetId}`, { method: 'DELETE' });
+        showToast('文章已删除', 'success');
+        closeDeleteModal();
+        loadPosts();
+        loadCategories();
+      } catch (err) {
+        showToast('删除失败: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '确认删除';
+      }
+    }
+
+    // ========================================================
+    // 搜索（防抖）
+    // ========================================================
+
+    function handleSearch(e) {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        currentSearch = e.target.value.trim();
+        loadPosts();
+      }, 350);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+    document.getElementById('searchInputMobile').addEventListener('input', function(e) {
+      document.getElementById('searchInput').value = e.target.value;
+      handleSearch(e);
+    });
+
+    // ========================================================
+    // 模态框键盘/点击关闭
+    // ========================================================
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('deleteModal').classList.contains('active')) {
+          closeDeleteModal();
+        } else if (document.getElementById('editorModal').classList.contains('active')) {
+          closeEditor();
+        } else if (document.getElementById('readerModal').classList.contains('active')) {
+          closeReader();
+        }
+      }
+    });
+
+    // 点击遮罩关闭
+    document.getElementById('readerModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeReader();
+    });
+    document.getElementById('editorModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeEditor();
+    });
+    document.getElementById('deleteModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeDeleteModal();
+    });
+
+    // ========================================================
+    // 入口按钮
+    // ========================================================
+
+    document.getElementById('btnNewPost').addEventListener('click', () => openEditor());
+
+    // ========================================================
+    // 初始化
+    // ========================================================
+
+    (async function init() {
+      lucide.createIcons();
+      await Promise.all([loadCategories(), loadPosts()]);
+      lucide.createIcons();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,2 +1,12 @@
 .DS_Store
 05_OpenCode实战/.opencode/node_modules
+
+# Python 项目产物（避免把虚拟环境与缓存提交进仓库）
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# 运行时 SQLite 数据库
+*.db

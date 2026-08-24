@@ -173,6 +173,21 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 开启 LSP 后，OpenCode 会在后台自动调用项目语言的原生 Language Server（如 TypeScript LSP、Pyright、gopls 等），使 AI 在写完代码后能像人类 IDE 一样自动捕获语法错误和类型不匹配，极大提高生成代码的编译通过率！
 
+#### 5. 环境变量与密钥安全（防泄露铁律）
+
+**切勿把真实 API Key 明文写进 `opencode.jsonc`！** 配置文件一旦分享或提交到代码仓，密钥即告泄露。OpenCode 支持在配置中通过 **`${环境变量名}`** 引用环境变量：
+
+```jsonc
+"options": {
+  "baseURL": "https://api.deepseek.com",
+  "apiKey": "${DEEPSEEK_API_KEY}"   // 从环境变量读取，避免明文
+}
+```
+
+你可以在项目根目录放置 `.env` 文件（并加入 `.gitignore`），OpenCode 启动时会自动加载；也可以在终端 `export DEEPSEEK_API_KEY=sk-xxx` 后重启 OpenCode。这样既安全，多台设备复用时也无需改动配置。
+
+> 💡 API Key 的申请与防泄露规范，可回顾 [3.2 API Key 原理申请与安全防泄露](../03_脚手架搭建/02_APIKey原理申请与安全防泄露.md)。
+
 ***
 
 ## 🔌 四、MCP（Model Context Protocol）工具扩展实战
@@ -192,6 +207,8 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
   }
 }
 ```
+
+> 💡 **CodeGraph 自动同步（Auto-Sync）**：挂载 MCP 前，请先在项目根目录执行一次 `codegraph init` 完成索引初始化（详见 [5.5 节](./05_极简全栈_FastAPI与SQLite个人博客实战(上).md)）。初始化完成后，CodeGraph 会在后台启动守护进程（Daemon）并开启文件监听（File Watcher），每次代码保存都会**毫秒级增量同步**到 `.codegraph/codegraph.db`，全程无需手动重建索引。
 
 ### 2. 远程 MCP 挂载（Remote SSE / HTTP）
 
