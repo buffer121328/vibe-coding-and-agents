@@ -1,5 +1,4 @@
 .DS_Store
-05_OpenCode实战/.opencode/node_modules
 
 # Python 项目产物（避免把虚拟环境与缓存提交进仓库）
 __pycache__/
@@ -7,6 +6,16 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+env/
+
+# 第三方依赖
+node_modules/
+site-packages/
+
+# 环境变量：排除各目录内的真实 .env 密钥文件，保留 .env.example 模板
+.env
+.env.*
+!.env.example
 
 # 运行时 SQLite 数据库
 *.db

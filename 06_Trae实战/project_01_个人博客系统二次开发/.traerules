@@ -2,12 +2,14 @@
 
 ## 项目基础信息
 - 项目名称：个人博客系统（二次开发实战版）
-- 技术栈：FastAPI + SQLite + SQLAlchemy 2.0 + HTML5/TailwindCSS + uv
+- 技术栈：FastAPI + SQLite + SQLAlchemy 2.0 + HTML5/TailwindCSS + uv（AI 能力：openai SDK + python-dotenv，默认 DeepSeek 兼容接口）
 - 运行命令：`uv run uvicorn main:app --reload --port 8000`
 - 测试命令：`uv run pytest -v`
 
 ## 开发与二次开发原则
-1. 保持分层清晰：`models.py`（ORM 表结构）、`schemas.py`（Pydantic DTO）、`database.py`（会话与引擎）、`main.py`（路由与接口）、`index.html`（前端单页面）。
-2. 安全规范：涉及用户注册登录必须采用密码哈希（bcrypt）与 JWT 鉴权，保护私有操作。
-3. 遵循 ATDD：新增或改造接口必须在 `test_main.py` 中编写/更新对应的单元与集成测试。
-4. UI 规范：维持深色玻璃拟态质感（`bg-white/5 backdrop-blur-md border-white/10`）与丝滑交互。
+0. OpenSpec 规格驱动（阶段级强约束）：每个阶段必须按 `explore → propose（四件套 proposal/spec/design/tasks）→ apply（实现+验收）→ sync/archive（合并主规格+归档）` 闭环推进；propose 四件套评审通过前**禁止**进入编码，apply 后**必须**归档；ATDD 只是 apply 阶段内部的红绿灯，不能替代阶段闭环。
+1. 保持分层清晰：`models.py`（ORM 表结构：User/Post(含 summary 导读)/Comment/Like）、`schemas.py`（Pydantic DTO，含分页/评论/点赞/AI DTO）、`database.py`（会话与引擎）、`security.py`（bcrypt 哈希 / JWT / 鉴权守卫，含 `get_optional_user`）、`ai_service.py`（OpenAI 兼容客户端与摘要/标签/标题/分类生成）、`main.py`（路由与接口，含分页/评论/点赞/AI 接口与后台自动生成）、`index.html`（前端单页面，含 AI 灵感副驾与导读展示）。
+2. 安全规范：涉及用户注册登录必须采用密码哈希（bcrypt）与 JWT 鉴权，保护私有操作；评论/点赞等社交写操作须登录；点赞用 `likes` 表唯一约束幂等防刷。
+3. AI 能力红线：`LLM_API_KEY` 只能存后端 `.env`（已忽略）经 `os.getenv` 读取，严禁落库/进响应/进前端；自动生成「按字段独立回填」绝不覆盖人工 `summary`/`tags`；未配 key 或调用失败必须优雅降级，博客主流程（发布/浏览/评论/点赞）始终可用；AI 输出强制 `json_object` + 解析兜底。
+4. 遵循 ATDD：新增或改造接口必须在 `test_main.py` 中编写/更新对应的单元与集成测试（AI 用例 stub `ai_service._chat_json`，不消耗真实 token）。
+5. UI 规范：维持深色玻璃拟态质感（`bg-white/5 backdrop-blur-md border-white/10`）与丝滑交互。

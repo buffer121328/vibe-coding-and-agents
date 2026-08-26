@@ -90,6 +90,31 @@ graph TD
 - **[project\_02\_AI灵感卡片生成器/](./project_02_AI灵感卡片生成器/)**：5.4 节配套项目代码目录；
 - **[project\_03\_个人博客系统/](./project_03_个人博客系统/)**：5.5 与 5.6 节配套全栈项目代码目录。
 
+## 🚀 启动说明（Quick Start）
+
+本章是 **OpenCode CLI / Desktop** 驱动的实战章节，分为“启动智能体”和“运行配套项目”两部分：
+
+### 1. 启动 OpenCode 智能体
+```bash
+# 终端启动 CLI（推荐在项目根目录执行，OpenCode 会自动读取 ./opencode.jsonc 与 .opencode/ 配置）
+opencode
+
+# 或打开 OpenCode Desktop 桌面应用，选择工作目录后进入对话
+```
+> 📌 模型供应商与 API Key 在 `opencode.jsonc` / `.opencode/oh-my-opencode-slim.jsonc` 中配置，首次使用按提示绑定即可（详见 [5.1 双端下载与主界面设置指南](01_OpenCode双端下载与主界面设置指南.md)）。
+
+### 2. 运行配套项目
+- **单文件小工具**（赛博木鱼 / 番茄钟 / AI 灵感卡片）：这些是零依赖纯前端 HTML，**直接双击文件**即可在浏览器运行；
+- **个人博客全栈项目**（`project_03_个人博客系统/`，FastAPI + SQLite + uv）：
+```bash
+cd project_03_个人博客系统
+uv sync                          # 首次：创建 .venv 并安装依赖
+uv run uvicorn main:app --reload --port 8000   # 启动后端
+```
+浏览器访问 `http://127.0.0.1:8000` 即可体验前后端全链路（CRUD / Markdown 渲染）。
+
+> 💡 **IDE 提示**：若在 VS Code / Trae 中打开博客项目，请把解释器选择为 `project_03_个人博客系统/.venv/bin/python`，可消除未安装依赖导致的红色波浪线，并支持直接点 ▶ 运行。
+
 ***
 
 ## 🔗 官方权威与学习资源

@@ -8,11 +8,13 @@ context: |
     - 依赖管理：uv
     - 测试：pytest + TestClient（后端），agent-browser（前端）
   约定：
-    - RESTful API：/api/posts, /api/categories
+    - RESTful API：/api/posts, /api/categories, /api/auth（login/me）, /api/users（仅 admin）
     - 单文件前端，零 npm 依赖，CDN 引入
     - 深色主题 + 玻璃拟态 UI
+    - 安全：密码 bcrypt 哈希；JWT（HS256）鉴权；角色权限制（reader 只读 / admin 可写）
+    - 仅管理员创建账号，不开放公开注册；启动种子化 admin（环境变量可覆盖）
     - ATDD：验收测试先行
-  当前状态：阶段一二已完成（后端 CRUD + 测试全绿），需要实现阶段三（前端）和阶段四（联调）
+  当前状态：阶段一~四已完成（CRUD + 前后端联调 + 测试全绿）；阶段五已完成（用户/JWT 权限隔离，42 用例全绿）
 
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.

@@ -248,14 +248,28 @@
             </div>
           </div>
 
-          <!-- 右侧：写文章按钮 -->
-          <button
-            id="btnNewPost"
-            class="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
-          >
-            <i data-lucide="pen-line" class="w-4 h-4"></i>
-            <span class="hidden sm:inline">写文章</span>
-          </button>
+          <!-- 右侧：登录区 + 写文章按钮 -->
+          <div class="flex items-center gap-3">
+            <div id="authArea" class="flex items-center gap-2">
+              <!-- 登录/用户区由 JS 渲染 -->
+            </div>
+            <button
+              id="btnAiBackfill"
+              onclick="aiBackfill()"
+              class="hidden items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-sm transition-all"
+              title="AI 批量回填无摘要文章的导读与标签"
+            >
+              <i data-lucide="wand-2" class="w-4 h-4"></i>
+              <span class="hidden md:inline">AI 回填</span>
+            </button>
+            <button
+              id="btnNewPost"
+              class="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
+              <i data-lucide="pen-line" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">写文章</span>
+            </button>
+          </div>
         </div>
 
         <!-- 移动端搜索框 -->
@@ -301,12 +315,16 @@
         <h3 class="text-lg font-medium text-slate-400 mb-2">暂无文章</h3>
         <p class="text-sm text-slate-600 mb-6">点击「写文章」开始创作你的第一篇博客吧</p>
         <button
+          id="emptyCreateBtn"
           onclick="openEditor()"
           class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 transition-all"
         >
           ✍️ 写第一篇文章
         </button>
       </div>
+
+      <!-- 分页导航 -->
+      <div id="paginationBar" class="hidden items-center justify-center gap-4 pt-8 pb-4"></div>
     </main>
   </div>
 
@@ -325,6 +343,17 @@
       </div>
       <!-- 元信息 -->
       <div id="readerMeta" class="flex flex-wrap items-center gap-4 px-6 py-3 text-xs text-slate-500 border-b border-white/5 shrink-0"></div>
+      <!-- 社交操作栏 -->
+      <div class="flex items-center gap-3 px-6 py-3 border-b border-white/5 shrink-0">
+        <button
+          id="likeButton"
+          onclick="toggleLike()"
+          class="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 transition-all"
+        >
+          <i data-lucide="heart" class="w-4 h-4"></i>
+          <span>点赞 0</span>
+        </button>
+      </div>
       <!-- 内容区 -->
       <div id="readerContent" class="flex-1 overflow-y-auto px-6 py-5 md-content"></div>
     </div>
@@ -362,6 +391,29 @@
             placeholder="标签（逗号分隔，如：Python, FastAPI）"
             class="flex-1 min-w-0 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all"
           />
+        </div>
+        <textarea
+          id="editorSummary"
+          rows="2"
+          placeholder="导读摘要（可选，留空发布后由 AI 自动生成 100 字导读）"
+          class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all resize-none"
+        ></textarea>
+
+        <!-- AI 灵感副驾 -->
+        <div id="aiPanel" class="hidden rounded-xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-2 text-sm text-slate-300">
+              <i data-lucide="sparkles" class="w-4 h-4 text-indigo-300"></i>
+              <span class="font-medium">AI 灵感副驾</span>
+              <span id="aiHint" class="text-xs text-slate-500"></span>
+            </div>
+            <button
+              id="btnAiGenerate"
+              onclick="aiGenerate()"
+              class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-medium shadow hover:shadow-indigo-500/30 transition-all"
+            >✨ 一键生成</button>
+          </div>
+          <div id="aiSuggestions" class="mt-2 space-y-2"></div>
         </div>
       </div>
 
@@ -431,6 +483,42 @@
     </div>
   </div>
 
+  <!-- ===== 登录模态框 ===== -->
+  <div id="loginModal" class="modal-overlay fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="modal-panel w-full max-w-sm bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-bold text-slate-100 font-display">登录</h3>
+        <button onclick="closeLoginModal()" class="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="space-y-4">
+        <input
+          id="loginUsername"
+          type="text"
+          placeholder="用户名"
+          autocomplete="username"
+          class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all"
+        />
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="密码"
+          autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')doLogin()"
+          class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 text-sm transition-all"
+        />
+      </div>
+      <button
+        id="btnLogin"
+        onclick="doLogin()"
+        class="w-full mt-6 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+      >
+        登 录
+      </button>
+    </div>
+  </div>
+
   <!-- ===== Toast 容器 ===== -->
   <div id="toastContainer" class="toast-container"></div>
 
@@ -440,6 +528,9 @@
     // 全局状态
     // ========================================================
     const API_BASE = '';  // 同源，无需前缀
+    const AUTH_KEY = 'blog_token';       // localStorage Token 键
+    const USER_KEY = 'blog_user';        // localStorage 用户信息键
+    let currentUser = null;              // 当前登录用户 { id, username, role } | null
     let allPosts = [];          // 缓存所有文章
     let categories = [];        // 分类列表
     let currentCategory = '';   // 当前选中的分类（空 = 全部）
@@ -447,6 +538,64 @@
     let editingPostId = null;   // 编辑中的文章 ID（null = 新建）
     let deleteTargetId = null;  // 待删除的文章 ID
     let searchTimer = null;     // 搜索防抖计时器
+    let pageInfo = { total: 0, page: 1, page_size: 9 };  // 首页分页信息
+    let readerPost = null;      // 阅读器当前文章（含社交字段）
+    let comments = { items: [], page: 1, pageSize: 20, total: 0, loadedAll: false };  // 评论区状态
+
+    // ========================================================
+    // 登录态工具
+    // ========================================================
+
+    function getToken() {
+      return localStorage.getItem(AUTH_KEY);
+    }
+
+    function saveAuth(token, user) {
+      localStorage.setItem(AUTH_KEY, token);
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+      currentUser = user;
+      updateAuthUI();
+    }
+
+    function clearAuth() {
+      localStorage.removeItem(AUTH_KEY);
+      localStorage.removeItem(USER_KEY);
+      currentUser = null;
+      updateAuthUI();
+    }
+
+    function isAdmin() {
+      return !!(currentUser && currentUser.role === 'admin');
+    }
+
+    // 根据登录态刷新导航与写/编辑/删除按钮
+    function updateAuthUI() {
+      const area = document.getElementById('authArea');
+      if (currentUser) {
+        area.innerHTML = `
+          <span class="text-sm text-slate-300 hidden sm:inline">${currentUser.username}</span>
+          <button
+            onclick="logout()"
+            class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-sm transition-all"
+          >退出</button>`;
+      } else {
+        area.innerHTML = `
+          <button
+            onclick="openLoginModal()"
+            class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-sm transition-all"
+          >登录</button>`;
+      }
+      document.getElementById('btnNewPost').classList.toggle('hidden', !isAdmin());
+      document.getElementById('emptyCreateBtn').classList.toggle('hidden', !isAdmin());
+      const backfillBtn = document.getElementById('btnAiBackfill');
+      if (backfillBtn) backfillBtn.classList.toggle('hidden', !(aiEnabled && isAdmin()));
+      renderPosts();
+      // 阅读器打开时刷新评论区（登录态变化影响输入框显隐）
+      if (document.getElementById('readerModal').classList.contains('active')) {
+        renderComments();
+      }
+      lucide.createIcons();
+    }
 
     // ========================================================
     // 工具函数
@@ -467,14 +616,14 @@
       }, 3000);
     }
 
-    // 通用 fetch 封装
+    // 通用 fetch 封装（自动附带 Token；401 时清除登录态并弹出登录框）
     async function apiFetch(path, options = {}) {
       try {
         const url = API_BASE + path;
-        const config = {
-          headers: { 'Content-Type': 'application/json' },
-          ...options,
-        };
+        const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+        const token = getToken();
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        const config = { ...options, headers };
         if (config.body && typeof config.body === 'object') {
           config.body = JSON.stringify(config.body);
         }
@@ -482,6 +631,11 @@
         if (res.status === 204) return null;
         const data = await res.json();
         if (!res.ok) {
+          if (res.status === 401) {
+            clearAuth();
+            const modal = document.getElementById('loginModal');
+            if (!modal.classList.contains('active')) openLoginModal();
+          }
           throw new Error(data.detail || `请求失败 (${res.status})`);
         }
         return data;
@@ -503,6 +657,13 @@
         .replace(/[#*_~>\-|]/g, '')
         .replace(/\n+/g, ' ')
         .trim();
+    }
+
+    // HTML 转义（渲染用户生成内容防 XSS）
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str == null ? '' : String(str);
+      return div.innerHTML;
     }
 
     // 格式化日期
@@ -531,26 +692,72 @@
       }
     }
 
-    // 加载文章列表
+    // 加载文章列表（分页）
     async function loadPosts() {
       try {
         const params = new URLSearchParams();
         if (currentCategory) params.set('category', currentCategory);
         if (currentSearch) params.set('search', currentSearch);
+        params.set('page', pageInfo.page);
+        params.set('page_size', pageInfo.page_size);
         const qs = params.toString();
-        allPosts = await apiFetch('/api/posts' + (qs ? '?' + qs : ''));
+        const data = await apiFetch('/api/posts' + (qs ? '?' + qs : ''));
+        allPosts = data.items;
+        pageInfo.total = data.total;
+        pageInfo.page_size = data.page_size;
         renderPosts();
         updateStats();
+        renderPagination();
       } catch (err) {
         showToast('加载文章失败: ' + err.message, 'error');
       }
     }
 
-    // 更新导航栏统计
+    // 更新导航栏统计（以全量 total 为准）
     function updateStats() {
-      document.getElementById('statArticles').textContent = allPosts.length + ' 篇文章';
+      document.getElementById('statArticles').textContent = pageInfo.total + ' 篇文章';
       const totalViews = allPosts.reduce((sum, p) => sum + (p.views || 0), 0);
       document.getElementById('statViews').textContent = totalViews + ' 次浏览';
+    }
+
+    // 渲染分页导航
+    function renderPagination() {
+      const bar = document.getElementById('paginationBar');
+      if (pageInfo.total === 0) {
+        bar.classList.add('hidden');
+        bar.classList.remove('flex');
+        return;
+      }
+      const totalPages = Math.max(1, Math.ceil(pageInfo.total / pageInfo.page_size));
+      const hasPrev = pageInfo.page > 1;
+      const hasNext = pageInfo.page < totalPages;
+      bar.classList.remove('hidden');
+      bar.classList.add('flex');
+      bar.innerHTML = `
+        <button
+          id="btnPrevPage"
+          class="px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 text-slate-300 transition-all ${hasPrev ? 'hover:bg-white/10 cursor-pointer' : 'opacity-40 cursor-not-allowed'}"
+          ${hasPrev ? '' : 'disabled'}
+        >← 上一页</button>
+        <span class="text-sm text-slate-400">第 ${pageInfo.page} / ${totalPages} 页 · 共 ${pageInfo.total} 篇</span>
+        <button
+          id="btnNextPage"
+          class="px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 text-slate-300 transition-all ${hasNext ? 'hover:bg-white/10 cursor-pointer' : 'opacity-40 cursor-not-allowed'}"
+          ${hasNext ? '' : 'disabled'}
+        >下一页 →</button>
+      `;
+      document.getElementById('btnPrevPage').addEventListener('click', () => {
+        if (!hasPrev) return;
+        pageInfo.page -= 1;
+        loadPosts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      document.getElementById('btnNextPage').addEventListener('click', () => {
+        if (!hasNext) return;
+        pageInfo.page += 1;
+        loadPosts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
 
     // ========================================================
@@ -573,6 +780,7 @@
         pill.addEventListener('click', () => {
           currentCategory = pill.dataset.cat;
           renderCategories();
+          pageInfo.page = 1;
           loadPosts();
         });
       });
@@ -582,10 +790,12 @@
     function renderPosts() {
       const grid = document.getElementById('postsGrid');
       const empty = document.getElementById('emptyState');
+      const isAdm = isAdmin();
 
       if (allPosts.length === 0) {
         grid.classList.add('hidden');
         empty.classList.remove('hidden');
+        document.getElementById('emptyCreateBtn').classList.toggle('hidden', !isAdm);
         lucide.createIcons({ nodes: [empty] });
         return;
       }
@@ -594,7 +804,8 @@
       empty.classList.add('hidden');
 
       grid.innerHTML = allPosts.map((post, i) => {
-        const excerpt = stripMd(post.content).slice(0, 100);
+        // AI 100 字导读优先作为卡片摘要，无导读时回退为正文截取
+        const excerpt = (post.summary || stripMd(post.content)).slice(0, 100);
         const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
         return `
           <article class="post-card fade-up stagger-${(i % 5) + 1} bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
@@ -625,9 +836,12 @@
               <div class="flex items-center justify-between pt-3 border-t border-white/5 mt-auto">
                 <div class="flex items-center gap-3 text-xs text-slate-500">
                   <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i>${post.views || 0}</span>
+                  <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3.5 h-3.5"></i>${post.likes || 0}</span>
+                  <span class="flex items-center gap-1"><i data-lucide="message-square" class="w-3.5 h-3.5"></i>${post.comment_count || 0}</span>
                   <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${fmtDate(post.created_at)}</span>
                 </div>
                 <div class="flex items-center gap-1">
+                  ${isAdm ? `
                   <button
                     onclick="openEditor(${post.id})"
                     class="p-1.5 rounded-lg hover:bg-white/10 text-slate-500 hover:text-indigo-400 transition-colors"
@@ -637,7 +851,7 @@
                     onclick="openDeleteModal(${post.id})"
                     class="p-1.5 rounded-lg hover:bg-white/10 text-slate-500 hover:text-red-400 transition-colors"
                     title="删除"
-                  ><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                  ><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
                 </div>
               </div>
             </div>
@@ -646,6 +860,68 @@
       }).join('');
 
       lucide.createIcons({ nodes: [grid] });
+    }
+
+    // ========================================================
+    // 认证：登录 / 退出 / 会话恢复
+    // ========================================================
+
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons({ nodes: [document.getElementById('loginModal')] });
+      setTimeout(() => document.getElementById('loginUsername').focus(), 50);
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    async function doLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!username || !password) {
+        showToast('请输入用户名和密码', 'error');
+        return;
+      }
+      const btn = document.getElementById('btnLogin');
+      btn.disabled = true;
+      btn.textContent = '登录中...';
+      try {
+        const data = await apiFetch('/api/auth/login', { method: 'POST', body: { username, password } });
+        saveAuth(data.access_token, data.user);
+        closeLoginModal();
+        showToast(`欢迎回来，${data.user.username}`, 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '登 录';
+      }
+    }
+
+    function logout() {
+      clearAuth();
+      showToast('已退出登录', 'info');
+    }
+
+    // 页面加载时恢复登录态（用 Token 调 /me 校验）
+    async function restoreSession() {
+      const token = getToken();
+      if (!token) {
+        updateAuthUI();
+        return;
+      }
+      try {
+        const user = await apiFetch('/api/auth/me');
+        currentUser = { id: user.id, username: user.username, role: user.role };
+        localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+        updateAuthUI();
+      } catch (err) {
+        // 401 已由 apiFetch 清理并弹出登录框
+        updateAuthUI();
+      }
     }
 
     // ========================================================
@@ -669,6 +945,7 @@
 
       try {
         const post = await apiFetch(`/api/posts/${id}?increment_views=true`);
+        readerPost = post;
         title.textContent = post.title;
         category.textContent = post.category || '未分类';
 
@@ -680,13 +957,22 @@
           ${tags.length ? tags.map(t => `<span class="px-2 py-0.5 rounded-md text-xs bg-white/5 text-slate-400">#${t}</span>`).join('') : ''}
         `;
 
-        // 渲染 Markdown
-        content.innerHTML = `<div class="md-content">${marked.parse(post.content || '')}</div>`;
+        // 渲染 Markdown + AI 导读条 + 评论区容器
+        content.innerHTML = `
+          ${post.summary ? `
+            <div class="mb-6 px-4 py-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm text-slate-300 leading-relaxed">
+              <span class="font-semibold text-indigo-300">📖 导读</span> · ${escapeHtml(post.summary)}
+            </div>` : ''}
+          <div class="md-content">${marked.parse(post.content || '')}</div>
+          <div id="commentsSection" class="mt-10 border-t border-white/10 pt-6"></div>
+        `;
         // 代码高亮
         content.querySelectorAll('pre code').forEach(block => {
           hljs.highlightElement(block);
         });
         lucide.createIcons({ nodes: [meta] });
+        renderLikeButton();
+        await loadComments(true);
       } catch (err) {
         content.innerHTML = `<div class="text-center py-16 text-red-400">加载失败: ${err.message}</div>`;
       }
@@ -695,6 +981,138 @@
     function closeReader() {
       document.getElementById('readerModal').classList.remove('active');
       document.body.style.overflow = '';
+      readerPost = null;
+    }
+
+    // ========================================================
+    // 点赞
+    // ========================================================
+
+    function renderLikeButton() {
+      const btn = document.getElementById('likeButton');
+      if (!readerPost) return;
+      const liked = !!readerPost.liked;
+      const n = readerPost.likes || 0;
+      btn.classList.toggle('text-pink-400', liked);
+      btn.classList.toggle('border-pink-500/40', liked);
+      btn.classList.toggle('bg-pink-500/10', liked);
+      btn.innerHTML = `
+        <i data-lucide="heart" class="w-4 h-4 ${liked ? 'fill-current' : ''}"></i>
+        <span>${liked ? '已点赞' : '点赞'} ${n}</span>
+      `;
+      lucide.createIcons({ nodes: [btn] });
+    }
+
+    async function toggleLike() {
+      if (!currentUser) { openLoginModal(); return; }
+      if (!readerPost) return;
+      const liked = !!readerPost.liked;
+      try {
+        const data = await apiFetch(`/api/posts/${readerPost.id}/like`, {
+          method: liked ? 'DELETE' : 'POST',
+        });
+        readerPost.liked = data.liked;
+        readerPost.likes = data.likes;
+        renderLikeButton();
+      } catch (err) {
+        showToast('操作失败: ' + err.message, 'error');
+      }
+    }
+
+    // ========================================================
+    // 评论区（楼层渲染）
+    // ========================================================
+
+    function renderComments() {
+      const section = document.getElementById('commentsSection');
+      if (!section) return;
+      const isAdm = isAdmin();
+      const inputArea = currentUser ? `
+        <div class="flex gap-2 mt-5">
+          <textarea id="commentInput" rows="2"
+            class="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 transition-all resize-none"
+            placeholder="写下你的评论..."></textarea>
+          <button onclick="submitComment()"
+            class="self-end px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium shadow-lg hover:shadow-indigo-500/30 transition-all">发表</button>
+        </div>` : `
+        <div class="mt-5 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-slate-500 flex items-center justify-between">
+          <span>登录后参与评论</span>
+          <button onclick="openLoginModal()" class="px-3 py-1.5 rounded-lg bg-white/10 text-slate-200 text-sm hover:bg-white/20 transition-all">去登录</button>
+        </div>`;
+
+      const listHtml = comments.items.length
+        ? comments.items.map((c, i) => {
+            const canDelete = currentUser && (c.user_id === currentUser.id || isAdm);
+            return `
+              <div class="flex gap-3 py-3 border-b border-white/5">
+                <span class="shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500/30 to-purple-500/30 border border-white/10 flex items-center justify-center text-xs font-bold text-indigo-300">
+                  ${escapeHtml(c.username).slice(0, 1).toUpperCase()}
+                </span>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <span class="text-xs px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 font-medium">${i + 1}楼</span>
+                    <span class="text-sm font-medium text-slate-300">${escapeHtml(c.username)}</span>
+                    <span class="text-xs text-slate-600">${fmtDate(c.created_at)}</span>
+                    ${canDelete ? `<button onclick="deleteComment(${c.id})" class="ml-auto text-xs text-slate-500 hover:text-red-400 transition-colors">删除</button>` : ''}
+                  </div>
+                  <p class="text-sm text-slate-400 break-words whitespace-pre-wrap">${escapeHtml(c.content)}</p>
+                </div>
+              </div>`;
+          }).join('')
+        : `<p class="text-center text-sm text-slate-600 py-6">还没有评论，来抢沙发～</p>`;
+
+      section.innerHTML = `
+        <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+          <i data-lucide="message-square" class="w-4 h-4"></i> 评论（${comments.total}）
+        </h3>
+        <div class="mt-2">${listHtml}</div>
+        <button id="commentsMore" onclick="loadComments(false)"
+          class="mt-4 w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-slate-300 transition-all">加载更多评论</button>
+        ${inputArea}
+      `;
+      document.getElementById('commentsMore').classList.toggle('hidden', comments.loadedAll);
+      lucide.createIcons({ nodes: [section] });
+    }
+
+    async function loadComments(reset = false) {
+      if (!readerPost) return;
+      if (reset) comments = { items: [], page: 1, pageSize: 20, total: 0, loadedAll: false };
+      try {
+        const data = await apiFetch(`/api/posts/${readerPost.id}/comments?page=${comments.page}&page_size=${comments.pageSize}`);
+        comments.total = data.total;
+        comments.items = comments.items.concat(data.items);
+        comments.loadedAll = comments.items.length >= comments.total || data.items.length < comments.pageSize;
+        comments.page += 1;
+        renderComments();
+      } catch (err) {
+        showToast('加载评论失败: ' + err.message, 'error');
+      }
+    }
+
+    async function submitComment() {
+      if (!currentUser) { openLoginModal(); return; }
+      const textarea = document.getElementById('commentInput');
+      const content = textarea.value.trim();
+      if (!content) { showToast('请输入评论内容', 'error'); return; }
+      try {
+        await apiFetch(`/api/posts/${readerPost.id}/comments`, { method: 'POST', body: { content } });
+        textarea.value = '';
+        showToast('评论发表成功', 'success');
+        await loadComments(true);
+      } catch (err) {
+        showToast('发表失败: ' + err.message, 'error');
+      }
+    }
+
+    async function deleteComment(commentId) {
+      if (!window.confirm('确定删除这条评论吗？')) return;
+      try {
+        await apiFetch(`/api/comments/${commentId}`, { method: 'DELETE' });
+        showToast('评论已删除', 'success');
+        await loadComments(true);
+      } catch (err) {
+        showToast('删除失败: ' + err.message, 'error');
+      }
     }
 
     // ========================================================
@@ -708,6 +1126,7 @@
       const titleInput = document.getElementById('editorTitle');
       const catInput = document.getElementById('editorCategory');
       const tagsInput = document.getElementById('editorTags');
+      const summaryInput = document.getElementById('editorSummary');
       const textarea = document.getElementById('editorTextarea');
       const preview = document.getElementById('editorPreview');
 
@@ -715,8 +1134,13 @@
       titleInput.value = '';
       catInput.value = '';
       tagsInput.value = '';
+      summaryInput.value = '';
       textarea.value = '';
       preview.innerHTML = '<p class="text-slate-600 text-sm">在左侧输入 Markdown，这里实时预览...</p>';
+
+      // 重置 AI 灵感建议
+      aiSuggestion = { title: '', category: '' };
+      document.getElementById('aiSuggestions').innerHTML = '';
 
       if (postId) {
         heading.textContent = '编辑文章';
@@ -725,6 +1149,7 @@
           titleInput.value = post.title || '';
           catInput.value = post.category || '';
           tagsInput.value = post.tags || '';
+          summaryInput.value = post.summary || '';
           textarea.value = post.content || '';
           updatePreview();
         }).catch(err => {
@@ -734,6 +1159,7 @@
         heading.textContent = '写文章';
       }
 
+      updateAiUi();
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       lucide.createIcons({ nodes: [modal] });
@@ -767,13 +1193,14 @@
     async function publishPost() {
       const title = document.getElementById('editorTitle').value.trim();
       const content = document.getElementById('editorTextarea').value.trim();
+      const summary = document.getElementById('editorSummary').value.trim();
       const category = document.getElementById('editorCategory').value.trim();
       const tags = document.getElementById('editorTags').value.trim();
 
       if (!title) { showToast('请输入文章标题', 'error'); return; }
       if (!content) { showToast('请输入文章内容', 'error'); return; }
 
-      const body = { title, content, category, tags, status: 'published' };
+      const body = { title, content, summary, category, tags, status: 'published' };
 
       try {
         if (editingPostId) {
@@ -795,12 +1222,13 @@
     async function saveDraft() {
       const title = document.getElementById('editorTitle').value.trim();
       const content = document.getElementById('editorTextarea').value.trim();
+      const summary = document.getElementById('editorSummary').value.trim();
       const category = document.getElementById('editorCategory').value.trim();
       const tags = document.getElementById('editorTags').value.trim();
 
       if (!title) { showToast('请输入文章标题', 'error'); return; }
 
-      const body = { title, content, category, tags, status: 'draft' };
+      const body = { title, content, summary, category, tags, status: 'draft' };
 
       try {
         if (editingPostId) {
@@ -816,6 +1244,102 @@
       } catch (err) {
         showToast('保存失败: ' + err.message, 'error');
       }
+    }
+
+    // ========================================================
+    // AI 能力（阶段七：智能摘要提炼与自动打标）
+    // ========================================================
+
+    let aiEnabled = false;
+    let aiSuggestion = { title: '', category: '' };
+
+    // 根据 AI 可用性与登录态刷新 AI 相关 UI（编辑器面板 / 导航回填按钮）
+    function updateAiUi() {
+      const panel = document.getElementById('aiPanel');
+      if (panel) {
+        panel.classList.toggle('hidden', !aiEnabled);
+        document.getElementById('aiHint').textContent = aiEnabled ? '由大模型生成，仅供参考' : '未配置 LLM API Key，AI 灵感不可用';
+      }
+      const backfillBtn = document.getElementById('btnAiBackfill');
+      if (backfillBtn) backfillBtn.classList.toggle('hidden', !(aiEnabled && isAdmin()));
+    }
+
+    // 查询后端 AI 能力状态（公开接口，页面加载时调用一次）
+    async function checkAIStatus() {
+      try {
+        const s = await apiFetch('/api/ai/status');
+        aiEnabled = !!s.enabled;
+      } catch (err) {
+        aiEnabled = false;
+      }
+      updateAiUi();
+    }
+
+    // 编辑器「✨ 一键生成」：摘要/标签直接填充，标题/分类以建议条呈现供采用
+    async function aiGenerate() {
+      const content = document.getElementById('editorTextarea').value.trim();
+      if (!content) { showToast('请先输入正文，再生成 AI 灵感', 'error'); return; }
+      const btn = document.getElementById('btnAiGenerate');
+      btn.disabled = true;
+      btn.textContent = '生成中...';
+      try {
+        const data = await apiFetch('/api/ai/generate', {
+          method: 'POST',
+          body: {
+            title: document.getElementById('editorTitle').value.trim(),
+            content,
+            category: document.getElementById('editorCategory').value.trim(),
+          },
+        });
+        if (data.summary) document.getElementById('editorSummary').value = data.summary;
+        if (data.tags && data.tags.length) document.getElementById('editorTags').value = data.tags.join(',');
+        aiSuggestion = { title: data.title_suggestion || '', category: data.category_suggestion || '' };
+        const box = document.getElementById('aiSuggestions');
+        box.innerHTML = [
+          aiSuggestion.title ? `<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+            <span class="shrink-0 text-xs text-slate-400">标题</span>
+            <span class="flex-1 min-w-0 truncate text-sm text-slate-200">${escapeHtml(aiSuggestion.title)}</span>
+            <button onclick="applySuggestion('title')" class="shrink-0 px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs hover:bg-indigo-500/30 transition-all">采用</button>
+          </div>` : '',
+          aiSuggestion.category ? `<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+            <span class="shrink-0 text-xs text-slate-400">分类</span>
+            <span class="flex-1 min-w-0 truncate text-sm text-slate-200">${escapeHtml(aiSuggestion.category)}</span>
+            <button onclick="applySuggestion('category')" class="shrink-0 px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs hover:bg-indigo-500/30 transition-all">采用</button>
+          </div>` : '',
+        ].join('');
+        showToast('AI 灵感已生成，可直接采用', 'success');
+      } catch (err) {
+        showToast('AI 生成失败: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '✨ 一键生成';
+      }
+    }
+
+    // 采用标题/分类建议
+    function applySuggestion(field) {
+      const map = { title: 'editorTitle', category: 'editorCategory' };
+      const value = aiSuggestion[field];
+      if (!value) return;
+      document.getElementById(map[field]).value = value;
+      showToast(`已采用${field === 'title' ? '标题' : '分类'}建议`, 'success');
+    }
+
+    // 管理员批量回填无摘要旧文章的导读与标签
+    async function aiBackfill() {
+      const btn = document.getElementById('btnAiBackfill');
+      btn.disabled = true;
+      btn.textContent = '回填中...';
+      try {
+        const data = await apiFetch('/api/ai/backfill', { method: 'POST' });
+        showToast(`回填完成：处理 ${data.processed} 篇，成功 ${data.updated} 篇，失败 ${data.failed} 篇`, 'success');
+      } catch (err) {
+        showToast('回填失败: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'AI 回填';
+      }
+      loadPosts();
     }
 
     // ========================================================
@@ -863,6 +1387,7 @@
       clearTimeout(searchTimer);
       searchTimer = setTimeout(() => {
         currentSearch = e.target.value.trim();
+        pageInfo.page = 1;
         loadPosts();
       }, 350);
     }
@@ -879,7 +1404,9 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (document.getElementById('deleteModal').classList.contains('active')) {
+        if (document.getElementById('loginModal').classList.contains('active')) {
+          closeLoginModal();
+        } else if (document.getElementById('deleteModal').classList.contains('active')) {
           closeDeleteModal();
         } else if (document.getElementById('editorModal').classList.contains('active')) {
           closeEditor();
@@ -899,6 +1426,9 @@
     document.getElementById('deleteModal').addEventListener('click', (e) => {
       if (e.target === e.currentTarget) closeDeleteModal();
     });
+    document.getElementById('loginModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeLoginModal();
+    });
 
     // ========================================================
     // 入口按钮
@@ -912,7 +1442,9 @@
 
     (async function init() {
       lucide.createIcons();
+      await restoreSession();
       await Promise.all([loadCategories(), loadPosts()]);
+      checkAIStatus();
       lucide.createIcons();
     })();
   </script>

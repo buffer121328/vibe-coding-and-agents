@@ -86,11 +86,47 @@ vibe_coding/
 ├── 06_Trae实战/                                       # 第六章：Trae 实战（原生双模驱动与已有项目生产级二次开发）
 │   ├── README.md                                      # 第六章导读与全景知识图谱
 │   ├── 01_初识Trae：双模驱动、新人福利与生产级IDE新范式.md # 6.1 生态优势、新人首月2.5折、Work/Code双模、单文件精准撤销与Solo模式
-│   └── 02_环境基建与项目导入：在Trae中建立上下文与依赖安装.md # 6.2 工程迁移、uv秒级依赖同步、CodeGraph上下文、IDE神级扩展与探索大作业
+│   ├── 02_环境基建与项目导入：在Trae中建立上下文与依赖安装.md # 6.2 工程迁移、uv秒级依赖同步、CodeGraph上下文、IDE神级扩展与探索大作业
+│   ├── 03_阶段一实战：用户认证与JWT权限隔离系统.md    # 6.3 指挥官心智、Plan交互模式、Bcrypt哈希与JWT角色权限守卫
+│   ├── 04_阶段二实战：评论点赞系统与接口分页重构.md    # 6.4 Solo自主闭环、点赞防刷幂等、楼层评论与Page&PageSize分页重构
+│   ├── 05_阶段三实战：AI原生赋能智能摘要与自动打标.md # 6.5 计划先行心智、OpenAI客户端接入、100字导读提炼与AI批量回填
+│   └── 06_架构演进与目录治理：从SpringBoot三层架构到现代化全栈解耦.md # 6.6 SpringBoot三层思想、AI上帝文件防腐、生产级目录治理蓝图与进阶宝典
 ├── 07_Codex实战/                                      # 第七章：Codex 实战
-├── 08_手搓Agent/                                      # 第八章：手搓 Agent
-├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent
-├── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流
+├── 08_手搓Agent/                                      # 第八章：手搓 Agent（基于火山方舟 DeepSeek 从零构建）
+│   ├── README.md                                      # 第八章导读、11步演进全景路线图与技术雷达
+│   ├── 01_环境基建与模型接入.md                        # 8.1 火山方舟 DeepSeek API 接入与客户端封装
+│   ├── 02_ReAct思考范式.md                            # 8.2 极简 Thought-Action-Observation 闭环
+│   ├── 03_Plan_and_Execute规划范式.md                 # 8.3 任务清单拆解、Todo 状态机与动态重排
+│   ├── 04_工具注册与分发机制.md                        # 8.4 @tool 装饰器、JSON Schema 生成与分发机
+│   ├── 05_终端执行与代码编辑.md                        # 8.5 Bash 命令执行与 str_replace 精准行替换
+│   ├── 06_权限控制与人类在环.md                        # 8.6 危险指令拦截与 Human-in-the-Loop 交互确认
+│   ├── 07_Hooks生命周期机制.md                        # 8.7 Pre/Post 切面拦截、参数脱敏与审计日志
+│   ├── 08_上下文工程与压缩.md                          # 8.8 Token 预算、结果截断与 /compact 深度摘要
+│   ├── 09_记忆系统与技能挂载.md                        # 8.9 长期记忆提取持久化与 SKILL.md 动态挂载
+│   ├── 10_Subagents子代理协作.md                      # 8.10 上下文隔离、子任务派发与 DeepResearch
+│   └── 11_综合实战_打造MiniAgent.md                   # 8.11 Rich 高亮终端、LoopGuard 熔断与整机交付
+├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent（LCEL 管道流与工业级智能体编排）
+│   ├── README.md                                      # 第九章导读、10步进阶全景路线图与技术雷达
+│   ├── 01_初识LangChain与生态架构.md                  # 9.1 langchain-core 拆分、统一模型工厂与流式/批量调用
+│   ├── 02_Prompt模板与上下文消息流.md                 # 9.2 四大消息模型、ChatPromptTemplate 与 MessagesPlaceholder
+│   ├── 03_LCEL表达式语言与流式调度.md                 # 9.3 管道符 '|'、Runnable 协议族、并行流与 Fallbacks 容灾
+│   ├── 04_结构化输出与容错解析.md                     # 9.4 with_structured_output、Pydantic 强类型与 JSON 修复
+│   ├── 05_自定义工具生态与参数校验.md                 # 9.5 @tool 装饰器、Pydantic 参数防御与 bind_tools 底层机制
+│   ├── 06_记忆管理与会话状态持久化.md                 # 9.6 RunnableWithMessageHistory、会话隔离与 trim_messages 裁剪
+│   ├── 07_Callbacks回调与可观测性中间件.md            # 9.7 BaseCallbackHandler、Token 账单审计与敏感信息脱敏
+│   ├── 08_RAG核心链路与向量检索增强.md                # 9.8 语义切块、Chroma 向量入库与 LCEL 标准 RAG 检索问答
+│   ├── 09_Agent现代架构与create_agent.md              # 9.9 现代 Tool Calling Agent、Scratchpad 推理与中间步骤审计
+│   └── 10_综合实战_AI智能数码选购与避坑决策Agent.md # 9.10 综合实战：SmartBuyer 数码选购参谋与 10-Tab Gradio 工作台
+├── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流（意图图编排与多智能体实战）
+│   ├── README.md                                      # 第十章导读与核心概念
+│   ├── 01_初识LangGraph与状态机.md                    # 10.1 解决传统Agent不可控痛点，图与状态流转
+│   ├── 02_State图的构建与运行.md                      # 10.2 定义交接本State与节点的连线流转
+│   ├── 03_条件路由与动态决策.md                       # 10.3 十字路口路由裁判、意图分流与决策树
+│   ├── 04_并行执行与Send动态分发.md                   # 10.4 Fan-out/Fan-in 并行与 Send 动态批量并行
+│   ├── 05_图的可视化与流式调试.md                     # 10.5 Mermaid/PNG 可视化与 stream 逐节点状态流转
+│   ├── 06_Memory与Human-in-the-loop.md                # 10.6 Checkpointer存档与危险动作人类签字拦截
+│   ├── 07_MultiAgent分层架构.md                       # 10.7 大堂经理与后厨专家的路由转交状态栈
+│   └── 08_综合实战_旅行助手项目.md                    # 10.8 综合实战：企业级全能旅行助手项目重构剖析
 ├── 11_如何做一个自己的项目/                           # 第十一章：如何做一个自己的项目（个人与应届生 AI 落地实战）
 │   ├── README.md                                      # 第十一章导读与全景知识图谱
 │   ├── 01_开源选型与二次开发_协议避坑与架构借力.md    # 11.1 站在巨人肩膀、开源许可证(MIT/Apache/GPL/AGPL)避坑与二次开发
