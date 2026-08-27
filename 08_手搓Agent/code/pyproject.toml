@@ -1,0 +1,14 @@
+[project]
+name = "vibe-agent-scratch"
+version = "0.1.0"
+description = "第八章：基于智谱 BigModel GLM-5.3-Flash 从零手搓 Agent 实战代码库"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.60.0",
+    "gradio>=5.15.0",
+    "rich>=13.9.0",
+    "tiktoken>=0.8.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.10.0"
+]
