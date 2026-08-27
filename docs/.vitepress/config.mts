@@ -13,22 +13,35 @@ function firstHeading(file: string): string {
   return m ? m[1].trim() : ''
 }
 
-// 自动扫描 docs/ 下已同步的章节，生成侧边栏（新增章节/文章无需改配置）
-const sidebar = readdirSync(docsRoot)
-  .filter((d) => /^\d{2}_/.test(d) && statSync(join(docsRoot, d)).isDirectory())
+// 自动扫描 docs/ 下已同步的章节，生成单个章节的侧边栏分组（新增章节/文章无需改配置）
+const chapterDirs = readdirSync(docsRoot)
+  .filter((d: string) => /^\d{2}_/.test(d) && statSync(join(docsRoot, d)).isDirectory())
   .sort()
-  .map((dir) => {
-    const files = readdirSync(join(docsRoot, dir))
-      .filter((f) => f.endsWith('.md'))
-      .sort()
-    const items = files.map((f) => {
-      const isIndex = f === 'index.md'
-      const link = isIndex ? `/${dir}/` : `/${dir}/${f.replace(/\.md$/, '')}`
-      const title = firstHeading(join(docsRoot, dir, f)) || f.replace(/\.md$/, '')
-      return { text: title, link }
-    })
-    return { text: dir.replace(/^\d{2}_/, ''), items }
+
+function chapterGroup(dir: string) {
+  const files = readdirSync(join(docsRoot, dir))
+    .filter((f: string) => f.endsWith('.md'))
+    .sort()
+  const items = files.map((f: string) => {
+    const isIndex = f === 'index.md'
+    const link = isIndex ? `/${dir}/` : `/${dir}/${f.replace(/\.md$/, '')}`
+    const title = firstHeading(join(docsRoot, dir, f)) || f.replace(/\.md$/, '')
+    return { text: title, link }
   })
+  return { text: dir.replace(/^\d{2}_/, ''), items }
+}
+
+const sidebar = chapterDirs.map(chapterGroup)
+
+// 顶部导航按学习路径分为六大类，点击直达该类入口章节
+const categories = [
+  { text: '🧭 入门概念', link: '/01_发展之路/' },
+  { text: '🛠️ 主流工具进阶', link: '/04_Dify实战/' },
+  { text: '🤖 底层理解 Agent', link: '/08_手搓Agent/' },
+  { text: '🏭 主流 Agent 框架实战', link: '/09_LangChain搭建Agent/' },
+  { text: '📚 RAG 实战', link: '/11_RAG实战/' },
+  { text: '💆 心理按摩', link: '/12_如何做一个自己的项目/' },
+]
 
 export default withMermaid(defineConfig({
   lang: 'zh-CN',
@@ -40,6 +53,7 @@ export default withMermaid(defineConfig({
   ignoreDeadLinks: true, // 书稿中存在指向项目子文件/未同步页面的交叉引用，跳过死链检查
 
   markdown: {
+    math: true, // 支持 $..$ / $$..$$ 的 LaTeX 数学公式（VitePress 内置 markdown-it-mathjax3）
     config(md) {
       // 把行内文本与行内代码里的 {{ 和 }} 转义为 HTML 实体，避免 Vue 模板编译器
       // 把 Dify 模板变量（如 {{#sys.query#}}）误当作插值表达式导致构建失败
@@ -57,6 +71,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
+      ...categories,
       { text: 'GitHub', link: 'https://github.com/buffer121328/vibe_coding' },
     ],
     sidebar,
