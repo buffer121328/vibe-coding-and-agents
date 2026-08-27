@@ -1,17 +1,25 @@
-# 🌊 Vibe Coding 极速通关与现代 AI Agent 知识库
+<h1 align="center">🌊 Vibe Coding 极速通关与现代 AI Agent 知识库</h1>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![AI Era: 2026](https://img.shields.io/badge/AI_Era-2026_Frontier-blue.svg)](https://github.com)
-[![Status: Actively Developing](https://img.shields.io/badge/Status-Actively_Updating-orange.svg)](https://github.com)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com)
-[![在线阅读](https://img.shields.io/badge/📖在线阅读-VitePress-4f46e5)](https://buffer121328.github.io/vibe_coding/)
+<p align="center">
+  <em>用通俗大白话讲透原理 · 从 0 到 1 手搓 Agent · 打通 Dify / OpenCode / LangChain / LangGraph / RAG 工业级落地</em>
+</p>
+
+<p align="center">
+  <a href="https://buffer121328.github.io/vibe_coding/">
+    <img src="https://img.shields.io/badge/在线阅读-在线文档站-4f46e5" alt="在线阅读" />
+  </a>
+  <a href="https://github.com/buffer121328/vibe_coding/actions/workflows/deploy-docs.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/buffer121328/vibe_coding/deploy-docs.yml?branch=main&label=%E6%96%87%E6%A1%A3%E9%83%A8%E7%BD%B2" alt="文档部署状态" />
+  </a>
+  <img src="https://img.shields.io/github/stars/buffer121328/vibe_coding?style=social" alt="GitHub Stars" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
+</p>
 
 > **“There's a new kind of coding I call 'vibe coding', where you entirely give in to the vibes, embrace every AI, and forget that the code even exists... I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.”**
 > —— *Andrej Karpathy (前 OpenAI 联合创始人、前 Tesla AI 总监)*
 
 ***
-
-> 📖 **在线阅读**：[Vibe Coding 在线文档站](https://buffer121328.github.io/vibe_coding/)（VitePress 渲染 · 全文搜索 · 侧边栏目录 · 章节 md 自动同步）
 
 ## 📖 项目简介 (About The Project)
 
