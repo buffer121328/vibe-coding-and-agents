@@ -7,7 +7,7 @@
 <!-- 📖 在线阅读：AI 生成的圆形图标，单独一行 -->
 <p align="center">
   <a href="https://buffer121328.github.io/vibe_coding/">
-    <img src="img/read-online.png" alt="在线阅读" width="150" height="150" style="border-radius:50%" />
+    <img src="img/image.png" alt="在线阅读" width="150" height="150" style="border-radius:50%" />
   </a>
 </p>
 
