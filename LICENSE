@@ -1,21 +1,47 @@
-MIT License
+# 许可协议 (License)
 
-Copyright (c) 2026 Vibe Coding Open Source Project
+## 中文版
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+### 授权条款
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+在遵守以下条款的前提下，任何人均可自由获取本软件及相关文档文件（以下简称"本软件"）的副本：
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+#### 1. 非商业使用许可
+- 禁止：任何形式的商业使用，包括但不限于：
+  - 将本软件或其衍生作品用于商业产品或服务
+  - 销售、出租或许可本软件
+  - 在商业环境中部署和运营本软件
+  - 利用本软件直接或间接获取商业利益
+
+#### 2. 商业使用授权
+商业授权咨询请联系：buffer121328@163.com
+
+#### 3. 署名要求
+使用本软件时，必须在显著位置保留原作者的版权声明和本许可证全文。
+
+#### 4. 免责声明
+本软件按"原样"提供，不附带任何明示或暗示的担保，包括但不限于对适销性、特定用途适用性和非侵权性的担保。在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责。
+
+---
+
+## English Version
+
+### License Terms
+
+Subject to the following terms and conditions, anyone is free to obtain a copy of this software and associated documentation files (hereinafter "the Software"):
+
+#### 1. Non-Commercial Use License
+- Prohibited: Any form of commercial use, including but not limited to:
+  - Using the Software or its derivative works in commercial products or services
+  - Selling, renting, or licensing the Software
+  - Deploying and operating the Software in a commercial environment
+  - Using the Software to obtain commercial benefits, directly or indirectly
+
+#### 2. Commercial Use Authorization
+For commercial licensing inquiries, please contact: buffer121328@163.com
+
+#### 3. Attribution Requirement
+When using the Software, you must retain the original author's copyright notice and the full text of this license in a prominent location.
+
+#### 4. Disclaimer of Warranty
+The Software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability.
