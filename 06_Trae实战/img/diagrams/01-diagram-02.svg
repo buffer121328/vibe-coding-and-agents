@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1308.108 324.70000000000005" width="1308.108" height="324.70000000000005" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Myth" data-label="新手误区: 永远停留在玩具 Demo">
+  <rect x="36" y="36" width="644.2059999999999" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="644.2059999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">新手误区: 永远停留在玩具 Demo</text>
+</g>
+<g class="subgraph" data-id="Reality" data-label="工业界真实开发模式: 持续二次开发">
+  <rect x="36" y="174.9" width="1236.108" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="174.9" width="1236.108" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="188.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">工业界真实开发模式: 持续二次开发</text>
+</g>
+<polyline class="edge" data-from="M1" data-to="M2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="224.36599999999999,98.45 276.366,98.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="M2" data-to="M3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="422.056,98.45 474.056,98.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R1" data-to="R2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="283.64599999999996,245.8 335.64599999999996,245.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R2" data-to="R3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="599.155,245.8 651.155,245.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R3" data-to="R4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="968.016,245.8 1020.016,245.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="M1" data-label="从 0 搭建简单单文件" data-shape="rectangle">
+  <rect x="52" y="80" width="172.36599999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="138.183" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">从 0 搭建简单单文件</text>
+</g>
+<g class="node" data-id="M2" data-label="语法跑通即丢弃" data-shape="rectangle">
+  <rect x="276.366" y="80" width="145.69" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="349.211" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">语法跑通即丢弃</text>
+</g>
+<g class="node" data-id="M3" data-label="无法应对真实复杂工程" data-shape="rectangle">
+  <rect x="474.056" y="80" width="190.14999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="569.131" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">无法应对真实复杂工程</text>
+</g>
+<g class="node" data-id="R1" data-label="接入已有工程代码基线
+(如 05 章已有的个人博客系统)" data-shape="rectangle">
+  <rect x="52" y="218.9" width="231.646" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="167.82299999999998" y="245.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="167.82299999999998" dy="-3.9000000000000012">接入已有工程代码基线</tspan><tspan x="167.82299999999998" dy="16.900000000000002">(如 05 章已有的个人博客系统)</tspan></text>
+</g>
+<g class="node" data-id="R2" data-label="AI 快速阅读索引并理解项目上下文" data-shape="rectangle">
+  <rect x="335.64599999999996" y="227.35000000000002" width="263.50899999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="467.40049999999997" y="245.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">AI 快速阅读索引并理解项目上下文</text>
+</g>
+<g class="node" data-id="R3" data-label="在 Trae Code 中精准重构接口与扩展新模块" data-shape="rectangle">
+  <rect x="651.155" y="227.35000000000002" width="316.861" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="809.5854999999999" y="245.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">在 Trae Code 中精准重构接口与扩展新模块</text>
+</g>
+<g class="node" data-id="R4" data-label="利用 Solo 模式自动自测与交付" data-shape="rectangle">
+  <rect x="1020.016" y="227.35000000000002" width="236.09199999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1138.062" y="245.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">利用 Solo 模式自动自测与交付</text>
+</g>
+</svg>

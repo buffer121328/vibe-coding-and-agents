@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 369.73199999999997 1359.4" width="369.73199999999997" height="1359.4" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="SingleAgent" data-label="单 Agent 与 RAG 数据连接">
+  <rect x="36" y="36" width="245.86199999999997" height="191.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="245.86199999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">单 Agent 与 RAG 数据连接</text>
+</g>
+<g class="subgraph" data-id="MultiAgent" data-label="多智能体团队协作 (Multi-Agent)">
+  <rect x="36" y="251.60000000000008" width="259.19999999999993" height="269.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="251.60000000000008" width="259.19999999999993" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="265.6000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">多智能体团队协作 (Multi-Agent)</text>
+</g>
+<g class="subgraph" data-id="NewStars" data-label="官方新秀 / 轻量极简">
+  <rect x="36" y="545.0000000000001" width="297.73199999999997" height="347.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="545.0000000000001" width="297.73199999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="559.0000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">官方新秀 / 轻量极简</text>
+</g>
+<g class="subgraph" data-id="OfficialSDK" data-label="官方 SDK / 生产级流水线">
+  <rect x="36" y="916.2000000000002" width="201.402" height="269.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="916.2000000000002" width="201.402" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="930.2000000000002" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">官方 SDK / 生产级流水线</text>
+</g>
+<g class="subgraph" data-id="LowCode" data-label="低代码可视化平台">
+  <rect x="36" y="1209.6000000000004" width="189.546" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="1209.6000000000004" width="189.546" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="1223.6000000000004" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">低代码可视化平台</text>
+</g>
+<g class="node" data-id="LC" data-label="LangChain
+(流水线组装瑞士军刀)" data-shape="rectangle">
+  <rect x="83.863" y="80" width="182.73999999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="175.233" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="175.233" dy="-3.9000000000000012">LangChain</tspan><tspan x="175.233" dy="16.900000000000002">(流水线组装瑞士军刀)</tspan></text>
+</g>
+<g class="node" data-id="LI" data-label="LlamaIndex
+(数据检索与高级 RAG 王者)" data-shape="rectangle">
+  <rect x="83.863" y="157.8" width="213.86199999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="190.79399999999998" y="184.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.79399999999998" dy="-3.9000000000000012">LlamaIndex</tspan><tspan x="190.79399999999998" dy="16.900000000000002">(数据检索与高级 RAG 王者)</tspan></text>
+</g>
+<g class="node" data-id="LG" data-label="LangGraph
+(带红绿灯的可控循环状态图)" data-shape="rectangle">
+  <rect x="83.863" y="373.4000000000001" width="227.19999999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="197.46299999999997" y="400.30000000000007" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="197.46299999999997" dy="-3.9000000000000012">LangGraph</tspan><tspan x="197.46299999999997" dy="16.900000000000002">(带红绿灯的可控循环状态图)</tspan></text>
+</g>
+<g class="node" data-id="AG" data-label="Microsoft AutoGen
+(专家微信群自由辩论)" data-shape="rectangle">
+  <rect x="83.863" y="451.2000000000001" width="182.73999999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="175.233" y="478.1000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="175.233" dy="-3.9000000000000012">Microsoft AutoGen</tspan><tspan x="175.233" dy="16.900000000000002">(专家微信群自由辩论)</tspan></text>
+</g>
+<g class="node" data-id="CA" data-label="CrewAI
+(电影剧组各岗位严密配合)" data-shape="rectangle">
+  <rect x="83.863" y="295.6000000000001" width="212.37999999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="190.053" y="322.50000000000006" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.053" dy="-3.9000000000000012">CrewAI</tspan><tspan x="190.053" dy="16.900000000000002">(电影剧组各岗位严密配合)</tspan></text>
+</g>
+<g class="node" data-id="ADK" data-label="Google ADK
+(谷歌官方多智能体开发框架)" data-shape="rectangle">
+  <rect x="83.863" y="666.8000000000002" width="227.19999999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="197.46299999999997" y="693.7000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="197.46299999999997" dy="-3.9000000000000012">Google ADK</tspan><tspan x="197.46299999999997" dy="16.900000000000002">(谷歌官方多智能体开发框架)</tspan></text>
+</g>
+<g class="node" data-id="PI" data-label="Pi Agent
+(1500 行极简编码 Agent)" data-shape="rectangle">
+  <rect x="83.863" y="744.6000000000001" width="187.18599999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="177.456" y="771.5000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="177.456" dy="-3.9000000000000012">Pi Agent</tspan><tspan x="177.456" dy="16.900000000000002">(1500 行极简编码 Agent)</tspan></text>
+</g>
+<g class="node" data-id="PA" data-label="Pydantic AI
+(类型安全新锐)" data-shape="rectangle">
+  <rect x="83.863" y="589.0000000000001" width="138.28" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="153.003" y="615.9000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="153.003" dy="-3.9000000000000012">Pydantic AI</tspan><tspan x="153.003" dy="16.900000000000002">(类型安全新锐)</tspan></text>
+</g>
+<g class="node" data-id="DSH" data-label="DeepSeek Harness
+(一切皆插件的国产开源 Agent 底座)" data-shape="rectangle">
+  <rect x="83.863" y="822.4000000000001" width="265.73199999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="216.72899999999998" y="849.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="216.72899999999998" dy="-3.9000000000000012">DeepSeek Harness</tspan><tspan x="216.72899999999998" dy="16.900000000000002">(一切皆插件的国产开源 Agent 底座)</tspan></text>
+</g>
+<g class="node" data-id="OAS" data-label="OpenAI Agents SDK
+(Swarm 官方继任者)" data-shape="rectangle">
+  <rect x="83.863" y="1038.0000000000002" width="165.697" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="166.7115" y="1064.9000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="166.7115" dy="-3.9000000000000012">OpenAI Agents SDK</tspan><tspan x="166.7115" dy="16.900000000000002">(Swarm 官方继任者)</tspan></text>
+</g>
+<g class="node" data-id="SK" data-label="Semantic Kernel
+(微软企业级 SDK)" data-shape="rectangle">
+  <rect x="83.863" y="1115.8000000000002" width="152.35899999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="160.0425" y="1142.7000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="160.0425" dy="-3.9000000000000012">Semantic Kernel</tspan><tspan x="160.0425" dy="16.900000000000002">(微软企业级 SDK)</tspan></text>
+</g>
+<g class="node" data-id="HS" data-label="Haystack
+(工业级 RAG 流水线)" data-shape="rectangle">
+  <rect x="83.863" y="960.2000000000002" width="169.402" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="168.564" y="987.1000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="168.564" dy="-3.9000000000000012">Haystack</tspan><tspan x="168.564" dy="16.900000000000002">(工业级 RAG 流水线)</tspan></text>
+</g>
+<g class="node" data-id="DF" data-label="Dify / Flowise / Coze
+(拖拽搭建 AI 应用)" data-shape="rectangle">
+  <rect x="83.863" y="1253.6000000000004" width="157.546" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="162.636" y="1280.5000000000005" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="162.636" dy="-3.9000000000000012">Dify / Flowise / Coze</tspan><tspan x="162.636" dy="16.900000000000002">(拖拽搭建 AI 应用)</tspan></text>
+</g>
+</svg>

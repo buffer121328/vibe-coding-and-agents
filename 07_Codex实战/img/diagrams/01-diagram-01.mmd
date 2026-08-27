@@ -1,0 +1,19 @@
+graph LR
+    subgraph EngineWorld ["原厂底模大脑 (Engine)"]
+        GPT["OpenAI GPT-5.x / 5.6 系列"]
+        Claude["Anthropic Claude 5 系列"]
+        DeepSeek["DeepSeek V4 系列"]
+        Grok["xAI Grok 4.x 系列"]
+    end
+
+    subgraph AgentWorld ["原厂专属智能体 (Transmission & Chassis)"]
+        Codex["OpenAI Codex\n(已并入 ChatGPT 桌面端)"]
+        ClaudeCode["Claude Code"]
+        DSHarness["OpenCode / Hermes Agent"]
+        CursorGrok["Cursor / Grok Build"]
+    end
+
+    GPT <===>|"原厂数据闭环 · 软硬深度对齐"| Codex
+    Claude <===>|"原厂数据闭环 · 软硬深度对齐"| ClaudeCode
+    DeepSeek <===>|"原厂数据闭环 · 软硬深度对齐"| DSHarness
+    Grok <===>|"原厂数据闭环 · 软硬深度对齐"| CursorGrok

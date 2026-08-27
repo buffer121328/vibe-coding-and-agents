@@ -1,0 +1,8 @@
+graph TD
+    subgraph Blackboard ["1. 共享黑板模式 (Shared Blackboard)"]
+        B1["所有 Agent 围在一块大黑板前\n谁有了新进展就写在黑板上，其他人随时抬头看\n代表：LangGraph 的全局 State"]
+    end
+
+    subgraph Messaging ["2. 点对点飞鸽传书 (Message Passing)"]
+        M1["Agent 之间互相发微信私聊消息\n明确指定 Recipient 接收人 ID 进行消息投递\n代表：AutoGen / A2A 协议"]
+    end

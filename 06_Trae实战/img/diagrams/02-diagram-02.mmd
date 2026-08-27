@@ -1,0 +1,21 @@
+graph LR
+    subgraph Build ["① 建图阶段 (codegraph build)"]
+        TS["Tree-sitter 语法解析器\n(把代码拆成抽象语法树 AST)"]
+        KG["知识图谱数据库\n(符号 / 函数 / 调用关系 / 依赖边)"]
+        TS --> KG
+    end
+
+    subgraph Serve ["② 服务阶段 (codegraph serve --mcp)"]
+        MCP["本地 MCP Server\n(暴露 codegraph_explore 等查询工具)"]
+        AGENT["Trae Agent\n(按需调用图谱查询工具)"]
+        MCP --> AGENT
+    end
+
+    subgraph Query ["③ 查询阶段 (零扫描)"]
+        Q1["codegraph_explore: 多符号探索"]
+        Q2["codegraph_trace: 调用链追踪"]
+        Q3["codegraph_impact: 影响分析"]
+        Q1 --> AGENT
+        Q2 --> AGENT
+        Q3 --> AGENT
+    end

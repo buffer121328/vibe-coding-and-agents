@@ -13,19 +13,12 @@
 
 **API Key（应用程序接口密钥）** 就是一段像密码一样的长字符串（例如 `sk-proj-abc123xxxx...`）。
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Dev as 你的电脑 / Agent (Cursor)
-    participant Cloud as 云端大模型平台 (DeepSeek / OpenAI)
-    participant Bill as 计费水表系统
-
-    Dev->>Cloud: 发送请求 + 附带专属 API Key 门禁卡
-    Cloud->>Bill: 验证 Key 是否有效？账户是否有余额？
-    Bill-->>Cloud: 验证通过，余额充足
-    Cloud-->>Dev: 秒级返回生成的代码与回答
-    Bill->>Bill: 扣除本次消耗的 500 Token 算力费用 (约 0.001 元)
-```
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-01.svg">
+    <img src="img/diagrams/02-diagram-01.svg" alt="🔑 什么是 API Key？它是怎么扣费的？" width="960">
+  </a>
+</p>
 
 ---
 
@@ -142,20 +135,12 @@ sequenceDiagram
 > 有很多新手在写代码时，直接把 `sk-xxxx` 写死在 Python 文件里，然后随手 `git push` 上传到了 GitHub 公开仓库。
 > 结果 **5 秒钟内** 就被全网爬虫脚本扫走盗刷，一夜之间欠下了几千美元的天价账单！
 
-```mermaid
-graph TD
-    subgraph Bad ["❌ 致命错误操作 (千万别做！)"]
-        B1["把 API Key 直接明文写在代码里：<br/>client = OpenAI(api_key='sk-123456...')"]
-        B1 --> B2["执行 git push 推送到公开 GitHub 仓库"]
-        B2 --> B3["全网扫描黑客秒级盗刷你的额度！💥"]
-    end
-
-    subgraph Good ["✅ 工业级标准安全做法 (.env 隔离)"]
-        G1["把密钥保存在本地单独的 .env 文件中"]
-        G1 --> G2["在 .gitignore 中加上一行：.env (严禁上传)"]
-        G2 --> G3["代码中通过环境变量动态读取：<br/>api_key = os.getenv('OPENAI_API_KEY')"]
-    end
-```
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：Cyberpunk -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-02.svg">
+    <img src="img/diagrams/02-diagram-02.svg" alt="🛑 API Key 核心安全铁律（防盗刷血泪教训）" width="760">
+  </a>
+</p>
 
 ***
 

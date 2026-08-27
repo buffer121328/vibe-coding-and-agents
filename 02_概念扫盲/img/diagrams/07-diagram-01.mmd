@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    actor User as 用户
+    participant LLM as 服务员 (大模型)
+    participant Host as 传菜系统 (本地宿主程序)
+    participant Tool as 后厨大厨 (外部工具/数据库)
+
+    User->>LLM: 问：“帮我查下账户余额还有多少”
+    LLM-->>Host: 递出格式化小票：{"action": "get_balance", "user_id": 10086}
+    Host->>Tool: 拿着小票去真实数据库里查询余额
+    Tool-->>Host: 返回真实金额：{"balance": "¥8,520.00"}
+    Host->>LLM: 把真实查询结果喂回给大模型
+    LLM-->>User: 礼貌回复：“主人，您的账户当前可用余额为 8,520.00 元。”

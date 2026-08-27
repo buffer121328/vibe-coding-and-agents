@@ -1,0 +1,6 @@
+graph TD
+    Q["用户提问"] --> Agent["Agent 判断：需要检索吗？"]
+    Agent -->|"需要"| Search["调用检索工具查知识库"]
+    Search --> Check["评估结果够不够回答？"]
+    Check -->|"不够，需要再查"| Search
+    Check -->|"够了"| Answer["结合检索结果生成最终答案"]

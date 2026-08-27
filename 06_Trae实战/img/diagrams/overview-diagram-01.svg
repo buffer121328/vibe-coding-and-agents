@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 721.7069999999998 974.8" width="721.7069999999998" height="974.8" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Step1" data-label="第一步：认知建立与基建就绪">
+  <rect x="36" y="36" width="649.7069999999998" height="223.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="649.7069999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第一步：认知建立与基建就绪</text>
+</g>
+<g class="subgraph" data-id="Step2" data-label="第二步：阶段一 · 身份与安全鉴权">
+  <rect x="97.50299999999993" y="315.6" width="526.7009999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="97.50299999999993" y="315.6" width="526.7009999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="109.50299999999993" y="329.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第二步：阶段一 · 身份与安全鉴权</text>
+</g>
+<g class="subgraph" data-id="Step3" data-label="第三步：阶段二 · 社交互动与性能重构">
+  <rect x="103.43099999999993" y="485.40000000000003" width="514.8449999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="103.43099999999993" y="485.40000000000003" width="514.8449999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="115.43099999999993" y="499.40000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第三步：阶段二 · 社交互动与性能重构</text>
+</g>
+<g class="subgraph" data-id="Step4" data-label="第四步：阶段三 · AI 原生赋能与终极交付">
+  <rect x="71.93849999999992" y="655.2" width="577.8299999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="71.93849999999992" y="655.2" width="577.8299999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="83.93849999999992" y="669.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第四步：阶段三 · AI 原生赋能与终极交付</text>
+</g>
+<g class="subgraph" data-id="Step5" data-label="第五步：工程升华 · 架构演进与目录治理">
+  <rect x="110.84099999999995" y="825" width="500.02499999999986" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="110.84099999999995" y="825" width="500.02499999999986" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="122.84099999999995" y="839" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第五步：工程升华 · 架构演进与目录治理</text>
+</g>
+<polyline class="edge" data-from="Step1" data-to="Step2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="360.8534999999999,259.6 360.8534999999999,315.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step2" data-to="Step3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="360.8534999999999,429.40000000000003 360.8534999999999,485.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step3" data-to="Step4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="360.8534999999999,599.2 360.8534999999999,655.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step4" data-to="Step5" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="360.8534999999999,769 360.8534999999999,825" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A1" data-to="A2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="360.8534999999999,133.8 360.8534999999999,189.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="A1" data-label="01 初识 Trae：双模驱动与生产级范式
+(生态优势 / 新人首月 2.5 折 / Work vs Code / 单文件精准撤销 / Solo 模式)" data-shape="rectangle">
+  <rect x="119.80149999999992" y="80" width="482.1039999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">01 初识 Trae：双模驱动与生产级范式</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(生态优势 / 新人首月 2.5 折 / Work vs Code / 单文件精准撤销 / Solo 模式)</tspan></text>
+</g>
+<g class="node" data-id="A2" data-label="02 环境基建与项目导入
+(工程迁移 / uv 依赖秒级同步 / CodeGraph &amp; .traerules 上下文 / IDE 神级扩展推荐 / 课后大作业)" data-shape="rectangle">
+  <rect x="52" y="189.8" width="617.7069999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="216.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">02 环境基建与项目导入</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(工程迁移 / uv 依赖秒级同步 / CodeGraph &amp; .traerules 上下文 / IDE 神级扩展推荐 / 课后大作业)</tspan></text>
+</g>
+<g class="node" data-id="B1" data-label="03 用户认证与 JWT 权限隔离系统
+(User 模型 / Bcrypt 哈希 / JWT 颁发与验证 / Depends 权限守卫 / 登录弹窗)" data-shape="rectangle">
+  <rect x="113.50299999999993" y="359.6" width="494.7009999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="386.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">03 用户认证与 JWT 权限隔离系统</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(User 模型 / Bcrypt 哈希 / JWT 颁发与验证 / Depends 权限守卫 / 登录弹窗)</tspan></text>
+</g>
+<g class="node" data-id="C1" data-label="04 评论点赞系统与接口分页重构
+(Comment 一对多关联 / 点赞计数防刷 / Page &amp; PageSize 分页 / 楼层渲染)" data-shape="rectangle">
+  <rect x="119.43099999999993" y="529.4000000000001" width="482.8449999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="556.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">04 评论点赞系统与接口分页重构</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(Comment 一对多关联 / 点赞计数防刷 / Page &amp; PageSize 分页 / 楼层渲染)</tspan></text>
+</g>
+<g class="node" data-id="D1" data-label="05 AI 智能摘要提炼与自动打标
+(LLM 接口接入 / 100字导读生成 / 内容感知提取标签 / 批量回填 / 全栈终极大合影)" data-shape="rectangle">
+  <rect x="87.93849999999992" y="699.2" width="545.8299999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="726.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">05 AI 智能摘要提炼与自动打标</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(LLM 接口接入 / 100字导读生成 / 内容感知提取标签 / 批量回填 / 全栈终极大合影)</tspan></text>
+</g>
+<g class="node" data-id="E1" data-label="06 架构演进与目录治理
+(SpringBoot 三层思想 / AI 上帝文件防腐 / 生产级目录蓝图 / 进阶经典)" data-shape="rectangle">
+  <rect x="126.84099999999995" y="869" width="468.02499999999986" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.8534999999999" y="895.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="360.8534999999999" dy="-3.9000000000000012">06 架构演进与目录治理</tspan><tspan x="360.8534999999999" dy="16.900000000000002">(SpringBoot 三层思想 / AI 上帝文件防腐 / 生产级目录蓝图 / 进阶经典)</tspan></text>
+</g>
+</svg>

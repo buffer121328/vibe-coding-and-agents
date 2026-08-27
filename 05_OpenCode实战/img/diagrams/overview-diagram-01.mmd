@@ -1,0 +1,27 @@
+graph TD
+    subgraph Step1 ["第一步：环境基建与双端认知"]
+        A1["01 双端下载与主界面设置指南\n(CLI/Desktop 跨平台安装 / 主界面功能区 / 通用设置 / 提供商接入)"]
+    end
+
+    subgraph Step2 ["第二步：核心配置与能力外挂"]
+        B1["02 高级配置：MCP、Skills 与 omo-slim 实战\n(opencode.jsonc 深度拆解 / MCP 工具挂载 / Skills 战术包 / omo-slim 多专家协作)"]
+    end
+
+    subgraph Step3 ["第三步：极速破冰小工具实战"]
+        C1["03 意图驱动单文件小工具实战\n(零依赖单文件 / 赛博解压木鱼 / Web Audio 音效 / 60fps 粒子)"]
+    end
+
+    subgraph Step4 ["第四步：进阶动态交互与多专家协作"]
+        D1["04 动态交互网页与 AI 灵感卡片生成器\n(多专家协同调度 / 高质感 UI 美学 / Canvas 海报生成 / 浏览器端自测)"]
+    end
+
+    subgraph Step5 ["第五步：经典轻量全栈与数据库实战"]
+        E1["05 极简全栈实战（上）：基建准备与阶段拆分规划\n(OpenSpec / CodeGraph / uv / 阶段拆分思路 / docs 规划)"]
+        E2["06 极简全栈实战（下）：前后端编码落地与全链路交付\n(FastAPI CRUD / SQLite 持久化 / TailwindCSS / Markdown 渲染)"]
+        E1 --> E2
+    end
+
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Step4
+    Step4 --> Step5

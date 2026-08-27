@@ -10,37 +10,12 @@
 
 ## 🧭 第二章全景知识图谱
 
-```mermaid
-graph TD
-    subgraph Part1 ["第一部分：传统软件工程基建"]
-        A1["01 软件架构基础<br/>(前端/后端/数据库/中间件/微服务/同步异步)"]
-        A2["02 Git 与 GitHub 极速入门<br/>(版本控制/注册流程/代理网络配置)"]
-    end
-
-    subgraph Part2 ["第二部分：大模型底层与认知进化"]
-        B1["03 大模型本质与 Transformer<br/>(概率接龙/本质压缩/注意力机制)"]
-        B2["05 提示词与上下文工程<br/>(Prompt Engineering vs Context Engineering)"]
-        B3["10 模型微调与量化技术<br/>(SFT/LoRA 专项深造 vs GGUF 轻量化压缩)"]
-    end
-
-    subgraph Part3 ["第三部分：AI Agent 智能体与前沿范式"]
-        C1["04 Agent 机制与运行原理<br/>(大模型大脑 + 工具手脚 + ReAct 闭环)"]
-        C2["06 记忆管理与 Agent Skills<br/>(短期窗口/长期记忆/技能包封装)"]
-        C3["07 工具调用、MCP 与 A2A 协议<br/>(Function Calling / 万能 Type-C 接口 / 智能体协作)"]
-        C4["08 RAG 知识库与向量存储<br/>(开卷考试/Embedding 相似度检索)"]
-        C5["09 Multi-Agent 多智能体范式<br/>(团队作战：监工/流水线/层级/辩论/蜂群五大范式)"]
-        C6["11 Harness 工程与 Loop 工程<br/>(沙箱评测底盘 / 自主迭代与熔断防护)"]
-    end
-
-    subgraph Part4 ["第四部分：实战框架、前沿开源项目与生态大市场"]
-        D1["12 主流开发框架全景<br/>(LangChain / LangGraph / AutoGen / CrewAI / LlamaIndex)"]
-        D2["13 论文/项目/Skills市场/MCP教程<br/>(8 篇里程碑论文 + DeerFlow/DeepAgents + Skills 市场 + MCP 实战)"]
-    end
-
-    Part1 --> Part2
-    Part2 --> Part3
-    Part3 --> Part4
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🧭 第二章全景知识图谱" width="860">
+  </a>
+</p>
 
 ---
 
@@ -48,8 +23,8 @@ graph TD
 
 点击下方链接逐一阅读各小节的通俗精讲与权威官方链接：
 
-1. **[2.1 软件架构基础：前端、后端、数据库、中间件、微服务、同步与异步](./01_软件架构基础.md)**
-   - 饭店前厅与后厨的比喻，彻底搞懂现代互联网软件的骨架与协作方式。
+1. **[2.1 软件架构基础：计算机、网络、前端、后端、数据库、中间件、微服务、同步与异步](./01_软件架构基础.md)**
+   - 开胃菜先补底层：电脑与操作系统怎么跑起来、IP/端口/服务器/接口是什么、一次网页请求的完整旅程；再借饭店前厅与后厨的比喻，彻底搞懂现代互联网软件的骨架与协作方式。
 
 2. **[2.2 Git 与 GitHub 极速入门：时光机、代码云盘、注册与代理配置](./02_Git与GitHub极速入门.md)**
    - 什么是 Git 存盘点？什么是 GitHub 社交广场？国内如何配置代理流畅拉取代码？

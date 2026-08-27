@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor User as 候选人 (User)
+    participant System as 「面必过」Chatflow
+    
+    User->>System: 上传简历 PDF + 粘贴后端开发 JD + 发送“开始模拟面试”
+    Note over System: 状态锁识别为 interview 模式并持久化锁定\n文档提取器解析 PDF 并保存 resume_summary
+    System-->>User: 阶段一【开场寒暄】：你好！请先用 1 分钟做一个简要的技术自我介绍。
+    
+    User->>System: 自我介绍并提及擅长 FastAPI、Redis 缓存与 LangChain
+    Note over System: Python 拼接首轮问答并存入 qa_history
+    System-->>User: 阶段二【技术深挖】：你在高并发场景下如何利用 Redis 解决缓存击穿问题？
+    
+    User->>System: 回答互斥锁与逻辑过期的实现原理
+    System-->>User: 阶段三【项目实战】：介绍一下你在简历中提到的 Agent 知识库问答项目架构？
+    
+    User->>System: 详细阐述 RAG 架构与混合检索方案
+    System-->>User: 阶段四【行为与反问】：你在项目中遇到过的最大技术分歧是什么？是否有问题想问我？
+    
+    User->>System: 回答并表示“今天面试先到这里吧，我想看看复盘报告”
+    Note over System: 面试引擎输出 [INTERVIEW_END]\n触发三大专家串行打分 ⮕ 代码清洗 ⮕ 生成 HTML
+    System-->>User: 交付《模拟面试综合复盘报告.html》下载卡片，并自动清空状态锁！

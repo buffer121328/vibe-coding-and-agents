@@ -25,37 +25,12 @@
 
 ## 🧭 第四章全景知识图谱
 
-```mermaid
-graph TD
-    subgraph Step1 ["第一步：建立平台认知与概念扫盲"]
-        A1["01 Dify 核心概念与平台全貌<br/>(三层架构 / 主页功能区拆解 / 四大应用形态 / 核心节点体系)"]
-    end
-
-    subgraph Step2 ["第二步：工作室实操与工作流创建"]
-        B1["02 工作室实操与工作流创建<br/>(探索工作室 / 筛选与卡片管理 / 三大创建姿势 / 选型决策树)"]
-    end
-
-    subgraph Step3 ["第三步：集成生态与能力外挂"]
-        C1["03 模型供应商与工具插件生态<br/>(全球模型矩阵 / 5大能力标签 / 多Key负载均衡 / 工具插件与MCP)"]
-    end
-
-    subgraph Step4 ["第四步：实战 ——「面必过」双引擎 Chatbot"]
-        D1["04 案例全景透视与架构设计<br/>(业务痛点 / 游乐园手环状态锁 / 7大会话变量 / 插件生态)"]
-        D2["05 核心调度引擎：状态锁路由与意图识别分流<br/>(JD提取 / 状态锁If-Else / 意图识别Prompt / 动态加锁)"]
-        D3["06 实战(上)：沉浸式模拟面试流水线<br/>(简历懒加载 / Python问答记忆拼接 / 面试引擎 / 三连击复盘 / HTML导出)"]
-        D4["07 实战(下)：多专家圆桌式简历优化<br/>(JD匹配 + HR审核 + 内容优化 / 圆桌收敛 / 简历HTML生成)"]
-        D5["08 调试、发布与端到端自测指南<br/>(单节点调试 / 变量避坑 / Web App发布 / API集成 / 为什么不用Agent节点深水区反思)"]
-    end
-
-    Step1 --> Step2
-    Step2 --> Step3
-    Step3 --> Step4
-    D1 --> D2
-    D2 --> D3
-    D2 --> D4
-    D3 --> D5
-    D4 --> D5
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🧭 第四章全景知识图谱" width="860">
+  </a>
+</p>
 
 ***
 

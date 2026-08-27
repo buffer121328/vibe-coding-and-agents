@@ -58,48 +58,12 @@
 
 ## 🗺️ 13 步进阶全景路线图 (Roadmap)
 
-```mermaid
-flowchart TD
-    classDef p1 fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1,rx:8,ry:8
-    classDef p2 fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20,rx:8,ry:8
-    classDef p3 fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:8,ry:8
-    classDef p4 fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C,rx:8,ry:8
-    classDef groupBox fill:#FAFAFA,stroke:#BDBDBD,stroke-width:2px,stroke-dasharray: 4 4,rx:12,ry:12,color:#424242
-
-    subgraph Phase1 ["🌱 第一阶段：基建与思考内核 (8.1 - 8.3)"]
-        S01["8.1 环境基建与模型接入<br/>(智谱 BigModel API 原生封装)"]:::p1
-        S02["8.2 ReAct 思考范式<br/>(Thought-Action-Observation 极简闭环)"]:::p1
-        S03["8.3 Plan & Execute 规划范式<br/>(TodoItem 状态机与结构化任务拆解)"]:::p1
-        S01 --> S02 --> S03
-    end
-
-    subgraph Phase2 ["🛠️ 第二阶段：手脚工具与安全门禁 (8.4 - 8.6)"]
-        S04["8.4 工具注册与分发机制<br/>(@tool 装饰器与 JSON Schema 路由)"]:::p2
-        S05["8.5 终端执行与代码编辑<br/>(run_bash 与 str_replace 精准行替换)"]:::p2
-        S06["8.6 权限控制与人类在环<br/>(危险指令拦截与 Human-in-the-Loop)"]:::p2
-        S04 --> S05 --> S06
-    end
-
-    subgraph Phase3 ["🧠 第三阶段：扩展切面与长效运行 (8.7 - 8.9)"]
-        S07["8.7 Hooks 生命周期机制<br/>(Pre/Post 钩子、敏感脱敏与审计)"]:::p3
-        S08["8.8 上下文工程与压缩<br/>(0ms 滑动截断与工具裁剪 vs /compact 摘要)"]:::p3
-        S09["8.9 记忆系统与技能挂载<br/>(持久化 Memory 与 SKILL.md 动态挂载)"]:::p3
-        S07 --> S08 --> S09
-    end
-
-    subgraph Phase4 ["🛠️ 第四阶段：工程化进阶 (8.10 - 8.12)"]
-        S10["8.10 Subagents 子代理协作<br/>(上下文隔离、任务派发与 DeepResearch)"]:::p4
-        S11["8.11 会话持久化与多分支<br/>(存档读档、fork 分叉与 Markdown 导出)"]:::p1
-        S12["8.12 可观测性与性能评估<br/>(事件总线、Token 账单与评估套件)"]:::p2
-        S10 --> S11 --> S12
-    end
-
-    subgraph Phase5 ["🚀 第五阶段：收官实战 (8.13)"]
-        S13["8.13 综合实战：打造个人 Mini-Agent<br/>(联网搜索 + 深度思考 + 全机制整合)"]:::p4
-    end
-
-    Phase1 ==> Phase2 ==> Phase3 ==> Phase4 ==> Phase5
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🗺️ 13 步进阶全景路线图 (Roadmap)" width="860">
+  </a>
+</p>
 
 ***
 

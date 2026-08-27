@@ -1,0 +1,26 @@
+graph TD
+    subgraph Client ["前端客户端 (单文件 HTML)"]
+        Grid["3×3 首页文章网格\n(点赞徽标 / 评论计数 / 分页条)"]
+        Reader["文章阅读器\n(点赞心形按钮 / 楼层评论区)"]
+    end
+
+    subgraph BackendAPI ["FastAPI 业务引擎"]
+        PageAPI["参数化分页引擎 (GET /api/posts)\n(翻页菜单 / Page & PageSize)"]
+        SocialAPI["社交互动中枢 (Like & Comment)\n(防刷幂等点赞 / 楼层升序排序)"]
+        BatchCount["批量聚合统计 (_post_counts)\n(IN + GROUP BY 告别 N+1 慢查询)"]
+    end
+
+    subgraph Database ["SQLite 数据持久层"]
+        T_Post["posts 表\n(文章元数据)"]
+        T_Like["likes 表 (唯一约束)\n(实名制投票箱: 防止狂按刷赞)"]
+        T_Comment["comments 表 (一对多)\n(房号登记表: 按时间排 1楼/2楼)"]
+    end
+
+    Grid --> PageAPI
+    Reader --> SocialAPI
+    PageAPI --> BatchCount
+    BatchCount --> T_Post
+    BatchCount --> T_Like
+    BatchCount --> T_Comment
+    SocialAPI --> T_Like
+    SocialAPI --> T_Comment

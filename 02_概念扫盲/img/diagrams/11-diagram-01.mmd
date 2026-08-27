@@ -1,0 +1,18 @@
+graph TD
+    subgraph HarnessSys ["Harness 工程 (执行与评测底座)"]
+        Box["Docker 隔离沙箱与防滚架"]
+        ToolBridge["MCP 工具网关与安全拦截器"]
+        EvalBench["SWE-bench 国际标准化考场"]
+    end
+
+    subgraph LoopSys ["Loop 工程 (自主迭代控制循环)"]
+        Start["任务目标下达"] --> Reason["1. 深入分析与规划 (Reason)"]
+        Reason --> Act["2. 调工具执行动作 (Act)"]
+        Act --> Obs["3. 获取真实环境反馈 (Observe)"]
+        Obs --> Verify{"4. 验证测试通过了吗？"}
+        Verify -->|测试失败 / 报错| Reflect["5. 反思失败根因并自我修正 (Reflect)"]
+        Reflect --> Reason
+        Verify -->|全部亮绿灯| Exit["达成目标交付成果"]
+    end
+
+    HarnessSys <--> LoopSys

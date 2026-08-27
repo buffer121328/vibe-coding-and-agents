@@ -6,25 +6,12 @@
 
 ## 🍳 智能管家做大餐：一图看懂 Agent 运作机制
 
-```mermaid
-graph TD
-    User(["用户下达宏观需求：'今晚做一顿丰盛的牛排晚餐'"]) --> Brain["【1. 大脑规划】拆解步骤：看冰箱 ➔ 采购缺料 ➔ 烹饪 ➔ 摆盘"]
-    
-    subgraph Execution ["Agent 自主闭环执行与反馈"]
-        Brain -->|"调用眼睛工具"| T1["打开冰箱摄像头检查 (发现缺黑椒汁和西兰花)"]
-        T1 -->|"环境反馈"| Brain
-        
-        Brain -->|"调用手脚工具"| T2["打开买菜 App 自动下单黑椒汁与西兰花"]
-        T2 -->|"环境反馈：骑手已送达"| Brain
-        
-        Brain -->|"调用烹饪工具"| T3["开火煎牛排 3 分钟"]
-        T3 -->|"调用温度计观察：中心温度偏低"| Brain
-        
-        Brain -->|"反思修正"| T4["补煎 1 分钟并浇上黑椒汁"]
-    end
-
-    Execution --> Finish(["牛排大餐烹饪完成，请主人享用！"])
-```
+<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/04-diagram-01.svg">
+    <img src="img/diagrams/04-diagram-01.svg" alt="🍳 智能管家做大餐：一图看懂 Agent 运作机制" width="760">
+  </a>
+</p>
 
 ***
 
@@ -47,20 +34,12 @@ graph TD
 
 在 Agent 自主解决问题时，有三种最主流的思考架构：
 
-```mermaid
-graph LR
-    subgraph C1 ["1. 思维链 CoT (Chain of Thought)"]
-        A1["步步推导草稿纸<br/>'做数学题，写下一道道解题步骤'"]
-    end
-
-    subgraph C2 ["2. 思维树 ToT (Tree of Thoughts)"]
-        A2["脑内多分支推演<br/>'下象棋，提前推演 3 种走法，死路及时回头剪枝'"]
-    end
-
-    subgraph C3 ["3. 边想边干 ReAct (Reason + Act)"]
-        A3["行动与环境试错<br/>'尝一口汤咸淡 ➔ 加半勺盐 ➔ 再尝一口'"]
-    end
-```
+<!-- 图表源文件：img/diagrams/04-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/04-diagram-02.svg">
+    <img src="img/diagrams/04-diagram-02.svg" alt="🧠 Agent 高级思考流派：CoT、ToT 与 ReAct" width="960">
+  </a>
+</p>
 
 ### 1. 思维链 CoT（Chain of Thought / 草稿纸模式）
 

@@ -1,0 +1,16 @@
+graph TD
+    subgraph FlatChaos ["痛点: 扁平目录与上帝文件"]
+        F1["根目录堆积数十个文件\n(职责边界模糊 / 找代码如大海捞针)"]
+        F2["AI 倾向在单个文件疯狂追加\n(几千行上帝文件 God File)"]
+        F3["超长上下文消耗海量 Token\n(推理变慢 / 频繁触发幻觉与误删)"]
+        F1 --> F2 --> F3
+    end
+
+    subgraph GovernedOrder ["治理后: 模块化工程体系"]
+        G1["分层清晰 (api / core / services / models)"]
+        G2["单文件保持 100~300 行极简高内聚"]
+        G3["AI 读写极精准 / 秒级定位 / 零冲突"]
+        G1 --> G2 --> G3
+    end
+
+    FlatChaos -.->|目录治理重构| GovernedOrder

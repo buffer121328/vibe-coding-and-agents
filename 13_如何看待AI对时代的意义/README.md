@@ -15,33 +15,12 @@
 
 ## 🧭 第十三章全景认知图谱
 
-```mermaid
-graph TD
-    subgraph Part1 ["第一部分：正向审视 —— 生产力跃迁与超级个体红利"]
-        A1["01 生产力跃迁与超级个体<br/>(告别机械苦力 / 创造力平民化 / 一个人就是一支军队)"]
-    end
-
-    subgraph Part2 ["第二部分：理性反思 —— 结构性阵痛与岗位洗牌"]
-        B1["02 结构性阵痛与传统岗位洗牌<br/>(机械搬砖岗位承压 / 任务消失不等于需求消亡 / 拒绝做执行末端)"]
-    end
-
-    subgraph Part3 ["第三部分：历史回响 —— 从马车夫到出租车司机的大进化"]
-        C1["03 从马夫到司机的历史回响<br/>(百年汽车演进 / 王选激光照排 / ETC收费员转岗 / 网约车再就业 / 5大AI新职业浪潮)"]
-    end
-
-    subgraph Part4 ["第四部分：清醒定力 —— 拒绝焦虑割韭菜与打造个人护城河"]
-        D1["04 拒绝焦虑割韭菜与个人护城河<br/>(揭穿焦虑营销套路 / 深度技术硬功 / 思想架构 / 第一性原理 / 对抗性思考)"]
-    end
-
-    subgraph Part5 ["第五部分：红线警示 —— AI 绝不能碰的边界"]
-        E1["05 AI 绝不能碰的红线<br/>(安防攻击 / 伦理道德 / 暴力违法 / 造谣造假 / 数据隐私 / 学术诚信)"]
-    end
-
-    Part1 --> Part2
-    Part2 --> Part3
-    Part3 --> Part4
-    Part4 --> Part5
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🧭 第十三章全景认知图谱" width="760">
+  </a>
+</p>
 
 ---
 

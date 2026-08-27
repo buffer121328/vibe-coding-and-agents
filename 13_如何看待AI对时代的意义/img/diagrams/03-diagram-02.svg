@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 736.5269999999999 497.00000000000006" width="736.5269999999999" height="497.00000000000006" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="NewJobEcosystem" data-label="🚀 2026+ AI 时代五大核心新兴高薪角色">
+  <rect x="36" y="36" width="664.5269999999999" height="425.00000000000006" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="664.5269999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🚀 2026+ AI 时代五大核心新兴高薪角色</text>
+</g>
+<g class="node" data-id="J1" data-label="1. 意图与上下文架构师 (Intent &amp; Context Architect)
+负责将模糊业务诉求拆解为精准的 Spec 契约、状态机流转与动态上下文注入机制" data-shape="rectangle">
+  <rect x="70.525" y="157.8" width="566.578" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="353.81399999999996" y="184.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="353.81399999999996" dy="-3.9000000000000012">1. 意图与上下文架构师 (Intent &amp; Context Architect)</tspan><tspan x="353.81399999999996" dy="16.900000000000002">负责将模糊业务诉求拆解为精准的 Spec 契约、状态机流转与动态上下文注入机制</tspan></text>
+</g>
+<g class="node" data-id="J2" data-label="2. AI 评估与安全对齐工程师 (Eval Harness &amp; Guardrail Engineer)
+负责在沙箱中构建严苛的自动化测试基准 (SWE-bench 风格)，防范大模型幻觉与越狱投毒" data-shape="rectangle">
+  <rect x="70.525" y="235.60000000000002" width="612.52" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="376.78499999999997" y="262.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="376.78499999999997" dy="-3.9000000000000012">2. AI 评估与安全对齐工程师 (Eval Harness &amp; Guardrail Engineer)</tspan><tspan x="376.78499999999997" dy="16.900000000000002">负责在沙箱中构建严苛的自动化测试基准 (SWE-bench 风格)，防范大模型幻觉与越狱投毒</tspan></text>
+</g>
+<g class="node" data-id="J3" data-label="3. 垂直领域 Agent 编排专家 (Domain Agent Orchestrator)
+深刻理解行业业务，运用 LangGraph / Multi-Agent 架构编排多专家闭环协同流水线" data-shape="rectangle">
+  <rect x="70.525" y="80" width="558.4269999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="349.73849999999993" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="349.73849999999993" dy="-3.9000000000000012">3. 垂直领域 Agent 编排专家 (Domain Agent Orchestrator)</tspan><tspan x="349.73849999999993" dy="16.900000000000002">深刻理解行业业务，运用 LangGraph / Multi-Agent 架构编排多专家闭环协同流水线</tspan></text>
+</g>
+<g class="node" data-id="J4" data-label="4. 后训练与小模型蒸馏调优师 (SLM Distillation &amp; SFT Specialist)
+专精于利用消费级算力精调 1B-3B 专用端侧小模型，实现系统 90%+ 极致降本与毫秒级低延迟" data-shape="rectangle">
+  <rect x="70.525" y="313.40000000000003" width="632.5269999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="386.7885" y="340.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="386.7885" dy="-3.9000000000000012">4. 后训练与小模型蒸馏调优师 (SLM Distillation &amp; SFT Specialist)</tspan><tspan x="386.7885" dy="16.900000000000002">专精于利用消费级算力精调 1B-3B 专用端侧小模型，实现系统 90%+ 极致降本与毫秒级低延迟</tspan></text>
+</g>
+<g class="node" data-id="J5" data-label="5. 超级个体 / AI 原生独立创客 (AI-Native Solopreneur)
+一人即一支军队，利用 AI 杠杆跨界打通产品、研发、UI 与全球化营销" data-shape="rectangle">
+  <rect x="124.61799999999997" y="391.20000000000005" width="487.291" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="368.26349999999996" y="418.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="368.26349999999996" dy="-3.9000000000000012">5. 超级个体 / AI 原生独立创客 (AI-Native Solopreneur)</tspan><tspan x="368.26349999999996" dy="16.900000000000002">一人即一支军队，利用 AI 杠杆跨界打通产品、研发、UI 与全球化营销</tspan></text>
+</g>
+</svg>

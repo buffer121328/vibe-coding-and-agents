@@ -8,22 +8,12 @@
 
 很多初学者觉得大模型神乎其神，其实它的成长过程和一个人类专家的求学之路极其相似：
 
-```mermaid
-graph LR
-    subgraph S1 ["第 1 阶段：海量预训练 (Pre-training)"]
-        A["狂读全人类公开发表的所有书籍、百科、论坛与几十亿行开源代码<br/>【学到：全人类通识知识与语言规律】"]
-    end
-
-    subgraph S2 ["第 2 阶段：指令监督微调 (SFT)"]
-        B["刷几万道精选的名师问答题库，学习怎么像个礼貌助手一样答题<br/>【学到：听懂人话，按格式回答】"]
-    end
-
-    subgraph S3 ["第 3 阶段：强化学习与对齐 (RLHF)"]
-        C["人类专家当裁判给答案打分，好答案给小红花，违规危险答案严惩<br/>【学到：价值观对齐，安全有益】"]
-    end
-
-    A --> B --> C --> Output["最终出厂的 ChatGPT / Claude / DeepSeek"]
-```
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-01.svg">
+    <img src="img/diagrams/03-diagram-01.svg" alt="🏭 一个万亿参数大模型是怎样“炼”成的？（三阶段大比喻）" width="860">
+  </a>
+</p>
 
 ***
 
@@ -41,12 +31,12 @@ graph LR
 
 你在调用 API 或在写提示词时经常会看到 `temperature` 参数：
 
-```mermaid
-graph TD
-    T0["Temperature = 0.0<br/>【严谨死板的老法官】<br/>每次只挑数学概率最高的那一个字<br/>输出绝对确定、严密无差错<br/>👉 适合：写代码、算数学、提取 JSON 数据"]
-    
-    T1["Temperature = 1.0<br/>【喝醉酒脑洞大开的科幻诗人】<br/>大胆挑选概率较低的词汇组合<br/>想象力极其丰富、天马行空<br/>👉 适合：写小说、头脑风暴、起产品名字"]
-```
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-02.svg">
+    <img src="img/diagrams/03-diagram-02.svg" alt="2. 温度参数（Temperature）与 Top-P（控制 AI 的性格与脑洞）" width="760">
+  </a>
+</p>
 
 ***
 
@@ -59,14 +49,12 @@ graph TD
   - 突然，远处的吧台有人轻声喊了一句：**“小明，你的外卖到了！”**
   - 虽然现场声浪震天，但小明的耳朵雷达瞬间把 99% 的注意力集中到了这几个字上，并立刻把“外卖”和“自己（小明）”关联在一起。
 
-```mermaid
-graph TD
-    subgraph AttentionFlow ["自注意力全景扫描：'小猫爬上了树梢，因为【它】看见了小鸟'"]
-        It["代词：【它】"] -->|95% 超强注意力雷达关联| Cat["主体：小猫 (The Cat)"]
-        It -.->|3% 微弱注意力| Tree["物体：树梢 (Tree)"]
-        It -.->|2% 微弱注意力| Bird["目标：小鸟 (Bird)"]
-    end
-```
+<!-- 图表源文件：img/diagrams/03-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-03.svg">
+    <img src="img/diagrams/03-diagram-03.svg" alt="3. 自注意力机制（Self-Attention）—— 嘈杂派对上的“鸡尾酒会效应”" width="760">
+  </a>
+</p>
 
 - 在处理一万行代码时，Transformer 不会像旧算法那样读到后面忘前面，而是能瞬间计算出**当前这一行变量与 500 行之前定义的结构体之间的强关联**！
 
@@ -94,14 +82,12 @@ embedding_of_car = [-0.90, 0.44, 0.10, -0.77, ...]  # “汽车”（和猫狗�
 - **日常生活比喻**：像学霸现场写作文——一个字一个字写，每写一个字都要回头看看前面写过的内容，再决定下一个字写什么。
 - **技术大白话**：生成时模型每次只预测“**下一个 Token**”的概率分布，挑出最合理的那个，拼回原文再继续预测，循环往复直到输出结束符。
 
-```mermaid
-graph LR
-    Start["输入一段文字"] --> Predict["模型预测下一个 Token 的概率分布"]
-    Predict --> Pick["挑出最合理的下一个字"]
-    Pick --> Append["把新字拼接到原文末尾"]
-    Append -->|"循环往复，直到输出结束符"| Predict
-    Append --> Done["最终生成完整回答"]
-```
+<!-- 图表源文件：img/diagrams/03-diagram-04.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-04.svg">
+    <img src="img/diagrams/03-diagram-04.svg" alt="5. 自回归生成：为什么大模型一个字一个字往外“蹦”？" width="860">
+  </a>
+</p>
 
 - **为什么生成慢？**：一次只能吐一个 Token，所以长回答要等好几秒；也正因如此，**输出 Token 往往比输入更贵**（呼应 3.2 章的 Token 计费）。
 

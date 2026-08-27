@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    participant Upstream as 上游官方仓库 (Upstream Repo)
+    participant MyFork as 个人 Fork 仓库 (GitHub Origin)
+    participant Local as 本地开发环境 (Local Workspace)
+
+    Upstream->>MyFork: 1. 在 GitHub 页面点击 Fork
+    MyFork->>Local: 2. git clone 到本地
+    Local->>Local: 3. git remote add upstream 绑定上游
+    Note over Local: 4. 开辟 feature/ai-agent 分支进行非侵入式开发
+    Upstream-->>Local: 5. 随时 git fetch upstream 拉取上游安全更新与新特性
+    Local->>Local: 6. 优雅 Rebase 合并，保持代码干净

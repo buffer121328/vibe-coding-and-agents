@@ -9,34 +9,12 @@
 
 按照在 `docs/` 中确立的极简 5 文件分工，我们将分步推进实现：
 
-```mermaid
-graph TD
-    subgraph Step1 ["第一步：Phase 2 后端与数据层落地"]
-        direction TB
-        S1_1["🗄️ database.py: SQLite 引擎与 get_db 会话"]
-        S1_2["🧱 models.py: Post 数据表 ORM 模型 (SQLAlchemy 2.0)"]
-        S1_3["🔍 schemas.py: Pydantic 请求与响应校验 (model_dump)"]
-        S1_4["🚀 main.py: FastAPI RESTful CRUD 路由与单页托管"]
-        S1_1 --> S1_2 --> S1_3 --> S1_4
-    end
-
-    subgraph Step2 ["第二步：Phase 3 前端与 Markdown 落地"]
-        direction TB
-        S2_1["🎨 index.html: TailwindCSS 暗黑玻璃拟态 SPA"]
-        S2_2["⚡ Marked.js + Highlight.js 实时渲染管线"]
-        S2_3["🧩 瀑布流卡片 / 分类筛选 / 双栏编辑器 / 阅读模态框"]
-        S2_1 --> S2_2 --> S2_3
-    end
-
-    subgraph Step3 ["第三步：Phase 4 全链路联调与验收交付"]
-        direction TB
-        S3_1["🌐 CORS 跨域配置与同源单页静态托管"]
-        S3_2["✅ CRUD 全套业务闭环手动自测与交付"]
-        S3_1 --> S3_2
-    end
-
-    Step1 --> Step2 --> Step3
-```
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-01.svg">
+    <img src="img/diagrams/06-diagram-01.svg" alt="🗺️ 一、全栈编码推进路线图" width="860">
+  </a>
+</p>
 
 ***
 
@@ -141,6 +119,7 @@ AI 在 `tasks.md` 中不仅拆解了业务代码实现步骤，还**自觉多出
 等待 AI 逐步编写代码并运行测试，当所有测试通过后，`tasks.md` 将全线变成绿色打勾状态 `[x]`：
 
 <img src="./img/06_openspec_tasks_completed.png" alt="OpenSpec 全部任务完成打勾" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
+
 ***
 
 ## 🛡️ 五、人工验收、归档与 Git 提交全流程
@@ -173,7 +152,7 @@ uv run uvicorn main:app --reload --port 8000
 
 ### 2. 浏览器访问主页
 
-在浏览器地址栏输入：**`http://127.0.0.1:8000`**（也就是大名鼎鼎的本地服务器 `localhost:8000`）。
+在浏览器地址栏输入：**`http://127.0.0.1:8000`**（也就是大名鼎鼎的“抖音”项目 `localhost:8000`）。
 
 你将看到一个**极高质感的暗黑极客风格个人博客系统**：
 
@@ -210,26 +189,12 @@ uv run uvicorn main:app --reload --port 8000
 
 整个博客系统仅由 5 个核心文件构成，结构极其扁平清爽。我们来重点剖析其最新的核心代码实现细节：
 
-```mermaid
-graph TD
-    subgraph Architecture ["🏛️ 极简全栈数据流向图"]
-        direction LR
-        Frontend["🎨 index.html<br/>(TailwindCSS + Marked.js)"]
-        Router["🚀 main.py<br/>(FastAPI RESTful 路由)"]
-        Schema["🔍 schemas.py<br/>(Pydantic V2 校验)"]
-        Model["🧱 models.py<br/>(SQLAlchemy 2.0 ORM)"]
-        DB["🗄️ database.py & blog.db<br/>(SQLite 单文件存储)"]
-
-        Frontend -->|"1. HTTP fetch (JSON)"| Router
-        Router -->|"2. 校验请求参数"| Schema
-        Schema -->|"3. 构造实体操作"| Model
-        Model -->|"4. SQL 读写执行"| DB
-        DB -->|"5. 返回数据记录"| Model
-        Model -->|"6. 序列化 JSON 响应"| Schema
-        Schema -->|"7. 200/201 响应体"| Router
-        Router -->|"8. 渲染卡片/详情"| Frontend
-    end
-```
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-02.svg">
+    <img src="img/diagrams/06-diagram-02.svg" alt="🔍 七、核心代码深度剖析与极简架构解析" width="860">
+  </a>
+</p>
 
 ### 1. 数据库连接与会话生命周期：`database.py`
 

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 965.4629999999999 482.50000000000006" width="965.4629999999999" height="482.50000000000006" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Build" data-label="① 建图阶段 (codegraph build)">
+  <rect x="36" y="36" width="547.2919999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="547.2919999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">① 建图阶段 (codegraph build)</text>
+</g>
+<g class="subgraph" data-id="Serve" data-label="② 服务阶段 (codegraph serve --mcp)">
+  <rect x="371.7969999999999" y="212.34999999999997" width="557.6659999999999" height="154.56" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="371.7969999999999" y="212.34999999999997" width="557.6659999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="383.7969999999999" y="226.34999999999997" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">② 服务阶段 (codegraph serve --mcp)</text>
+</g>
+<g class="subgraph" data-id="Query" data-label="③ 查询阶段 (零扫描)">
+  <rect x="36" y="191.8" width="271.7969999999999" height="254.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="191.8" width="271.7969999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="205.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">③ 查询阶段 (零扫描)</text>
+</g>
+<polyline class="edge" data-from="Q1" data-to="AGENT" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="303.6529999999999,254.25 689.9029999999999,254.25 689.9029999999999,324.00999999999993 715.9029999999999,324.00999999999993" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q2" data-to="AGENT" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="288.83299999999997,333.15000000000003 689.9029999999999,333.15000000000003 689.9029999999999,324.00999999999993 715.9029999999999,324.00999999999993" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q3" data-to="AGENT" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="279.941,412.05 689.9029999999999,412.05 689.9029999999999,324.00999999999993 715.9029999999999,324.00999999999993" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="TS" data-to="KG" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="290.31499999999994,106.9 330.45899999999995,106.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MCP" data-to="AGENT" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="663.9029999999999,283.24999999999994 689.9029999999999,283.24999999999994 689.9029999999999,324.00999999999993 715.9029999999999,324.00999999999993" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="TS" data-label="Tree-sitter 语法解析器
+(把代码拆成抽象语法树 AST)" data-shape="rectangle">
+  <rect x="63.85599999999998" y="80" width="226.45899999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="177.08549999999997" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="177.08549999999997" dy="-3.9000000000000012">Tree-sitter 语法解析器</tspan><tspan x="177.08549999999997" dy="16.900000000000002">(把代码拆成抽象语法树 AST)</tspan></text>
+</g>
+<g class="node" data-id="KG" data-label="知识图谱数据库
+(符号 / 函数 / 调用关系 / 依赖边)" data-shape="rectangle">
+  <rect x="330.45899999999995" y="80" width="236.833" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="448.87549999999993" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="448.87549999999993" dy="-3.9000000000000012">知识图谱数据库</tspan><tspan x="448.87549999999993" dy="16.900000000000002">(符号 / 函数 / 调用关系 / 依赖边)</tspan></text>
+</g>
+<g class="node" data-id="MCP" data-label="本地 MCP Server
+(暴露 codegraph_explore 等查询工具)" data-shape="rectangle">
+  <rect x="387.7969999999999" y="256.34999999999997" width="276.106" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="525.8499999999999" y="283.24999999999994" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="525.8499999999999" dy="-3.9000000000000012">本地 MCP Server</tspan><tspan x="525.8499999999999" dy="16.900000000000002">(暴露 codegraph_explore 等查询工具)</tspan></text>
+</g>
+<g class="node" data-id="AGENT" data-label="Trae Agent
+(按需调用图谱查询工具)" data-shape="rectangle">
+  <rect x="715.9029999999999" y="297.10999999999996" width="197.55999999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="814.6829999999999" y="324.00999999999993" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="814.6829999999999" dy="-3.9000000000000012">Trae Agent</tspan><tspan x="814.6829999999999" dy="16.900000000000002">(按需调用图谱查询工具)</tspan></text>
+</g>
+<g class="node" data-id="Q1" data-label="codegraph_explore: 多符号探索" data-shape="rectangle">
+  <rect x="63.85599999999998" y="235.8" width="239.79699999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="183.75449999999995" y="254.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">codegraph_explore: 多符号探索</text>
+</g>
+<g class="node" data-id="Q2" data-label="codegraph_trace: 调用链追踪" data-shape="rectangle">
+  <rect x="63.85599999999998" y="314.70000000000005" width="224.97699999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="176.34449999999998" y="333.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">codegraph_trace: 调用链追踪</text>
+</g>
+<g class="node" data-id="Q3" data-label="codegraph_impact: 影响分析" data-shape="rectangle">
+  <rect x="63.85599999999998" y="393.6" width="216.08499999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="171.89849999999996" y="412.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">codegraph_impact: 影响分析</text>
+</g>
+</svg>

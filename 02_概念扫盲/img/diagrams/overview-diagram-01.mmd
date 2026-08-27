@@ -1,0 +1,29 @@
+graph TD
+    subgraph Part1 ["第一部分：传统软件工程基建"]
+        A1["01 软件架构基础\n(计算机/网络/前端/后端/数据库/中间件/微服务/同步异步)"]
+        A2["02 Git 与 GitHub 极速入门\n(版本控制/注册流程/代理网络配置)"]
+    end
+
+    subgraph Part2 ["第二部分：大模型底层与认知进化"]
+        B1["03 大模型本质与 Transformer\n(概率接龙/本质压缩/注意力机制)"]
+        B2["05 提示词与上下文工程\n(Prompt Engineering vs Context Engineering)"]
+        B3["10 模型微调与量化技术\n(SFT/LoRA 专项深造 vs GGUF 轻量化压缩)"]
+    end
+
+    subgraph Part3 ["第三部分：AI Agent 智能体与前沿范式"]
+        C1["04 Agent 机制与运行原理\n(大模型大脑 + 工具手脚 + ReAct 闭环)"]
+        C2["06 记忆管理与 Agent Skills\n(短期窗口/长期记忆/技能包封装)"]
+        C3["07 工具调用、MCP 与 A2A 协议\n(Function Calling / 万能 Type-C 接口 / 智能体协作)"]
+        C4["08 RAG 知识库与向量存储\n(开卷考试/Embedding 相似度检索)"]
+        C5["09 Multi-Agent 多智能体范式\n(团队作战：监工/流水线/层级/辩论/蜂群五大范式)"]
+        C6["11 Harness 工程与 Loop 工程\n(沙箱评测底盘 / 自主迭代与熔断防护)"]
+    end
+
+    subgraph Part4 ["第四部分：实战框架、前沿开源项目与生态大市场"]
+        D1["12 主流开发框架全景\n(LangChain / LangGraph / AutoGen / CrewAI / LlamaIndex)"]
+        D2["13 论文/项目/Skills市场/MCP教程\n(8 篇里程碑论文 + DeerFlow/DeepAgents + Skills 市场 + MCP 实战)"]
+    end
+
+    Part1 --> Part2
+    Part2 --> Part3
+    Part3 --> Part4

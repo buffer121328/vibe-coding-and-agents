@@ -1,0 +1,6 @@
+graph LR
+    Start([开始]) --> Node1["【节点 1】编写功能代码"]
+    Node1 --> Node2["【节点 2】运行自动化测试"]
+    Node2 --> Check{"【条件边】测试全绿了吗？"}
+    Check -->|否：掉头循环修正| Node1
+    Check -->|是：放行出城| Finish([交付完成])

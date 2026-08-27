@@ -1,0 +1,10 @@
+graph TD
+    subgraph PlainText ["传统纯文本生成 (不可控)"]
+        T1["模型自由预测下一个 Token"] --> T2["可能输出标点、空格、客套话、Markdown 代码块"]
+        T2 --> T3["下游程序解析概率性报错崩溃"]
+    end
+
+    subgraph StructuredMode ["结构化输出模式 (100% 确定性)"]
+        S1["定义 JSON Schema 契约"] --> S2["引擎在解码时强制将不符合 Schema 的 Token 概率置为 0"]
+        S2 --> S3["100% 输出符合类型约束的合法 JSON 数据对象"]
+    end

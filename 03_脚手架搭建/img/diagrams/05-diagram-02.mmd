@@ -1,0 +1,5 @@
+graph TD
+    A["1. Propose (提出提案)\n在 changes/ 目录下编写新功能的 Spec 蓝图"] --> B["2. Review (人工审查)\n确认数据流、API 字段与安全策略无误"]
+    B --> C["3. Apply (Agent 实施)\nAgent 严格照着 Spec 跨文件编写代码并跑测试"]
+    C --> D["4. Sync (同步主规范)\n将测试通过的新特性合并进 specs/ 永久主库"]
+    D --> E["5. Archive (归档结项)\n将本次 changes 提案归档，保持工作区干净"]

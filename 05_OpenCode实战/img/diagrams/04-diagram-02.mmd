@@ -1,0 +1,11 @@
+graph LR
+    subgraph OldWay ["5.3 原生双模切换 (需人类介入切换)"]
+        Plan["1. 手动切到 Plan 模式\n(提问、澄清、出方案)"] --> Switch["🧑 人类手动切换模式"]
+        Switch --> Build["2. 手动切到 Build 模式\n(生成代码、落地实现)"]
+    end
+
+    subgraph NewWay ["5.4 omo-slim Orchestrator 模式 (全自治闭环)"]
+        OrchInput["人类直接说出最终意图 (Orchestrator 模式)"] --> AutoPlan["🤖 AI 内部自主拟定执行蓝图与 TodoList"]
+        AutoPlan --> AutoDispatch["👥 自动调度 Designer / Oracle 协同交付"]
+        AutoDispatch --> AutoTest["🌐 自动调用 Agent-Browser 自测验收"]
+    end

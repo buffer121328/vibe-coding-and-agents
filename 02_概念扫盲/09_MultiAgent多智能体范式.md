@@ -12,19 +12,12 @@
 - **角色混乱（Role Confusion）**：让同一个 AI “既当运动员（写代码），又当裁判员（找 Bug）”，它往往很难发现自己潜意识里的逻辑漏洞；
 - **专业深度不够**：现实世界里没有人能同时是顶级全栈、顶级安全黑客和顶级产品经理，**专精分工才是工业化生产的唯一解法！**
 
-```mermaid
-graph TD
-    subgraph SingleAgent ["单兵 Agent (认知超载、容易宕机)"]
-        S["一个人扛下所有：<br/>PRD需求 + 架构设计 + 前端 + 后端 + 数据库 + 安全测试<br/>❌ 容易遗忘细节、出现盲区与幻觉"]
-    end
-
-    subgraph MultiAgentTeam ["Multi-Agent 团队协同 (各司其职、互相把关)"]
-        PM["📋 产品经理 Agent"] --> Arch["🏛️ 架构师 Agent"]
-        Arch --> Coder["💻 研发工程师 Agent"]
-        Coder --> QA["🔍 严苛测试 Agent"]
-        QA -->|发现 Bug 驳回| Coder
-    end
-```
+<!-- 图表源文件：img/diagrams/09-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/09-diagram-01.svg">
+    <img src="img/diagrams/09-diagram-01.svg" alt="👥 为什么单兵 Agent 会“力不从心”？（痛点拆解）" width="760">
+  </a>
+</p>
 
 ***
 
@@ -41,17 +34,12 @@ graph TD
   - 导医台听完你的症状，把骨折的你分流到**骨科诊室（骨科 Agent）**，把发烧的你分流到**发热门诊（内科 Agent）**；
   - 各科室医生看完了，把诊断报告交回给导医台汇总出院。
 
-```mermaid
-graph TD
-    User(["用户提出复杂需求"]) --> Boss["👑 主管 Agent (Supervisor)"]
-    Boss -->|派发前端任务| W1["🎨 前端专职 Agent"]
-    Boss -->|派发后端任务| W2["⚙️ 后端专职 Agent"]
-    Boss -->|派发查库任务| W3["🗄️ 数据分析 Agent"]
-    W1 -->|汇报产出| Boss
-    W2 -->|汇报产出| Boss
-    W3 -->|汇报产出| Boss
-    Boss --> Finish(["汇总全部成果，统一交付给用户"])
-```
+<!-- 图表源文件：img/diagrams/09-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/09-diagram-02.svg">
+    <img src="img/diagrams/09-diagram-02.svg" alt="1. 中心化监工 / 调度分发范式（Supervisor Pattern）" width="760">
+  </a>
+</p>
 
 ***
 
@@ -61,12 +49,12 @@ graph TD
   - **记者（Agent 1）** 负责去现场采写初稿 ➔ 产出传递给 ➔ **主编（Agent 2）** 负责审查政治合规与错别字 ➔ 产出传递给 ➔ **美工排版师（Agent 3）** 负责插图版面 ➔ **印刷厂（Agent 4）** 出报纸。
 - **特点**：前一个 Agent 的输出，作为后一个 Agent 的输入，环环相扣，极为严谨。
 
-```mermaid
-graph LR
-    A["1. 需求分析 Agent<br/>(输出标准 PRD 文档)"] --> B["2. 架构设计 Agent<br/>(输出 API 接口定义)"]
-    B --> C["3. 编码实现 Agent<br/>(输出完整代码文件)"]
-    C --> D["4. 质量验收 Agent<br/>(执行测试用例并验收)"]
-```
+<!-- 图表源文件：img/diagrams/09-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/09-diagram-03.svg">
+    <img src="img/diagrams/09-diagram-03.svg" alt="2. 顺序线性流水线范式（Sequential / Pipeline Pattern）" width="760">
+  </a>
+</p>
 
 ***
 
@@ -87,13 +75,12 @@ graph LR
   - **红队（黑客攻击 Agent）** 疯狂寻找系统漏洞，**蓝队（安全防御 Agent）** 见招拆招拼命打补丁。
 - **为什么它极其强大？**：研究表明，让两个立场相反的 Agent 互相挑刺辩论 3 轮，**能消除 90% 以上由单一大模型产生的幻觉与盲目自信**！
 
-```mermaid
-graph LR
-    subgraph DebateRing ["法庭辩论与攻防角斗场"]
-        A["🔴 正方 / 创作者 Agent<br/>提出方案与代码实现"] <-->|多轮质疑与交锋挑刺| B["🔵 反方 / 审查者 Agent<br/>专门寻找安全漏洞与边界死角"]
-    end
-    DebateRing --> Judge["⚖️ 裁判 / 仲裁者 Agent 投票评判，敲定最无懈可击的终极方案"]
-```
+<!-- 图表源文件：img/diagrams/09-diagram-04.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/09-diagram-04.svg">
+    <img src="img/diagrams/09-diagram-04.svg" alt="4. 辩论对抗与共识范式（Debate / Consensus / Red-Blue Teaming）" width="860">
+  </a>
+</p>
 
 ***
 
@@ -126,16 +113,12 @@ graph LR
 
 ## 📡 多智能体之间如何共享信息？（两大主流流派）
 
-```mermaid
-graph TD
-    subgraph Blackboard ["1. 共享黑板模式 (Shared Blackboard)"]
-        B1["所有 Agent 围在一块大黑板前<br/>谁有了新进展就写在黑板上，其他人随时抬头看<br/>代表：LangGraph 的全局 State"]
-    end
-
-    subgraph Messaging ["2. 点对点飞鸽传书 (Message Passing)"]
-        M1["Agent 之间互相发微信私聊消息<br/>明确指定 Recipient 接收人 ID 进行消息投递<br/>代表：AutoGen / A2A 协议"]
-    end
-```
+<!-- 图表源文件：img/diagrams/09-diagram-05.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/09-diagram-05.svg">
+    <img src="img/diagrams/09-diagram-05.svg" alt="📡 多智能体之间如何共享信息？（两大主流流派）" width="760">
+  </a>
+</p>
 
 ***
 

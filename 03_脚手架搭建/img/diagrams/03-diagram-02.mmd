@@ -1,0 +1,15 @@
+graph LR
+    subgraph Global ["你的电脑全局 Python 环境"]
+        G["Python 3.11 全局主程序"]
+    end
+
+    subgraph ProjA ["项目 A 独立房间 (.venv-a)"]
+        A["仅安装 langchain==0.3.0"]
+    end
+
+    subgraph ProjB ["项目 B 独立房间 (.venv-b)"]
+        B["仅安装 fastapi==0.115.0"]
+    end
+
+    Global --> ProjA
+    Global --> ProjB

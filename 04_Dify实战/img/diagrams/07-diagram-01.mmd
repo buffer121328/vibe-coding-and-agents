@@ -1,0 +1,28 @@
+graph TD
+    subgraph Stage1 ["阶段一：输入解析与状态加锁"]
+        A["设为简历 (Assigner)"] --> B{"简历是否已提取 (If-Else)"}
+        B -- "首次解析" --> C["文档提取器 (PDF/Word/TXT)"]
+        C --> D["简历信息提取 (LLM)"]
+        B -- "已提取" --> D
+    end
+
+    subgraph Stage2 ["阶段二：多专家多视角并行会诊 (Parallel Review)"]
+        D --> E["JD匹配分析师\n(4大维度诊断 + 技能缺口 + JSON)"]
+        D --> F["HR审核专家\n(6秒初筛 + 顾虑标记 + 通过率 + JSON)"]
+        E --> G["内容优化师\n(STAR法则改写 + 量化指标注入 + JSON)"]
+    end
+
+    subgraph Stage3 ["阶段三：圆桌会议与终极收敛"]
+        E --> H["圆桌式复盘 (LLM: DeepSeek-Pro)\n三方意见裁决 + 缺口补齐 + 生成终极 Markdown 简历"]
+        F --> H
+        G --> H
+        D --> H
+    end
+
+    subgraph Stage4 ["阶段四：A4 双栏视觉生成与安全交付"]
+        H --> I["简历 HTML 生成 (LLM)\nA4 黄金比例 + 深色左栏 + 白底主内容"]
+        I --> J["代码清洗 (Python3 Code)\n结构化安全气囊 + 实体反转义 + A4 容器兜底"]
+        J --> K["简历 HTML (Tool 节点: md_to_html)"]
+        K --> L["清空简历模式 (Assigner: 解除手环)"]
+        L --> M["输出简历 (Answer: 交付下载卡片)"]
+    end

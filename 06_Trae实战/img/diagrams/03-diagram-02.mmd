@@ -1,0 +1,10 @@
+graph TD
+    subgraph JWT ["JWT = Header.Payload.Signature"]
+        H["Header 头部\n(声明算法 HS256 / 类型 JWT)"]
+        P["Payload 载荷\n(用户ID sub / 角色 role / 过期时间 exp)"]
+        S["Signature 签名\n(用密钥对前两段做 HMAC 哈希)"]
+    end
+
+    H --- P --- S
+    S -.->|验签不通过 → 拒绝| REJECT["🚫 401 Unauthorized"]
+    S -.->|验签通过 → 放行| PASS["✅ 放行进入受保护接口"]

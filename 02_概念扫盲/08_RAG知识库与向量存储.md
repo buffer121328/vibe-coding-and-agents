@@ -13,16 +13,12 @@
   - 学生就算再聪明也答不上来，只能瞎猜。
   - 但如果你把\*\*《2026年公司最新差旅报销制度.pdf》\*\*递到他手里说：“翻开第 5 页，念给我听”，他就能 100% 精准报出正确数字！这就是 **RAG（检索增强生成）** 的本质。
 
-```mermaid
-graph TD
-    User["用户提问：'我的年假怎么计算？'"] --> Search["1. 【检索 Retrieval】在内部制度库中秒级查找相关条款"]
-    Docs["企业内部知识库 (数百份员工手册与 PDF)"] --> Search
-    Search --> Found["命中关键段落：'入职满一年享有 5 天带薪年假'"]
-    
-    Found --> Prompt["2. 【增强 Augmented】将参考依据组装进提示词：<br/>【依据】：入职满一年享有 5 天带薪年假<br/>【问题】：我的年假怎么计算？"]
-    
-    Prompt --> LLM["3. 【生成 Generation】大模型阅读依据后精准输出：<br/>'根据公司员工手册，您入职满一年后即可享受 5 天带薪年假。'"]
-```
+<!-- 图表源文件：img/diagrams/08-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/08-diagram-01.svg">
+    <img src="img/diagrams/08-diagram-01.svg" alt="📚 为什么 RAG 是解决 AI 幻觉的灵丹妙药？" width="760">
+  </a>
+</p>
 
 ***
 
@@ -46,13 +42,12 @@ graph TD
 
 把一本 500 页的《产品手册》存入向量数据库前，必须把它切成一段段 500 字左右的“小薄片（Chunks）”：
 
-```mermaid
-graph LR
-    subgraph ChunkingFlow ["切块与重叠 (Chunk Overlap) 保证上下文不丢失"]
-        C1["第 1 块：讲完了注册流程...【末尾 50 字】"]
-        C2["第 2 块：【开头 50 字与第 1 块重叠】...继续讲登录与找回密码"]
-    end
-```
+<!-- 图表源文件：img/diagrams/08-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/08-diagram-02.svg">
+    <img src="img/diagrams/08-diagram-02.svg" alt="🍰 文档切块（Chunking）与重叠（Overlap）千层饼心法" width="960">
+  </a>
+</p>
 
 - **为什么必须有重叠（Overlap）？**：
   - 如果刚好一句话在正中间被切断（“前一半在第 1 块，后一半在第 2 块”），语义就支离破碎了。保留 50 字的重叠就像“做千层饼”，保证任何一段上下文都不会漏网！
@@ -63,15 +58,12 @@ graph LR
 
 工业级 RAG 之所以准，是因为它采用了\*\*“海选 + 决赛精评”\*\*的两阶段打法：
 
-```mermaid
-graph TD
-    Query["用户输入：'iPhone 16 Pro Max 换电池多少钱？'"] --> Stage1["【阶段一：初赛海选 (Hybrid Search)】<br/>1. 向量语义检索 (找出所有关于苹果手机维修的文档)<br/>2. 传统关键词检索 (精准锁定 'iPhone 16 Pro Max' 关键词)"]
-    
-    Stage1 --> Top100["海选出 Top 100 篇候选段落"]
-    Top100 --> Reranker["【阶段二：决赛评委精细打分 (Rerank 重排模型)】<br/>用算力更强的重排小模型，逐字对比上下文逻辑与提问的契合度"]
-    
-    Reranker --> Top3["最终挑出 3 篇最精准的官方报价表喂给大模型！"]
-```
+<!-- 图表源文件：img/diagrams/08-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/08-diagram-03.svg">
+    <img src="img/diagrams/08-diagram-03.svg" alt="🎯 混合检索（Hybrid Search）与重排（Rerank）—— 选秀大赛大比喻" width="760">
+  </a>
+</p>
 
 ***
 
@@ -108,14 +100,12 @@ graph TD
 - **本质**：在 RAG 外面套一层 Agent，让模型**自己决定**要不要查、用什么工具查、查完是否还要再查；
 - **生活比喻**：不再是机械地翻一次书，而是会追问的管理员——“您要 2026 年版本还是 2025 年版本？我再翻两本交叉验证一下再回答您。”
 
-```mermaid
-graph TD
-    Q["用户提问"] --> Agent["Agent 判断：需要检索吗？"]
-    Agent -->|"需要"| Search["调用检索工具查知识库"]
-    Search --> Check["评估结果够不够回答？"]
-    Check -->|"不够，需要再查"| Search
-    Check -->|"够了"| Answer["结合检索结果生成最终答案"]
-```
+<!-- 图表源文件：img/diagrams/08-diagram-04.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/08-diagram-04.svg">
+    <img src="img/diagrams/08-diagram-04.svg" alt="2. Agentic RAG：有脑子的“图书管理员”" width="760">
+  </a>
+</p>
 
 - **优点**：能处理多步、复杂的检索任务，答案更准；
 - **缺点**：引入循环，更慢、更烧 Token（呼应 2.4 章的 Agent 机制）。

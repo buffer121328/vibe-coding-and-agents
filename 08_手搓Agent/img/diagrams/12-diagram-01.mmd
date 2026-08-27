@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph Agent ["🤖 Agent 主流程 (只负责 emit，不关心谁在看)"]
+        A["agent_start 任务启动"] --> B["llm_call LLM 推理"]
+        B --> C["tool_call 工具执行"]
+        C --> D["tool_result 工具结果"]
+        D --> B
+        D --> E["compact 上下文压缩 / error 报错 / finish 完成"]
+    end
+
+    subgraph Bus ["📡 EventBus 事件总线 (subscribe / emit 广播)"]
+        BUS["把事件分发给精确匹配者 + 通配(*)订阅者，并写入历史"]
+    end
+
+    subgraph Subscribers ["👀 各司其职的订阅者"]
+        S1["💰 TokenCostAudit 费用审计"]
+        S2["📜 TraceRecorder 轨迹回放"]
+        S3["🖥️ Gradio 实时进度面板"]
+        S4["🎯 EvalSuite 评估统计"]
+    end
+
+    Agent --> BUS --> Subscribers

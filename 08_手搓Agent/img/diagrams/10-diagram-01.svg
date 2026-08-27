@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.166 1030.1999999999998" width="488.166" height="1030.1999999999998" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="DeepResearch" data-label="DeepResearch 4 专家协同子代理流水线 (各自独立上下文)">
+  <rect x="36" y="54" width="289.581" height="672.1" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="54" width="289.581" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="68" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">DeepResearch 4 专家协同子代理流水线 (各自独立上下文)</text>
+</g>
+<polyline class="edge" data-from="Main" data-to="Delivery" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="284.68575,901.3 284.68575000000004,957.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Main" data-to="S1" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="派发课题" points="326.87491666666665,864.4 326.87491666666665,852.4 388.581,852.4 388.581,36 180.7905,36 180.7905,98" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S4" data-to="Main" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="回传纯净终稿报告" points="180.7905,710.1 180.7905,852.4 242.49658333333335,852.4 242.49658333333335,864.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S1" data-to="S2" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="独立议题" points="180.7905,151.8 180.7905,284.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S2" data-to="S3" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="研究草稿" points="180.7905,337.90000000000003 180.7905,470.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S3" data-to="S4" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="评审意见" points="180.7905,524 180.7905,656.3000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Main" data-to="S1" data-label="派发课题">
+  <rect x="355.581" y="783.1" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="388.166" y="798.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">派发课题</text>
+</g>
+<g class="edge-label" data-from="S4" data-to="Main" data-label="回传纯净终稿报告">
+  <rect x="124.29050000000001" y="783.1" width="112.69000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="180.6355" y="798.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">回传纯净终稿报告</text>
+</g>
+<g class="edge-label" data-from="S1" data-to="S2" data-label="独立议题">
+  <rect x="147.7905" y="202.8" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="180.37550000000002" y="217.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">独立议题</text>
+</g>
+<g class="edge-label" data-from="S2" data-to="S3" data-label="研究草稿">
+  <rect x="147.7905" y="388.90000000000003" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="180.37550000000002" y="404.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">研究草稿</text>
+</g>
+<g class="edge-label" data-from="S3" data-to="S4" data-label="评审意见">
+  <rect x="147.7905" y="575" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="180.37550000000002" y="590.15" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">评审意见</text>
+</g>
+<g class="node" data-id="Main" data-label="👔 主调度 Agent (拥有主任务目标)" data-shape="rectangle">
+  <rect x="158.11825000000005" y="864.4" width="253.13499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="284.68575000000004" y="882.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👔 主调度 Agent (拥有主任务目标)</text>
+</g>
+<g class="node" data-id="Delivery" data-label="🎯 交付给最终用户" data-shape="stadium">
+  <rect x="203.31925000000004" y="957.3" width="162.733" height="36.900000000000006" rx="18.450000000000003" ry="18.450000000000003" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="284.68575000000004" y="975.75" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎯 交付给最终用户</text>
+</g>
+<g class="node" data-id="S1" data-label="1. 🎯 规划子代理 (Planner)
+拆解 2-3 个核心研究议题" data-shape="rectangle">
+  <rect x="81.64000000000001" y="98" width="198.301" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="180.7905" y="124.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="180.7905" dy="-3.9000000000000012">1. 🎯 规划子代理 (Planner)</tspan><tspan x="180.7905" dy="16.900000000000002">拆解 2-3 个核心研究议题</tspan></text>
+</g>
+<g class="node" data-id="S2" data-label="2. 🔍 检索研究子代理 (Researcher)
+深度技术推演与方案论证" data-shape="rectangle">
+  <rect x="52" y="284.1" width="257.581" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="180.7905" y="311" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="180.7905" dy="-3.9000000000000012">2. 🔍 检索研究子代理 (Researcher)</tspan><tspan x="180.7905" dy="16.900000000000002">深度技术推演与方案论证</tspan></text>
+</g>
+<g class="node" data-id="S3" data-label="3. 🧐 批判审查子代理 (Critic)
+漏洞排查与极限情况挑刺" data-shape="rectangle">
+  <rect x="72.74800000000003" y="470.20000000000005" width="216.08499999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="180.7905" y="497.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="180.7905" dy="-3.9000000000000012">3. 🧐 批判审查子代理 (Critic)</tspan><tspan x="180.7905" dy="16.900000000000002">漏洞排查与极限情况挑刺</tspan></text>
+</g>
+<g class="node" data-id="S4" data-label="4. ✍️ 终稿撰写子代理 (Writer)
+汇总成高质量 Markdown 交付报告" data-shape="rectangle">
+  <rect x="52" y="656.3000000000001" width="257.581" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="180.7905" y="683.2" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="180.7905" dy="-3.9000000000000012">4. ✍️ 终稿撰写子代理 (Writer)</tspan><tspan x="180.7905" dy="16.900000000000002">汇总成高质量 Markdown 交付报告</tspan></text>
+</g>
+</svg>

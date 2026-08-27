@@ -1,0 +1,14 @@
+flowchart TD
+
+    Action["Agent 产生工具调用意图"] --> Guard["🛡️ PermissionGuard 风险评估门禁"]
+
+    Guard -->|1. 只读/计算操作| Safe["🟢 SAFE (安全白名单)\nls, view_file, get_user_info"]
+    Safe --> ExecAuto["⚡ 自动放行执行"]
+
+    Guard -->|2. 文件修改/非常规终端命令| Mod["🟡 MODERATE (中度风险)\nstr_replace, git commit, curl"]
+    Mod --> HITL{"👤 人类在环审批\n(Human-in-the-Loop)"}
+    HITL -- 人类点击 [y] 批准 --> ExecApproved["⚡ 授权执行并记录审计日志"]
+    HITL -- 人类点击 [N] 拒绝 --> Cancel["❌ 终止操作并向模型反馈原因"]
+
+    Guard -->|3. 破坏性高危命令| Crit["🔴 CRITICAL (极高危黑名单)\nrm -rf /, mkfs, :(){ :|:& };:"]
+    Crit --> HardDeny["🚫 永久阻断！直接报错拒绝"]

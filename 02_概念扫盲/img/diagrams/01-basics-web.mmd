@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant User as 用户
+    participant Browser as 浏览器（客户端）
+    participant DNS as DNS 查号台
+    participant Server as 服务器（IP + 端口）
+    participant API as API 服务窗口
+
+    User->>Browser: 输入 github.com 并回车
+    Browser->>DNS: 这个域名对应哪个 IP？
+    DNS-->>Browser: 返回服务器的 IP 门牌号
+    Browser->>Server: 连接 443 端口并发送 HTTP 请求
+    Server->>API: 按接口规则处理这张点菜单
+    API-->>Server: 返回处理结果与数据
+    Server-->>Browser: 返回 HTTP 响应
+    Browser-->>User: 把数据渲染成看得见的网页

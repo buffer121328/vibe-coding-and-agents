@@ -10,13 +10,12 @@
 
 从人类必须迁就机器，到今天机器完全理解人类的灵感意图：
 
-```mermaid
-graph TD
-    A["1. 传统手写时代<br/>纯手工打铁 / 错个标点直接崩溃 / 天天看报错秃头"] --> B["2. AI 网页对话时代<br/>ChatGPT / Claude / 问一句答一段 / 人肉切屏搬运"]
-    B --> C["3. AI 插件辅助时代<br/>Copilot / Continue / 住在代码软件里 / 智能联想按 Tab 键"]
-    C --> D["4. Agent 自主编程时代<br/>Cursor / Devin / Claude Code / 自带手脚 / 自己改多个文件跑测试"]
-    D --> E["5. 🌊 Vibe Coding 时代<br/>Bolt.new / Lovable / Dify / 动嘴提需求当总指挥 / 几分钟出产品"]
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🧭 编程进化五代全景图" width="760">
+  </a>
+</p>
 
 ---
 

@@ -1,0 +1,10 @@
+graph TD
+    subgraph S1 ["黑盒框架调用 (容易两眼一抹黑)"]
+        A1["你的业务代码"] --> B1["LangChain / 重型框架黑盒 (多层抽象封装)"]
+        B1 --> C1["大模型 API"]
+    end
+
+    subgraph S2 ["原生手搓架构 (第一性原理，清晰透明)"]
+        A2["你的业务代码"] --> B2["原生 Client 封装 (透明可控、轻量极致)"]
+        B2 --> C2["智谱 BigModel API (标准 OpenAI 协议)"]
+    end

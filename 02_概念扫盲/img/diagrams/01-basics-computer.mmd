@@ -1,0 +1,17 @@
+flowchart TB
+    App["你点开一个 App"] --> OS["操作系统：后厨总调度\n分配算力、内存、文件与网络"]
+
+    OS --> Process["进程：正在工作的班组\n每个运行中的程序都有自己的任务"]
+
+    subgraph Hardware ["电脑硬件厨房"]
+        CPU["CPU：掌勺大厨\n不停执行计算"]
+        RAM["内存 RAM：灶台\n临时摆放正在使用的数据"]
+        Disk["硬盘：食材冷库\n长期保存文件，断电也不丢"]
+        GPU["GPU：摆盘师傅\n绘制画面，也能并行加速 AI"]
+    end
+
+    Process --> CPU
+    Process <--> RAM
+    RAM <--> Disk
+    CPU --> GPU
+    GPU --> Screen["屏幕显示结果"]

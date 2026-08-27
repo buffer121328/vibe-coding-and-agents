@@ -1,0 +1,27 @@
+graph TD
+    subgraph UserInput ["1. 人类意图 (User Intent)"]
+        Prompt["自然语言需求\n'帮我做一个高颜值 AI 灵感卡片生成器'"]
+    end
+
+    subgraph Studio ["2. omo-slim 创意工作室 (多智能体协同调度)"]
+        direction TB
+        Orchestrator["🧙‍♂️ Orchestrator (总指挥官)\n• 接收意图并自主制定执行计划\n• 无需手动切换 Plan/Build 模式\n• 统筹分发子任务"]
+
+        subgraph Specialists ["智囊与特战专家"]
+            Designer["🎨 Designer (UI 设计师)\n挂载 tailwind-ui-master\n负责 5 大主题排版与玻璃拟态"]
+            Oracle["🔮 Oracle (架构智囊)\n攻克 Canvas 60fps 动效\n与 DOM 转高清图片导出算法"]
+            Browser["🌐 Agent-Browser (自测验收)\n真实浏览器自动化点击与截图闭环"]
+        end
+
+        Orchestrator --> Designer
+        Orchestrator --> Oracle
+        Orchestrator --> Browser
+    end
+
+    subgraph Output ["3. 最终交付物"]
+        App["✨ 《AI 灵感金句卡片工坊》\n(多主题 / 动效粒子 / 实时预览 / 一键导出 PNG)"]
+    end
+
+    UserInput --> Orchestrator
+    Specialists --> Orchestrator
+    Orchestrator --> Output

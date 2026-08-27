@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820.2539999999999 412.5" width="820.2539999999999" height="412.5" style="--bg:#282a36;--fg:#f8f8f2;--line:#6272a4;--accent:#bd93f9;--muted:#6272a4;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="HangingDiagnosis" data-label="🚨 很久没反应的 5 大根因排查">
+  <rect x="36" y="36" width="748.2539999999999" height="340.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="748.2539999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🚨 很久没反应的 5 大根因排查</text>
+</g>
+<polyline class="edge" data-from="H1" data-to="F1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="359.228,220.25 383.221,220.25" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H3" data-to="F3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="340.7029999999999,281.15 383.221,281.15" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H4" data-to="F4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="325.142,159.35000000000002 383.221,159.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H5" data-to="F5" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="319.214,342.05 383.221,342.05" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="H1" data-label="1. 开启了『深度思考』或多角色协作？" data-shape="rectangle">
+  <rect x="72.00700000000002" y="201.8" width="287.221" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="215.6175" y="220.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">1. 开启了『深度思考』或多角色协作？</text>
+</g>
+<g class="node" data-id="F1" data-label="正常现象！CoT 推理需 10~30 秒，查看 Trace 折叠面板" data-shape="rectangle">
+  <rect x="383.221" y="201.8" width="385.03299999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="575.7375" y="220.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">正常现象！CoT 推理需 10~30 秒，查看 Trace 折叠面板</text>
+</g>
+<g class="node" data-id="H2" data-label="&quot;2. 终端在后台等待输入 [y/N" data-shape="rectangle">
+  <rect x="72.00700000000002" y="80" width="217.56699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="180.7905" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">&quot;2. 终端在后台等待输入 [y/N</text>
+</g>
+<g class="node" data-id="H3" data-label="3. 开启了全局科学上网代理 (VPN)？" data-shape="rectangle">
+  <rect x="72.00700000000002" y="262.7" width="268.6959999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="206.35499999999996" y="281.15" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">3. 开启了全局科学上网代理 (VPN)？</text>
+</g>
+<g class="node" data-id="F3" data-label="将 open.bigmodel.cn 加为直连白名单或临时关闭 VPN" data-shape="rectangle">
+  <rect x="383.221" y="262.7" width="370.213" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="568.3275" y="281.15" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">将 open.bigmodel.cn 加为直连白名单或临时关闭 VPN</text>
+</g>
+<g class="node" data-id="H4" data-label="4. API Key 余额耗尽或 QPS 超限？" data-shape="rectangle">
+  <rect x="72.00700000000002" y="140.9" width="253.13499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="198.5745" y="159.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">4. API Key 余额耗尽或 QPS 超限？</text>
+</g>
+<g class="node" data-id="F4" data-label="登录智谱开放平台查额度，或配置火山方舟灾备 Key" data-shape="rectangle">
+  <rect x="383.221" y="140.9" width="379.10499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="572.7735" y="159.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">登录智谱开放平台查额度，或配置火山方舟灾备 Key</text>
+</g>
+<g class="node" data-id="H5" data-label="5. 连续狂点发送导致队列堵塞？" data-shape="rectangle">
+  <rect x="72.00700000000002" y="323.6" width="247.20699999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="195.6105" y="342.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">5. 连续狂点发送导致队列堵塞？</text>
+</g>
+<g class="node" data-id="F5" data-label="点击『清空重置』刷新 Session，避免并发连击" data-shape="rectangle">
+  <rect x="383.221" y="323.6" width="345.01899999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="555.7305" y="342.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">点击『清空重置』刷新 Session，避免并发连击</text>
+</g>
+</svg>

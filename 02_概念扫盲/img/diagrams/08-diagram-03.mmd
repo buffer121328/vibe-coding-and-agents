@@ -1,0 +1,7 @@
+graph TD
+    Query["用户输入：'iPhone 16 Pro Max 换电池多少钱？'"] --> Stage1["【阶段一：初赛海选 (Hybrid Search)】\n1. 向量语义检索 (找出所有关于苹果手机维修的文档)\n2. 传统关键词检索 (精准锁定 'iPhone 16 Pro Max' 关键词)"]
+    
+    Stage1 --> Top100["海选出 Top 100 篇候选段落"]
+    Top100 --> Reranker["【阶段二：决赛评委精细打分 (Rerank 重排模型)】\n用算力更强的重排小模型，逐字对比上下文逻辑与提问的契合度"]
+    
+    Reranker --> Top3["最终挑出 3 篇最精准的官方报价表喂给大模型！"]

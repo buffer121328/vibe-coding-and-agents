@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 819.2604999999999 2130.676" width="819.2604999999999" height="2130.676" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Phase1" data-label="阶段一：首轮简历懒加载与多轮记忆组装">
+  <rect x="121.27758333333337" y="36" width="587.8309999999999" height="723.5319999999999" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="121.27758333333337" y="36" width="587.8309999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.27758333333338" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">阶段一：首轮简历懒加载与多轮记忆组装</text>
+</g>
+<g class="subgraph" data-id="Phase2" data-label="阶段二：面试引擎控场与出题闭环">
+  <rect x="275.399" y="827.5319999999999" width="507.86149999999986" height="561.444" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="275.399" y="827.5319999999999" width="507.86149999999986" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="287.399" y="841.5319999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">阶段二：面试引擎控场与出题闭环</text>
+</g>
+<g class="subgraph" data-id="Phase3" data-label="阶段三：三大专家链式复盘与 HTML 交付">
+  <rect x="36" y="1533.2759999999998" width="588.945" height="561.4" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="1533.2759999999998" width="588.945" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="1547.2759999999998" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">阶段三：三大专家链式复盘与 HTML 交付</text>
+</g>
+<polyline class="edge" data-from="E" data-to="I" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="275.3305833333334,743.5319999999999 275.3305833333334,807.5319999999999 442.41949999999997,807.5319999999999 442.41949999999997,871.5319999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H" data-to="I" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="566.9115833333333,743.5319999999999 566.9115833333333,807.5319999999999 442.41949999999997,807.5319999999999 442.41949999999997,871.5319999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="J" data-to="L" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="是 (面试结束)" points="402.52883333333335,1163.8853333333332 402.52883333333335,1215.7759999999998 330.4725,1215.7759999999998 330.4725000000001,1577.2759999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="421.12108333333333,116.9 421.12108333333333,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="C" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="首次 (未提取)" points="385.1824166666667,352.5933333333333 385.1824166666667,400.5319999999999 275.3305833333334,400.5319999999999 275.3305833333333,520.8319999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C" data-to="D" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="275.3305833333333,557.732 275.3305833333334,613.732" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D" data-to="E" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="275.3305833333334,650.632 275.3305833333334,706.632" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="F" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="多轮中 (已提取)" points="457.05975,352.59333333333325 457.05975,400.5319999999999 566.9115833333333,400.5319999999999 566.9115833333333,520.8319999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F" data-to="G" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="566.9115833333333,557.732 566.9115833333333,613.732" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G" data-to="H" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="566.9115833333333,650.632 566.9115833333334,706.632" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="I" data-to="J" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="442.41949999999997,908.4319999999999 442.41949999999997,964.432" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="J" data-to="K" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="否 (继续面试)" points="482.31016666666665,1163.8853333333332 482.31016666666665,1215.7759999999998 554.3665,1215.7759999999998 554.3665,1336.0759999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="L" data-to="M" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="330.4725,1614.176 330.4725,1670.176" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="M" data-to="N" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="330.4725,1707.0759999999998 330.4725,1763.0759999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="N" data-to="O" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="330.4725,1799.9759999999999 330.4725,1855.9759999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="O" data-to="P" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="330.4725,1892.8759999999997 330.4725,1948.8759999999997" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="P" data-to="Q" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="330.4725,1985.7759999999998 330.4725,2041.7759999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="J" data-to="L" data-label="是 (面试结束)">
+  <rect x="287.9725000000001" y="1445.9759999999999" width="84.77200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="330.3585000000001" y="1461.126" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">是 (面试结束)</text>
+</g>
+<g class="edge-label" data-from="B" data-to="C" data-label="首次 (未提取)">
+  <rect x="232.83058333333338" y="439.5319999999999" width="84.77200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="275.2165833333334" y="454.6819999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">首次 (未提取)</text>
+</g>
+<g class="edge-label" data-from="B" data-to="F" data-label="多轮中 (已提取)">
+  <rect x="518.4115833333333" y="439.5319999999999" width="96.65200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="566.7375833333333" y="454.6819999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">多轮中 (已提取)</text>
+</g>
+<g class="edge-label" data-from="J" data-to="K" data-label="否 (继续面试)">
+  <rect x="511.86650000000003" y="1254.7759999999998" width="84.77200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="554.2525" y="1269.926" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">否 (继续面试)</text>
+</g>
+<g class="node" data-id="A" data-label="设为面试 (Assigner)" data-shape="rectangle">
+  <rect x="338.27258333333333" y="80" width="165.697" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="421.12108333333333" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">设为面试 (Assigner)</text>
+</g>
+<g class="node" data-id="B" data-label="简历是否已提取 (If-Else)
+resume_ex == 'true'" data-shape="diamond">
+  <polygon points="421.12108333333333,172.90000000000003 528.9370833333332,280.716 421.12108333333333,388.532 313.30508333333336,280.716" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="421.12108333333333" y="280.716" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="421.12108333333333" dy="-3.9000000000000012">简历是否已提取 (If-Else)</tspan><tspan x="421.12108333333333" dy="16.900000000000002">resume_ex == &#39;true&#39;</tspan></text>
+</g>
+<g class="node" data-id="C" data-label="文档提取器 (PDF/Word解析)" data-shape="rectangle">
+  <rect x="166.54708333333338" y="520.8319999999999" width="217.56699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="275.3305833333334" y="539.2819999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">文档提取器 (PDF/Word解析)</text>
+</g>
+<g class="node" data-id="D" data-label="简历信息提取 (LLM: DeepSeek-Pro)" data-shape="rectangle">
+  <rect x="143.94658333333342" y="613.732" width="262.7679999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="275.3305833333334" y="632.182" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">简历信息提取 (LLM: DeepSeek-Pro)</text>
+</g>
+<g class="node" data-id="E" data-label="标志位置 true + 存入 resume_summary" data-shape="rectangle">
+  <rect x="137.27758333333338" y="706.632" width="276.106" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="275.3305833333334" y="725.082" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">标志位置 true + 存入 resume_summary</text>
+</g>
+<g class="node" data-id="F" data-label="面试问答收集 (LLM)" data-shape="rectangle">
+  <rect x="482.21058333333326" y="520.8319999999999" width="169.402" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="566.9115833333333" y="539.2819999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">面试问答收集 (LLM)</text>
+</g>
+<g class="node" data-id="G" data-label="问题回答记录拼接 (Python3 Code)" data-shape="rectangle">
+  <rect x="440.7145833333333" y="613.732" width="252.39399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="566.9115833333333" y="632.182" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">问题回答记录拼接 (Python3 Code)</text>
+</g>
+<g class="node" data-id="H" data-label="更新 qa_history 会话变量" data-shape="rectangle">
+  <rect x="467.3905833333333" y="706.632" width="199.042" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="566.9115833333333" y="725.082" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">更新 qa_history 会话变量</text>
+</g>
+<g class="node" data-id="I" data-label="面试引擎 (LLM: DeepSeek-Pro 6阶段控场)" data-shape="rectangle">
+  <rect x="291.399" y="871.5319999999999" width="302.041" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="442.41949999999997" y="889.982" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">面试引擎 (LLM: DeepSeek-Pro 6阶段控场)</text>
+</g>
+<g class="node" data-id="J" data-label="结束变量判断 (If-Else)
+是否包含 [INTERVIEW_END]" data-shape="diamond">
+  <polygon points="442.4195,964.4319999999998 562.0915,1084.1039999999998 442.4195,1203.7759999999998 322.74750000000006,1084.1039999999998" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="442.4195" y="1084.1039999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="442.4195" dy="-3.9000000000000012">结束变量判断 (If-Else)</tspan><tspan x="442.4195" dy="16.900000000000002">是否包含 [INTERVIEW_END]</tspan></text>
+</g>
+<g class="node" data-id="K" data-label="面试题提取 (LLM) -&gt; 保存 last_question -&gt; 输出面试题 (Answer)" data-shape="rectangle">
+  <rect x="341.4725" y="1336.0759999999998" width="425.7879999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="554.3665" y="1354.5259999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">面试题提取 (LLM) -&gt; 保存 last_question -&gt; 输出面试题 (Answer)</text>
+</g>
+<g class="node" data-id="L" data-label="结束变量赋值 (is_end=true)" data-shape="rectangle">
+  <rect x="224.65300000000002" y="1577.2759999999998" width="211.639" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="1595.7259999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">结束变量赋值 (is_end=true)</text>
+</g>
+<g class="node" data-id="M" data-label="表现评估专家 (LLM 6维量化打分)" data-shape="rectangle">
+  <rect x="203.90500000000003" y="1670.176" width="253.13499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="1688.626" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">表现评估专家 (LLM 6维量化打分)</text>
+</g>
+<g class="node" data-id="N" data-label="改进方案专家 (LLM 薄弱点提升路线)" data-shape="rectangle">
+  <rect x="192.79000000000002" y="1763.0759999999998" width="275.365" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="1781.5259999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">改进方案专家 (LLM 薄弱点提升路线)</text>
+</g>
+<g class="node" data-id="O" data-label="技术复盘专家 (LLM 综合复盘长文)" data-shape="rectangle">
+  <rect x="200.20000000000005" y="1855.9759999999999" width="260.54499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="1874.426" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">技术复盘专家 (LLM 综合复盘长文)</text>
+</g>
+<g class="node" data-id="P" data-label="HTML 视觉排版 (LLM) -&gt; Python 代码清洗 (结构化保护层) -&gt; Markdown⮕HTML (Tool)" data-shape="rectangle">
+  <rect x="52" y="1948.8759999999997" width="556.945" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="1967.3259999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">HTML 视觉排版 (LLM) -&gt; Python 代码清洗 (结构化保护层) -&gt; Markdown⮕HTML (Tool)</text>
+</g>
+<g class="node" data-id="Q" data-label="清空面试模式 (current_mode='') -&gt; 输出复盘报告 (Answer)" data-shape="rectangle">
+  <rect x="132.02800000000008" y="2041.7759999999998" width="396.8889999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="330.4725" y="2060.2259999999997" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">清空面试模式 (current_mode=&#39;&#39;) -&gt; 输出复盘报告 (Answer)</text>
+</g>
+</svg>

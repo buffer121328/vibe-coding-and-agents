@@ -13,16 +13,12 @@
 - **官方开发者文档**：[https://docs.dify.ai](https://docs.dify.ai)
 - **定位**：开源的 LLM 应用开发与 LLMOps（大模型运维）协同平台。
 
-```mermaid
-graph TD
-    subgraph Layers ["Dify 平台三层全景架构"]
-        A["顶层交互层 (Web Apps / SDK / RESTful API / Dify CLI)"]
-        B["核心引擎层 (Prompt 工程 / 工作流 Workflow / 知识库 RAG / Agent 闭环 / 插件市场)"]
-        C["底层基础设施 (大语言模型 OpenAI/Claude/DeepSeek / 向量数据库 / 容器沙箱)"]
-    end
-    A --> B
-    B --> C
-```
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-01.svg">
+    <img src="img/diagrams/01-diagram-01.svg" alt="1. 官方权威档案" width="760">
+  </a>
+</p>
 
 ---
 
@@ -88,19 +84,12 @@ Dify 主页内置了海量开箱即用的行业模板：
 
 要在 Dify 中游刃有余地编排复杂系统，必须彻底搞懂以下六大核心概念：
 
-```mermaid
-graph LR
-    subgraph Flow ["Dify 标准工作流运转流向"]
-        N1["Start 节点 (输入参数)"] --> N2["Knowledge 知识检索 (RAG)"]
-        N2 --> N3["LLM 思考处理 (Prompt + 变量)"]
-        N3 --> N4["Code 脚本处理 (数据清洗/格式化)"]
-        N4 --> N5{"IF/ELSE 条件分支"}
-        N5 -->|"满足分支 A"| N6["Tool / HTTP 请求 (发通知/调外部 API)"]
-        N5 -->|"满足分支 B"| N7["Template 模板组装"]
-        N6 --> N8["End 节点 (输出最终响应)"]
-        N7 --> N8
-    end
-```
+<!-- 图表源文件：img/diagrams/01-diagram-02.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-02.svg">
+    <img src="img/diagrams/01-diagram-02.svg" alt="🧩 三、Dify 底层核心概念与节点体系深度剖析" width="760">
+  </a>
+</p>
 
 ### 1. 节点体系 (Node Architecture)
 工作流画布中的每一个积木块都是一个独立的**功能节点**：

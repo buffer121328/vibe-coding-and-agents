@@ -1,0 +1,6 @@
+graph TD
+    Start["输入一段文字"] --> Predict["模型预测下一个 Token 的概率分布"]
+    Predict --> Pick["挑出最合理的下一个字"]
+    Pick --> Append["把新字拼接到原文末尾"]
+    Append -->|"循环往复，直到输出结束符"| Predict
+    Append --> Done["最终生成完整回答"]

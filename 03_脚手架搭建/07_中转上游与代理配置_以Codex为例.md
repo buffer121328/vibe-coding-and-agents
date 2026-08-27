@@ -8,17 +8,12 @@
 
 在实际使用 OpenAI Codex、Claude Code 或本地 Agent 时，许多开发者会遇到 `Connection Timeout (连接超时)` 或 `SSL Error` 报错。或者有的同学不会挂梯子，没有visa实体卡无法购买订阅。
 
-```mermaid
-graph LR
-    subgraph Direct ["❌ 国内直连海外 (容易网络抖动、掉线)"]
-        User1["你的电脑 / 终端 Agent"] -.->|跨国长途直连，网络不稳定| Official["OpenAI / Anthropic 海外机房"]
-    end
-
-    subgraph Relay ["✅ 中转上游网关 (极速顺畅、稳定不卡)"]
-        User2["你的电脑 / CC-Switch"] -->|"国内高速专线（毫秒级）"| Proxy["中转上游服务器（香港/日本专线节点）"]
-        Proxy -->|"专线内网转发"| Official2["官方云端大模型 API"]
-    end
-```
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/07-diagram-01.svg">
+    <img src="img/diagrams/07-diagram-01.svg" alt="🌐 为什么需要中转上游与代理？（国际中转仓比喻）" width="960">
+  </a>
+</p>
 
 ***
 
@@ -26,22 +21,12 @@ graph LR
 
 **CC-Switch** 是一款专为 AI 命令行与 Agent 开发者打造的跨平台桌面工具，彻底终结了“每次换模型都要手动改一大堆代码和配置文件”的折磨！这个后面也会带大家进行使用！
 
-```mermaid
-graph TD
-    subgraph CCSwitch ["【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)"]
-        GUI["图形化界面：一键点选当前生效的模型与供应商"]
-    end
-
-    subgraph Agents ["各类终端与开发工具"]
-        A1["Claude Code CLI"] --> CCSwitch
-        A2["OpenAI Codex"] --> CCSwitch
-        A3["OpenCode"] --> CCSwitch
-    end
-
-    CCSwitch -->|自动智能转发| Out1["DeepSeek 官方 API"]
-    CCSwitch -->|自动智能转发| Out2["OpenAI GPT-5.6"]
-    CCSwitch -->|自动智能转发| Out3["Anthropic Claude 3.7"]
-```
+<!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/07-diagram-02.svg">
+    <img src="img/diagrams/07-diagram-02.svg" alt="🎛️ 终极利器：CC-swtich统一中转与多模型管理神器" width="760">
+  </a>
+</p>
 
 ### CC-Switch 的三大杀手锏
 

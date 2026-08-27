@@ -1,0 +1,21 @@
+graph TD
+    subgraph HQ ["Trae 现代化作战总指挥部 (Trae IDE)"]
+        Tree["项目资源管理器\n(经典文件树 & 语法高亮)"]
+        AgentCore["Trae Agent 智能体中枢\n(理解上下文 & 意图协同)"]
+        DiffView["高精密 Diff 审查视窗\n(单文件精准撤销 / 代码比对)"]
+    end
+
+    subgraph ContextNetwork ["智能体高敏锐度上下文网络"]
+        CG["CodeGraph MCP 语义图谱\n(全息战术地形图 / 符号依赖索引)"]
+        OS["OpenSpec 规格演进蓝图\n(阶段作战任务书 / openspec init 适配)"]
+        Ref["reference/ 历史已验收归档\n(区分历史资产与新迭代规格)"]
+        Rules["AGENTS.md & .trae/rules/\n(最高纪律红线 & 按需模块化规则)"]
+    end
+
+    subgraph Fuel ["项目动力中枢"]
+        UV["uv 极速包管理器\n(秒级依赖解析 / 纯净虚拟环境)"]
+    end
+
+    ContextNetwork --> AgentCore
+    Fuel --> HQ
+    Tree --> DiffView

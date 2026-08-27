@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1114.9579999999999 326.7333333333334" width="1114.9579999999999" height="326.7333333333334" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Architecture" data-label="🏛️ 极简全栈数据流向图">
+  <rect x="36" y="36" width="1042.9579999999999" height="254.7333333333334" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="1042.9579999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🏛️ 极简全栈数据流向图</text>
+</g>
+<polyline class="edge" data-from="Frontend" data-to="Router" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="1. HTTP fetch (JSON)" points="248.81899999999996,238.86666666666673 260.81899999999996,238.86666666666673 260.81899999999996,227.31666666666672 422.10299999999995,227.31666666666672 422.10299999999995,238.86666666666673 466.10299999999995,238.86666666666673" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Router" data-to="Schema" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="2. 校验请求参数" points="645.8789999999999,238.86666666666673 657.8789999999999,238.86666666666673 657.8789999999999,227.31666666666672 825.1029999999998,227.31666666666672 825.1029999999998,216.04666666666668 869.1029999999998,216.04666666666668" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Schema" data-to="Model" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="3. 构造实体操作" points="869.1029999999998,194.5266666666667 837.1029999999998,194.5266666666667 837.1029999999998,160.7166666666667 669.8789999999999,160.7166666666667 669.8789999999999,149.4466666666667 645.8789999999999,149.4466666666667" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Model" data-to="DB" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="4. SQL 读写执行" points="645.8789999999999,127.92666666666669 657.8789999999999,127.92666666666669 657.8789999999999,94.11666666666669 825.1029999999998,94.11666666666669 825.1029999999998,97.93333333333334 869.1029999999998,97.93333333333334" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="DB" data-to="Model" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="5. 返回数据记录" points="869.1029999999998,115.86666666666667 825.1029999999998,115.86666666666667 825.1029999999998,127.41666666666669 669.8789999999999,127.41666666666669 669.8789999999999,138.6866666666667 645.8789999999999,138.6866666666667" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Model" data-to="Schema" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="6. 序列化 JSON 响应" points="645.8789999999999,160.2066666666667 657.8789999999999,160.2066666666667 657.8789999999999,194.0166666666667 825.1029999999998,194.0166666666667 825.1029999999998,205.2866666666667 869.1029999999998,205.2866666666667" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Schema" data-to="Router" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="7. 200/201 响应体" points="869.1029999999998,226.80666666666667 837.1029999999998,226.80666666666667 837.1029999999998,260.61666666666673 657.8789999999999,260.61666666666673 657.8789999999999,256.80000000000007 645.8789999999999,256.80000000000007" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Router" data-to="Frontend" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="8. 渲染卡片/详情" points="466.10299999999995,256.80000000000007 422.10299999999995,256.80000000000007 422.10299999999995,260.61666666666673 260.81899999999996,260.61666666666673 260.81899999999996,256.80000000000007 248.81899999999996,256.80000000000007" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Frontend" data-to="Router" data-label="1. HTTP fetch (JSON)">
+  <rect x="300.81899999999996" y="211.31666666666672" width="113.28399999999999" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="357.46099999999996" y="226.46666666666673" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">1. HTTP fetch (JSON)</text>
+</g>
+<g class="edge-label" data-from="Router" data-to="Schema" data-label="2. 校验请求参数">
+  <rect x="707.9769999999999" y="211.31666666666672" width="99.028" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.4909999999999" y="226.46666666666673" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">2. 校验请求参数</text>
+</g>
+<g class="edge-label" data-from="Schema" data-to="Model" data-label="3. 构造实体操作">
+  <rect x="707.9769999999999" y="144.7166666666667" width="99.028" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.4909999999999" y="159.8666666666667" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">3. 构造实体操作</text>
+</g>
+<g class="edge-label" data-from="Model" data-to="DB" data-label="4. SQL 读写执行">
+  <rect x="708.2739999999999" y="78.11666666666667" width="98.43400000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.4909999999999" y="93.26666666666668" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">4. SQL 读写执行</text>
+</g>
+<g class="edge-label" data-from="DB" data-to="Model" data-label="5. 返回数据记录">
+  <rect x="707.9769999999999" y="111.41666666666669" width="99.028" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.4909999999999" y="126.56666666666669" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">5. 返回数据记录</text>
+</g>
+<g class="edge-label" data-from="Model" data-to="Schema" data-label="6. 序列化 JSON 响应">
+  <rect x="697.8789999999999" y="178.0166666666667" width="119.22399999999999" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.4909999999999" y="193.1666666666667" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">6. 序列化 JSON 响应</text>
+</g>
+<g class="edge-label" data-from="Schema" data-to="Router" data-label="7. 200/201 响应体">
+  <rect x="707.383" y="244.61666666666676" width="100.21600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="757.491" y="259.76666666666677" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">7. 200/201 响应体</text>
+</g>
+<g class="edge-label" data-from="Router" data-to="Frontend" data-label="8. 渲染卡片/详情">
+  <rect x="306.46199999999993" y="244.61666666666676" width="101.998" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="357.46099999999996" y="259.76666666666677" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">8. 渲染卡片/详情</text>
+</g>
+<g class="node" data-id="Frontend" data-label="🎨 index.html
+(TailwindCSS + Marked.js)" data-shape="rectangle">
+  <rect x="52" y="220.9333333333334" width="196.81899999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="150.40949999999998" y="247.8333333333334" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="150.40949999999998" dy="-3.9000000000000012">🎨 index.html</tspan><tspan x="150.40949999999998" dy="16.900000000000002">(TailwindCSS + Marked.js)</tspan></text>
+</g>
+<g class="node" data-id="Router" data-label="🚀 main.py
+(FastAPI RESTful 路由)" data-shape="rectangle">
+  <rect x="466.10299999999995" y="220.9333333333334" width="179.77599999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="555.991" y="247.8333333333334" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="555.991" dy="-3.9000000000000012">🚀 main.py</tspan><tspan x="555.991" dy="16.900000000000002">(FastAPI RESTful 路由)</tspan></text>
+</g>
+<g class="node" data-id="Schema" data-label="🔍 schemas.py
+(Pydantic V2 校验)" data-shape="rectangle">
+  <rect x="869.1029999999998" y="183.76666666666668" width="151.618" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="944.9119999999998" y="210.66666666666669" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="944.9119999999998" dy="-3.9000000000000012">🔍 schemas.py</tspan><tspan x="944.9119999999998" dy="16.900000000000002">(Pydantic V2 校验)</tspan></text>
+</g>
+<g class="node" data-id="Model" data-label="🧱 models.py
+(SQLAlchemy 2.0 ORM)" data-shape="rectangle">
+  <rect x="468.32599999999996" y="117.16666666666669" width="177.55299999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="557.1025" y="144.0666666666667" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="557.1025" dy="-3.9000000000000012">🧱 models.py</tspan><tspan x="557.1025" dy="16.900000000000002">(SQLAlchemy 2.0 ORM)</tspan></text>
+</g>
+<g class="node" data-id="DB" data-label="🗄️ database.py &amp; blog.db
+(SQLite 单文件存储)" data-shape="rectangle">
+  <rect x="869.1029999999998" y="80" width="193.855" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="966.0304999999998" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="966.0304999999998" dy="-3.9000000000000012">🗄️ database.py &amp; blog.db</tspan><tspan x="966.0304999999998" dy="16.900000000000002">(SQLite 单文件存储)</tspan></text>
+</g>
+</svg>

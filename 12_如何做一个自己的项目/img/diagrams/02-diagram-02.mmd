@@ -1,0 +1,15 @@
+graph TD
+    subgraph UserIntent ["用户输入模糊大白话"]
+        U1["'想给我 60 岁爱钓鱼的爸爸买个 500 元以内的生日礼物，要结实耐用的！'"]
+    end
+
+    subgraph AgentPipeline ["AI 导购智能体流水线"]
+        P1["1. 槽位提取\n对象: 父亲(60岁)\n爱好: 钓鱼\n预算: <=500\n偏好: 耐用"] --> P2["2. 结构化 SQL 检索\nSELECT * FROM goods WHERE category='fishing' AND price<=500"]
+        P2 --> P3["3. 组合礼盒包装\n推荐高碳素鱼竿+防滑钓鱼手套套装+定制贺卡话术"]
+    end
+
+    subgraph FrontendUI ["前端渲染"]
+        F1["直接以富文本商品卡片形式展示，一键加入购物车"]
+    end
+
+    UserIntent --> AgentPipeline --> FrontendUI

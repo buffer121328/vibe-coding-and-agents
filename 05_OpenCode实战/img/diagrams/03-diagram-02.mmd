@@ -1,0 +1,24 @@
+graph LR
+    subgraph Trigger ["敲击触发"]
+        A["鼠标点击 / 空格键"]
+    end
+
+    subgraph Audio ["声音引擎"]
+        B["Web Audio 算法合成音效"]
+    end
+
+    subgraph Visual ["视觉引擎"]
+        C1["木鱼 SVG 缩放回弹"]
+        C2["Canvas 60fps 霓虹粒子爆发"]
+        C3["随机祝福词上浮渐隐"]
+    end
+
+    subgraph State ["状态持久化"]
+        D1["连击倍率 Combo +1"]
+        D2["总功德 / 今日功德更新"]
+        D3["LocalStorage 实时写入"]
+    end
+
+    A --> Audio
+    A --> Visual
+    A --> State

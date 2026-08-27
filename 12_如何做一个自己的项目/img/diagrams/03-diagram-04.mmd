@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    participant Sensor as 外部实时监测 (天气/交通 API)
+    participant Agent as 实时自愈 Agent (Travel Guardian)
+    participant UI as 前端 Three.js 3D 大屏
+
+    Sensor->>Agent: 1. 监测到：明天下午 14:00 目标景区突降特大暴雨
+    Note over Agent: 2. 触发紧急避险规则，启动室内行程自愈重排
+    Agent->>Agent: 3. 将室外爬山行程调整为室内现代艺术博物馆
+    Agent->>UI: 4. 推送动态警告弹窗与行程变更 Diff 对比卡片
+    UI-->>UI: 5. 3D 路线流光粒子轨迹实时动态重绘变轨！

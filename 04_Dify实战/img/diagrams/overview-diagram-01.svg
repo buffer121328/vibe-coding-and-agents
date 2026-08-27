@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1025.144 1024.6000000000001" width="1025.144" height="1024.6000000000001" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Step1" data-label="第一步：建立平台认知与概念扫盲">
+  <rect x="289.2355" y="36" width="446.67299999999994" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="289.2355" y="36" width="446.67299999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="301.2355" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第一步：建立平台认知与概念扫盲</text>
+</g>
+<g class="subgraph" data-id="Step2" data-label="第二步：工作室实操与工作流创建">
+  <rect x="289.2355" y="205.8" width="446.67299999999994" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="289.2355" y="205.8" width="446.67299999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="301.2355" y="219.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第二步：工作室实操与工作流创建</text>
+</g>
+<g class="subgraph" data-id="Step3" data-label="第三步：集成生态与能力外挂">
+  <rect x="274.045" y="375.6" width="477.054" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="274.045" y="375.6" width="477.054" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="286.045" y="389.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第三步：集成生态与能力外挂</text>
+</g>
+<g class="subgraph" data-id="Step4" data-label="第四步：实战 ——「面必过」双引擎 Chatbot">
+  <rect x="36" y="545.4000000000001" width="953.144" height="443.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="545.4000000000001" width="953.144" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="559.4000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第四步：实战 ——「面必过」双引擎 Chatbot</text>
+</g>
+<polyline class="edge" data-from="Step1" data-to="Step2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="512.572,149.8 512.572,205.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step2" data-to="Step3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="512.572,319.6 512.572,375.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step3" data-to="Step4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="512.572,489.40000000000003 512.572,545.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D1" data-to="D2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="490.7125,643.2 490.7125,699.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D2" data-to="D3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="490.7125,753 490.7125,781 729.4984999999999,781 729.4984999999999,809.0000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D2" data-to="D4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="490.7125,753 490.7125,781 251.9265,781 251.9265,809.0000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D3" data-to="D5" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="729.4984999999999,862.8000000000001 729.4984999999999,890.8000000000002 490.7125,890.8000000000002 490.7125,918.8000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D4" data-to="D5" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="251.9265,862.8000000000001 251.9265,890.8000000000002 490.7125,890.8000000000002 490.7125,918.8000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="A1" data-label="01 Dify 核心概念与平台全貌
+(三层架构 / 主页功能区拆解 / 四大应用形态 / 核心节点体系)" data-shape="rectangle">
+  <rect x="305.2355" y="80" width="414.67299999999994" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="512.572" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="512.572" dy="-3.9000000000000012">01 Dify 核心概念与平台全貌</tspan><tspan x="512.572" dy="16.900000000000002">(三层架构 / 主页功能区拆解 / 四大应用形态 / 核心节点体系)</tspan></text>
+</g>
+<g class="node" data-id="B1" data-label="02 工作室实操与工作流创建
+(探索工作室 / 筛选与卡片管理 / 三大创建姿势 / 选型决策树)" data-shape="rectangle">
+  <rect x="305.2355" y="249.8" width="414.67299999999994" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="512.572" y="276.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="512.572" dy="-3.9000000000000012">02 工作室实操与工作流创建</tspan><tspan x="512.572" dy="16.900000000000002">(探索工作室 / 筛选与卡片管理 / 三大创建姿势 / 选型决策树)</tspan></text>
+</g>
+<g class="node" data-id="C1" data-label="03 模型供应商与工具插件生态
+(全球模型矩阵 / 5大能力标签 / 多Key负载均衡 / 工具插件与MCP)" data-shape="rectangle">
+  <rect x="290.045" y="419.6" width="445.054" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="512.572" y="446.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="512.572" dy="-3.9000000000000012">03 模型供应商与工具插件生态</tspan><tspan x="512.572" dy="16.900000000000002">(全球模型矩阵 / 5大能力标签 / 多Key负载均衡 / 工具插件与MCP)</tspan></text>
+</g>
+<g class="node" data-id="D1" data-label="04 案例全景透视与架构设计
+(业务痛点 / 游乐园手环状态锁 / 7大会话变量 / 插件生态)" data-shape="rectangle">
+  <rect x="294.49100000000004" y="589.4000000000001" width="392.4429999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="490.7125" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="490.7125" dy="-3.9000000000000012">04 案例全景透视与架构设计</tspan><tspan x="490.7125" dy="16.900000000000002">(业务痛点 / 游乐园手环状态锁 / 7大会话变量 / 插件生态)</tspan></text>
+</g>
+<g class="node" data-id="D2" data-label="05 核心调度引擎：状态锁路由与意图识别分流
+(JD提取 / 状态锁If-Else / 意图识别Prompt / 动态加锁)" data-shape="rectangle">
+  <rect x="309.6815" y="699.2" width="362.0619999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="490.7125" y="726.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="490.7125" dy="-3.9000000000000012">05 核心调度引擎：状态锁路由与意图识别分流</tspan><tspan x="490.7125" dy="16.900000000000002">(JD提取 / 状态锁If-Else / 意图识别Prompt / 动态加锁)</tspan></text>
+</g>
+<g class="node" data-id="D3" data-label="06 实战(上)：沉浸式模拟面试流水线
+(简历懒加载 / Python问答记忆拼接 / 面试引擎 / 三连击复盘 / HTML导出)" data-shape="rectangle">
+  <rect x="485.85299999999995" y="809.0000000000001" width="487.291" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="729.4984999999999" y="835.9000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="729.4984999999999" dy="-3.9000000000000012">06 实战(上)：沉浸式模拟面试流水线</tspan><tspan x="729.4984999999999" dy="16.900000000000002">(简历懒加载 / Python问答记忆拼接 / 面试引擎 / 三连击复盘 / HTML导出)</tspan></text>
+</g>
+<g class="node" data-id="D4" data-label="07 实战(下)：多专家圆桌式简历优化
+(JD匹配 + HR审核 + 内容优化 / 圆桌收敛 / 简历HTML生成)" data-shape="rectangle">
+  <rect x="52" y="809.0000000000001" width="399.853" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="251.9265" y="835.9000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="251.9265" dy="-3.9000000000000012">07 实战(下)：多专家圆桌式简历优化</tspan><tspan x="251.9265" dy="16.900000000000002">(JD匹配 + HR审核 + 内容优化 / 圆桌收敛 / 简历HTML生成)</tspan></text>
+</g>
+<g class="node" data-id="D5" data-label="08 调试、发布与端到端自测指南
+(单节点调试 / 变量避坑 / Web App发布 / API集成 / 为什么不用Agent节点深水区反思)" data-shape="rectangle">
+  <rect x="211.1285" y="918.8000000000002" width="559.168" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="490.7125" y="945.7000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="490.7125" dy="-3.9000000000000012">08 调试、发布与端到端自测指南</tspan><tspan x="490.7125" dy="16.900000000000002">(单节点调试 / 变量避坑 / Web App发布 / API集成 / 为什么不用Agent节点深水区反思)</tspan></text>
+</g>
+</svg>

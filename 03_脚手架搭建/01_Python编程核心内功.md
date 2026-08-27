@@ -14,13 +14,12 @@
 - 几乎所有的大模型 SDK（OpenAI、Anthropic、DeepSeek）、主流 Agent 框架（LangChain、LangGraph、CrewAI、AutoGen）、向量数据库驱动和开源微调工具，都是以 Python 为第一优先级支持的。
 - 掌握 Python 核心语法，你才能在 Agent 写完代码后，一眼看穿“这里的逻辑对不对”、“这个参数有没有传反”。
 
-```mermaid
-graph LR
-    subgraph Mindset ["【YES 工程师 vs 交响乐指挥官】"]
-        YesMan["❌ YES 工程师<br/>看不懂代码 ➔ 闭眼狂点 Accept ➔ 遇到 Bug 一头雾水 ➔ 系统崩盘"]
-        Commander["✅ Vibe Coder 指挥官<br/>懂核心内功 ➔ 扫一眼识别逻辑缺陷 ➔ 精准提要求让 AI 修正 ➔ 稳步交付"]
-    end
-```
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-01.svg">
+    <img src="img/diagrams/01-diagram-01.svg" alt="🥋 为什么必须掌握 Python？" width="960">
+  </a>
+</p>
 
 ---
 

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1071.4529999999997 775.2" width="1071.4529999999997" height="775.2" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="ComboA" data-label="方案 A：国内日常全能与多模态组合 (个人与轻量团队)">
+  <rect x="36" y="36" width="917.943" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="917.943" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">方案 A：国内日常全能与多模态组合 (个人与轻量团队)</text>
+</g>
+<g class="subgraph" data-id="ComboB" data-label="方案 B：企业私有化自建与全模态母舰 (企业与开源极客)">
+  <rect x="36" y="217.8" width="963.1439999999998" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="217.8" width="963.1439999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="231.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">方案 B：企业私有化自建与全模态母舰 (企业与开源极客)</text>
+</g>
+<g class="subgraph" data-id="ComboC" data-label="方案 C：国内硬核研发与 Agent 攻坚 (全栈工程师开发首选)">
+  <rect x="36" y="399.6" width="999.4529999999997" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="399.6" width="999.4529999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="413.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">方案 C：国内硬核研发与 Agent 攻坚 (全栈工程师开发首选)</text>
+</g>
+<g class="subgraph" data-id="ComboD" data-label="方案 D：极客与全球化顶配生产力 (追求极致体验)">
+  <rect x="36" y="520.5" width="972.0359999999998" height="218.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="520.5" width="972.0359999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="534.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">方案 D：极客与全球化顶配生产力 (追求极致体验)</text>
+</g>
+<polyline class="edge" data-from="CA1" data-to="CA2" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="391.83199999999994,128.9 413.83199999999994,128.9 413.83199999999994,98.45 435.83199999999994,98.45" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CA1" data-to="CA3" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="391.83199999999994,128.9 413.83199999999994,128.9 413.83199999999994,159.35000000000002 435.83199999999994,159.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CB1" data-to="CB2" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="497.054,310.7 519.054,310.7 519.054,280.25 541.054,280.25" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CB1" data-to="CB3" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="497.054,310.7 519.054,310.7 519.054,341.15000000000003 541.054,341.15000000000003" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CC1" data-to="CC2" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="531.1399999999999,462.05 579.9564999999999,462.05" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CD1" data-to="CD2" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="540.7729999999999,643.85 560.36475,643.85 560.36475,643.85 579.9564999999999,643.85" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CD1" data-to="CD3" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="540.7729999999999,643.85 560.36475,643.85 560.36475,704.75 579.9564999999999,704.75" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="CD1" data-to="CD4" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="540.7729999999999,643.85 560.36475,643.85 560.36475,582.95 579.9564999999999,582.95" fill="none" stroke="var(--_line)" stroke-width="1" />
+<g class="node" data-id="CA1" data-label="🧠 通用思考与中文大脑：DeepSeek (V3 / R1 / V4)" data-shape="rectangle">
+  <rect x="52" y="110.45" width="339.83199999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="221.91599999999997" y="128.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 通用思考与中文大脑：DeepSeek (V3 / R1 / V4)</text>
+</g>
+<g class="node" data-id="CA2" data-label="🎙️ 黄金辅助全家桶：字节豆包 (Seed-TTS / Seed-Embedding) 或 阿里通义" data-shape="rectangle">
+  <rect x="435.83199999999994" y="80" width="502.111" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="686.8874999999999" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎙️ 黄金辅助全家桶：字节豆包 (Seed-TTS / Seed-Embedding) 或 阿里通义</text>
+</g>
+<g class="node" data-id="CA3" data-label="⚡ 批量跑腿与轻量高频：小米 MiMo-V2.5 Pro / MiniMax M2.5 Pro" data-shape="rectangle">
+  <rect x="435.83199999999994" y="140.9" width="440.60799999999983" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="656.1359999999999" y="159.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">⚡ 批量跑腿与轻量高频：小米 MiMo-V2.5 Pro / MiniMax M2.5 Pro</text>
+</g>
+<g class="node" data-id="CB1" data-label="🏰 核心全栈底座：阿里通义全家桶 (Qwen3.8-27B/Max 开源部署)" data-shape="rectangle">
+  <rect x="52" y="292.25" width="445.054" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="274.527" y="310.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🏰 核心全栈底座：阿里通义全家桶 (Qwen3.8-27B/Max 开源部署)</text>
+</g>
+<g class="node" data-id="CB2" data-label="🔍 知识库向量 RAG：Qwen3-Embedding (32k 上下文 / MTEB 霸榜)" data-shape="rectangle">
+  <rect x="541.054" y="261.8" width="442.0899999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="762.0989999999999" y="280.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔍 知识库向量 RAG：Qwen3-Embedding (32k 上下文 / MTEB 霸榜)</text>
+</g>
+<g class="node" data-id="CB3" data-label="🎬 视觉与视频生成：通义万相 Wan 2.1 / Wan 2.6 (音画同步)" data-shape="rectangle">
+  <rect x="541.054" y="322.70000000000005" width="403.5579999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="742.8329999999999" y="341.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎬 视觉与视频生成：通义万相 Wan 2.1 / Wan 2.6 (音画同步)</text>
+</g>
+<g class="node" data-id="CC1" data-label="💻 编程与工具调用主力：智谱 GLM-5.3 (代码跃升50% / 白盒安全审查)" data-shape="rectangle">
+  <rect x="52" y="443.6" width="479.1399999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="291.56999999999994" y="462.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">💻 编程与工具调用主力：智谱 GLM-5.3 (代码跃升50% / 白盒安全审查)</text>
+</g>
+<g class="node" data-id="CC2" data-label="🔍 长代码库与复杂排错：月之暗面 Kimi K3 (2.8T MoE / 深度推理)" data-shape="rectangle">
+  <rect x="579.9564999999999" y="443.6" width="444.31299999999993" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="802.1129999999998" y="462.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔍 长代码库与复杂排错：月之暗面 Kimi K3 (2.8T MoE / 深度推理)</text>
+</g>
+<g class="node" data-id="CD1" data-label="👑 核心架构设计与重构：Claude 5 系列 (Sonnet 5 / Opus 5，走中转上游)" data-shape="rectangle">
+  <rect x="52" y="625.4" width="488.77299999999985" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="296.38649999999996" y="643.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👑 核心架构设计与重构：Claude 5 系列 (Sonnet 5 / Opus 5，走中转上游)</text>
+</g>
+<g class="node" data-id="CD2" data-label="🚀 Cursor 编辑器敏捷协同：xAI Grok 4.6 (第一方原生集成)" data-shape="rectangle">
+  <rect x="579.9564999999999" y="625.4" width="407.26299999999986" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="783.5879999999999" y="643.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🚀 Cursor 编辑器敏捷协同：xAI Grok 4.6 (第一方原生集成)</text>
+</g>
+<g class="node" data-id="CD3" data-label="⚡ 海量长文档与高吞吐：Google Gemini 3.7 Flash" data-shape="rectangle">
+  <rect x="579.9564999999999" y="686.3" width="345.7599999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="752.8364999999999" y="704.75" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">⚡ 海量长文档与高吞吐：Google Gemini 3.7 Flash</text>
+</g>
+<g class="node" data-id="CD4" data-label="🌐 全球生态与通用对接：OpenAI GPT-5.6 (Sol / Terra)" data-shape="rectangle">
+  <rect x="579.9564999999999" y="564.5" width="373.1769999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="766.5449999999998" y="582.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🌐 全球生态与通用对接：OpenAI GPT-5.6 (Sol / Terra)</text>
+</g>
+</svg>

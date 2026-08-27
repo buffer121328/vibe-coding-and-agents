@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 677.13 475" width="677.13" height="475" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="A" x1="70" y1="70" x2="70" y2="445" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="B" x1="210" y1="70" x2="210" y2="445" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="C" x1="350" y1="70" x2="350" y2="445" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="D" x1="490" y1="70" x2="490" y2="445" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="message" data-from="A" data-to="B" data-label="打电话订机票：“帮我查下明天的票”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="70" y1="90" x2="210" y2="90" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="140" y="80" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">打电话订机票：“帮我查下明天的票”</text>
+</g>
+<g class="message" data-from="A" data-to="A" data-label="举着手机干等 5 分钟（完全卡住，无法离开）" data-line-style="dashed" data-arrow-head="filled" data-self="true">
+  <polyline points="70,130 100,130 100,150 70,150" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="108" y="140" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">举着手机干等 5 分钟（完全卡住，无法离开）</text>
+</g>
+<g class="message" data-from="B" data-to="A" data-label="“查到了，给你出票”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="210" y1="200" x2="70" y2="200" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="140" y="190" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">“查到了，给你出票”</text>
+</g>
+<g class="message" data-from="C" data-to="D" data-label="餐厅点餐扫码下单" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="350" y1="255" x2="490" y2="255" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="420" y="245" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">餐厅点餐扫码下单</text>
+</g>
+<g class="message" data-from="D" data-to="C" data-label="立刻返回：“已接单，你的排队号是 88”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="490" y1="295" x2="350" y2="295" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="420" y="285" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">立刻返回：“已接单，你的排队号是 88”</text>
+</g>
+<g class="message" data-from="C" data-to="C" data-label="放心去隔壁买杯咖啡、看会手机（完全非阻塞）" data-line-style="dashed" data-arrow-head="filled" data-self="true">
+  <polyline points="350,335 380,335 380,355 350,355" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="388" y="345" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">放心去隔壁买杯咖啡、看会手机（完全非阻塞）</text>
+</g>
+<g class="message" data-from="D" data-to="C" data-label="手机弹窗推送通知：“您的 88 号餐品制作完成，请取餐！”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="490" y1="405" x2="350" y2="405" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="420" y="395" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">手机弹窗推送通知：“您的 88 号餐品制作完成，请取餐！”</text>
+</g>
+<g class="note" data-position="over" data-actors="C,D">
+  <polygon points="282.435,208 551.565,208 557.565,214 557.565,231 282.435,231" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="551.565,208 557.565,214 551.565,214" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="420" y="219.5" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">【异步模式】：先拿凭证，各自忙碌，搞定通知</text>
+</g>
+<g class="actor" data-id="A" data-label="A" data-type="participant">
+  <rect x="30" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="70" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">A</text>
+</g>
+<g class="actor" data-id="B" data-label="B" data-type="participant">
+  <rect x="170" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="210" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">B</text>
+</g>
+<g class="actor" data-id="C" data-label="C" data-type="participant">
+  <rect x="310" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="350" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">C</text>
+</g>
+<g class="actor" data-id="D" data-label="D" data-type="participant">
+  <rect x="450" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="490" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">D</text>
+</g>
+</svg>

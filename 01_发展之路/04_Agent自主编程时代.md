@@ -10,25 +10,12 @@
 
 $$\text{Agent (智能体)} = \text{前沿大模型大脑 (如 Claude 5 / DeepSeek V4)} + \text{任务规划规划力} + \text{全项目记忆} + \text{可调用的工具箱 (终端/读写文件/联网)}$$
 
-```mermaid
-graph TD
-    User(["你下达指令：'给电商系统增加微信扫码支付与订单状态轮询'"]) --> Brain["前沿推理大脑 (Claude / DeepSeek / GPT) 规划任务"]
-    
-    subgraph Loop ["ReAct 自主闭环（思考 ➔ 执行 ➔ 观察 ➔ 修复）"]
-        Brain -->|"1. 思考：需要先扫描现有数据库表结构与路由配置"| Tool1["调用工具：自动语义搜索并读取相关代码"]
-        Tool1 -->|"2. 观察：掌握了当前项目架构与依赖版本"| Brain
-        
-        Brain -->|"3. 思考：需要新建支付控制器并修改 4 个相关文件"| Tool2["调用工具：自动新建并跨文件精准编辑代码"]
-        Tool2 -->|"4. 观察：多文件修改完成，保持代码规范统一"| Brain
-        
-        Brain -->|"5. 思考：在终端里运行测试用例检验支付流程"| Tool3["调用工具：在后台命令行自动运行测试"]
-        Tool3 -->|"6. 观察：发现终端报错（缺少回调参数验证）"| Brain
-        
-        Brain -->|"7. 思考：自动定位问题所在，完成自我修复"| Tool2
-    end
-    
-    Brain --> Finish(["测试全部亮绿灯，向你展示完整的修改清单与效果报告"])
-```
+<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/04-diagram-01.svg">
+    <img src="img/diagrams/04-diagram-01.svg" alt="🤖 到底什么是 AI Coding Agent（编码智能体）？" width="760">
+  </a>
+</p>
 
 ---
 

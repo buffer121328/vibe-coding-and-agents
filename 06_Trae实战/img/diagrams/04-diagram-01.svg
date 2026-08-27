@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 761.7159999999999 695.2" width="761.7159999999999" height="695.2" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Client" data-label="前端客户端 (单文件 HTML)">
+  <rect x="122.93774999999997" y="36" width="515.213" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="122.93774999999997" y="36" width="515.213" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="134.93774999999997" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">前端客户端 (单文件 HTML)</text>
+</g>
+<g class="subgraph" data-id="BackendAPI" data-label="FastAPI 业务引擎">
+  <rect x="109.22925000000004" y="217.8" width="543.3709999999999" height="223.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="109.22925000000004" y="217.8" width="543.3709999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="121.22925000000004" y="231.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">FastAPI 业务引擎</text>
+</g>
+<g class="subgraph" data-id="Database" data-label="SQLite 数据持久层">
+  <rect x="36" y="509.40000000000003" width="689.7159999999999" height="149.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="509.40000000000003" width="689.7159999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="523.4000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">SQLite 数据持久层</text>
+</g>
+<polyline class="edge" data-from="Grid" data-to="PageAPI" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="253.27874999999995,133.8 253.27874999999997,199.8 246.23925,199.8 246.23925,261.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Reader" data-to="SocialAPI" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="511.8852499999999,133.8 511.8852499999999,199.8 518.9247499999999,199.8 518.9247499999999,261.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BatchCount" data-to="T_Post" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="246.23925000000003,425.40000000000003 246.23925000000003,507.4000000000001 113.72999999999999,507.4000000000001 113.72999999999999,589.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BatchCount" data-to="T_Like" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="246.23925000000003,425.40000000000003 246.23925000000003,507.4000000000001 325.65349999999995,507.4000000000001 325.65349999999995,589.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BatchCount" data-to="T_Comment" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="246.23925000000003,425.40000000000003 246.23925000000003,507.4000000000001 592.7814999999999,507.4000000000001 592.7814999999999,589.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SocialAPI" data-to="T_Like" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="518.9247499999999,315.6 518.9247499999999,452.50000000000006 325.65349999999995,452.50000000000006 325.65349999999995,589.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SocialAPI" data-to="T_Comment" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="518.9247499999999,315.6 518.9247499999999,452.50000000000006 592.7814999999999,452.50000000000006 592.7814999999999,589.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PageAPI" data-to="BatchCount" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="246.23925,315.6 246.23925000000003,371.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="Grid" data-label="3×3 首页文章网格
+(点赞徽标 / 评论计数 / 分页条)" data-shape="rectangle">
+  <rect x="138.93774999999997" y="80" width="228.682" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="253.27874999999995" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="253.27874999999995" dy="-3.9000000000000012">3×3 首页文章网格</tspan><tspan x="253.27874999999995" dy="16.900000000000002">(点赞徽标 / 评论计数 / 分页条)</tspan></text>
+</g>
+<g class="node" data-id="Reader" data-label="文章阅读器
+(点赞心形按钮 / 楼层评论区)" data-shape="rectangle">
+  <rect x="401.61974999999995" y="80" width="220.53099999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="511.8852499999999" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="511.8852499999999" dy="-3.9000000000000012">文章阅读器</tspan><tspan x="511.8852499999999" dy="16.900000000000002">(点赞心形按钮 / 楼层评论区)</tspan></text>
+</g>
+<g class="node" data-id="PageAPI" data-label="参数化分页引擎 (GET /api/posts)
+(翻页菜单 / Page &amp; PageSize)" data-shape="rectangle">
+  <rect x="125.22925000000004" y="261.8" width="242.01999999999992" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="246.23925" y="288.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="246.23925" dy="-3.9000000000000012">参数化分页引擎 (GET /api/posts)</tspan><tspan x="246.23925" dy="16.900000000000002">(翻页菜单 / Page &amp; PageSize)</tspan></text>
+</g>
+<g class="node" data-id="SocialAPI" data-label="社交互动中枢 (Like &amp; Comment)
+(防刷幂等点赞 / 楼层升序排序)" data-shape="rectangle">
+  <rect x="401.2492499999999" y="261.8" width="235.35099999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="518.9247499999999" y="288.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="518.9247499999999" dy="-3.9000000000000012">社交互动中枢 (Like &amp; Comment)</tspan><tspan x="518.9247499999999" dy="16.900000000000002">(防刷幂等点赞 / 楼层升序排序)</tspan></text>
+</g>
+<g class="node" data-id="BatchCount" data-label="批量聚合统计 (_post_counts)
+(IN + GROUP BY 告别 N+1 慢查询)" data-shape="rectangle">
+  <rect x="127.45225000000003" y="371.6" width="237.57399999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="246.23925000000003" y="398.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="246.23925000000003" dy="-3.9000000000000012">批量聚合统计 (_post_counts)</tspan><tspan x="246.23925000000003" dy="16.900000000000002">(IN + GROUP BY 告别 N+1 慢查询)</tspan></text>
+</g>
+<g class="node" data-id="T_Post" data-label="posts 表
+(文章元数据)" data-shape="rectangle">
+  <rect x="52" y="589.4000000000001" width="123.46" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="113.72999999999999" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="113.72999999999999" dy="-3.9000000000000012">posts 表</tspan><tspan x="113.72999999999999" dy="16.900000000000002">(文章元数据)</tspan></text>
+</g>
+<g class="node" data-id="T_Like" data-label="likes 表 (唯一约束)
+(实名制投票箱: 防止狂按刷赞)" data-shape="rectangle">
+  <rect x="209.45999999999998" y="589.4000000000001" width="232.38699999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="325.65349999999995" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="325.65349999999995" dy="-3.9000000000000012">likes 表 (唯一约束)</tspan><tspan x="325.65349999999995" dy="16.900000000000002">(实名制投票箱: 防止狂按刷赞)</tspan></text>
+</g>
+<g class="node" data-id="T_Comment" data-label="comments 表 (一对多)
+(房号登记表: 按时间排 1楼/2楼)" data-shape="rectangle">
+  <rect x="475.847" y="589.4000000000001" width="233.869" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="592.7814999999999" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="592.7814999999999" dy="-3.9000000000000012">comments 表 (一对多)</tspan><tspan x="592.7814999999999" dy="16.900000000000002">(房号登记表: 按时间排 1楼/2楼)</tspan></text>
+</g>
+</svg>

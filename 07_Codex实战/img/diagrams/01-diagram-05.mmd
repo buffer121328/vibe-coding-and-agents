@@ -1,0 +1,19 @@
+graph LR
+    CodexClient["Codex CLI / 桌面客户端 (Responses API)"]
+    
+    subgraph SwitchLayer ["CC-Switch 本地中转调度层"]
+        LocalRoute["本地路由 127.0.0.1:15721\n(Responses ➔ Chat Completions 协议转换)"]
+        KeepAuth["Codex 应用增强\n(保留官方登录，绕过模型门控)"]
+    end
+
+    subgraph UpstreamProviders ["上游模型池 (Model Pool)"]
+        P1["DeepSeek V4 / Kimi / GLM / MiniMax / 小米 MiMo"]
+        P2["国内兼容 OpenAI 协议的中转网关"]
+        P3["本地 Ollama / vLLM 私有化部署"]
+    end
+
+    CodexClient ==> SwitchLayer
+    LocalRoute ==> P1
+    LocalRoute ==> P2
+    LocalRoute ==> P3
+    KeepAuth -.->|"auth.json 保留官方 Access Token"| CodexClient

@@ -1,0 +1,5 @@
+graph TD
+    A["DOM 节点\n(海报卡片区)"] --> B["html2canvas 快照\n(遍历计算后样式并绘制到 Canvas)"]
+    B --> C["Canvas 按 2x 放大绘制\n(Retina 高分屏适配)"]
+    C --> D["canvas.toDataURL('image/png')\n生成 base64"]
+    D --> E["创建 a 标签的 download 属性\n触发浏览器保存图片"]

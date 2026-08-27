@@ -12,15 +12,12 @@
   - **汽车安全带蜂鸣器**：当你坐上驾驶位发动引擎的一瞬间（触发事件），系统自动检查你有没有系安全带（Pre-Hook 拦截）。没系好就疯狂报警甚至无法挂挡！
   - **自动洗手机**：把手伸到水龙头下（事件），自动感应出水并在离开后自动关闭（Post-Hook 收尾）。
 
-```mermaid
-graph LR
-    subgraph HookFlow ["Hooks 拦截与触发工作流"]
-        Event["准备执行动作 (例如：提交代码 / Agent 调用终端)"] --> Pre["🚨 Pre-Hook (前置拦截钩子)<br/>自动运行代码语法检查 / 拦截高危删库命令"]
-        Pre -->|检查通过| Run["正式执行核心动作"]
-        Pre -->|检查不通过| Block["❌ 当场拦截并报错提示修正"]
-        Run --> Post["✨ Post-Hook (后置收尾钩子)<br/>自动格式化代码 / 记录操作审计日志"]
-    end
-```
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-01.svg">
+    <img src="img/diagrams/06-diagram-01.svg" alt="🪝 一、先搞懂什么是 Hooks（钩子机制）？" width="860">
+  </a>
+</p>
 
 ### 编程与 Agent 中最常见的两大 Hooks
 
@@ -67,12 +64,12 @@ graph LR
 
 **Agent Skill** 是一套封装了专家规程的 `SKILL.md` 标准包。
 
-```mermaid
-graph TD
-    Market["从 Agent Skills Hub 挑选技能<br/>(例如：security-audit 安全审计技能)"] --> Download["一键下载解压到项目 .skills/ 目录"]
-    Download --> Config["在项目 AGENTS.md 中登记技能触发词"]
-    Config --> Agent["Agent 识别到关键词，秒级激活专家级操作能力！"]
-```
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-02.svg">
+    <img src="img/diagrams/06-diagram-02.svg" alt="🧰 三、如何下载与挂载 Agent Skills 技能包？" width="760">
+  </a>
+</p>
 
 ### 实战步骤（以安全审计技能为例）：
 

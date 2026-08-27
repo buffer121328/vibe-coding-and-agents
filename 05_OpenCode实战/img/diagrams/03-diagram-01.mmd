@@ -1,0 +1,26 @@
+graph TD
+    subgraph Phase1 ["1. 意图萌发 (User Intent)"]
+        A["用户模糊灵感\n'想做一个解压木鱼和番茄钟'"]
+    end
+
+    subgraph Phase2 ["2. Plan 模式：需求对齐会 (Interactive Clarification)"]
+        B1["OpenCode 提问交互\n(单应用还是双应用? 交互偏好? 核心功能?)"]
+        B2["技术蓝图锁定\n(Tailwind CDN + Web Audio + Canvas 粒子 + LocalStorage)"]
+    end
+
+    subgraph Phase3 ["3. Build 模式：特种兵极速交付 (Skills-Driven Coding)"]
+        C1["挂载 single-file-app 规范"]
+        C2["挂载 html5-canvas-artist 技能"]
+        C3["生成 cyber-muyu.html & pomodoro-clock.html"]
+    end
+
+    subgraph Phase4 ["4. 即时反馈与验收 (Instant Feedback)"]
+        D["浏览器双击秒开\n(60fps 动效 / 纯原生合成音效 / 本地数据持久化)"]
+    end
+
+    Phase1 --> Phase2
+    B1 --> B2
+    Phase2 --> Phase3
+    C1 --> C3
+    C2 --> C3
+    Phase3 --> Phase4

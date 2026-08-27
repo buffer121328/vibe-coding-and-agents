@@ -1,0 +1,32 @@
+graph LR
+    subgraph ComboA ["方案 A：国内日常全能与多模态组合 (个人与轻量团队)"]
+        CA1["🧠 通用思考与中文大脑：DeepSeek (V3 / R1 / V4)"]
+        CA2["🎙️ 黄金辅助全家桶：字节豆包 (Seed-TTS / Seed-Embedding) 或 阿里通义"]
+        CA3["⚡ 批量跑腿与轻量高频：小米 MiMo-V2.5 Pro / MiniMax M2.5 Pro"]
+        CA1 --- CA2
+        CA1 --- CA3
+    end
+
+    subgraph ComboB ["方案 B：企业私有化自建与全模态母舰 (企业与开源极客)"]
+        CB1["🏰 核心全栈底座：阿里通义全家桶 (Qwen3.8-27B/Max 开源部署)"]
+        CB2["🔍 知识库向量 RAG：Qwen3-Embedding (32k 上下文 / MTEB 霸榜)"]
+        CB3["🎬 视觉与视频生成：通义万相 Wan 2.1 / Wan 2.6 (音画同步)"]
+        CB1 --- CB2
+        CB1 --- CB3
+    end
+
+    subgraph ComboC ["方案 C：国内硬核研发与 Agent 攻坚 (全栈工程师开发首选)"]
+        CC1["💻 编程与工具调用主力：智谱 GLM-5.3 (代码跃升50% / 白盒安全审查)"]
+        CC2["🔍 长代码库与复杂排错：月之暗面 Kimi K3 (2.8T MoE / 深度推理)"]
+        CC1 --- CC2
+    end
+
+    subgraph ComboD ["方案 D：极客与全球化顶配生产力 (追求极致体验)"]
+        CD1["👑 核心架构设计与重构：Claude 5 系列 (Sonnet 5 / Opus 5，走中转上游)"]
+        CD2["🚀 Cursor 编辑器敏捷协同：xAI Grok 4.6 (第一方原生集成)"]
+        CD3["⚡ 海量长文档与高吞吐：Google Gemini 3.7 Flash"]
+        CD4["🌐 全球生态与通用对接：OpenAI GPT-5.6 (Sol / Terra)"]
+        CD1 --- CD2
+        CD1 --- CD3
+        CD1 --- CD4
+    end

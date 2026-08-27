@@ -1,0 +1,7 @@
+graph TD
+    subgraph HookFlow ["Hooks 拦截与触发工作流"]
+        Event["准备执行动作 (例如：提交代码 / Agent 调用终端)"] --> Pre["🚨 Pre-Hook (前置拦截钩子)\n自动运行代码语法检查 / 拦截高危删库命令"]
+        Pre -->|检查通过| Run["正式执行核心动作"]
+        Pre -->|检查不通过| Block["❌ 当场拦截并报错提示修正"]
+        Run --> Post["✨ Post-Hook (后置收尾钩子)\n自动格式化代码 / 记录操作审计日志"]
+    end

@@ -1,0 +1,18 @@
+graph TD
+    subgraph Architecture ["🏛️ 极简全栈数据流向图"]
+        direction LR
+        Frontend["🎨 index.html\n(TailwindCSS + Marked.js)"]
+        Router["🚀 main.py\n(FastAPI RESTful 路由)"]
+        Schema["🔍 schemas.py\n(Pydantic V2 校验)"]
+        Model["🧱 models.py\n(SQLAlchemy 2.0 ORM)"]
+        DB["🗄️ database.py & blog.db\n(SQLite 单文件存储)"]
+
+        Frontend -->|"1. HTTP fetch (JSON)"| Router
+        Router -->|"2. 校验请求参数"| Schema
+        Schema -->|"3. 构造实体操作"| Model
+        Model -->|"4. SQL 读写执行"| DB
+        DB -->|"5. 返回数据记录"| Model
+        Model -->|"6. 序列化 JSON 响应"| Schema
+        Schema -->|"7. 200/201 响应体"| Router
+        Router -->|"8. 渲染卡片/详情"| Frontend
+    end

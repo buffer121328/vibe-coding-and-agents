@@ -10,34 +10,12 @@
 
 我们用一个**高档米其林餐厅的运转流程**来形象理解三层架构的核心精髓：
 
-```mermaid
-graph TD
-    subgraph Layer1 ["表现层: Controller (前厅领位与服务员)"]
-        HTTPReq["接收 HTTP 请求<br/>(验证顾客身份 / 检查点菜单入参)"]
-        HTTPResp["返回 HTTP 响应<br/>(封装 JSON / 格式化状态码 / 呈现菜品)"]
-    end
-
-    subgraph Layer2 ["业务逻辑层: Service (后厨主厨烹饪团队)"]
-        BizLogic["核心业务逻辑编排<br/>(煎牛排火候 / 秘制酱汁调制 / 会员折扣计算)"]
-        Tx["事务与流程把控<br/>(多步骤原子性 / 异常回滚)"]
-    end
-
-    subgraph Layer3 ["数据访问层: DAO / Repository (库房管理员与食材仓库)"]
-        CRUD["数据持久化操作<br/>(冷库取肉 / 补货入库 / 数据库 SQL 增删改查)"]
-        Cache["缓存与数据对接<br/>(保鲜冷藏 / Redis / Session)"]
-    end
-
-    subgraph Storage ["物理存储层: Database (中央供应链基地)"]
-        DB[(SQLite / PostgreSQL / MySQL)]
-    end
-
-    HTTPReq --> BizLogic
-    BizLogic --> Tx
-    Tx --> CRUD
-    CRUD --> Cache
-    Cache --> DB
-    BizLogic --> HTTPResp
-```
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-01.svg">
+    <img src="img/diagrams/06-diagram-01.svg" alt="💡 一、生活化大比喻：SpringBoot 三层架构的工程美学" width="760">
+  </a>
+</p>
 
 ### 🍽️ 餐厅角色深度对照：
 
@@ -61,24 +39,12 @@ graph TD
 
 但一旦项目继续演进，这种扁平结构就会暴露出极其致命的痛点：
 
-```mermaid
-graph LR
-    subgraph FlatChaos ["痛点: 扁平目录与上帝文件"]
-        F1["根目录堆积数十个文件<br/>(职责边界模糊 / 找代码如大海捞针)"]
-        F2["AI 倾向在单个文件疯狂追加<br/>(几千行上帝文件 God File)"]
-        F3["超长上下文消耗海量 Token<br/>(推理变慢 / 频繁触发幻觉与误删)"]
-        F1 --> F2 --> F3
-    end
-
-    subgraph GovernedOrder ["治理后: 模块化工程体系"]
-        G1["分层清晰 (api / core / services / models)"]
-        G2["单文件保持 100~300 行极简高内聚"]
-        G3["AI 读写极精准 / 秒级定位 / 零冲突"]
-        G1 --> G2 --> G3
-    end
-
-    FlatChaos -.->|目录治理重构| GovernedOrder
-```
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-02.svg">
+    <img src="img/diagrams/06-diagram-02.svg" alt="🌪️ 二、为什么要进行目录治理？（痛点直击与 AI 劣根性剖析）" width="760">
+  </a>
+</p>
 
 ### 1. 痛点一：根目录“扁平大杂烩”，工程职责混乱
 
@@ -230,22 +196,12 @@ project_01_个人博客系统二次开发/
 
 ### 2. 🗺️ 三层架构 vs 六边形架构 vs 洋葱架构（架构流派全景）
 
-```mermaid
-graph LR
-    subgraph Layer3Tier ["三层架构 (经典)"]
-        L3A["Controller → Service → DAO"]
-    end
-    subgraph Hex ["六边形架构 (端口&适配器)"]
-        H1["核心领域 ←→ 输入端口(API/CLI)<br/>核心领域 ←→ 输出端口(DB/外部API)"]
-    end
-    subgraph Onion ["洋葱架构 (Clean Architecture)"]
-        O1["实体 → 用例 → 接口适配器 → 框架/驱动"]
-    end
-
-    Layer3Tier -.->|简单够用| Current["✅ 本博客（教学优选）"]
-    Hex -.->|中型项目| Next1["进阶方向"]
-    Onion -.->|大型复杂系统| Next2["高阶方向"]
-```
+<!-- 图表源文件：img/diagrams/06-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-03.svg">
+    <img src="img/diagrams/06-diagram-03.svg" alt="2. 🗺️ 三层架构 vs 六边形架构 vs 洋葱架构（架构流派全景）" width="960">
+  </a>
+</p>
 
 - **三层架构（Controller-Service-DAO）**：我们本章的“主教练”。够用、直观、团队共识度高，是**大多数中小型项目的黄金起点**；
 - **六边形架构（Hexagonal / Ports & Adapters）**：把核心业务放在“六边形中心”，周边用“端口（接口）”连接数据库、UI 等外部适配器。核心业务与外部世界彻底解耦，更换数据库/框架如换插座一样轻松；
@@ -285,16 +241,10 @@ graph LR
 
 至此，**《Vibe Coding 极速通关》第六章：Trae 实战** 的全部内容已经圆满交付！
 
-```mermaid
-graph TD
-    subgraph Chapter6Journey ["第六章 完整知识体系演进"]
-        M1["6.1 初识 Trae<br/>(双模驱动 / 新人福利 / Solo 自主闭环)"]
-        M2["6.2 环境基建与上下文网络<br/>(OpenSpec init / CodeGraph MCP / 模块化 Rules)"]
-        M3["6.3 阶段一实战: 用户鉴权体系<br/>(Bcrypt 哈希 / JWT 颁发 / Depends 权限守卫)"]
-        M4["6.4 阶段二实战: 社交互动与分页<br/>(点赞防刷 / 楼层评论 / 性能分页重构)"]
-        M5["6.5 阶段三实战: AI 原生超能力<br/>(100字导读 / 自动打标 / 存量批量回填)"]
-        M6["6.6 架构演进与目录治理<br/>(SpringBoot 三层思想 / 解耦防腐 / 进阶经典)"]
-        M1 --> M2 --> M3 --> M4 --> M5 --> M6
-    end
-```
+<!-- 图表源文件：img/diagrams/06-diagram-04.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-04.svg">
+    <img src="img/diagrams/06-diagram-04.svg" alt="🚀 五、第六章全章圆满大收官" width="760">
+  </a>
+</p>
 

@@ -1,0 +1,31 @@
+graph TD
+    subgraph Client ["前端客户端 (单文件 HTML)"]
+        Nav["顶部导航栏\n(🪄 AI 回填 专属按钮)"]
+        Card["文章卡片列表\n(展示 100 字导读 & 智能标签)"]
+        Reader["文章详情页\n(📖 导读 黄金阅读提示)"]
+    end
+
+    subgraph BackendAPI ["FastAPI 业务引擎 (main.py)"]
+        BGTask["BackgroundTasks 异步后台任务\n(发布即返回，后台静默生成)"]
+        BackfillAPI["批量回填引擎 (/api/ai/backfill)\n(自动扫描历史旧文章 / 幂等限速)"]
+        StatusAPI["AI 可用性探测 (/api/ai/status)\n(未配 Key 时优雅降级，不崩业务)"]
+    end
+
+    subgraph AIService ["AI 智能中枢 (ai_service.py)"]
+        LLMClient["OpenAI 兼容客户端\n(统一 SDK / 一行切换 DeepSeek / Kimi / 通义)"]
+        JSONParser["结构化输出解析器\n(严格输出纯 JSON 对象 / 失败自愈兜底)"]
+    end
+
+    subgraph LLMCloud ["大模型云端 (DeepSeek / 通义 / Kimi)"]
+        LLM["大模型推理引擎\n(提炼 100 字导读 + 3~5 个精准标签)"]
+    end
+
+    Nav --> BackfillAPI
+    BackfillAPI --> AIService
+    BGTask --> AIService
+    AIService --> LLMClient
+    LLMClient --> LLM
+    LLM --> JSONParser
+    JSONParser --> Card
+    JSONParser --> Reader
+    StatusAPI -.-> Nav

@@ -1,0 +1,13 @@
+flowchart TD
+
+    Start(["用户输入复杂问题"]) --> LoopStart
+
+    subgraph Loop ["ReAct 核心自愈循环 (while not finished)"]
+        LoopStart["1. 🧠 Thought (思考)\n'我当前掌握什么？下一步该查什么？'"]
+        LoopStart --> Action["2. ⚡ Action (行动)\n'选择工具并构造参数：calculate[1+1]'"]
+        Action --> Obs["3. 👀 Observation (观察)\n'拿到真实环境返回结果：2'"]
+        Obs --> Check{"是否已经得出\n最终答案？"}
+        Check -- 否：信息不足/报错 --> LoopStart
+    end
+
+    Check -- 是：结论明确 --> Finish["4. 🎯 Final Answer (最终交付)\n'整合所有观察，给出完整解答'"]

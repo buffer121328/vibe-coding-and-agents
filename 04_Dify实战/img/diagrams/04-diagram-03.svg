@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 485.328 558" width="485.328" height="558" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Architecture" data-label="Dify 插件化驱动体系">
+  <rect x="36" y="36" width="413.328" height="486.00000000000006" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="413.328" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Dify 插件化驱动体系</text>
+</g>
+<polyline class="edge" data-from="A" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="在下拉框中选择" points="242.664,133.8 242.664,266.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="C" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="发起网络请求" points="242.664,319.90000000000003 242.664,452.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="A" data-to="B" data-label="在下拉框中选择">
+  <rect x="192.164" y="184.8" width="100.81000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="242.569" y="199.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">在下拉框中选择</text>
+</g>
+<g class="edge-label" data-from="B" data-to="C" data-label="发起网络请求">
+  <rect x="198.164" y="370.90000000000003" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="242.629" y="386.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">发起网络请求</text>
+</g>
+<g class="node" data-id="A" data-label="应用画布中的 LLM 节点
+(操作界面: 负责写 Prompt、调温度参数)" data-shape="rectangle">
+  <rect x="97.201" y="80" width="290.926" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="242.664" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="242.664" dy="-3.9000000000000012">应用画布中的 LLM 节点</tspan><tspan x="242.664" dy="16.900000000000002">(操作界面: 负责写 Prompt、调温度参数)</tspan></text>
+</g>
+<g class="node" data-id="B" data-label="langgenius/deepseek 模型插件
+(驱动层: 负责封装 DeepSeek API 通信协议与模型列表)" data-shape="rectangle">
+  <rect x="52" y="266.1" width="381.328" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="242.664" y="293" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="242.664" dy="-3.9000000000000012">langgenius/deepseek 模型插件</tspan><tspan x="242.664" dy="16.900000000000002">(驱动层: 负责封装 DeepSeek API 通信协议与模型列表)</tspan></text>
+</g>
+<g class="node" data-id="C" data-label="DeepSeek 云端官方 API 开放平台
+(算力底座: DeepSeek-V3 / DeepSeek-R1)" data-shape="rectangle">
+  <rect x="101.64699999999999" y="452.20000000000005" width="282.034" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="242.664" y="479.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="242.664" dy="-3.9000000000000012">DeepSeek 云端官方 API 开放平台</tspan><tspan x="242.664" dy="16.900000000000002">(算力底座: DeepSeek-V3 / DeepSeek-R1)</tspan></text>
+</g>
+</svg>

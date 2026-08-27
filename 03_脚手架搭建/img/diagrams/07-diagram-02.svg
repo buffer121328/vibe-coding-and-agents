@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970.5929999999998 437" width="970.5929999999998" height="437" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="CCSwitch" data-label="【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)">
+  <rect x="36" y="211.20000000000002" width="385.16999999999996" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="211.20000000000002" width="385.16999999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="225.20000000000002" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)</text>
+</g>
+<g class="subgraph" data-id="Agents" data-label="各类终端与开发工具">
+  <rect x="455.16999999999996" y="36" width="469.639" height="189.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="455.16999999999996" y="36" width="469.639" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="467.16999999999996" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">各类终端与开发工具</text>
+<g class="subgraph" data-id="CCSwitch" data-label="【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)">
+  <rect x="630.112" y="172.9" width="98.266" height="36.900000000000006" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="630.112" y="172.9" width="98.266" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="642.112" y="186.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)</text>
+</g>
+</g>
+<polyline class="edge" data-from="CCSwitch" data-to="Out1" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="自动智能转发" points="654.6785,209.8 654.6785,275.8 488.289,275.8 488.289,364.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CCSwitch" data-to="Out2" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="自动智能转发" points="679.245,209.8 679.2449999999999,275.8 669.461,275.8 669.461,364.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CCSwitch" data-to="Out3" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="自动智能转发" points="703.8115,209.8 703.8115,275.8 852.856,275.8 852.8559999999999,364.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A1" data-to="CCSwitch" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="679.245,116.9 679.245,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A2" data-to="CCSwitch" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="845.9675,116.9 845.9675,128.9 703.8115,128.9 703.8115,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A3" data-to="CCSwitch" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="523.2669999999999,116.9 523.2669999999999,128.9 654.6785,128.9 654.6785,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="CCSwitch" data-to="Out1" data-label="自动智能转发">
+  <rect x="443.789" y="282.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="488.254" y="297.95" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">自动智能转发</text>
+</g>
+<g class="edge-label" data-from="CCSwitch" data-to="Out2" data-label="自动智能转发">
+  <rect x="624.961" y="282.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="669.426" y="297.95" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">自动智能转发</text>
+</g>
+<g class="edge-label" data-from="CCSwitch" data-to="Out3" data-label="自动智能转发">
+  <rect x="808.356" y="282.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="852.821" y="297.95" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">自动智能转发</text>
+</g>
+<g class="node" data-id="Out1" data-label="DeepSeek 官方 API" data-shape="rectangle">
+  <rect x="408.775" y="364.1" width="159.028" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="488.289" y="382.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">DeepSeek 官方 API</text>
+</g>
+<g class="node" data-id="Out2" data-label="OpenAI GPT-5.6" data-shape="rectangle">
+  <rect x="601.803" y="364.1" width="135.31599999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="669.461" y="382.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OpenAI GPT-5.6</text>
+</g>
+<g class="node" data-id="Out3" data-label="Anthropic Claude 3.7" data-shape="rectangle">
+  <rect x="771.1189999999999" y="364.1" width="163.474" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="852.8559999999999" y="382.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Anthropic Claude 3.7</text>
+</g>
+<g class="node" data-id="GUI" data-label="图形化界面：一键点选当前生效的模型与供应商" data-shape="rectangle">
+  <rect x="52" y="255.20000000000002" width="353.16999999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="228.58499999999998" y="273.65000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">图形化界面：一键点选当前生效的模型与供应商</text>
+</g>
+<g class="node" data-id="A1" data-label="Claude Code CLI" data-shape="rectangle">
+  <rect x="609.364" y="80" width="139.762" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="679.245" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Claude Code CLI</text>
+</g>
+<g class="node" data-id="A2" data-label="OpenAI Codex" data-shape="rectangle">
+  <rect x="783.126" y="80" width="125.68299999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="845.9675" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OpenAI Codex</text>
+</g>
+<g class="node" data-id="A3" data-label="OpenCode" data-shape="rectangle">
+  <rect x="471.16999999999996" y="80" width="104.194" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="523.2669999999999" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OpenCode</text>
+</g>
+</svg>

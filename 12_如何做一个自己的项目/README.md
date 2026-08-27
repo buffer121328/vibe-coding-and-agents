@@ -17,33 +17,12 @@
 
 ## 🧭 第十二章全景知识图谱
 
-```mermaid
-graph TD
-    subgraph Part0 ["开篇：生产级 vs 玩具 Demo + 垂直领域护城河"]
-        A0["00 什么是生产级 Agent 项目<br/>(七维分水岭 / 垂直领域深耕 / 培训班项目体检 / 引出 01·02)"]
-    end
-
-    subgraph Part1 ["第一部分：开源选型与借力（站在巨人肩膀上）"]
-        A1["01 开源选型与二次开发<br/>(四维筛选法 / 协议避坑图解 / 优雅改造工作流)"]
-    end
-
-    subgraph Part2 ["第二部分：传统业务系统的 AI 赋能改造"]
-        B1["02 传统业务 AI 赋能<br/>(电商导购与客服 / CRM 智能跟进 / 教育自适应 / 架构嫁接手术)"]
-    end
-
-    subgraph Part3 ["第三部分：数据困境破局与出彩功能设计"]
-        C1["03 数据困境与业务深耕<br/>(真实数据破局 4 招 / 拒绝代码堆叠 / Three.js 旅行助手惊艳改造)"]
-    end
-
-    subgraph Part4 ["第四部分：求职通关、小模型降本与开源贡献"]
-        D1["04 求职与能力进阶<br/>(垂直微调 SFT / SLM 端侧小模型极致降本 / 开源 PR 贡献 / 简历 STAR)"]
-    end
-
-    Part0 --> Part1
-    Part1 --> Part2
-    Part2 --> Part3
-    Part3 --> Part4
-```
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/overview-diagram-01.svg">
+    <img src="img/diagrams/overview-diagram-01.svg" alt="🧭 第十二章全景知识图谱" width="760">
+  </a>
+</p>
 
 ---
 

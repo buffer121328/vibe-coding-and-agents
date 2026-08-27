@@ -1,0 +1,18 @@
+flowchart TD
+
+    Main["👔 主调度 Agent (拥有主任务目标)"]
+
+    subgraph DeepResearch ["DeepResearch 4 专家协同子代理流水线 (各自独立上下文)"]
+        S1["1. 🎯 规划子代理 (Planner)\n拆解 2-3 个核心研究议题"]
+        S2["2. 🔍 检索研究子代理 (Researcher)\n深度技术推演与方案论证"]
+        S3["3. 🧐 批判审查子代理 (Critic)\n漏洞排查与极限情况挑刺"]
+        S4["4. ✍️ 终稿撰写子代理 (Writer)\n汇总成高质量 Markdown 交付报告"]
+        
+        S1 -->|独立议题| S2
+        S2 -->|研究草稿| S3
+        S3 -->|评审意见| S4
+    end
+
+    Main -->|派发课题| S1
+    S4 -->|回传纯净终稿报告| Main
+    Main --> Delivery(["🎯 交付给最终用户"])

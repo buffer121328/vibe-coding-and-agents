@@ -11,35 +11,12 @@
 
 如果把传统的全栈写代码比作**街头泥瓦匠盖房子**（想到哪砌到哪，改二楼客厅时把一楼承重墙砸穿了都没发觉），那么我们这一套结合了 OpenSpec 与 CodeGraph 的 Vibe Coding 全栈工作流就是**现代化数字装配式建筑工程队**：
 
-```mermaid
-graph TD
-    subgraph Foundation ["1. 基建与规则中枢 (Infrastructure & Brain)"]
-        direction TB
-        AgentsMD["📜 AGENTS.md 规则大脑<br/>(统一技术栈 / 红线纪律 / Skills 按需加载)"]
-        OpenSpecTool["📐 OpenSpec 规格驱动框架<br/>(施工蓝图与阶段规程 / 规划四件套)"]
-        CodeGraphTool["🛰️ CodeGraph 语义图谱<br/>(高精度代码雷达 / 命中符号即已读)"]
-        UVTool["⚡ uv 极速包管理器<br/>(Rust 驱动 / 秒级依赖装配 / 零配置虚拟环境)"]
-    end
-
-    subgraph PhaseStrategy ["2. 阶段拆分推进体系 (docs/ 阶段蓝图)"]
-        direction TB
-        Phase1["📐 Phase 1: 极简目录结构与 API 契约"]
-        Phase2["🐍 Phase 2: 后端 CRUD 与 SQLite 持久化"]
-        Phase3["🎨 Phase 3: TailwindCSS 前端与 Markdown 渲染"]
-        Phase4["🚀 Phase 4: 全链路联调与功能自测"]
-        
-        Phase1 --> Phase2 --> Phase3 --> Phase4
-    end
-
-    subgraph Deliverables ["3. 全栈交付物 (Full-Stack Application)"]
-        direction LR
-        Backend["🐍 FastAPI + SQLite (blog.db)"]
-        Frontend["🎨 TailwindCSS 暗黑单页 (index.html)"]
-    end
-
-    Foundation --> PhaseStrategy
-    PhaseStrategy --> Deliverables
-```
+<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/05-diagram-01.svg">
+    <img src="img/diagrams/05-diagram-01.svg" alt="💡 一、生活化大比喻：从“街头泥瓦匠盲盖”到“现代化数字装配式建筑”" width="860">
+  </a>
+</p>
 
 - 📐 **OpenSpec（施工蓝图与验收规程）**：就像盖楼前必须先出的**正规工程图纸与质检标准**。在动第一块砖（写业务代码）之前，必须先明确需求范围（Proposal）、数据模型（Schema）与接口契约（Specification），从根源杜绝 AI “胡思乱想与代码幻觉”；
 - 🛰️ **CodeGraph（高精度 GPS 卫星导航与雷达）**：就像施工队的**地下管线雷达探测仪**。AI 不需要把整个城市掘地三尺（无脑 Read 全库文件撑爆上下文），而是通过抽象语法树精准定位函数与类的调用链路，“指哪打哪，命中即已读”；
@@ -278,20 +255,12 @@ uv add fastapi uvicorn sqlalchemy
 
 这种“**一步登天式 Prompting**”在真实工程中往往会导致灾难性后果。我们之所以坚决引入 `docs/` 阶段拆分推进，背后有两大不可动摇的黄金法则：
 
-```mermaid
-graph LR
-    subgraph Pain ["❌ 一次性全量生成痛点"]
-        P1["一次性生成 10+ 文件"] --> P2["Bug 混杂交织<br/>(不知道是DB/CORS还是前端错)"]
-        P2 --> P3["排查极其困难<br/>无法精确定位回滚"]
-    end
-
-    subgraph Solution ["✅ 阶段拆分推进优势"]
-        S1["Phase 1: 规格与目录"] --> S2["Phase 2: 后端与DB"]
-        S2 --> S3["Phase 3: 前端与Markdown"]
-        S3 --> S4["Phase 4: 联调与自测"]
-        S2 -.->|"独立验收/秒级回滚"| S2
-    end
-```
+<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/05-diagram-02.svg">
+    <img src="img/diagrams/05-diagram-02.svg" alt="🧠 六、核心：为什么要对全栈项目进行「阶段拆分」？" width="960">
+  </a>
+</p>
 
 ### 1. 方便分步验收与快速回滚（降低试错与排错成本）
 

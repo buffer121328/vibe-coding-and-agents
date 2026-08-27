@@ -1,0 +1,14 @@
+graph TD
+
+    subgraph Storage ["外部持久化存储 (Disk Persistence)"]
+        M1["💾 agent_memory.json\n- 代码风格: 必须写类型注解\n- 技术栈: FastAPI + Vue3"]
+        S1["📂 ./skills 技能包仓库\n- git_expert.md (Git规范)\n- python_cleaner.md (代码重构)"]
+    end
+
+    subgraph Assembler ["Prompt 动态组装流水线 (Prompt Assembler)"]
+        Base["基础 System 设定"] --> Merged["增强型 System Prompt"]
+        M1 -->|自动读取提取| Merged
+        S1 -->|根据任务按需勾选挂载| Merged
+    end
+
+    Merged --> Agent["🚀 驱动 GLM 智能体执行任务"]

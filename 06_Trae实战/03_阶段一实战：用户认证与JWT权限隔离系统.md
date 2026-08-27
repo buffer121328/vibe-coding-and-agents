@@ -8,32 +8,12 @@
 
 在给已有博客系统引入用户认证前，我们先通过生活中的生动比喻理解核心机制：
 
-```mermaid
-graph TD
-    subgraph Client ["前端客户端 (浏览器)"]
-        User["访客 / 管理员"]
-        TokenStore["localStorage<br/>(暂存加密数字手环)"]
-    end
-
-    subgraph SecurityLayer ["安全中枢 (security.py)"]
-        BcryptEngine["Bcrypt 加盐哈希<br/>(单向不可逆防伪印泥)"]
-        JWTIssuer["JWT 颁发中心<br/>(生成带过期时间的防伪手环)"]
-        Guard["Depends 权限守卫<br/>(扫描手环角色: admin / reader)"]
-    end
-
-    subgraph BackendEngine ["后端业务引擎 (main.py)"]
-        PublicAPI["公开读接口 (GET /api/posts)<br/>(无需手环，人人可读)"]
-        ProtectedAPI["受保护写接口 (POST/PUT/DELETE)<br/>(必须出示 admin 手环)"]
-    end
-
-    User -->|输入账密| BcryptEngine
-    BcryptEngine -->|验证通过| JWTIssuer
-    JWTIssuer -->|颁发 Token| TokenStore
-    TokenStore -->|携带 Token 请求| Guard
-    Guard -->|放行| ProtectedAPI
-    Guard -.->|未登录 401 / 越权 403| User
-    User -->|直接访问| PublicAPI
-```
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Cyberpunk -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-01.svg">
+    <img src="img/diagrams/03-diagram-01.svg" alt="💡 一、生活化大比喻：门禁卡、防伪手环与权限守卫" width="860">
+  </a>
+</p>
 
 - 🔐 **Bcrypt 加盐哈希**：就像是**特制的单向不可逆防伪印泥**。哪怕数据库被黑客不小心偷走，他们看到的也只是一串复杂的乱码哈希，绝不可能反推算出原始密码；
 - 🎟️ **JWT（JSON Web Token）**：就像是游乐场的**加密防伪数字手环**。用户登录成功后，后端发给前端一个带有时效性（7天有效）和角色信息（`role: admin`）的 Token。之后前端每次发起请求都戴着手环，服务端不用每次查库验证密码，直接验算签名即可秒级放行；
@@ -266,18 +246,12 @@ def create_post(post_in: PostCreate, db: Session = Depends(database.get_db), _: 
 
 JWT 本质上是一串被 `.` 分成三段的 Base64 字符串：**`Header.Payload.Signature`**（形如 `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.xxxx`）。
 
-```mermaid
-graph LR
-    subgraph JWT ["JWT = Header.Payload.Signature"]
-        H["Header 头部<br/>(声明算法 HS256 / 类型 JWT)"]
-        P["Payload 载荷<br/>(用户ID sub / 角色 role / 过期时间 exp)"]
-        S["Signature 签名<br/>(用密钥对前两段做 HMAC 哈希)"]
-    end
-
-    H --- P --- S
-    S -.->|验签不通过 → 拒绝| REJECT["🚫 401 Unauthorized"]
-    S -.->|验签通过 → 放行| PASS["✅ 放行进入受保护接口"]
-```
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-02.svg">
+    <img src="img/diagrams/03-diagram-02.svg" alt="1. 🪪 JWT 的“三段式”结构：为什么改一个字节都会被识破？" width="860">
+  </a>
+</p>
 
 - **Header（头部）**：声明令牌类型（JWT）与签名算法（HS256）；
 - **Payload（载荷）**：存放“声明”，比如我们的 `sub`（用户 ID）、`role`（角色）与 `exp`（过期时间）。**注意：Payload 只是 Base64 编码，并没有加密，任何人都能解码看到内容**，所以严禁把密码等敏感信息塞进去；

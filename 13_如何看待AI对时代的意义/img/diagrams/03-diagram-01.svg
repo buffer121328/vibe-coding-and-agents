@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1266.473 324.5" width="1266.473" height="324.5" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Year1886" data-label="1886 年：汽车初生时的被嘲笑与恐慌">
+  <rect x="36" y="36" width="468.90299999999996" height="252.50000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="468.90299999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1886 年：汽车初生时的被嘲笑与恐慌</text>
+</g>
+<g class="subgraph" data-id="Year1920" data-label="1920 年：流水线普及后的产业大爆发">
+  <rect x="548.903" y="52.900000000000006" width="681.57" height="218.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="548.903" y="52.900000000000006" width="681.57" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="560.903" y="66.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1920 年：流水线普及后的产业大爆发</text>
+</g>
+<polyline class="edge" data-from="Year1886" data-to="Year1920" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="504.90299999999996,162.25 548.903,162.25" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="C1" data-label="卡尔·本茨发明三轮汽车
+又吵又慢，经常抛锚，需要推车" data-shape="rectangle">
+  <rect x="136.84449999999998" y="157.8" width="249.42999999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="261.55949999999996" y="184.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="261.55949999999996" dy="-3.9000000000000012">卡尔·本茨发明三轮汽车</tspan><tspan x="261.55949999999996" dy="16.900000000000002">又吵又慢，经常抛锚，需要推车</tspan></text>
+</g>
+<g class="node" data-id="C2" data-label="马车夫工会抗议示威，高呼'末日降临'" data-shape="rectangle">
+  <rect x="136.84449999999998" y="235.60000000000002" width="284.99799999999993" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="279.34349999999995" y="254.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">马车夫工会抗议示威，高呼&#39;末日降临&#39;</text>
+</g>
+<g class="node" data-id="C3" data-label="英国甚至出台《红旗法案》：
+规定汽车前面必须有人举红旗步行领路，车速不得超过 6 km/h" data-shape="rectangle">
+  <rect x="52" y="80" width="436.90299999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="270.4515" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="270.4515" dy="-3.9000000000000012">英国甚至出台《红旗法案》：</tspan><tspan x="270.4515" dy="16.900000000000002">规定汽车前面必须有人举红旗步行领路，车速不得超过 6 km/h</tspan></text>
+</g>
+<g class="node" data-id="E1" data-label="福特 T 型车让汽车走进千家万户，马车彻底退出客运历史舞台" data-shape="rectangle">
+  <rect x="669.384" y="157.8" width="440.60799999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="889.688" y="176.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">福特 T 型车让汽车走进千家万户，马车彻底退出客运历史舞台</text>
+</g>
+<g class="node" data-id="E2" data-label="【马车夫的进化】：转型考取驾照，成为出租车司机、客车司机、重型卡车司机" data-shape="rectangle">
+  <rect x="609.363" y="218.70000000000002" width="560.65" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="889.6880000000001" y="237.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">【马车夫的进化】：转型考取驾照，成为出租车司机、客车司机、重型卡车司机</text>
+</g>
+<g class="node" data-id="E3" data-label="【衍生万亿产业】：公路基建、加油站、汽修技师、交警调度、汽车保险、自驾游、汽车旅馆" data-shape="rectangle">
+  <rect x="564.903" y="96.9" width="649.57" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="889.6880000000001" y="115.35000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">【衍生万亿产业】：公路基建、加油站、汽修技师、交警调度、汽车保险、自驾游、汽车旅馆</text>
+</g>
+</svg>

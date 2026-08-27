@@ -1,0 +1,14 @@
+graph TD
+    subgraph CCSwitch ["【CC-Switch 统一调度中心】(监听本地 127.0.0.1:15721)"]
+        GUI["图形化界面：一键点选当前生效的模型与供应商"]
+    end
+
+    subgraph Agents ["各类终端与开发工具"]
+        A1["Claude Code CLI"] --> CCSwitch
+        A2["OpenAI Codex"] --> CCSwitch
+        A3["OpenCode"] --> CCSwitch
+    end
+
+    CCSwitch -->|自动智能转发| Out1["DeepSeek 官方 API"]
+    CCSwitch -->|自动智能转发| Out2["OpenAI GPT-5.6"]
+    CCSwitch -->|自动智能转发| Out3["Anthropic Claude 3.7"]

@@ -1,0 +1,27 @@
+graph TD
+    subgraph Step1 ["第一阶段：单节点单步调试 (Unit Debugging)"]
+        A["选中目标节点 (LLM / Code / Tool)"] --> B["输入 Mock 变量或继承上一轮上下文"]
+        B --> C["点击 Run Step (单步执行)"]
+        C --> D["在「变量检查」面板核对 Output 与 Schema"]
+    end
+
+    subgraph Step2 ["第二阶段：分支与状态机联调 (Integration Testing)"]
+        D --> E["测试意图识别分流与状态锁机制"]
+        E --> F["验证 Assigner 是否正确加锁与清空释放"]
+        F --> G["测试 Python 沙箱容错与代码清洗"]
+    end
+
+    subgraph Step3 ["第三阶段：应用增强与发布上线 (Deployment)"]
+        G --> H["配置功能增强面板 (开场白 / 文件上传 / 引用)"]
+        H --> I["点击「发布」更新至生产环境"]
+        I --> J["获取 Web App 独立访问链接 / API 访问凭据"]
+    end
+
+    subgraph Step4 ["第四阶段：端到端黑盒自测 (End-to-End Validation)"]
+        J --> K["用例一：模拟面试全流程 6 阶段 ⮕ 复盘 HTML 导出"]
+        J --> L["用例二：简历上传 + JD 对齐 ⮕ A4 双栏 HTML 交付"]
+    end
+
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Step4

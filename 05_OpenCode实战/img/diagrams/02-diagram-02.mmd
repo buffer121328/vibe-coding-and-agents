@@ -1,0 +1,16 @@
+graph TD
+    User["人类意图 (User Prompt)"] --> Orch["🧙‍♂️ orchestrator (总指挥官)"]
+    
+    Orch -->|"遇到复杂架构/难点"| Ora["🔮 oracle (智囊顾问)"]
+    Orch -->|"需要搜库/查文档"| Lib["📚 librarian (图书管理员)"]
+    Orch -->|"需要摸清代码全貌"| Exp["🧭 explorer (代码探路者)"]
+    Orch -->|"需要编写前端/测试 UI"| Des["🎨 designer (UI 设计师)"]
+    Orch -->|"遇到报错/单测失败"| Fix["🔧 fixer (修复专家)"]
+
+    Ora -->|"输出解题策略"| Orch
+    Lib -->|"输出参考资料"| Orch
+    Exp -->|"输出文件拓扑"| Orch
+    Des -->|"输出设计方案"| Orch
+    Fix -->|"输出修复补丁"| Orch
+
+    Orch --> Result["交付最终代码与执行结果"]

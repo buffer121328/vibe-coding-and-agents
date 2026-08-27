@@ -12,28 +12,12 @@
 
 为了破解这一痛点，学术界与工业界（如开源社区著名的 **[Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)** 与 **[learn-claude-code s05 TodoWrite](https://github.com/shareAI-lab/learn-claude-code/tree/main/s05_todo_write)**）提出了 **Plan and Execute（先规划，再执行）** 架构。
 
-```mermaid
-flowchart TD
-    classDef planStyle fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:8,ry:8
-    classDef execStyle fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20,rx:8,ry:8
-    classDef stateStyle fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92,rx:8,ry:8
-
-    Goal(["用户宏观目标：'策划一顿简单健康的周末晚餐'"]) --> Planner
-
-    subgraph Phase1 ["第一阶段：宏观规划 (Planner)"]
-        Planner["🧠 大模型意图拆解<br/>生成结构化 Todo 数组"]:::planStyle
-        Planner --> TodoList["📋 生成 Todo 清单：<br/>[1. 明确饮食需求] [2. 设计健康菜单] [3. 制定采购清单] [4. 编排烹饪流程]"]:::stateStyle
-    end
-
-    subgraph Phase2 ["第二阶段：流水线逐项攻克 (Executor)"]
-        TodoList --> S1["执行 Task 1: 明确饮食需求 (状态 -> in_progress -> completed)"]:::execStyle
-        S1 --> S2["执行 Task 2: 设计健康菜单 (带入 Task 1 产出上下文)"]:::execStyle
-        S2 --> S3["执行 Task 3: 制定采购清单 (带入前序累积上下文)"]:::execStyle
-        S3 --> S4["执行 Task 4: 编排烹饪流程 (终结并汇总交付)"]:::execStyle
-    end
-
-    S4 --> FinalOutput(["🎯 输出一份可落地的晚餐执行方案"])
-```
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-01.svg">
+    <img src="img/diagrams/03-diagram-01.svg" alt="🧗 为什么需要 Plan and Execute？" width="760">
+  </a>
+</p>
 
 ***
 

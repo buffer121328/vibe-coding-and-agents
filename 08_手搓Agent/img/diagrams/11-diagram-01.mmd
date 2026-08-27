@@ -1,0 +1,7 @@
+flowchart TD
+    Root["🆕 主会话（根节点）\n修复登录服务内存泄漏"] --> R1["📝 若干轮对话后存档"]
+    R1 --> A["🌿 分支 A：LRU 容量上限 + 定时清理"]
+    R1 --> B["🌿 分支 B：WeakValueDictionary 弱引用"]
+    B --> B2["✅ 压测通过，恢复并定稿"]
+    A -.->|未采纳| Keep["🗑️ 保留存档，可随时回看"]
+    B2 --> Export["📤 导出 Markdown 存档"]

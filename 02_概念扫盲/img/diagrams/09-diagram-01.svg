@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 893.01 354.70000000000005" width="893.01" height="354.70000000000005" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="SingleAgent" data-label="单兵 Agent (认知超载、容易宕机)">
+  <rect x="36" y="36" width="411.84599999999995" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="411.84599999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">单兵 Agent (认知超载、容易宕机)</text>
+</g>
+<g class="subgraph" data-id="MultiAgentTeam" data-label="Multi-Agent 团队协同 (各司其职、互相把关)">
+  <rect x="481.846" y="36" width="375.164" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="481.846" y="36" width="375.164" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="493.846" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Multi-Agent 团队协同 (各司其职、互相把关)</text>
+</g>
+<polyline class="edge" data-from="PM" data-to="Arch" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="763.719,116.9 763.719,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Arch" data-to="Coder" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="763.719,209.8 763.719,221.8 643.2511666666667,221.8 643.2511666666667,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Coder" data-to="QA" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="600.9006666666667,265.8 600.9006666666667,116.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="QA" data-to="Coder" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="发现 Bug 驳回" points="549.3733333333333,116.9 549.3733333333333,221.8 558.5501666666667,221.8 558.5501666666667,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="QA" data-to="Coder" data-label="发现 Bug 驳回">
+  <rect x="505.37333333333333" y="176.2" width="87.74200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="549.2443333333333" y="191.35" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">发现 Bug 驳回</text>
+</g>
+<g class="node" data-id="S" data-label="一个人扛下所有：
+PRD需求 + 架构设计 + 前端 + 后端 + 数据库 + 安全测试
+❌ 容易遗忘细节、出现盲区与幻觉" data-shape="rectangle">
+  <rect x="52" y="80" width="379.84599999999995" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="241.92299999999997" y="115.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="241.92299999999997" dy="-12.350000000000001">一个人扛下所有：</tspan><tspan x="241.92299999999997" dy="16.900000000000002">PRD需求 + 架构设计 + 前端 + 后端 + 数据库 + 安全测试</tspan><tspan x="241.92299999999997" dy="16.900000000000002">❌ 容易遗忘细节、出现盲区与幻觉</tspan></text>
+</g>
+<g class="node" data-id="PM" data-label="📋 产品经理 Agent" data-shape="rectangle">
+  <rect x="686.428" y="80" width="154.582" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="763.719" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📋 产品经理 Agent</text>
+</g>
+<g class="node" data-id="Arch" data-label="🏛️ 架构师 Agent" data-shape="rectangle">
+  <rect x="690.133" y="172.9" width="147.17200000000003" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="763.719" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🏛️ 架构师 Agent</text>
+</g>
+<g class="node" data-id="Coder" data-label="💻 研发工程师 Agent" data-shape="rectangle">
+  <rect x="516.1996666666666" y="265.8" width="169.402" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="600.9006666666667" y="284.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">💻 研发工程师 Agent</text>
+</g>
+<g class="node" data-id="QA" data-label="🔍 严苛测试 Agent" data-shape="rectangle">
+  <rect x="497.846" y="80" width="154.582" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="575.137" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔍 严苛测试 Agent</text>
+</g>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1086.274 695.2" width="1086.274" height="695.2" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Step1" data-label="第一步：修炼核心内功 (严防 YES 工程师)">
+  <rect x="219.21099999999996" y="36" width="647.852" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="219.21099999999996" y="36" width="647.852" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="231.21099999999996" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第一步：修炼核心内功 (严防 YES 工程师)</text>
+</g>
+<g class="subgraph" data-id="Step2" data-label="第二步：打造现代化开发工位">
+  <rect x="229.95550000000003" y="205.8" width="626.3629999999998" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="229.95550000000003" y="205.8" width="626.3629999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="241.95550000000003" y="219.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第二步：打造现代化开发工位</text>
+</g>
+<g class="subgraph" data-id="Step3" data-label="第三步：规范驱动与进阶外挂">
+  <rect x="36" y="375.6" width="1014.2739999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="375.6" width="1014.2739999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="389.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第三步：规范驱动与进阶外挂</text>
+</g>
+<g class="subgraph" data-id="Step4" data-label="第四步：调兵遣将心法">
+  <rect x="364.631" y="545.4000000000001" width="357.012" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="364.631" y="545.4000000000001" width="357.012" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="376.631" y="559.4000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第四步：调兵遣将心法</text>
+</g>
+<polyline class="edge" data-from="Step1" data-to="Step2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="543.137,149.8 543.137,205.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step2" data-to="Step3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="543.137,319.6 543.137,375.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Step3" data-to="Step4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="543.137,489.40000000000003 543.137,545.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="A1" data-label="01 Python 编程核心内功
+(拒绝盲目点接受 / 核心语法 / 免费名校教程)" data-shape="rectangle">
+  <rect x="235.21099999999996" y="80" width="317.602" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="394.01199999999994" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="394.01199999999994" dy="-3.9000000000000012">01 Python 编程核心内功</tspan><tspan x="394.01199999999994" dy="16.900000000000002">(拒绝盲目点接受 / 核心语法 / 免费名校教程)</tspan></text>
+</g>
+<g class="node" data-id="A2" data-label="02 API Key 原理申请与安全防泄露
+(VIP 门禁卡 / 供应商平台 / .env 铁律)" data-shape="rectangle">
+  <rect x="586.8129999999999" y="80" width="264.25" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="718.9379999999999" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="718.9379999999999" dy="-3.9000000000000012">02 API Key 原理申请与安全防泄露</tspan><tspan x="718.9379999999999" dy="16.900000000000002">(VIP 门禁卡 / 供应商平台 / .env 铁律)</tspan></text>
+</g>
+<g class="node" data-id="B1" data-label="03 IDE 环境配置：VS Code 与 PyCharm
+(插件天梯榜 / 虚拟环境 venv 与 uv)" data-shape="rectangle">
+  <rect x="245.95550000000003" y="249.8" width="281.29299999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="386.602" y="276.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="386.602" dy="-3.9000000000000012">03 IDE 环境配置：VS Code 与 PyCharm</tspan><tspan x="386.602" dy="16.900000000000002">(插件天梯榜 / 虚拟环境 venv 与 uv)</tspan></text>
+</g>
+<g class="node" data-id="B2" data-label="04 主流 Agent 工具链下载与配置
+(Trae / Claude Code / Codex / OpenCode)" data-shape="rectangle">
+  <rect x="561.2484999999999" y="249.8" width="279.06999999999994" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="700.7834999999999" y="276.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="700.7834999999999" dy="-3.9000000000000012">04 主流 Agent 工具链下载与配置</tspan><tspan x="700.7834999999999" dy="16.900000000000002">(Trae / Claude Code / Codex / OpenCode)</tspan></text>
+</g>
+<g class="node" data-id="C1" data-label="05 Spec 驱动开发与 OpenSpec 实战
+(终结 AI 瞎猜 / OpenSpec 规范 / Qoder 编译器)" data-shape="rectangle">
+  <rect x="380.631" y="419.6" width="319.084" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="540.173" y="446.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="540.173" dy="-3.9000000000000012">05 Spec 驱动开发与 OpenSpec 实战</tspan><tspan x="540.173" dy="16.900000000000002">(终结 AI 瞎猜 / OpenSpec 规范 / Qoder 编译器)</tspan></text>
+</g>
+<g class="node" data-id="C2" data-label="06 Hooks 机制、MCP 与 Skills 配置
+(自动化拦截门禁 / MCP.json / 技能大市场)" data-shape="rectangle">
+  <rect x="733.7149999999999" y="419.6" width="300.55899999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="883.9944999999999" y="446.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="883.9944999999999" dy="-3.9000000000000012">06 Hooks 机制、MCP 与 Skills 配置</tspan><tspan x="883.9944999999999" dy="16.900000000000002">(自动化拦截门禁 / MCP.json / 技能大市场)</tspan></text>
+</g>
+<g class="node" data-id="C3" data-label="07 中转上游与代理配置：以 Codex 为例
+(CC-Switch 工具 / .codex 配置 / 极速网关)" data-shape="rectangle">
+  <rect x="52" y="419.6" width="294.631" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="199.3155" y="446.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="199.3155" dy="-3.9000000000000012">07 中转上游与代理配置：以 Codex 为例</tspan><tspan x="199.3155" dy="16.900000000000002">(CC-Switch 工具 / .codex 配置 / 极速网关)</tspan></text>
+</g>
+<g class="node" data-id="D1" data-label="08 如何选择 AI：主流大模型全景评测
+(6大业务场景 / 国内外全家桶 / 黄金组合矩阵)" data-shape="rectangle">
+  <rect x="380.631" y="589.4000000000001" width="325.012" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="543.137" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="543.137" dy="-3.9000000000000012">08 如何选择 AI：主流大模型全景评测</tspan><tspan x="543.137" dy="16.900000000000002">(6大业务场景 / 国内外全家桶 / 黄金组合矩阵)</tspan></text>
+</g>
+</svg>

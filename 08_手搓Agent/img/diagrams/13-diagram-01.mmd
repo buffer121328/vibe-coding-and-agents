@@ -1,0 +1,18 @@
+flowchart TD
+
+    User(["👤 用户：多轮对话提问"]) --> Router
+
+    Router{"是否开启\n深度思考？"} -- 是 --> Deep["🧠 DeepThink 前置分析\n(结构化拆解问题，可走 R1)"]
+    Router -- 否 --> LoopIn
+    Deep --> LoopIn
+
+    subgraph Loop ["🔄 通用工具循环（8.2/8.3 主循环）"]
+        LoopIn["🤖 模型决策"]
+        LoopIn --> NeedWeb{"需要最新\n外部信息？"}
+        NeedWeb -- 是 --> Web["🌐 web_search 联网检索\n(返回标题+链接+摘要)"]
+        NeedWeb -- 否 --> Tool["🛠️ 其他工具：exec_bash /\nread_file / str_replace /\nsave_preference"]
+        Web --> LoopIn
+        Tool --> LoopIn
+    end
+
+    Loop --> Finish(["💬 最终回答"])

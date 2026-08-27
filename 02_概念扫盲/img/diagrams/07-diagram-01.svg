@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794.594 360" width="794.594" height="360" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="User" x1="70" y1="70" x2="70" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="LLM" x1="216.2515" y1="70" x2="216.2515" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Host" x1="418.3945" y1="70" x2="418.3945" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Tool" x1="659.44" y1="70" x2="659.44" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="message" data-from="User" data-to="LLM" data-label="问：“帮我查下账户余额还有多少”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="70" y1="90" x2="216.2515" y2="90" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="143.12574999999998" y="80" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">问：“帮我查下账户余额还有多少”</text>
+</g>
+<g class="message" data-from="LLM" data-to="Host" data-label="递出格式化小票：{&quot;action&quot;: &quot;get_balance&quot;, &quot;user_id&quot;: 10086}" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="216.2515" y1="130" x2="418.3945" y2="130" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="317.323" y="120" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">递出格式化小票：{&quot;action&quot;: &quot;get_balance&quot;, &quot;user_id&quot;: 10086}</text>
+</g>
+<g class="message" data-from="Host" data-to="Tool" data-label="拿着小票去真实数据库里查询余额" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="418.3945" y1="170" x2="659.44" y2="170" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="538.91725" y="160" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">拿着小票去真实数据库里查询余额</text>
+</g>
+<g class="message" data-from="Tool" data-to="Host" data-label="返回真实金额：{&quot;balance&quot;: &quot;¥8,520.00&quot;}" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="659.44" y1="210" x2="418.3945" y2="210" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="538.91725" y="200" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">返回真实金额：{&quot;balance&quot;: &quot;¥8,520.00&quot;}</text>
+</g>
+<g class="message" data-from="Host" data-to="LLM" data-label="把真实查询结果喂回给大模型" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="418.3945" y1="250" x2="216.2515" y2="250" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="317.323" y="240" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">把真实查询结果喂回给大模型</text>
+</g>
+<g class="message" data-from="LLM" data-to="User" data-label="礼貌回复：“主人，您的账户当前可用余额为 8,520.00 元。”" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="216.2515" y1="290" x2="70" y2="290" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="143.12574999999998" y="280" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">礼貌回复：“主人，您的账户当前可用余额为 8,520.00 元。”</text>
+</g>
+<g class="actor" data-id="User" data-label="用户" data-type="actor">
+  <g transform="translate(52,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="70" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">用户</text>
+</g>
+<g class="actor" data-id="LLM" data-label="服务员 (大模型)" data-type="participant">
+  <rect x="150" y="30" width="132.503" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="216.2515" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">服务员 (大模型)</text>
+</g>
+<g class="actor" data-id="Host" data-label="传菜系统 (本地宿主程序)" data-type="participant">
+  <rect x="322.503" y="30" width="191.783" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="418.3945" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">传菜系统 (本地宿主程序)</text>
+</g>
+<g class="actor" data-id="Tool" data-label="后厨大厨 (外部工具/数据库)" data-type="participant">
+  <rect x="554.2860000000001" y="30" width="210.308" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="659.44" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">后厨大厨 (外部工具/数据库)</text>
+</g>
+</svg>

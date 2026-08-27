@@ -53,27 +53,12 @@
 
 许多初学者第一次打开 Trae 时，会发现它拥有 **Trae Work** 和 **Trae Code** 两种截然不同的核心形态（此外还有面向设计稿转代码的 **Design** 工作区）。这两种核心形态到底有什么区别？我们用一个生活中的生动比喻来理解：
 
-```mermaid
-graph TD
-    subgraph TraeEngine ["Trae 智能体中枢平台 (Trae Platform)"]
-        WorkHub["Trae Work: 数字化全能总管<br/>(应用控制 / 办公自动化 / 手机遥控 / 云端沙箱)"]
-        CodeHub["Trae Code: 高精密数字化手术台<br/>(VSCode 生态 / 细粒度 Diff 审查 / 单文件精准撤销 / 语法高亮)"]
-        DesignHub["Trae Design: 设计稿转代码<br/>(多模态图片识别 / 设计图一键生成页面)"]
-        SoloCore["Solo 模式: 自主智能体闭环<br/>(大任务拆解 / 自动纠错 / 耗时看板 / 三端同步 / 云端执行)"]
-    end
-
-    subgraph Scenarios ["两大生产落地场景"]
-        Office["工作赋能 & 流程自动化<br/>(适合非纯代码/自动化办公/跨设备派工)"]
-        Dev["复杂工程 & 架构迭代重构<br/>(适合专业开发/大型项目二次开发)"]
-    end
-
-    WorkHub --> Office
-    CodeHub --> Dev
-    DesignHub --> Dev
-    SoloCore --> WorkHub
-    SoloCore --> CodeHub
-    SoloCore --> DesignHub
-```
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-01.svg">
+    <img src="img/diagrams/01-diagram-01.svg" alt="🎭 二、生活化大比喻：Trae 的双模引擎（Work vs. Code）" width="760">
+  </a>
+</p>
 
 - 🏢 **Trae Work ——「带专属秘书团的数字化调度中心」**：
   - 它不仅能写代码，还能帮你做办公自动化、浏览器网页爬取、调用第三方应用、甚至在云端沙箱跑任务；
@@ -237,20 +222,12 @@ Trae Code 内置了完整的 Git 工作流，并加持 AI 的智能审查能力�
 大家面临的都是已有项目（甚至祖传屎山代码）的优化、重构或某几个独立模块的迭代！”
 ```
 
-```mermaid
-graph LR
-    subgraph Myth ["新手误区: 永远停留在玩具 Demo"]
-        M1["从 0 搭建简单单文件"] --> M2["语法跑通即丢弃"] --> M3["无法应对真实复杂工程"]
-    end
-
-    subgraph Reality ["工业界真实开发模式: 持续二次开发"]
-        R1["接入已有工程代码基线<br/>(如 05 章已有的个人博客系统)"]
-        R2["AI 快速阅读索引并理解项目上下文"]
-        R3["在 Trae Code 中精准重构接口与扩展新模块"]
-        R4["利用 Solo 模式自动自测与交付"]
-        R1 --> R2 --> R3 --> R4
-    end
-```
+<!-- 图表源文件：img/diagrams/01-diagram-02.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-02.svg">
+    <img src="img/diagrams/01-diagram-02.svg" alt="🎯 六、为什么后续章节我们要基于已有项目做“二次开发”？" width="960">
+  </a>
+</p>
 
 ### 💡 基于已有项目二次开发的四大核心价值：
 
@@ -265,22 +242,12 @@ graph LR
 
 为了让不同背景的同学能够选对最适合自己的武器，我们整理了一份权威选型指南：
 
-```mermaid
-graph TD
-    User(["你的核心诉求是什么？"])
-    
-    Q1{"日常办公/工作赋能/非纯代码？"}
-    Q2{"专业软件开发/复杂工程编码？"}
-    Q3{"设计稿转代码/快速出前端原型？"}
-    
-    User --> Q1
-    User --> Q2
-    User --> Q3
-    
-    Q1 -- 是 --> ToolA["首选: Trae Work / WorkBuddy<br/>(办公自动化 / 网页抓取 / 手机跨端远程)"]
-    Q2 -- 是 --> ToolB["首选: Trae Code / CodeBuddy / Cursor<br/>(VSCode 生态 / 可视化 Diff / Solo 模式自主闭环)"]
-    Q3 -- 是 --> ToolC["首选: Trae Design<br/>(多模态图片识别 / 设计稿一键生成页面)"]
-```
+<!-- 图表源文件：img/diagrams/01-diagram-03.mmd；视觉风格：Stripe 紫蓝 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-03.svg">
+    <img src="img/diagrams/01-diagram-03.svg" alt="🧭 七、场景化工具选型指南：你该怎么选？" width="760">
+  </a>
+</p>
 
 - **💼 办公赋能、数据处理与日常自动化**：
   - 如果你的目标是让 AI 帮你在电脑上整理表格、批量处理文档、抓取网页信息或在手机上远程控制电脑做任务，极力推荐体验 **Trae Work** 与 **WorkBuddy**；

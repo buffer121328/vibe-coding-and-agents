@@ -8,29 +8,12 @@
 
 如果把我们在第五章中用 OpenCode 构建的代码比作**一支刚刚结束野外拉练的特种作战小队**，那么本次将项目导入 Trae，就相当于**将小队进驻到现代化高科技作战总指挥部**：
 
-```mermaid
-graph TD
-    subgraph HQ ["Trae 现代化作战总指挥部 (Trae IDE)"]
-        Tree["项目资源管理器<br/>(经典文件树 & 语法高亮)"]
-        AgentCore["Trae Agent 智能体中枢<br/>(理解上下文 & 意图协同)"]
-        DiffView["高精密 Diff 审查视窗<br/>(单文件精准撤销 / 代码比对)"]
-    end
-
-    subgraph ContextNetwork ["智能体高敏锐度上下文网络"]
-        CG["CodeGraph MCP 语义图谱<br/>(全息战术地形图 / 符号依赖索引)"]
-        OS["OpenSpec 规格演进蓝图<br/>(阶段作战任务书 / openspec init 适配)"]
-        Ref["reference/ 历史已验收归档<br/>(区分历史资产与新迭代规格)"]
-        Rules["AGENTS.md & .trae/rules/<br/>(最高纪律红线 & 按需模块化规则)"]
-    end
-
-    subgraph Fuel ["项目动力中枢"]
-        UV["uv 极速包管理器<br/>(秒级依赖解析 / 纯净虚拟环境)"]
-    end
-
-    ContextNetwork --> AgentCore
-    Fuel --> HQ
-    Tree --> DiffView
-```
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-01.svg">
+    <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、生活化大比喻：项目迁移与上下文建立" width="760">
+  </a>
+</p>
 
 - 🗺️ **CodeGraph MCP**：就像是**基地的全息战术沙盘**。它把整个博客系统的路由（Router）、数据模型（Model）、输入校验（Schema）以及数据库连接（Database）的关系绘制成一张拓扑网，让 AI 不需要每次把所有代码从头读到尾，就能一秒定位核心逻辑；
 - 📋 **OpenSpec + `reference/` 归档**：就像是**战役任务书的归档与立项机制**。把上一阶段已经完成验收的 4 份文档移入 `reference/` 作为参考资料，保持当前 `docs/` 纯净，让 Trae Agent 能够一眼看清“什么是已经做完的既有资产，什么是接下来要迭代的全新需求”；
@@ -344,29 +327,12 @@ project_01_个人博客系统二次开发/
 
 CodeGraph 是一款开源的 **代码知识图谱（Codebase Knowledge Graph）** 工具，它的核心思想是：**在 AI 开始干活之前，先把整个代码库的地形勘察好**。工作链路如下：
 
-```mermaid
-graph LR
-    subgraph Build ["① 建图阶段 (codegraph build)"]
-        TS["Tree-sitter 语法解析器<br/>(把代码拆成抽象语法树 AST)"]
-        KG["知识图谱数据库<br/>(符号 / 函数 / 调用关系 / 依赖边)"]
-        TS --> KG
-    end
-
-    subgraph Serve ["② 服务阶段 (codegraph serve --mcp)"]
-        MCP["本地 MCP Server<br/>(暴露 codegraph_explore 等查询工具)"]
-        AGENT["Trae Agent<br/>(按需调用图谱查询工具)"]
-        MCP --> AGENT
-    end
-
-    subgraph Query ["③ 查询阶段 (零扫描)"]
-        Q1["codegraph_explore: 多符号探索"]
-        Q2["codegraph_trace: 调用链追踪"]
-        Q3["codegraph_impact: 影响分析"]
-        Q1 --> AGENT
-        Q2 --> AGENT
-        Q3 --> AGENT
-    end
-```
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-02.svg">
+    <img src="img/diagrams/02-diagram-02.svg" alt="🧬 原理深挖：CodeGraph 是如何给 AI 画“代码地图”的？" width="1100">
+  </a>
+</p>
 
 - **1. 建图（Build）**：用 `tree-sitter` 语法解析器把 Python / JS / TS / Go 等几十种语言的源码解析成**抽象语法树（AST）**，再抽取其中的类、函数、变量与**调用关系（Call Graph）**，存入一张可查询的本地知识图谱（完全离线、无需 Docker、无需云服务）；
 - **2. 服务（Serve）**：通过 `codegraph serve --mcp` 把图谱暴露成 **MCP Server**，AI 只需调用工具即可查询图谱；
@@ -391,17 +357,12 @@ MCP（Model Context Protocol）是 Anthropic 提出的**开放标准协议**，�
 
 这里特地为大家精选了 **5 款提升 10 倍开发幸福感的神级扩展**，强烈建议新手同学点击安装：
 
-```mermaid
-graph LR
-    subgraph Extensions ["Trae Code 新手神级扩展大礼包"]
-        E1["🌐 Live Server<br/>(本地 HTML 实时热重载刷新)"]
-        E2["🚀 Open in Browser<br/>(右键一键用浏览器打开网页)"]
-        E3["⚡ Code Runner<br/>(免终端极速单段/单文件代码运行)"]
-        E4["✨ Prettier - Code formatter<br/>(代码保存自动对齐排版/强迫症福音)"]
-        E5["🇨🇳 Chinese Language Pack<br/>(全界面简体中文支持)"]
-        E6["🐍 Python (Microsoft)<br/>(智能类型提示 / 语法高亮 / 单步断点调试)"]
-    end
-```
+<!-- 图表源文件：img/diagrams/02-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-03.svg">
+    <img src="img/diagrams/02-diagram-03.svg" alt="🛠️ 四、Trae Code 新手必装神级扩展推荐（幸福感倍增）" width="960">
+  </a>
+</p>
 
 | 插件名称 | 核心功能与使用场景 | 为什么强烈推荐？ |
 | :--- | :--- | :--- |

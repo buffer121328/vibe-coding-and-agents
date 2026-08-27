@@ -1,0 +1,11 @@
+graph TD
+    subgraph SingleAgent ["单兵 Agent (认知超载、容易宕机)"]
+        S["一个人扛下所有：\nPRD需求 + 架构设计 + 前端 + 后端 + 数据库 + 安全测试\n❌ 容易遗忘细节、出现盲区与幻觉"]
+    end
+
+    subgraph MultiAgentTeam ["Multi-Agent 团队协同 (各司其职、互相把关)"]
+        PM["📋 产品经理 Agent"] --> Arch["🏛️ 架构师 Agent"]
+        Arch --> Coder["💻 研发工程师 Agent"]
+        Coder --> QA["🔍 严苛测试 Agent"]
+        QA -->|发现 Bug 驳回| Coder
+    end

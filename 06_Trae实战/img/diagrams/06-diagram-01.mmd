@@ -1,0 +1,26 @@
+graph TD
+    subgraph Layer1 ["表现层: Controller (前厅领位与服务员)"]
+        HTTPReq["接收 HTTP 请求\n(验证顾客身份 / 检查点菜单入参)"]
+        HTTPResp["返回 HTTP 响应\n(封装 JSON / 格式化状态码 / 呈现菜品)"]
+    end
+
+    subgraph Layer2 ["业务逻辑层: Service (后厨主厨烹饪团队)"]
+        BizLogic["核心业务逻辑编排\n(煎牛排火候 / 秘制酱汁调制 / 会员折扣计算)"]
+        Tx["事务与流程把控\n(多步骤原子性 / 异常回滚)"]
+    end
+
+    subgraph Layer3 ["数据访问层: DAO / Repository (库房管理员与食材仓库)"]
+        CRUD["数据持久化操作\n(冷库取肉 / 补货入库 / 数据库 SQL 增删改查)"]
+        Cache["缓存与数据对接\n(保鲜冷藏 / Redis / Session)"]
+    end
+
+    subgraph Storage ["物理存储层: Database (中央供应链基地)"]
+        DB[(SQLite / PostgreSQL / MySQL)]
+    end
+
+    HTTPReq --> BizLogic
+    BizLogic --> Tx
+    Tx --> CRUD
+    CRUD --> Cache
+    Cache --> DB
+    BizLogic --> HTTPResp

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1794.665 589.45" width="1794.665" height="589.45" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="DecisionMatrix" data-label="现代 AI 编程工具黄金选型法则">
+  <rect x="36" y="36" width="1722.665" height="517.45" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="1722.665" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">现代 AI 编程工具黄金选型法则</text>
+</g>
+<polyline class="edge" data-from="Q" data-to="PickCodex" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="最爱 GPT 的超强逻辑推理与生态" points="874.4848333333332,320.20833333333337 874.4848333333332,392.25 547.9534999999998,392.25 547.9534999999998,500.55" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q" data-to="PickClaude" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="偏好 Claude 细腻的代码审美与超长文本" points="922.5264999999998,368.25 922.5264999999998,500.55" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q" data-to="PickCursor" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="偏好 xAI Grok 的极客敏捷与长推理" points="826.4431666666665,272.16666666666663 826.4431666666665,380.25 175.97399999999993,380.25 175.97399999999993,500.55" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q" data-to="PickDeepSeek" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="追求 DeepSeek 极致性价比与开源自由" points="970.5681666666665,320.2083333333334 970.5681666666665,392.25 1224.4814999999999,392.25 1224.4814999999999,500.55" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q" data-to="PickTrae" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="国内网络直连、追求极致福利与低成本" points="1018.6098333333332,272.1666666666667 1018.6098333333332,380.25 1571.2669999999998,380.25 1571.2669999999998,500.55" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Q" data-to="PickCodex" data-label="最爱 GPT 的超强逻辑推理与生态">
+  <rect x="454.9534999999998" y="419.25" width="185.15800000000004" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="547.5324999999998" y="434.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">最爱 GPT 的超强逻辑推理与生态</text>
+</g>
+<g class="edge-label" data-from="Q" data-to="PickClaude" data-label="偏好 Claude 细腻的代码审美与超长文本">
+  <rect x="812.0264999999998" y="419.25" width="220.79800000000003" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="922.4254999999998" y="434.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">偏好 Claude 细腻的代码审美与超长文本</text>
+</g>
+<g class="edge-label" data-from="Q" data-to="PickCursor" data-label="偏好 xAI Grok 的极客敏捷与长推理">
+  <rect x="79.47399999999992" y="419.25" width="192.88000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="175.91399999999993" y="434.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">偏好 xAI Grok 的极客敏捷与长推理</text>
+</g>
+<g class="edge-label" data-from="Q" data-to="PickDeepSeek" data-label="追求 DeepSeek 极致性价比与开源自由">
+  <rect x="1117.4814999999999" y="419.25" width="213.67000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1224.3165" y="434.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">追求 DeepSeek 极致性价比与开源自由</text>
+</g>
+<g class="edge-label" data-from="Q" data-to="PickTrae" data-label="国内网络直连、追求极致福利与低成本">
+  <rect x="1461.2669999999998" y="419.25" width="219.61" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="1571.072" y="434.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">国内网络直连、追求极致福利与低成本</text>
+</g>
+<g class="node" data-id="Q" data-label="你的核心需求与模型偏好是什么？" data-shape="diamond">
+  <polygon points="922.5264999999998,80 1066.6515,224.125 922.5264999999998,368.25 778.4014999999998,224.125" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="922.5264999999998" y="224.125" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">你的核心需求与模型偏好是什么？</text>
+</g>
+<g class="node" data-id="PickCodex" data-label="👉 选 OpenAI Codex (GPT-5.6 Sol/Terra/Luna，已并入 ChatGPT)" data-shape="rectangle">
+  <rect x="333.94799999999987" y="500.55" width="428.01099999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="547.9534999999998" y="519" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👉 选 OpenAI Codex (GPT-5.6 Sol/Terra/Luna，已并入 ChatGPT)</text>
+</g>
+<g class="node" data-id="PickClaude" data-label="👉 选 Claude Code (Opus 5 / Fable 5)" data-shape="rectangle">
+  <rect x="795.9589999999998" y="500.55" width="253.13499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="922.5264999999998" y="519" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👉 选 Claude Code (Opus 5 / Fable 5)</text>
+</g>
+<g class="node" data-id="PickCursor" data-label="👉 选 Cursor / Grok Build (Grok 4.x)" data-shape="rectangle">
+  <rect x="52" y="500.55" width="247.94799999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="175.974" y="519" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👉 选 Cursor / Grok Build (Grok 4.x)</text>
+</g>
+<g class="node" data-id="PickDeepSeek" data-label="👉 选 OpenCode / Hermes (DeepSeek V4)" data-shape="rectangle">
+  <rect x="1083.0939999999998" y="500.55" width="282.775" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1224.4814999999999" y="519" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👉 选 OpenCode / Hermes (DeepSeek V4)</text>
+</g>
+<g class="node" data-id="PickTrae" data-label="👉 选 字节 Trae (每日免费额度，首月低至2.5折)" data-shape="rectangle">
+  <rect x="1399.869" y="500.55" width="342.796" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1571.2669999999998" y="519" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👉 选 字节 Trae (每日免费额度，首月低至2.5折)</text>
+</g>
+</svg>

@@ -1,0 +1,14 @@
+graph TD
+    subgraph Mindset ["🎯 现代 AI 选型思路 (灵活匹配业务，不盲目迷信单点屠榜)"]
+        Task["你的具体业务场景与开发任务"] --> Judge{"核心诉求与环境限制是什么？"}
+        
+        Judge -->|"国内日常问答 / 逻辑推理 / 中文润色"| Route1["⚡ 中文理解与高智商通用脑\n(DeepSeek-V3 / R1 / V4)"]
+        Judge -->|"国内全能全家桶：开源自建 / 向量 / 视频生成"| Route2["🏰 阿里通义全家桶超级母舰\n(Qwen3.8 + 万相 Wan 视频 + Qwen3-Embedding)"]
+        Judge -->|"国内全能全家桶：极致语音 / 向量 / 多模态"| Route3["🎙️ 字节豆包全家桶黄金辅助\n(Doubao + Seed-TTS 2.0 + Seed-Embedding)"]
+        Judge -->|"国内硬核编程 / 跨文件排错 / 长程攻坚"| Route4["💻 编程与长链路推理双子星\n(智谱 GLM-5.3 & 月之暗面 Kimi K3)"]
+        Judge -->|"极致性价比 / 批量跑腿 / 架构师拆解"| Route5["🏎️ 极速吞吐与低成本生产力\n(小米 MiMo-V2.5 Pro & MiniMax M2.5 Pro)"]
+        Judge -->|"Cursor 编辑器极速补全 / 敏捷极客"| Route6["🚀 编辑器第一方深度协同\n(xAI Grok 4.6 原生集成 Cursor)"]
+        Judge -->|"超大上下文 / 毫秒极速 / 音视频吞吐"| Route7["⚡ 百万超大窗口与高吞吐工作马\n(Google Gemini 3.7 Flash)"]
+        Judge -->|"全球通用生态 / 工业级稳定"| Route8["🌐 国际化框架对接与成熟标准\n(OpenAI GPT-5.6 Sol / Terra / Luna)"]
+        Judge -->|"顶级代码天花板 / 复杂 Agent 闭环"| Route9["👑 极致代码质量与混合推理\n(Anthropic Claude 5 系列: Sonnet 5 / Opus 5)"]
+    end

@@ -13,16 +13,12 @@
 2. **性能与耗时遥测**：精确记录每个工具的执行毫秒数；
 3. **审计与合规**：完整记录所有调用的输入输出流水。
 
-```mermaid
-flowchart TD
-    classDef hookStyle fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B,rx:8,ry:8
-    classDef toolStyle fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:8,ry:8
-
-    Call["Agent 发起工具调用"] --> Pre["1. 🪝 PreToolUse Hooks<br/>- 参数合法性预检<br/>- 记录起始时间戳 _start_time"]:::hookStyle
-    Pre --> Exec["2. ⚡ 纯粹的业务工具函数执行<br/>(例如: 查询数据库 / 请求外部 API)"]:::toolStyle
-    Exec --> Post["3. 🪝 PostToolUse Hooks<br/>- 自动正则脱敏 (隐藏 sk-xxx / password)<br/>- 计算耗时并追加遥测标记"]:::hookStyle
-    Post --> Return["4. 📦 清洗后的安全结果回填模型上下文"]
-```
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/07-diagram-01.svg">
+    <img src="img/diagrams/07-diagram-01.svg" alt="🪝 为什么成熟的 Agent 框架必须具备 Hooks 机制？" width="760">
+  </a>
+</p>
 
 ***
 

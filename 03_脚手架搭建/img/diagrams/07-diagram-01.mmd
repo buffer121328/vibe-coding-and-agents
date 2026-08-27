@@ -1,0 +1,9 @@
+graph LR
+    subgraph Direct ["❌ 国内直连海外 (容易网络抖动、掉线)"]
+        User1["你的电脑 / 终端 Agent"] -.->|跨国长途直连，网络不稳定| Official["OpenAI / Anthropic 海外机房"]
+    end
+
+    subgraph Relay ["✅ 中转上游网关 (极速顺畅、稳定不卡)"]
+        User2["你的电脑 / CC-Switch"] -->|"国内高速专线（毫秒级）"| Proxy["中转上游服务器（香港/日本专线节点）"]
+        Proxy -->|"专线内网转发"| Official2["官方云端大模型 API"]
+    end

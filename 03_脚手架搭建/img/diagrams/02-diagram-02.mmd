@@ -1,0 +1,12 @@
+graph TD
+    subgraph Bad ["❌ 致命错误操作 (千万别做！)"]
+        B1["把 API Key 直接明文写在代码里：\nclient = OpenAI(api_key='sk-123456...')"]
+        B1 --> B2["执行 git push 推送到公开 GitHub 仓库"]
+        B2 --> B3["全网扫描黑客秒级盗刷你的额度！💥"]
+    end
+
+    subgraph Good ["✅ 工业级标准安全做法 (.env 隔离)"]
+        G1["把密钥保存在本地单独的 .env 文件中"]
+        G1 --> G2["在 .gitignore 中加上一行：.env (严禁上传)"]
+        G2 --> G3["代码中通过环境变量动态读取：\napi_key = os.getenv('OPENAI_API_KEY')"]
+    end

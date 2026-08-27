@@ -1,0 +1,26 @@
+graph TD
+    subgraph Phase1 ["阶段一：首轮简历懒加载与多轮记忆组装"]
+        A["设为面试 (Assigner)"] --> B{"简历是否已提取 (If-Else)\nresume_ex == 'true'"}
+        B -- "首次 (未提取)" --> C["文档提取器 (PDF/Word解析)"]
+        C --> D["简历信息提取 (LLM: DeepSeek-Pro)"]
+        D --> E["标志位置 true + 存入 resume_summary"]
+        B -- "多轮中 (已提取)" --> F["面试问答收集 (LLM)"]
+        F --> G["问题回答记录拼接 (Python3 Code)"]
+        G --> H["更新 qa_history 会话变量"]
+    end
+
+    subgraph Phase2 ["阶段二：面试引擎控场与出题闭环"]
+        E --> I["面试引擎 (LLM: DeepSeek-Pro 6阶段控场)"]
+        H --> I
+        I --> J{"结束变量判断 (If-Else)\n是否包含 [INTERVIEW_END]"}
+        J -- "否 (继续面试)" --> K["面试题提取 (LLM) -> 保存 last_question -> 输出面试题 (Answer)"]
+    end
+
+    subgraph Phase3 ["阶段三：三大专家链式复盘与 HTML 交付"]
+        J -- "是 (面试结束)" --> L["结束变量赋值 (is_end=true)"]
+        L --> M["表现评估专家 (LLM 6维量化打分)"]
+        M --> N["改进方案专家 (LLM 薄弱点提升路线)"]
+        N --> O["技术复盘专家 (LLM 综合复盘长文)"]
+        O --> P["HTML 视觉排版 (LLM) -> Python 代码清洗 (结构化保护层) -> Markdown⮕HTML (Tool)"]
+        P --> Q["清空面试模式 (current_mode='') -> 输出复盘报告 (Answer)"]
+    end

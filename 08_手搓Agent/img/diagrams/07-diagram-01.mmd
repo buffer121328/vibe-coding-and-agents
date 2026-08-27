@@ -1,0 +1,6 @@
+flowchart TD
+
+    Call["Agent 发起工具调用"] --> Pre["1. 🪝 PreToolUse Hooks\n- 参数合法性预检\n- 记录起始时间戳 _start_time"]
+    Pre --> Exec["2. ⚡ 纯粹的业务工具函数执行\n(例如: 查询数据库 / 请求外部 API)"]
+    Exec --> Post["3. 🪝 PostToolUse Hooks\n- 自动正则脱敏 (隐藏 sk-xxx / password)\n- 计算耗时并追加遥测标记"]
+    Post --> Return["4. 📦 清洗后的安全结果回填模型上下文"]

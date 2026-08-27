@@ -1,0 +1,19 @@
+graph TD
+    subgraph TraeEngine ["Trae 智能体中枢平台 (Trae Platform)"]
+        WorkHub["Trae Work: 数字化全能总管\n(应用控制 / 办公自动化 / 手机遥控 / 云端沙箱)"]
+        CodeHub["Trae Code: 高精密数字化手术台\n(VSCode 生态 / 细粒度 Diff 审查 / 单文件精准撤销 / 语法高亮)"]
+        DesignHub["Trae Design: 设计稿转代码\n(多模态图片识别 / 设计图一键生成页面)"]
+        SoloCore["Solo 模式: 自主智能体闭环\n(大任务拆解 / 自动纠错 / 耗时看板 / 三端同步 / 云端执行)"]
+    end
+
+    subgraph Scenarios ["两大生产落地场景"]
+        Office["工作赋能 & 流程自动化\n(适合非纯代码/自动化办公/跨设备派工)"]
+        Dev["复杂工程 & 架构迭代重构\n(适合专业开发/大型项目二次开发)"]
+    end
+
+    WorkHub --> Office
+    CodeHub --> Dev
+    DesignHub --> Dev
+    SoloCore --> WorkHub
+    SoloCore --> CodeHub
+    SoloCore --> DesignHub

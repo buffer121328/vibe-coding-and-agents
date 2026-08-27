@@ -1,0 +1,36 @@
+graph TD
+    subgraph Entrance ["入口与状态锁调度区"]
+        A["用户输入 (Start)"] --> B["JD 信息提取 (Assigner)"]
+        B --> C{"状态锁 (If-Else)\ncurrent_mode 判断"}
+        C -- "未锁定 (首次会话)" --> D["意图识别 (LLM)"]
+        D --> E{"意图分支 (If-Else)"}
+        E -- "意图=模拟面试" --> F["设为面试模式 (Assigner)"]
+        E -- "意图=简历优化" --> G["设为简历模式 (Assigner)"]
+        E -- "其他意图" --> H["闲聊与开场引导 (Answer)"]
+    end
+
+    subgraph InterviewFlow ["分支一：沉浸式模拟面试流水线"]
+        C -- "已锁定为面试" --> F
+        F --> I{"简历是否已提取 (If-Else)"}
+        I -- "首次 (未提取)" --> J["文档提取器 + 简历结构化 (LLM)"]
+        I -- "多轮中 (已提取)" --> K["问答收集 + Python 历史拼接 (Code)"]
+        J --> L["面试引擎 (LLM 提问/追问/判停)"]
+        K --> L
+        L --> M{"是否结束 (If-Else)"}
+        M -- "否 (继续面试)" --> N["保存试题 (Assigner) -> 输出面试题 (Answer)"]
+        M -- "是 (面试结束)" --> O["表现评估 -> 改进方案 -> 技术复盘 (3大专家链)"]
+        O --> P["HTML 生成 (LLM) -> 代码清洗 (Code) -> 转换导出 (Tool)"]
+        P --> Q["清空面试模式 (Assigner) -> 输出最终复盘报告 (Answer)"]
+    end
+
+    subgraph ResumeFlow ["分支二：多专家圆桌式简历优化流水线"]
+        C -- "已锁定为简历" --> G
+        G --> R["文档提取器 + 简历解析 (LLM)"]
+        R --> S1["JD 匹配分析师 (LLM)"]
+        R --> S2["HR 审核把关 (LLM)"]
+        S1 --> S3["内容优化师 (LLM)"]
+        S2 --> T["圆桌式复盘汇总 (LLM)"]
+        S3 --> T
+        T --> U["简历 HTML 生成 (LLM) -> 代码清洗 (Code) -> 转换导出 (Tool)"]
+        U --> V["清空简历模式 (Assigner) -> 输出精修简历 (Answer)"]
+    end

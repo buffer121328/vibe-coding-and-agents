@@ -1,0 +1,5 @@
+graph LR
+    IDE["Claude Desktop / Cursor / Cline (MCP Client)"] <-->|JSON-RPC 标准通道| MCPHub["MCP 协议中枢"]
+    MCPHub <--> PostgreSQL["🐘 PostgreSQL 数据库"]
+    MCPHub <--> GitHubAPI["🐙 GitHub PR 管理"]
+    MCPHub <--> Browser["🌐 无头浏览器自动化"]

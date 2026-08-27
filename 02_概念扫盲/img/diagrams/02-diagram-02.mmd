@@ -1,0 +1,5 @@
+graph TD
+    Original["全球官方开源仓库 (比如 Dify 官方项目)"] -->|"1. Fork (复印一份到我自己的云端账号)"| MyFork["我的专属副本仓库 (随便魔改不影响官方)"]
+    MyFork -->|"2. 我修改并添加了支持微信扫码的新功能"| LocalCode["本地写代码并测试成功"]
+    LocalCode -->|"3. Pull Request / PR (向官方提交改良提案)"| Original
+    Author["官方维护团队审核代码无误后，一键 Merge 合并进主干，向全球发布！"]

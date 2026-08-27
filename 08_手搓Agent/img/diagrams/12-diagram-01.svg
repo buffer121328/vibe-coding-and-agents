@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1011.06 858.3" width="1011.06" height="858.3" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Agent" data-label="🤖 Agent 主流程 (只负责 emit，不关心谁在看)">
+  <rect x="334.06350000000003" y="36" width="342.93299999999994" height="468.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="334.06350000000003" y="36" width="342.93299999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="346.06350000000003" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🤖 Agent 主流程 (只负责 emit，不关心谁在看)</text>
+</g>
+<g class="subgraph" data-id="Bus" data-label="📡 EventBus 事件总线 (subscribe / emit 广播)">
+  <rect x="292.197" y="566.5" width="426.666" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="292.197" y="566.5" width="426.666" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="304.197" y="580.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">📡 EventBus 事件总线 (subscribe / emit 广播)</text>
+</g>
+<g class="subgraph" data-id="Subscribers" data-label="👀 各司其职的订阅者">
+  <rect x="36" y="725.4" width="939.06" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="725.4" width="939.06" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="739.4" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">👀 各司其职的订阅者</text>
+</g>
+<polyline class="edge" data-from="Agent" data-to="BUS" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="505.53,504.5 505.53,610.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BUS" data-to="Subscribers" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="505.53,647.4 505.53,725.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="505.53,116.9 505.53,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="C" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="530.1821666666667,209.8 530.1821666666667,221.8 549.1197500000001,221.8 549.1197500000001,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C" data-to="D" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="549.1197500000001,302.70000000000005 549.1197500000001,314.70000000000005 533.1461666666667,314.70000000000005 533.1461666666667,358.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="477.91383333333334,358.70000000000005 477.91383333333334,314.70000000000005 461.94025,314.70000000000005 461.94025,221.8 480.87783333333334,221.8 480.87783333333334,209.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D" data-to="E" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="505.53,395.6 505.53,451.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="A" data-label="agent_start 任务启动" data-shape="rectangle">
+  <rect x="420.4585" y="80" width="170.143" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="505.53000000000003" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">agent_start 任务启动</text>
+</g>
+<g class="node" data-id="B" data-label="llm_call LLM 推理" data-shape="rectangle">
+  <rect x="431.57349999999997" y="172.9" width="147.913" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="505.53" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">llm_call LLM 推理</text>
+</g>
+<g class="node" data-id="C" data-label="tool_call 工具执行" data-shape="rectangle">
+  <rect x="472.94025" y="265.8" width="152.359" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="549.11975" y="284.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">tool_call 工具执行</text>
+</g>
+<g class="node" data-id="D" data-label="tool_result 工具结果" data-shape="rectangle">
+  <rect x="422.6815" y="358.70000000000005" width="165.697" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="505.53000000000003" y="377.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">tool_result 工具结果</text>
+</g>
+<g class="node" data-id="E" data-label="compact 上下文压缩 / error 报错 / finish 完成" data-shape="rectangle">
+  <rect x="350.06350000000003" y="451.6" width="310.93299999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="505.53" y="470.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">compact 上下文压缩 / error 报错 / finish 完成</text>
+</g>
+<g class="node" data-id="BUS" data-label="把事件分发给精确匹配者 + 通配(*)订阅者，并写入历史" data-shape="rectangle">
+  <rect x="308.197" y="610.5" width="394.666" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="505.53" y="628.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">把事件分发给精确匹配者 + 通配(*)订阅者，并写入历史</text>
+</g>
+<g class="node" data-id="S1" data-label="💰 TokenCostAudit 费用审计" data-shape="rectangle">
+  <rect x="283.55999999999995" y="769.4" width="215.34399999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="391.2319999999999" y="787.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">💰 TokenCostAudit 费用审计</text>
+</g>
+<g class="node" data-id="S2" data-label="📜 TraceRecorder 轨迹回放" data-shape="rectangle">
+  <rect x="532.904" y="769.4" width="215.344" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="640.576" y="787.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📜 TraceRecorder 轨迹回放</text>
+</g>
+<g class="node" data-id="S3" data-label="🖥️ Gradio 实时进度面板" data-shape="rectangle">
+  <rect x="52" y="769.4" width="197.55999999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="150.77999999999997" y="787.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🖥️ Gradio 实时进度面板</text>
+</g>
+<g class="node" data-id="S4" data-label="🎯 EvalSuite 评估统计" data-shape="rectangle">
+  <rect x="782.2479999999999" y="769.4" width="176.81199999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="870.6539999999999" y="787.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎯 EvalSuite 评估统计</text>
+</g>
+</svg>

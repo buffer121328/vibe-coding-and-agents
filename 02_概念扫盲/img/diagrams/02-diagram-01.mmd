@@ -1,0 +1,20 @@
+graph TD
+    subgraph S1 ["1. 工作区 (Working Tree)"]
+        W["你的办公桌\n随时在上面写字涂改代码"]
+    end
+
+    subgraph S2 ["2. 暂存区 (Staging Area)"]
+        S["打包快递纸箱\n执行 git add：把满意的修改装进纸箱"]
+    end
+
+    subgraph S3 ["3. 本地仓库 (Local Repo)"]
+        L["自家地下室货架\n执行 git commit：给纸箱贴上封条编号存档"]
+    end
+
+    subgraph S4 ["4. 远程仓库 (GitHub)"]
+        R["全球云端总仓库\n执行 git push：顺丰寄到云端备份"]
+    end
+
+    W -->|git add| S
+    S -->|git commit| L
+    L -->|git push| R

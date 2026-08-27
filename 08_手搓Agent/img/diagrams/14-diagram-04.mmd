@@ -1,0 +1,6 @@
+flowchart TD
+
+    Req(["Agent 请求"]) --> Main["主力引擎：智谱 GLM-5.3-Flash"]
+    Main -->|"正常响应"| Success(["返回 Token 流"])
+    Main -->|"网络超时 / 5xx 服务宕机"| Fallback["自动无缝降级：火山方舟 DeepSeek-V4-Flash"]
+    Fallback --> Success

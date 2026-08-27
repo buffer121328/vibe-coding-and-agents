@@ -42,28 +42,12 @@
 
 很多新手被 `git add`、`git commit`、`git push` 搞得晕头转向，其实它的过程和**日常网购退货打包**一模一样：
 
-```mermaid
-graph LR
-    subgraph S1 ["1. 工作区 (Working Tree)"]
-        W["你的办公桌<br/>随时在上面写字涂改代码"]
-    end
-
-    subgraph S2 ["2. 暂存区 (Staging Area)"]
-        S["打包快递纸箱<br/>执行 git add：把满意的修改装进纸箱"]
-    end
-
-    subgraph S3 ["3. 本地仓库 (Local Repo)"]
-        L["自家地下室货架<br/>执行 git commit：给纸箱贴上封条编号存档"]
-    end
-
-    subgraph S4 ["4. 远程仓库 (GitHub)"]
-        R["全球云端总仓库<br/>执行 git push：顺丰寄到云端备份"]
-    end
-
-    W -->|git add| S
-    S -->|git commit| L
-    L -->|git push| R
-```
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-01.svg">
+    <img src="img/diagrams/02-diagram-01.svg" alt="🎮 Git 的“四层空间”大白话拆解（快递打包大比喻）" width="760">
+  </a>
+</p>
 
 ***
 
@@ -172,13 +156,12 @@ ssh -T git@github.com
 
 ### 2. GitHub 社交三剑客：Fork、PR 与 Issue
 
-```mermaid
-graph TD
-    Original["全球官方开源仓库 (比如 Dify 官方项目)"] -->|"1. Fork (复印一份到我自己的云端账号)"| MyFork["我的专属副本仓库 (随便魔改不影响官方)"]
-    MyFork -->|"2. 我修改并添加了支持微信扫码的新功能"| LocalCode["本地写代码并测试成功"]
-    LocalCode -->|"3. Pull Request / PR (向官方提交改良提案)"| Original
-    Author["官方维护团队审核代码无误后，一键 Merge 合并进主干，向全球发布！"]
-```
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-02.svg">
+    <img src="img/diagrams/02-diagram-02.svg" alt="2. GitHub 社交三剑客：Fork、PR 与 Issue" width="760">
+  </a>
+</p>
 
 - **Fork（复印抄底）**：看到别人做了一个很酷的开源贪吃蛇游戏，点击右上角 `Fork`，瞬间把这套代码完整复印一份到你的个人主页里，你在里面怎么改都不会弄坏别人的原版。
 - **Pull Request（PR / 合并申请）**：你给这套贪吃蛇游戏增加了一个“双人对战模式”，觉得特别棒，向作者发起 PR：“嘿作者，我帮你开发了个新功能，请审查一下合并到官方版本里吧！”

@@ -1,0 +1,16 @@
+sequenceDiagram
+    autonumber
+    actor User as 你（开发者/产品经理）
+    participant Web as AI 网页端 (Claude / ChatGPT / DeepSeek / Gemini)
+    participant IDE as 本地代码编辑器 (VS Code)
+    participant Run as 你的电脑运行环境
+
+    User->>Web: 提问：“帮我用 Next.js 写一个带数据统计图表的看板”
+    Web-->>User: 展开深度思考链路，输出完整代码块与可视化预览
+    User->>User: 鼠标点击“复制代码”
+    User->>IDE: 切换窗口，粘贴进本地文件
+    User->>Run: 运行代码
+    Run-->>User: 终端弹出红字报错或缺少依赖
+    User->>Web: 复制报错信息，发回给 AI ：“报错了，帮我修”
+    Web-->>User: 自我反思并给出修正后的完整代码
+    User->>IDE: 再次手动覆盖粘贴

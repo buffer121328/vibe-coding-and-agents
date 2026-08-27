@@ -1,0 +1,13 @@
+graph TD
+    subgraph S1 ["低代码与可视化工作流 (Dify / Coze)"]
+        A["用户发来消息"] --> B["LLM 智能识别意图"]
+        B -->|需要查手册| C["RAG 知识库检索模块"]
+        B -->|需要查天气/股票| D["外部 API 插件模块"]
+        C --> E["组装回答并格式化"]
+        D --> E
+        E --> F["一键生成标准后端 API 接口"]
+    end
+    
+    subgraph S2 ["极速前端建站 (Bolt.new / Lovable / Cursor)"]
+        F -.->|一键对接 API| G["精美的 Web / 小程序 / App 前端"]
+    end

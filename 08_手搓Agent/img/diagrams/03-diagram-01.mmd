@@ -1,0 +1,17 @@
+flowchart TD
+
+    Goal(["用户宏观目标：'策划一顿简单健康的周末晚餐'"]) --> Planner
+
+    subgraph Phase1 ["第一阶段：宏观规划 (Planner)"]
+        Planner["🧠 大模型意图拆解\n生成结构化 Todo 数组"]
+        Planner --> TodoList["📋 生成 Todo 清单：\n[1. 明确饮食需求] [2. 设计健康菜单] [3. 制定采购清单] [4. 编排烹饪流程]"]
+    end
+
+    subgraph Phase2 ["第二阶段：流水线逐项攻克 (Executor)"]
+        TodoList --> S1["执行 Task 1: 明确饮食需求 (状态 -> in_progress -> completed)"]
+        S1 --> S2["执行 Task 2: 设计健康菜单 (带入 Task 1 产出上下文)"]
+        S2 --> S3["执行 Task 3: 制定采购清单 (带入前序累积上下文)"]
+        S3 --> S4["执行 Task 4: 编排烹饪流程 (终结并汇总交付)"]
+    end
+
+    S4 --> FinalOutput(["🎯 输出一份可落地的晚餐执行方案"])

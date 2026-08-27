@@ -1,0 +1,8 @@
+graph TD
+    subgraph Layers ["Dify 平台三层全景架构"]
+        A["顶层交互层 (Web Apps / SDK / RESTful API / Dify CLI)"]
+        B["核心引擎层 (Prompt 工程 / 工作流 Workflow / 知识库 RAG / Agent 闭环 / 插件市场)"]
+        C["底层基础设施 (大语言模型 OpenAI/Claude/DeepSeek / 向量数据库 / 容器沙箱)"]
+    end
+    A --> B
+    B --> C

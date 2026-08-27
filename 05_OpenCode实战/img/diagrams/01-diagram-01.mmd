@@ -1,0 +1,16 @@
+graph TD
+    subgraph Core ["OpenCode 统一底层核心 (OpenCode Core)"]
+        Config["全局配置文件\n(~/.config/opencode/opencode.jsonc)"]
+        Engine["智能体调度引擎 & 沙箱执行器"]
+        Router["多模型中转路由 & MCP/Skills 外挂"]
+    end
+
+    subgraph Client ["双端协同交互形态"]
+        CLI["OpenCode CLI\n(命令行极速黑客模式 / 远程 SSH 友好)"]
+        Desktop["OpenCode Desktop\n(图形化驾驶舱 / 可视化 Diff / 沉浸式交互)"]
+    end
+
+    Config --> Engine
+    Router --> Engine
+    Engine --> CLI
+    Engine --> Desktop

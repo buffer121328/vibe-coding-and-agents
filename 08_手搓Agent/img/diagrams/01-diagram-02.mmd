@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    actor User as 开发者 / Agent 内核
+    participant Client as ZhipuGLMClient
+    participant Zhipu as 智谱 BigModel 网关 (OpenAI 兼容)
+    participant Ark as 火山方舟网关 (OpenAI 兼容)
+    participant Model as GLM-5.3-Flash / DeepSeek-V4-Flash
+
+    User->>Client: 发送请求 chat(messages, stream=True)
+    Client->>Zhipu: HTTP POST /chat/completions (Bearer ZHIPU_API_KEY)
+    Zhipu->>Model: 提交 System/User 上下文与 Tools 定义
+    Model-->>Zhipu: 实时流式吐出 Token 碎片
+    Zhipu-->>Client: SSE 数据流分块 (Chunks)
+    Note over Client: 实时捕获文本增量并支持实时回调
+    Client-->>User: 逐字回调 / 流式渲染到终端
+    Note over Client,Zhipu: 若智谱网关超时 / 异常
+    Client->>Ark: 自动降级 POST /chat/completions (Bearer ARK_API_KEY)
+    Ark-->>Client: DeepSeek-V4-Flash 流式响应接管
+    Client-->>User: 灾备引擎接管，任务不中断

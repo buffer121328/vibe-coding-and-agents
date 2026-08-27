@@ -1,0 +1,6 @@
+graph TD
+    subgraph Metaphor1 ["生活比喻一：游乐园入场手环 (状态机与状态锁)"]
+        M1["游客买票进园 (发送'模拟面试')"] --> M2["戴上专属红色手环 (写入 current_mode = interview)"]
+        M2 --> M3["在园内玩所有项目 (后续每次回答免安检直接通关)"]
+        M3 --> M4["离园剪断手环 (面试结束清空 current_mode)"]
+    end

@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    actor User as 用户提问
+    participant Agent as Agent 核心调度器
+    participant Registry as ToolRegistry (分发机)
+    participant Model as 智谱 BigModel
+
+    User->>Agent: "查询员工 101 并计算其税后收入"
+    Agent->>Model: 发送请求 + Tools JSON Schema 列表
+    Model-->>Agent: 返回 tool_calls: [get_user_info(user_id=101)]
+    Agent->>Registry: dispatch("get_user_info", {"user_id": 101})
+    Registry-->>Agent: 返回结果: "张三 (架构师)"
+    Agent->>Model: 将结果作为 role: "tool" 消息回填
+    Model-->>Agent: 综合工具结果输出自然语言回复
+    Agent-->>User: "员工 101 是张三，其税后收入为..."

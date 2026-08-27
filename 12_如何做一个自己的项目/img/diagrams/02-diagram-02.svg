@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612.78 721.9" width="612.78" height="721.9" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="UserIntent" data-label="用户输入模糊大白话">
+  <rect x="36" y="36" width="540.78" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="540.78" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">用户输入模糊大白话</text>
+</g>
+<g class="subgraph" data-id="AgentPipeline" data-label="AI 导购智能体流水线">
+  <rect x="70.45650000000003" y="178.9" width="471.8669999999999" height="364.1" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="70.45650000000003" y="178.9" width="471.8669999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="82.45650000000003" y="192.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">AI 导购智能体流水线</text>
+</g>
+<g class="subgraph" data-id="FrontendUI" data-label="前端渲染">
+  <rect x="106.39500000000001" y="589" width="399.98999999999995" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="106.39500000000001" y="589" width="399.98999999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="118.39500000000001" y="603" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">前端渲染</text>
+</g>
+<polyline class="edge" data-from="UserIntent" data-to="AgentPipeline" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="306.39,132.9 306.39,178.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AgentPipeline" data-to="FrontendUI" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="306.39,543 306.39,589" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="P1" data-to="P2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="306.39,327.4 306.39,373.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="P2" data-to="P3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="306.39,427.20000000000005 306.39,473.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="U1" data-label="'想给我 60 岁爱钓鱼的爸爸买个 500 元以内的生日礼物，要结实耐用的！'" data-shape="rectangle">
+  <rect x="52" y="80" width="508.78" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.39" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">&#39;想给我 60 岁爱钓鱼的爸爸买个 500 元以内的生日礼物，要结实耐用的！&#39;</text>
+</g>
+<g class="node" data-id="P1" data-label="1. 槽位提取
+对象: 父亲(60岁)
+爱好: 钓鱼
+预算: &lt;=500
+偏好: 耐用" data-shape="rectangle">
+  <rect x="234.6565" y="222.9" width="143.46699999999998" height="104.50000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.39" y="275.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="306.39" dy="-29.250000000000004">1. 槽位提取</tspan><tspan x="306.39" dy="16.900000000000002">对象: 父亲(60岁)</tspan><tspan x="306.39" dy="16.900000000000002">爱好: 钓鱼</tspan><tspan x="306.39" dy="16.900000000000002">预算: &lt;=500</tspan><tspan x="306.39" dy="16.900000000000002">偏好: 耐用</tspan></text>
+</g>
+<g class="node" data-id="P2" data-label="2. 结构化 SQL 检索
+SELECT * FROM goods WHERE category='fishing' AND price&lt;=500" data-shape="rectangle">
+  <rect x="86.45650000000003" y="373.4" width="439.8669999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.39" y="400.29999999999995" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="306.39" dy="-3.9000000000000012">2. 结构化 SQL 检索</tspan><tspan x="306.39" dy="16.900000000000002">SELECT * FROM goods WHERE category=&#39;fishing&#39; AND price&lt;=500</tspan></text>
+</g>
+<g class="node" data-id="P3" data-label="3. 组合礼盒包装
+推荐高碳素鱼竿+防滑钓鱼手套套装+定制贺卡话术" data-shape="rectangle">
+  <rect x="122.39500000000001" y="473.20000000000005" width="367.98999999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.39" y="500.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="306.39" dy="-3.9000000000000012">3. 组合礼盒包装</tspan><tspan x="306.39" dy="16.900000000000002">推荐高碳素鱼竿+防滑钓鱼手套套装+定制贺卡话术</tspan></text>
+</g>
+<g class="node" data-id="F1" data-label="直接以富文本商品卡片形式展示，一键加入购物车" data-shape="rectangle">
+  <rect x="122.39500000000001" y="633" width="367.98999999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.39" y="651.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">直接以富文本商品卡片形式展示，一键加入购物车</text>
+</g>
+</svg>

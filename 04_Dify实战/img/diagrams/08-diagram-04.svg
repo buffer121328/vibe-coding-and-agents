@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 534.12 565" width="534.12" height="565" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="User" x1="89.7405" y1="70" x2="89.7405" y2="535" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="System" x1="267.06" y1="70" x2="267.06" y2="535" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="message" data-from="User" data-to="System" data-label="上传简历 PDF + 粘贴后端开发 JD + 发送“开始模拟面试”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="89.7405" y1="90" x2="267.06" y2="90" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="80" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">上传简历 PDF + 粘贴后端开发 JD + 发送“开始模拟面试”</text>
+</g>
+<g class="message" data-from="System" data-to="User" data-label="阶段一【开场寒暄】：你好！请先用 1 分钟做一个简要的技术自我介绍。" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="267.06" y1="145" x2="89.7405" y2="145" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="135" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">阶段一【开场寒暄】：你好！请先用 1 分钟做一个简要的技术自我介绍。</text>
+</g>
+<g class="message" data-from="User" data-to="System" data-label="自我介绍并提及擅长 FastAPI、Redis 缓存与 LangChain" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="89.7405" y1="185" x2="267.06" y2="185" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="175" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">自我介绍并提及擅长 FastAPI、Redis 缓存与 LangChain</text>
+</g>
+<g class="message" data-from="System" data-to="User" data-label="阶段二【技术深挖】：你在高并发场景下如何利用 Redis 解决缓存击穿问题？" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="267.06" y1="240" x2="89.7405" y2="240" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="230" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">阶段二【技术深挖】：你在高并发场景下如何利用 Redis 解决缓存击穿问题？</text>
+</g>
+<g class="message" data-from="User" data-to="System" data-label="回答互斥锁与逻辑过期的实现原理" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="89.7405" y1="280" x2="267.06" y2="280" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="270" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">回答互斥锁与逻辑过期的实现原理</text>
+</g>
+<g class="message" data-from="System" data-to="User" data-label="阶段三【项目实战】：介绍一下你在简历中提到的 Agent 知识库问答项目架构？" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="267.06" y1="320" x2="89.7405" y2="320" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="310" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">阶段三【项目实战】：介绍一下你在简历中提到的 Agent 知识库问答项目架构？</text>
+</g>
+<g class="message" data-from="User" data-to="System" data-label="详细阐述 RAG 架构与混合检索方案" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="89.7405" y1="360" x2="267.06" y2="360" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="350" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">详细阐述 RAG 架构与混合检索方案</text>
+</g>
+<g class="message" data-from="System" data-to="User" data-label="阶段四【行为与反问】：你在项目中遇到过的最大技术分歧是什么？是否有问题想问我？" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="267.06" y1="400" x2="89.7405" y2="400" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="390" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">阶段四【行为与反问】：你在项目中遇到过的最大技术分歧是什么？是否有问题想问我？</text>
+</g>
+<g class="message" data-from="User" data-to="System" data-label="回答并表示“今天面试先到这里吧，我想看看复盘报告”" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="89.7405" y1="440" x2="267.06" y2="440" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="430" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">回答并表示“今天面试先到这里吧，我想看看复盘报告”</text>
+</g>
+<g class="message" data-from="System" data-to="User" data-label="交付《模拟面试综合复盘报告.html》下载卡片，并自动清空状态锁！" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="267.06" y1="495" x2="89.7405" y2="495" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="178.40025" y="485" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">交付《模拟面试综合复盘报告.html》下载卡片，并自动清空状态锁！</text>
+</g>
+<g class="note" data-position="over" data-actors="System">
+  <polygon points="30,98 498.12,98 504.12,104 504.12,121 30,121" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="498.12,98 504.12,104 498.12,104" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="267.06" y="109.5" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)"><tspan x="267.06" dy="-3.3000000000000007">状态锁识别为 interview 模式并持久化锁定</tspan><tspan x="267.06" dy="14.3">文档提取器解析 PDF 并保存 resume_summary</tspan></text>
+</g>
+<g class="note" data-position="over" data-actors="System">
+  <polygon points="156.81900000000002,193 371.30100000000004,193 377.30100000000004,199 377.30100000000004,216 156.81900000000002,216" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="371.30100000000004,193 377.30100000000004,199 371.30100000000004,199" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="267.06" y="204.5" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Python 拼接首轮问答并存入 qa_history</text>
+</g>
+<g class="note" data-position="over" data-actors="System">
+  <polygon points="49.305000000000035,448 478.81499999999994,448 484.81499999999994,454 484.81499999999994,471 49.305000000000035,471" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="478.81499999999994,448 484.81499999999994,454 478.81499999999994,454" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="267.06" y="459.5" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)"><tspan x="267.06" dy="-3.3000000000000007">面试引擎输出 [INTERVIEW_END]</tspan><tspan x="267.06" dy="14.3">触发三大专家串行打分 ⮕ 代码清洗 ⮕ 生成 HTML</tspan></text>
+</g>
+<g class="actor" data-id="User" data-label="候选人 (User)" data-type="actor">
+  <g transform="translate(71.7405,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="89.7405" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">候选人 (User)</text>
+</g>
+<g class="actor" data-id="System" data-label="「面必过」Chatflow" data-type="participant">
+  <rect x="188.582" y="30" width="156.95600000000002" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="267.06" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">「面必过」Chatflow</text>
+</g>
+</svg>

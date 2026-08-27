@@ -1,0 +1,24 @@
+graph TD
+    subgraph Client ["前端客户端 (浏览器)"]
+        User["访客 / 管理员"]
+        TokenStore["localStorage\n(暂存加密数字手环)"]
+    end
+
+    subgraph SecurityLayer ["安全中枢 (security.py)"]
+        BcryptEngine["Bcrypt 加盐哈希\n(单向不可逆防伪印泥)"]
+        JWTIssuer["JWT 颁发中心\n(生成带过期时间的防伪手环)"]
+        Guard["Depends 权限守卫\n(扫描手环角色: admin / reader)"]
+    end
+
+    subgraph BackendEngine ["后端业务引擎 (main.py)"]
+        PublicAPI["公开读接口 (GET /api/posts)\n(无需手环，人人可读)"]
+        ProtectedAPI["受保护写接口 (POST/PUT/DELETE)\n(必须出示 admin 手环)"]
+    end
+
+    User -->|输入账密| BcryptEngine
+    BcryptEngine -->|验证通过| JWTIssuer
+    JWTIssuer -->|颁发 Token| TokenStore
+    TokenStore -->|携带 Token 请求| Guard
+    Guard -->|放行| ProtectedAPI
+    Guard -.->|未登录 401 / 越权 403| User
+    User -->|直接访问| PublicAPI

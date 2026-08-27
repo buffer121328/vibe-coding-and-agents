@@ -1,0 +1,26 @@
+graph TD
+    subgraph Step1 ["第一步：Phase 2 后端与数据层落地"]
+        direction TB
+        S1_1["🗄️ database.py: SQLite 引擎与 get_db 会话"]
+        S1_2["🧱 models.py: Post 数据表 ORM 模型 (SQLAlchemy 2.0)"]
+        S1_3["🔍 schemas.py: Pydantic 请求与响应校验 (model_dump)"]
+        S1_4["🚀 main.py: FastAPI RESTful CRUD 路由与单页托管"]
+        S1_1 --> S1_2 --> S1_3 --> S1_4
+    end
+
+    subgraph Step2 ["第二步：Phase 3 前端与 Markdown 落地"]
+        direction TB
+        S2_1["🎨 index.html: TailwindCSS 暗黑玻璃拟态 SPA"]
+        S2_2["⚡ Marked.js + Highlight.js 实时渲染管线"]
+        S2_3["🧩 瀑布流卡片 / 分类筛选 / 双栏编辑器 / 阅读模态框"]
+        S2_1 --> S2_2 --> S2_3
+    end
+
+    subgraph Step3 ["第三步：Phase 4 全链路联调与验收交付"]
+        direction TB
+        S3_1["🌐 CORS 跨域配置与同源单页静态托管"]
+        S3_2["✅ CRUD 全套业务闭环手动自测与交付"]
+        S3_1 --> S3_2
+    end
+
+    Step1 --> Step2 --> Step3

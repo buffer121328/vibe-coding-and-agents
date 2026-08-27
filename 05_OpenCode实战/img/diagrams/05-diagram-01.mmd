@@ -1,0 +1,27 @@
+graph TD
+    subgraph Foundation ["1. 基建与规则中枢 (Infrastructure & Brain)"]
+        direction TB
+        AgentsMD["📜 AGENTS.md 规则大脑\n(统一技术栈 / 红线纪律 / Skills 按需加载)"]
+        OpenSpecTool["📐 OpenSpec 规格驱动框架\n(施工蓝图与阶段规程 / 规划四件套)"]
+        CodeGraphTool["🛰️ CodeGraph 语义图谱\n(高精度代码雷达 / 命中符号即已读)"]
+        UVTool["⚡ uv 极速包管理器\n(Rust 驱动 / 秒级依赖装配 / 零配置虚拟环境)"]
+    end
+
+    subgraph PhaseStrategy ["2. 阶段拆分推进体系 (docs/ 阶段蓝图)"]
+        direction TB
+        Phase1["📐 Phase 1: 极简目录结构与 API 契约"]
+        Phase2["🐍 Phase 2: 后端 CRUD 与 SQLite 持久化"]
+        Phase3["🎨 Phase 3: TailwindCSS 前端与 Markdown 渲染"]
+        Phase4["🚀 Phase 4: 全链路联调与功能自测"]
+        
+        Phase1 --> Phase2 --> Phase3 --> Phase4
+    end
+
+    subgraph Deliverables ["3. 全栈交付物 (Full-Stack Application)"]
+        direction LR
+        Backend["🐍 FastAPI + SQLite (blog.db)"]
+        Frontend["🎨 TailwindCSS 暗黑单页 (index.html)"]
+    end
+
+    Foundation --> PhaseStrategy
+    PhaseStrategy --> Deliverables

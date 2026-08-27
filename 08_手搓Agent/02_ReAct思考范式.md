@@ -10,23 +10,12 @@
 
 而在 2022 年，普林斯顿大学与 Google 团队提出了著名的 **[ReAct (Reason + Act) 范式](https://arxiv.org/abs/2210.03629)**。它的核心精髓非常朴素：**把“思考 (Reasoning)”与“行动 (Acting)”交织在一起，形成一个能够根据环境反馈不断自我修正的死循环**！
 
-```mermaid
-flowchart TD
-    classDef nodeStyle fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B,rx:8,ry:8
-    classDef finishStyle fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20,rx:8,ry:8
-
-    Start(["用户输入复杂问题"]) --> LoopStart
-
-    subgraph Loop ["ReAct 核心自愈循环 (while not finished)"]
-        LoopStart["1. 🧠 Thought (思考)<br/>'我当前掌握什么？下一步该查什么？'"]:::nodeStyle
-        LoopStart --> Action["2. ⚡ Action (行动)<br/>'选择工具并构造参数：calculate[1+1]'"]:::nodeStyle
-        Action --> Obs["3. 👀 Observation (观察)<br/>'拿到真实环境返回结果：2'"]:::nodeStyle
-        Obs --> Check{"是否已经得出<br/>最终答案？"}
-        Check -- 否：信息不足/报错 --> LoopStart
-    end
-
-    Check -- 是：结论明确 --> Finish["4. 🎯 Final Answer (最终交付)<br/>'整合所有观察，给出完整解答'"]:::finishStyle
-```
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-01.svg">
+    <img src="img/diagrams/02-diagram-01.svg" alt="🍳 什么是 ReAct？大模型的“试错自愈小马达”" width="760">
+  </a>
+</p>
 
 ***
 

@@ -10,38 +10,12 @@
 我一般将opencode视作轻量级开发的主力，所以安装的配件和mcp不多，但都是真正好用的，同学们可以先看一下。\
 要真正发挥 OpenCode 的 100% 战斗力，需要先理解以下四个核心组件的分工与协作：
 
-```mermaid
-graph TD
-    subgraph Engine ["1. 控制中枢：opencode.jsonc"]
-        Config["模型总路由 + API 超时控制 + LSP 语法检查 + 全局插件声明"]
-    end
-
-    subgraph Hardware ["2. 万能拓展坞：MCP 工具协议"]
-        MCP1["codegraph (代码调用拓扑分析)"]
-        MCP2["websearch (实时联网搜索)"]
-        MCP3["context7 (长上下文增强检索)"]
-    end
-
-    subgraph Manual ["3. 特种兵战术包：Agent Skills"]
-        Skill1["simplify (代码极简重构规范)"]
-        Skill2["agent-browser (端到端网页自动化测试)"]
-    end
-
-    subgraph Command ["4. 六大多智能体智囊团：oh-my-opencode-slim"]
-        Orch["orchestrator (总指挥官)"]
-        Ora["oracle (架构智囊)"]
-        Lib["librarian (检索图书员)"]
-        Exp["explorer (代码探路者)"]
-        Des["designer (前端设计师)"]
-        Fix["fixer (修 Bug 专家)"]
-    end
-
-    Engine --> Hardware
-    Engine --> Manual
-    Engine --> Command
-    Hardware --> Command
-    Manual --> Command
-```
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-01.svg">
+    <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、生活化大比喻：OpenCode 的高级生态体系" width="860">
+  </a>
+</p>
 
 - 🖥️ **`opencode.jsonc`** **—— 赛车主板电脑**：决定了接入什么发动机（模型供应商）、加多少号汽油（API Key）、油门与刹车响应阈值（超时参数）；
 - 🔌 **MCP（Model Context Protocol）—— 车顶万能扩展坞**：即插即用，给 AI 挂载代码图谱分析、实时联网搜索、数据库查询等外部超能力；
@@ -337,24 +311,12 @@ opencode models --refresh
 
 ### 3. 六大专家角色协作矩阵与赋权心法：
 
-```mermaid
-graph TD
-    User["人类意图 (User Prompt)"] --> Orch["🧙‍♂️ orchestrator (总指挥官)"]
-    
-    Orch -->|"遇到复杂架构/难点"| Ora["🔮 oracle (智囊顾问)"]
-    Orch -->|"需要搜库/查文档"| Lib["📚 librarian (图书管理员)"]
-    Orch -->|"需要摸清代码全貌"| Exp["🧭 explorer (代码探路者)"]
-    Orch -->|"需要编写前端/测试 UI"| Des["🎨 designer (UI 设计师)"]
-    Orch -->|"遇到报错/单测失败"| Fix["🔧 fixer (修复专家)"]
-
-    Ora -->|"输出解题策略"| Orch
-    Lib -->|"输出参考资料"| Orch
-    Exp -->|"输出文件拓扑"| Orch
-    Des -->|"输出设计方案"| Orch
-    Fix -->|"输出修复补丁"| Orch
-
-    Orch --> Result["交付最终代码与执行结果"]
-```
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/02-diagram-02.svg">
+    <img src="img/diagrams/02-diagram-02.svg" alt="3. 六大专家角色协作矩阵与赋权心法：" width="760">
+  </a>
+</p>
 
 #### 🛡️ 技能与 MCP 白黑名单权限控制：
 

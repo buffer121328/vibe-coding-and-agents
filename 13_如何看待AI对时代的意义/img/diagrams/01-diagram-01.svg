@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 486.06899999999996 594.3000000000001" width="486.06899999999996" height="594.3000000000001" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="OldEra" data-label="❌ 传统手写时代：80% 苦力 + 20% 创造">
+  <rect x="36" y="36" width="414.06899999999996" height="279.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="414.06899999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">❌ 传统手写时代：80% 苦力 + 20% 创造</text>
+</g>
+<g class="subgraph" data-id="NewEra" data-label="✅ Vibe Coding 时代：10% 意图 + 90% 创造与审查">
+  <rect x="36" y="339.6" width="385.16999999999996" height="218.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="339.6" width="385.16999999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="353.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">✅ Vibe Coding 时代：10% 意图 + 90% 创造与审查</text>
+</g>
+<g class="node" data-id="O1" data-label="查找遗漏的分号与括号拼写错误 (2 小时)" data-shape="rectangle">
+  <rect x="77.74975" y="140.9" width="298.33599999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="226.91774999999998" y="159.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">查找遗漏的分号与括号拼写错误 (2 小时)</text>
+</g>
+<g class="node" data-id="O2" data-label="手写 500 行枯燥重复的 DTO/ORM 映射与 CRUD (3 小时)" data-shape="rectangle">
+  <rect x="77.74975" y="201.8" width="382.06899999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="268.78425" y="220.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">手写 500 行枯燥重复的 DTO/ORM 映射与 CRUD (3 小时)</text>
+</g>
+<g class="node" data-id="O3" data-label="死磕晦涩难懂的 Webpack/Docker 配置文件 (2 小时)" data-shape="rectangle">
+  <rect x="77.74975" y="80" width="362.0619999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="258.78074999999995" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">死磕晦涩难懂的 Webpack/Docker 配置文件 (2 小时)</text>
+</g>
+<g class="node" data-id="O4" data-label="真正思考业务架构与用户体验 (1 小时)" data-shape="rectangle">
+  <rect x="77.74975" y="262.70000000000005" width="279.06999999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="217.28474999999997" y="281.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">真正思考业务架构与用户体验 (1 小时)</text>
+</g>
+<g class="node" data-id="N1" data-label="自然语言清晰表达架构意图与约束契约" data-shape="rectangle">
+  <rect x="77.74975" y="444.5" width="293.89" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="224.69475" y="462.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">自然语言清晰表达架构意图与约束契约</text>
+</g>
+<g class="node" data-id="N2" data-label="AI Agent 秒级生成并自愈测试全套代码与配置" data-shape="rectangle">
+  <rect x="77.74975" y="505.40000000000003" width="329.45799999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="242.47875" y="523.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">AI Agent 秒级生成并自愈测试全套代码与配置</text>
+</g>
+<g class="node" data-id="N3" data-label="人类专注于产品灵魂、商业模式与用户沉浸体验" data-shape="rectangle">
+  <rect x="77.74975" y="383.6" width="353.16999999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="254.33474999999999" y="402.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">人类专注于产品灵魂、商业模式与用户沉浸体验</text>
+</g>
+</svg>

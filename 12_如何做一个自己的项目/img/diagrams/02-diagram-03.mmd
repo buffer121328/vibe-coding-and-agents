@@ -1,0 +1,18 @@
+graph TD
+    subgraph Input ["销售随手发来一段语音转文字"]
+        S1["'今天拜访了华东区的张总，他们对我们的 SaaS 旗舰版很感兴趣，预算大概 30 万左右，目前顾虑是私有化部署周期，约定下周三下午两点带技术团队复访。'"]
+    end
+
+    subgraph Extraction ["AI 结构化提取智能体"]
+        E1["客户名称: 华东区-张总"]
+        E2["意向产品: SaaS 旗舰版"]
+        E3["商机预算: 300,000 元"]
+        E4["核心痛点: 私有化部署交付周期"]
+        E5["日程待办: 下周三 14:00 技术复访 (自动写入日历)"]
+    end
+
+    subgraph AutoFill ["CRM 自动落库"]
+        DB["直接调用 CRM REST API 自动创建商机与跟进记录"]
+    end
+
+    Input --> Extraction --> AutoFill

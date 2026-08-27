@@ -1,0 +1,9 @@
+graph TD
+    subgraph Architecture ["Dify 插件化驱动体系"]
+        A["应用画布中的 LLM 节点\n(操作界面: 负责写 Prompt、调温度参数)"]
+        B["langgenius/deepseek 模型插件\n(驱动层: 负责封装 DeepSeek API 通信协议与模型列表)"]
+        C["DeepSeek 云端官方 API 开放平台\n(算力底座: DeepSeek-V3 / DeepSeek-R1)"]
+        
+        A -- "在下拉框中选择" --> B
+        B -- "发起网络请求" --> C
+    end

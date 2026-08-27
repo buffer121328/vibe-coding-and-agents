@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1297.4409999999998 405.6" width="1297.4409999999998" height="405.6" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="SkillPack" data-label="一个标准 Agent Skill 技能包的内部构成">
+  <rect x="505.92799999999994" y="36" width="314.034" height="333.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="505.92799999999994" y="36" width="314.034" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="517.9279999999999" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">一个标准 Agent Skill 技能包的内部构成</text>
+</g>
+<polyline class="edge" data-from="User" data-to="SkillPack" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="动态按需加载" points="320.99799999999993,202.8 505.92799999999994,202.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SkillPack" data-to="Output" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="819.962,202.8 871.962,202.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="User" data-to="SkillPack" data-label="动态按需加载">
+  <rect x="368.99799999999993" y="186.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="413.46299999999997" y="201.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">动态按需加载</text>
+</g>
+<g class="node" data-id="User" data-label="用户说：'对网站做一次安全渗透排查'" data-shape="rectangle">
+  <rect x="36" y="184.35000000000002" width="284.99799999999993" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="178.49899999999997" y="202.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">用户说：&#39;对网站做一次安全渗透排查&#39;</text>
+</g>
+<g class="node" data-id="Output" data-label="Agent 像顶级黑客一样严格按规范完成排查并出具报告" data-shape="rectangle">
+  <rect x="871.962" y="184.35000000000002" width="389.4789999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1066.7015" y="202.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Agent 像顶级黑客一样严格按规范完成排查并出具报告</text>
+</g>
+<g class="node" data-id="D" data-label="1. 元数据与触发条件 (何时唤醒此技能)" data-shape="rectangle">
+  <rect x="531.5609999999999" y="158.9" width="282.034" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="672.578" y="177.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">1. 元数据与触发条件 (何时唤醒此技能)</text>
+</g>
+<g class="node" data-id="S" data-label="2. 专家级 SOP 规范文档 (SKILL.md)" data-shape="rectangle">
+  <rect x="531.5609999999999" y="237.8" width="256.8399999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="659.9809999999999" y="256.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">2. 专家级 SOP 规范文档 (SKILL.md)</text>
+</g>
+<g class="node" data-id="E" data-label="3. 自动化执行脚本 (Python / Bash 脚本)" data-shape="rectangle">
+  <rect x="531.5609999999999" y="80" width="280.552" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="671.837" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">3. 自动化执行脚本 (Python / Bash 脚本)</text>
+</g>
+<g class="node" data-id="T" data-label="4. 标准产出报告模版 (Templates)" data-shape="rectangle">
+  <rect x="531.5609999999999" y="316.70000000000005" width="243.50199999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="653.3119999999999" y="335.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">4. 标准产出报告模版 (Templates)</text>
+</g>
+</svg>

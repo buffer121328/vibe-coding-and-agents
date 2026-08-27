@@ -1,0 +1,5 @@
+graph TD
+    subgraph ExpertPipeline ["三大专家串行推理链"]
+        E1["表现评估专家\n(6 大维度量化打分 + JSON Schema 契约)"] --> E2["改进方案专家\n(知识盲区 + 最差回答剖析 + Action Items)"]
+        E2 --> E3["技术复盘专家\n(综合汇总撰写《模拟面试综合复盘报告》全文)"]
+    end

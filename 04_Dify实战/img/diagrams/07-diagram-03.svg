@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 394.926 366.1" width="394.926" height="366.1" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="A4Layout" data-label="A4 黄金双栏视觉模型">
+  <rect x="36" y="36" width="322.926" height="294.1" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="322.926" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">A4 黄金双栏视觉模型</text>
+</g>
+<g class="node" data-id="LeftCol" data-label="🌑 左侧深色信息栏 (48mm)
+• 姓名 / 求职意向 (突出展示)
+• 联系方式 / 邮箱 / 电话
+• 核心技术关键词 / 技能标签
+• 竞赛成果 / 荣誉奖项 / 论文专利" data-shape="rectangle">
+  <rect x="63.30025" y="80" width="245.725" height="104.50000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="186.16275" y="132.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="186.16275" dy="-29.250000000000004">🌑 左侧深色信息栏 (48mm)</tspan><tspan x="186.16275" dy="16.900000000000002">• 姓名 / 求职意向 (突出展示)</tspan><tspan x="186.16275" dy="16.900000000000002">• 联系方式 / 邮箱 / 电话</tspan><tspan x="186.16275" dy="16.900000000000002">• 核心技术关键词 / 技能标签</tspan><tspan x="186.16275" dy="16.900000000000002">• 竞赛成果 / 荣誉奖项 / 论文专利</tspan></text>
+</g>
+<g class="node" data-id="RightCol" data-label="⚪ 右侧白色主内容区 (自适应剩余宽度)
+• 🎓 教育背景 (专业/主修/方向)
+• 💼 实习与工作经历 (轻量信息条)
+• 🚀 STAR 核心项目深度展示 (3-4 Bullet)" data-shape="rectangle">
+  <rect x="63.30025" y="226.5" width="290.926" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="208.76325" y="270.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="208.76325" dy="-20.8">⚪ 右侧白色主内容区 (自适应剩余宽度)</tspan><tspan x="208.76325" dy="16.900000000000002">• 🎓 教育背景 (专业/主修/方向)</tspan><tspan x="208.76325" dy="16.900000000000002">• 💼 实习与工作经历 (轻量信息条)</tspan><tspan x="208.76325" dy="16.900000000000002">• 🚀 STAR 核心项目深度展示 (3-4 Bullet)</tspan></text>
+</g>
+</svg>

@@ -1,0 +1,14 @@
+graph LR
+    subgraph Layer3Tier ["三层架构 (经典)"]
+        L3A["Controller → Service → DAO"]
+    end
+    subgraph Hex ["六边形架构 (端口&适配器)"]
+        H1["核心领域 ←→ 输入端口(API/CLI)\n核心领域 ←→ 输出端口(DB/外部API)"]
+    end
+    subgraph Onion ["洋葱架构 (Clean Architecture)"]
+        O1["实体 → 用例 → 接口适配器 → 框架/驱动"]
+    end
+
+    Layer3Tier -.->|简单够用| Current["✅ 本博客（教学优选）"]
+    Hex -.->|中型项目| Next1["进阶方向"]
+    Onion -.->|大型复杂系统| Next2["高阶方向"]

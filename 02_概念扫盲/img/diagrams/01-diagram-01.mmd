@@ -1,0 +1,18 @@
+graph TD
+    subgraph Client ["前端 (大堂与交互门面)"]
+        User["顾客 (用户与手机终端)"] --> UI["点餐屏幕 / 纸质菜单 (HTML/CSS/React/Vue)"]
+    end
+
+    subgraph Server ["后端 (后厨与业务大脑)"]
+        UI -->|发起点单网络请求| API["前台接待与传菜调度 (API 接口网关)"]
+        API --> Logic["大厨烹饪与算账运算 (Node.js/Python/Java/Go)"]
+    end
+
+    subgraph Storage ["数据库 (食材冷库与防盗账本)"]
+        Logic -->|存取食材与记账| DB["永久数据仓库 (PostgreSQL / MySQL / MongoDB)"]
+    end
+
+    subgraph Mid ["中间件 (保温台与调度广播)"]
+        Logic <--> Cache["爆款菜品极速保温台 (Redis 内存缓存)"]
+        Logic <--> Queue["点单排队小推车 (Kafka / RabbitMQ 消息队列)"]
+    end

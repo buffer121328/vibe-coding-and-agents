@@ -12,28 +12,12 @@
 - **上下文彻底隔离（Context Isolation）**：每个子代理拥有完全属于自己的全新 `messages[]`，它内部查了几十次网页、产生了上万 Token 的中间试错，都不会污染主 Agent 的主线程；
 - **只返回纯净交付物（Clean Text Back）**：子代理完成任务后，仅将提炼后的最终文本结论返回给父级。
 
-```mermaid
-flowchart TD
-    classDef mainStyle fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1,rx:8,ry:8
-    classDef subStyle fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:8,ry:8
-
-    Main["👔 主调度 Agent (拥有主任务目标)"]:::mainStyle
-
-    subgraph DeepResearch ["DeepResearch 4 专家协同子代理流水线 (各自独立上下文)"]
-        S1["1. 🎯 规划子代理 (Planner)<br/>拆解 2-3 个核心研究议题"]:::subStyle
-        S2["2. 🔍 检索研究子代理 (Researcher)<br/>深度技术推演与方案论证"]:::subStyle
-        S3["3. 🧐 批判审查子代理 (Critic)<br/>漏洞排查与极限情况挑刺"]:::subStyle
-        S4["4. ✍️ 终稿撰写子代理 (Writer)<br/>汇总成高质量 Markdown 交付报告"]:::subStyle
-        
-        S1 -->|独立议题| S2
-        S2 -->|研究草稿| S3
-        S3 -->|评审意见| S4
-    end
-
-    Main -->|派发课题| S1
-    S4 -->|回传纯净终稿报告| Main
-    Main --> Delivery(["🎯 交付给最终用户"])
-```
+<!-- 图表源文件：img/diagrams/10-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/10-diagram-01.svg">
+    <img src="img/diagrams/10-diagram-01.svg" alt="👥 为什么单 Agent 会遇到瓶颈？Subagent 的核心价值" width="760">
+  </a>
+</p>
 
 ***
 

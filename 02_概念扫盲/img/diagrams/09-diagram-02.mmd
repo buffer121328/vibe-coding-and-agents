@@ -1,0 +1,9 @@
+graph TD
+    User(["用户提出复杂需求"]) --> Boss["👑 主管 Agent (Supervisor)"]
+    Boss -->|派发前端任务| W1["🎨 前端专职 Agent"]
+    Boss -->|派发后端任务| W2["⚙️ 后端专职 Agent"]
+    Boss -->|派发查库任务| W3["🗄️ 数据分析 Agent"]
+    W1 -->|汇报产出| Boss
+    W2 -->|汇报产出| Boss
+    W3 -->|汇报产出| Boss
+    Boss --> Finish(["汇总全部成果，统一交付给用户"])

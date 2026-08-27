@@ -1,0 +1,15 @@
+graph TD
+    subgraph M1 ["1. 主从监工模式 (Supervisor)"]
+        Boss["总监 Agent"] --> W1["前端 Agent"]
+        Boss --> W2["后端 Agent"]
+        Boss --> W3["测试 Agent"]
+    end
+
+    subgraph M2 ["2. 扁平互评模式 (Peer-to-Peer)"]
+        A["作家 Agent"] <-->|互相交锋提意见| B["编辑审稿 Agent"]
+    end
+
+    subgraph M3 ["3. 树状层级模式 (Hierarchical)"]
+        CEO["CEO Agent"] --> VP["技术副总裁 Agent"]
+        VP --> Dev["一线开发 Agent"]
+    end

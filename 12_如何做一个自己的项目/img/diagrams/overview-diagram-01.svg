@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 579.435 865" width="579.435" height="865" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Part0" data-label="开篇：生产级 vs 玩具 Demo + 垂直领域护城河">
+  <rect x="71.19750000000002" y="36" width="437.0399999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="71.19750000000002" y="36" width="437.0399999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="83.19750000000002" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">开篇：生产级 vs 玩具 Demo + 垂直领域护城河</text>
+</g>
+<g class="subgraph" data-id="Part1" data-label="第一部分：开源选型与借力（站在巨人肩膀上）">
+  <rect x="107.50649999999999" y="205.8" width="364.42199999999997" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="107.50649999999999" y="205.8" width="364.42199999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="119.50649999999999" y="219.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第一部分：开源选型与借力（站在巨人肩膀上）</text>
+</g>
+<g class="subgraph" data-id="Part2" data-label="第二部分：传统业务系统的 AI 赋能改造">
+  <rect x="58.22999999999999" y="375.6" width="462.97499999999997" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="58.22999999999999" y="375.6" width="462.97499999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="70.22999999999999" y="389.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第二部分：传统业务系统的 AI 赋能改造</text>
+</g>
+<g class="subgraph" data-id="Part3" data-label="第三部分：数据困境破局与出彩功能设计">
+  <rect x="53.043000000000006" y="545.4000000000001" width="473.34899999999993" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="53.043000000000006" y="545.4000000000001" width="473.34899999999993" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="65.043" y="559.4000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第三部分：数据困境破局与出彩功能设计</text>
+</g>
+<g class="subgraph" data-id="Part4" data-label="第四部分：求职通关、小模型降本与开源贡献">
+  <rect x="36" y="715.2" width="507.43499999999995" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="715.2" width="507.43499999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="729.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第四部分：求职通关、小模型降本与开源贡献</text>
+</g>
+<polyline class="edge" data-from="Part0" data-to="Part1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="289.7175,149.8 289.7175,205.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Part1" data-to="Part2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="289.7175,319.6 289.7175,375.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Part2" data-to="Part3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="289.7175,489.40000000000003 289.7175,545.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Part3" data-to="Part4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="289.7175,659.2 289.7175,715.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="A0" data-label="00 什么是生产级 Agent 项目
+(七维分水岭 / 垂直领域深耕 / 培训班项目体检 / 引出 01·02)" data-shape="rectangle">
+  <rect x="87.19750000000002" y="80" width="405.0399999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="289.7175" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="289.7175" dy="-3.9000000000000012">00 什么是生产级 Agent 项目</tspan><tspan x="289.7175" dy="16.900000000000002">(七维分水岭 / 垂直领域深耕 / 培训班项目体检 / 引出 01·02)</tspan></text>
+</g>
+<g class="node" data-id="A1" data-label="01 开源选型与二次开发
+(四维筛选法 / 协议避坑图解 / 优雅改造工作流)" data-shape="rectangle">
+  <rect x="123.50649999999999" y="249.8" width="332.42199999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="289.7175" y="276.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="289.7175" dy="-3.9000000000000012">01 开源选型与二次开发</tspan><tspan x="289.7175" dy="16.900000000000002">(四维筛选法 / 协议避坑图解 / 优雅改造工作流)</tspan></text>
+</g>
+<g class="node" data-id="B1" data-label="02 传统业务 AI 赋能
+(电商导购与客服 / CRM 智能跟进 / 教育自适应 / 架构嫁接手术)" data-shape="rectangle">
+  <rect x="74.22999999999999" y="419.6" width="430.97499999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="289.7175" y="446.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="289.7175" dy="-3.9000000000000012">02 传统业务 AI 赋能</tspan><tspan x="289.7175" dy="16.900000000000002">(电商导购与客服 / CRM 智能跟进 / 教育自适应 / 架构嫁接手术)</tspan></text>
+</g>
+<g class="node" data-id="C1" data-label="03 数据困境与业务深耕
+(真实数据破局 4 招 / 拒绝代码堆叠 / Three.js 旅行助手惊艳改造)" data-shape="rectangle">
+  <rect x="69.043" y="589.4000000000001" width="441.34899999999993" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="289.7175" y="616.3000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="289.7175" dy="-3.9000000000000012">03 数据困境与业务深耕</tspan><tspan x="289.7175" dy="16.900000000000002">(真实数据破局 4 招 / 拒绝代码堆叠 / Three.js 旅行助手惊艳改造)</tspan></text>
+</g>
+<g class="node" data-id="D1" data-label="04 求职与能力进阶
+(垂直微调 SFT / SLM 端侧小模型极致降本 / 开源 PR 贡献 / 简历 STAR)" data-shape="rectangle">
+  <rect x="52" y="759.2" width="475.43499999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="289.7175" y="786.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="289.7175" dy="-3.9000000000000012">04 求职与能力进阶</tspan><tspan x="289.7175" dy="16.900000000000002">(垂直微调 SFT / SLM 端侧小模型极致降本 / 开源 PR 贡献 / 简历 STAR)</tspan></text>
+</g>
+</svg>

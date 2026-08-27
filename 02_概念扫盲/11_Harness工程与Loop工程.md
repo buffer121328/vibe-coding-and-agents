@@ -10,26 +10,12 @@
 1. **光有聪明的大脑（模型）远远不够**：如果没有隔离的沙箱、没有工具拦截网关、没有科学的评测基准，模型就会成为“不可控的黑盒”；
 2. **真实任务必须多步循环**：解决一个真实系统的 Bug，往往需要 10~30 步“探索代码 ➔ 尝试修改 ➔ 运行报错 ➔ 自我反思 ➔ 再次测试”的闭环迭代。
 
-```mermaid
-graph TD
-    subgraph HarnessSys ["Harness 工程 (执行与评测底座)"]
-        Box["Docker 隔离沙箱与防滚架"]
-        ToolBridge["MCP 工具网关与安全拦截器"]
-        EvalBench["SWE-bench 国际标准化考场"]
-    end
-
-    subgraph LoopSys ["Loop 工程 (自主迭代控制循环)"]
-        Start["任务目标下达"] --> Reason["1. 深入分析与规划 (Reason)"]
-        Reason --> Act["2. 调工具执行动作 (Act)"]
-        Act --> Obs["3. 获取真实环境反馈 (Observe)"]
-        Obs --> Verify{"4. 验证测试通过了吗？"}
-        Verify -->|测试失败 / 报错| Reflect["5. 反思失败根因并自我修正 (Reflect)"]
-        Reflect --> Reason
-        Verify -->|全部亮绿灯| Exit["达成目标交付成果"]
-    end
-
-    HarnessSys <--> LoopSys
-```
+<!-- 图表源文件：img/diagrams/11-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/11-diagram-01.svg">
+    <img src="img/diagrams/11-diagram-01.svg" alt="🏎️ 为什么 2026 年大家都在谈 Harness 和 Loop？" width="760">
+  </a>
+</p>
 
 ---
 
@@ -57,13 +43,12 @@ graph TD
 
 **Loop 工程（循环工程）** 专注于设计 Agent 的自我修正机制与生命周期控制：
 
-```mermaid
-graph TD
-    subgraph TreeSearch ["迷宫探索大比喻：树状搜索与剪枝 (Tree Search)"]
-        Root["起点：解决一个高难度 Bug"] --> PathA["分支 A：修改数据库配置 ➔ (测试报错 500) ➔ 及时剪枝放弃！"]
-        Root --> PathB["分支 B：重写权限校验中间件 ➔ (测试通过！) ➔ 继续向前推进"]
-    end
-```
+<!-- 图表源文件：img/diagrams/11-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/11-diagram-02.svg">
+    <img src="img/diagrams/11-diagram-02.svg" alt="🔄 深入拆解 Loop 工程（控制闭环与自愈心法）" width="760">
+  </a>
+</p>
 
 ### 核心四大安全防翻车机制
 

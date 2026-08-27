@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 519.414 341.40000000000003" width="519.414" height="341.40000000000003" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Triple" data-label="🧨 AI 开源项目 · 三重地雷">
+  <rect x="36" y="36" width="447.41399999999993" height="269.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="447.41399999999993" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🧨 AI 开源项目 · 三重地雷</text>
+</g>
+<g class="node" data-id="T1" data-label="1. 模型权重许可证
+权重不是普通代码：Apache / Llama License / RAIL 各有红线" data-shape="rectangle">
+  <rect x="61.2625" y="157.8" width="415.41399999999993" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="268.9695" y="184.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="268.9695" dy="-3.9000000000000012">1. 模型权重许可证</tspan><tspan x="268.9695" dy="16.900000000000002">权重不是普通代码：Apache / Llama License / RAIL 各有红线</tspan></text>
+</g>
+<g class="node" data-id="T2" data-label="2. 训练数据许可证
+数据集常带'仅限研究 / 禁止商用'条款" data-shape="rectangle">
+  <rect x="120.54249999999999" y="235.60000000000002" width="278.32899999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="259.707" y="262.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="259.707" dy="-3.9000000000000012">2. 训练数据许可证</tspan><tspan x="259.707" dy="16.900000000000002">数据集常带&#39;仅限研究 / 禁止商用&#39;条款</tspan></text>
+</g>
+<g class="node" data-id="T3" data-label="3. API 服务条款 ToS
+云端 API 的竞业条款：禁蒸馏、禁转售、禁训练竞品" data-shape="rectangle">
+  <rect x="61.2625" y="80" width="378.3639999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="250.44449999999995" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="250.44449999999995" dy="-3.9000000000000012">3. API 服务条款 ToS</tspan><tspan x="250.44449999999995" dy="16.900000000000002">云端 API 的竞业条款：禁蒸馏、禁转售、禁训练竞品</tspan></text>
+</g>
+</svg>

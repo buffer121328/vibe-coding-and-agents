@@ -13,16 +13,12 @@
 - **过去写代码**：你必须像个泥瓦匠，在大脑里紧绷着每一块砖（语法、分号、内存、类型），稍不留神就被红字报错搞到心力交瘁；
 - **现在 Vibe Coding**：你彻底从琐碎的代码细节中解脱出来，化身为**产品总监 / 架构设计师**。你喝着咖啡，看着屏幕，用人话向 AI 描述你的灵感与想法，AI 负责在底下疯狂搬砖，你只需要看效果、提反馈、享受创造的纯粹快乐！
 
-```mermaid
-graph LR
-    subgraph S1 ["传统开发思维（底层细节驱动）"]
-        A1["死记语法与规则"] --> A2["手打繁琐套话代码"] --> A3["通宵肉眼排错找 Bug"]
-    end
-    
-    subgraph S2 ["Vibe Coding 思维方式（高层意图驱动）"]
-        B1["构思产品创意与功能"] --> B2["输入清晰意图指挥 Agent"] --> B3["直接看运行效果验收迭代"]
-    end
-```
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-01.svg">
+    <img src="img/diagrams/06-diagram-01.svg" alt="🌊 什么是 Vibe Coding？（大白话版）" width="960">
+  </a>
+</p>
 
 ---
 
@@ -42,12 +38,12 @@ graph LR
 
 要想真正玩转 Vibe Coding，而不是陷入“代码越跑越乱”的泥潭，只需要掌握这三点：
 
-```mermaid
-graph TD
-    A["意图要讲清楚 (Intent)"] --- B["上下文要喂饱 (Context)"]
-    B --- C["验证要自动化 (Verification)"]
-    C --- A
-```
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Cyberpunk -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-02.svg">
+    <img src="img/diagrams/06-diagram-02.svg" alt="🔺 Vibe Coding 爽快又不翻车的“黄金三角”" width="760">
+  </a>
+</p>
 
 ### 1. 意图讲清楚（Intent）：别让 AI 当算命先生
 - ❌ **糟糕的提问**：“帮我写个网站”。（AI 根本不知道你要什么，只能瞎猜）；

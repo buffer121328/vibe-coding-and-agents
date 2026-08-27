@@ -1,0 +1,22 @@
+graph TD
+    subgraph Gate1 ["关卡一：输入预处理"]
+        A["用户输入 (Start)"] --> B["JD 信息提取 (Assigner)"]
+    end
+
+    subgraph Gate2 ["关卡二：状态锁免检判定"]
+        B --> C{"状态锁 (If-Else)\ncurrent_mode 判断"}
+    end
+
+    subgraph Gate3 ["关卡三：意图识别与结构化输出 (全新会话)"]
+        C -- "未锁定 (首次会话)" --> D["意图识别 (LLM: DeepSeek-Flash)\n🌟 强约束 Structured Output"]
+    end
+
+    subgraph Gate4 ["关卡四：意图分支与动态加锁"]
+        D --> E{"意图分支 (If-Else)"}
+        E -- "intent=模拟面试" --> F["设为面试 (Assigner: current_mode='面试')"]
+        E -- "intent=简历优化" --> G["设为简历 (Assigner: current_mode='简历')"]
+        E -- "intent=other" --> H["闲聊与开场引导 (Answer)"]
+    end
+
+    C -- "已锁定为面试" --> F
+    C -- "已锁定为简历" --> G

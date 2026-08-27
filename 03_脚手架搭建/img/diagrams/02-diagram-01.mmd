@@ -1,0 +1,11 @@
+sequenceDiagram
+    autonumber
+    actor Dev as 你的电脑 / Agent (Cursor)
+    participant Cloud as 云端大模型平台 (DeepSeek / OpenAI)
+    participant Bill as 计费水表系统
+
+    Dev->>Cloud: 发送请求 + 附带专属 API Key 门禁卡
+    Cloud->>Bill: 验证 Key 是否有效？账户是否有余额？
+    Bill-->>Cloud: 验证通过，余额充足
+    Cloud-->>Dev: 秒级返回生成的代码与回答
+    Bill->>Bill: 扣除本次消耗的 500 Token 算力费用 (约 0.001 元)

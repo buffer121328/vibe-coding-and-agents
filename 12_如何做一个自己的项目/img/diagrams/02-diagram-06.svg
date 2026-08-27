@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 891.6829999999999 271.4" width="891.6829999999999" height="271.4" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="Agent" data-to="MCP1" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="MCP 标准协议" points="253.56699999999995,124.125 265.56699999999995,124.125 265.56699999999995,54.45 425.68499999999995,54.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Agent" data-to="MCP2" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="MCP 标准协议" points="253.56699999999995,133.35000000000002 425.68499999999995,133.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Agent" data-to="MCP3" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="MCP 标准协议" points="253.56699999999995,142.57500000000002 265.56699999999995,142.57500000000002 265.56699999999995,212.25 425.68499999999995,212.25" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MCP1" data-to="DB1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="673.6329999999999,54.45 725.6329999999999,54.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MCP2" data-to="DB2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="673.6329999999999,133.35000000000002 725.6329999999999,133.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MCP3" data-to="DB3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="675.1149999999999,212.25 725.6329999999999,212.25" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Agent" data-to="MCP1" data-label="MCP 标准协议">
+  <rect x="273.56699999999995" y="38.45" width="90.11800000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="318.626" y="53.6" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">MCP 标准协议</text>
+</g>
+<g class="edge-label" data-from="Agent" data-to="MCP2" data-label="MCP 标准协议">
+  <rect x="301.56699999999995" y="117.35" width="90.11800000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="346.626" y="132.5" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">MCP 标准协议</text>
+</g>
+<g class="edge-label" data-from="Agent" data-to="MCP3" data-label="MCP 标准协议">
+  <rect x="273.56699999999995" y="196.25" width="90.11800000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="318.626" y="211.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">MCP 标准协议</text>
+</g>
+<g class="node" data-id="Agent" data-label="Agent / 大模型（任意厂商）" data-shape="rectangle">
+  <rect x="36" y="114.9" width="217.56699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="144.78349999999998" y="133.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Agent / 大模型（任意厂商）</text>
+</g>
+<g class="node" data-id="MCP1" data-label="MCP Server: 商品查询 / 库存扣减" data-shape="rectangle">
+  <rect x="425.68499999999995" y="36" width="247.94799999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="549.6589999999999" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">MCP Server: 商品查询 / 库存扣减</text>
+</g>
+<g class="node" data-id="MCP2" data-label="MCP Server: 订单售后 / 发票开具" data-shape="rectangle">
+  <rect x="425.68499999999995" y="114.9" width="247.94799999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="549.6589999999999" y="133.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">MCP Server: 订单售后 / 发票开具</text>
+</g>
+<g class="node" data-id="MCP3" data-label="MCP Server: CRM 商机 / 日程写入" data-shape="rectangle">
+  <rect x="425.68499999999995" y="193.8" width="249.42999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="550.4" y="212.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">MCP Server: CRM 商机 / 日程写入</text>
+</g>
+<g class="node" data-id="DB1" data-label="业务数据库" data-shape="rectangle">
+  <rect x="725.6329999999999" y="36" width="116.05" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="783.6579999999999" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">业务数据库</text>
+</g>
+<g class="node" data-id="DB2" data-label="业务数据库" data-shape="rectangle">
+  <rect x="725.6329999999999" y="114.9" width="116.05" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="783.6579999999999" y="133.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">业务数据库</text>
+</g>
+<g class="node" data-id="DB3" data-label="业务数据库" data-shape="rectangle">
+  <rect x="725.6329999999999" y="193.8" width="116.05" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="783.6579999999999" y="212.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">业务数据库</text>
+</g>
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1431.9229999999998 597.4000000000001" width="1431.9229999999998" height="597.4000000000001" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Client" data-label="前端客户端 (单文件 HTML)">
+  <rect x="381.1389999999999" y="417.6000000000001" width="675.637" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="381.1389999999999" y="417.6000000000001" width="675.637" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="393.1389999999999" y="431.6000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">前端客户端 (单文件 HTML)</text>
+</g>
+<g class="subgraph" data-id="BackendAPI" data-label="FastAPI 业务引擎 (main.py)">
+  <rect x="331.12" y="54" width="851.2539999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="331.12" y="54" width="851.2539999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="343.12" y="68" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">FastAPI 业务引擎 (main.py)</text>
+</g>
+<g class="subgraph" data-id="AIService" data-label="AI 智能中枢 (ai_service.py)">
+  <rect x="638.6481666666666" y="235.8" width="665.636" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="638.6481666666666" y="235.8" width="665.636" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="650.6481666666666" y="249.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">AI 智能中枢 (ai_service.py)</text>
+</g>
+<g class="subgraph" data-id="LLMCloud" data-label="大模型云端 (DeepSeek / 通义 / Kimi)">
+  <rect x="59.039999999999964" y="397.6" width="288.099" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="59.039999999999964" y="397.6" width="288.099" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="71.03999999999996" y="411.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">大模型云端 (DeepSeek / 通义 / Kimi)</text>
+</g>
+<polyline class="edge" data-from="Nav" data-to="BackfillAPI" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="482.95149999999984,505.40000000000003 482.95149999999967,549.4000000000001 1383.9229999999998,549.4000000000001 1383.9229999999998,36 1041.2884999999997,36 1041.2885,98" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BackfillAPI" data-to="AIService" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1041.2884999999999,151.8 1041.2885,217.8 971.6496666666667,217.8 971.6496666666667,235.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BGTask" data-to="AIService" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="759.3405,151.8 759.3405000000002,205.8 961.6496666666667,205.8 961.6496666666667,235.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AIService" data-to="LLMClient" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="494.91049999999996,0 494.91049999999996,44" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLMClient" data-to="LLM" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1133.5586666666666,333.6 1133.5586666666666,367.6 203.08950000000004,367.6 203.08949999999993,451.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLM" data-to="JSONParser" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="203.08949999999996,505.40000000000003 203.08950000000004,529.4000000000001 49.039999999999964,529.4000000000001 49.039999999999964,217.8 799.7406666666666,217.8 799.7406666666666,279.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="JSONParser" data-to="Card" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="799.7406666666666,333.6 799.7406666666666,392.6 711.1769999999999,392.6 711.1769999999999,451.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="JSONParser" data-to="Reader" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="799.7406666666666,333.6 799.7406666666666,392.6 947.1829999999999,392.6 947.1829999999999,451.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="StatusAPI" data-to="Nav" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="474.799,151.8 474.79900000000015,205.8 36.040000000000134,205.8 36.040000000000134,379.6 482.95150000000007,379.6 482.9514999999998,451.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<g class="node" data-id="Nav" data-label="顶部导航栏
+(🪄 AI 回填 专属按钮)" data-shape="rectangle">
+  <rect x="397.1389999999999" y="451.6" width="171.62499999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="482.9514999999999" y="478.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="482.9514999999999" dy="-3.9000000000000012">顶部导航栏</tspan><tspan x="482.9514999999999" dy="16.900000000000002">(🪄 AI 回填 专属按钮)</tspan></text>
+</g>
+<g class="node" data-id="Card" data-label="文章卡片列表
+(展示 100 字导读 &amp; 智能标签)" data-shape="rectangle">
+  <rect x="602.7639999999999" y="451.6" width="216.826" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="711.1769999999999" y="478.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="711.1769999999999" dy="-3.9000000000000012">文章卡片列表</tspan><tspan x="711.1769999999999" dy="16.900000000000002">(展示 100 字导读 &amp; 智能标签)</tspan></text>
+</g>
+<g class="node" data-id="Reader" data-label="文章详情页
+(📖 导读 黄金阅读提示)" data-shape="rectangle">
+  <rect x="853.5899999999999" y="451.6" width="187.18599999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="947.1829999999999" y="478.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="947.1829999999999" dy="-3.9000000000000012">文章详情页</tspan><tspan x="947.1829999999999" dy="16.900000000000002">(📖 导读 黄金阅读提示)</tspan></text>
+</g>
+<g class="node" data-id="BGTask" data-label="BackgroundTasks 异步后台任务
+(发布即返回，后台静默生成)" data-shape="rectangle">
+  <rect x="636.4780000000001" y="98" width="245.72499999999997" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="759.3405" y="124.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="759.3405" dy="-3.9000000000000012">BackgroundTasks 异步后台任务</tspan><tspan x="759.3405" dy="16.900000000000002">(发布即返回，后台静默生成)</tspan></text>
+</g>
+<g class="node" data-id="BackfillAPI" data-label="批量回填引擎 (/api/ai/backfill)
+(自动扫描历史旧文章 / 幂等限速)" data-shape="rectangle">
+  <rect x="916.2029999999999" y="98" width="250.17099999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1041.2884999999999" y="124.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1041.2884999999999" dy="-3.9000000000000012">批量回填引擎 (/api/ai/backfill)</tspan><tspan x="1041.2884999999999" dy="16.900000000000002">(自动扫描历史旧文章 / 幂等限速)</tspan></text>
+</g>
+<g class="node" data-id="StatusAPI" data-label="AI 可用性探测 (/api/ai/status)
+(未配 Key 时优雅降级，不崩业务)" data-shape="rectangle">
+  <rect x="347.12" y="98" width="255.35799999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="474.799" y="124.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="474.799" dy="-3.9000000000000012">AI 可用性探测 (/api/ai/status)</tspan><tspan x="474.799" dy="16.900000000000002">(未配 Key 时优雅降级，不崩业务)</tspan></text>
+</g>
+<g class="node" data-id="LLMClient" data-label="OpenAI 兼容客户端
+(统一 SDK / 一行切换 DeepSeek / Kimi / 通义)" data-shape="rectangle">
+  <rect x="978.8331666666666" y="279.8" width="309.45099999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1133.5586666666666" y="306.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1133.5586666666666" dy="-3.9000000000000012">OpenAI 兼容客户端</tspan><tspan x="1133.5586666666666" dy="16.900000000000002">(统一 SDK / 一行切换 DeepSeek / Kimi / 通义)</tspan></text>
+</g>
+<g class="node" data-id="JSONParser" data-label="结构化输出解析器
+(严格输出纯 JSON 对象 / 失败自愈兜底)" data-shape="rectangle">
+  <rect x="654.6481666666666" y="279.8" width="290.18499999999995" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="799.7406666666666" y="306.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="799.7406666666666" dy="-3.9000000000000012">结构化输出解析器</tspan><tspan x="799.7406666666666" dy="16.900000000000002">(严格输出纯 JSON 对象 / 失败自愈兜底)</tspan></text>
+</g>
+<g class="node" data-id="LLM" data-label="大模型推理引擎
+(提炼 100 字导读 + 3~5 个精准标签)" data-shape="rectangle">
+  <rect x="75.03999999999996" y="451.6" width="256.099" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="203.08949999999996" y="478.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="203.08949999999996" dy="-3.9000000000000012">大模型推理引擎</tspan><tspan x="203.08949999999996" dy="16.900000000000002">(提炼 100 字导读 + 3~5 个精准标签)</tspan></text>
+</g>
+</svg>

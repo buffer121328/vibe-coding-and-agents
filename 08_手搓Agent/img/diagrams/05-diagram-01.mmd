@@ -1,0 +1,10 @@
+graph LR
+    subgraph S1 ["1. 粗暴的全文件盲重写 (高危/极易吞代码)"]
+        A1["500 行源码文件"] --> B1["大模型全量重新生成 500 行"]
+        B1 --> C1["容易 Token 截断、吞掉注释与遗漏函数"]
+    end
+
+    subgraph S2 ["2. Claude Code 招牌 str_replace 微创手术 (精准/安全)"]
+        A2["500 行源码文件"] --> B2["大模型只给出 old_str 与 new_str (3-5行)"]
+        B2 --> C2["校验唯一性 ➔ 局部替换 ➔ 生成 Unified Diff"]
+    end

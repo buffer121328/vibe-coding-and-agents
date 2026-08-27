@@ -1,0 +1,16 @@
+sequenceDiagram
+    autonumber
+    actor User as 求职者 (User)
+    participant System as 「面必过」Chatflow
+    
+    User->>System: 上传初版简历 + 粘贴目标大厂岗位 JD + 发送“帮我优化简历”
+    Note over System: 状态锁识别为 resume 模式\n文档提取器提取简历文本
+    
+    par 多专家并行诊断
+        System->>System: JD 匹配分析师：诊断出缺失“Docker容器化”与“QPS指标”
+        System->>System: HR 审核专家：指出工作经历缺乏量化结果，建议前置亮点
+        System->>System: 内容优化润色师：按 STAR 法则重写项目行动与成效
+    end
+    
+    Note over System: 圆桌会议主持人汇流裁决 ⮕ 输出终极 Markdown 简历\nHTML 视觉生成引擎 ⮕ Python 专版代码清洗 ⮕ md_to_html 工具
+    System-->>User: 交付《A4 双栏投递版精修视觉简历.html》下载卡片，一键打印为高保真 PDF！

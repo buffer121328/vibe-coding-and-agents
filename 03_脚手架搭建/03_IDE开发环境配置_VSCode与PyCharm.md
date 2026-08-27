@@ -8,16 +8,12 @@
 
 ## 🥊 VS Code vs PyCharm：我该选哪一个？
 
-```mermaid
-graph TD
-    subgraph V1 ["1. Visual Studio Code (VS Code)"]
-        A1["🪶 轻巧极速 + 插件生态宇宙第一<br/>👉 完美支持 Python、前端、Markdown、Git 与各类 AI Agent 插件<br/>🟢 推荐：全栈开发、Vibe Coding 意图流开发"]
-    end
-
-    subgraph P1 ["2. PyCharm (JetBrains)"]
-        B1["🚜 重型专业装甲车 + 开箱即用<br/>👉 拥有全世界最顶级的 Python 深度断点调试与类型推断器<br/>🟢 推荐：纯 Python 大型后端、科学计算与严苛企业级项目"]
-    end
-```
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-01.svg">
+    <img src="img/diagrams/03-diagram-01.svg" alt="🥊 VS Code vs PyCharm：我该选哪一个？" width="960">
+  </a>
+</p>
 
 ***
 
@@ -49,23 +45,12 @@ graph TD
   - 如果把它们全扔进同一个大客厅（全局环境），系统当场冲突打架崩溃！
   - **虚拟环境** 就是给每个项目**独立隔出一个干净的小房间**，安装的第三方依赖包互不干扰。
 
-```mermaid
-graph LR
-    subgraph Global ["你的电脑全局 Python 环境"]
-        G["Python 3.11 全局主程序"]
-    end
-
-    subgraph ProjA ["项目 A 独立房间 (.venv-a)"]
-        A["仅安装 langchain==0.3.0"]
-    end
-
-    subgraph ProjB ["项目 B 独立房间 (.venv-b)"]
-        B["仅安装 fastapi==0.115.0"]
-    end
-
-    Global --> ProjA
-    Global --> ProjB
-```
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/03-diagram-02.svg">
+    <img src="img/diagrams/03-diagram-02.svg" alt="📦 什么是 Python 虚拟环境（Virtual Environment）？" width="960">
+  </a>
+</p>
 
 ***
 

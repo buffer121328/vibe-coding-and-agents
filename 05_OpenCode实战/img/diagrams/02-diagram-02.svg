@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 869.3145 508.20000000000005" width="869.3145" height="508.20000000000005" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="User" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="741.2034999999998,242.10000000000002 741.2034999999998,254.10000000000002 497.9979999999999,254.10000000000002 497.9979999999999,266.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Ora" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="遇到复杂架构/难点" points="323.15199999999993,266.1 323.15199999999993,254.10000000000002 90,254.10000000000002 90,209.8 115.3403333333332,209.8 115.3403333333332,143.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Lib" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要搜库/查文档" points="332.8656666666666,303 332.8656666666666,335.00000000000006 170.54499999999996,335.00000000000006 170.54499999999996,423.30000000000007 183.6368333333333,423.30000000000007 183.6368333333333,435.30000000000007" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Exp" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要摸清代码全貌" points="381.4339999999999,266.1 381.4339999999999,230.10000000000002 305.88499999999993,230.10000000000002 305.88499999999993,177.8 325.7973333333333,177.8 325.7973333333333,143.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Des" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要编写前端/测试 UI" points="439.7159999999999,266.1 439.7159999999999,230.10000000000002 526.1465,230.10000000000002 526.1465,177.8 552.0333333333333,177.8 552.0333333333333,72.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Fix" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="遇到报错/单测失败" points="410.5749999999999,303 410.5749999999999,347.00000000000006 381.0349999999999,347.00000000000006 381.0349999999999,423.30000000000007 403.4888333333332,423.30000000000007 403.4888333333332,435.30000000000007" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Ora" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="输出解题策略" points="170.81966666666654,143.8 170.81966666666654,197.8 196.15999999999985,197.8 196.15999999999997,242.10000000000002 352.2929999999999,242.10000000000002 352.2929999999999,266.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Lib" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="输出参考资料" points="248.00816666666663,435.30000000000007 248.00816666666663,423.30000000000007 270.82499999999993,423.30000000000007 270.82499999999993,347.00000000000006 371.7203333333332,347.00000000000006 371.7203333333332,303" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Exp" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="输出文件拓扑" points="390.6626666666666,143.8 390.6626666666666,177.8 410.57499999999993,177.8 410.57499999999993,266.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Des" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="输出设计方案" points="612.2056666666666,72.9 612.2056666666666,116.9 638.0925,116.9 638.0924999999999,242.10000000000002 468.85699999999986,242.10000000000002 468.85699999999986,266.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Fix" data-to="Orch" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="输出修复补丁" points="455.01616666666655,435.30000000000007 455.01616666666655,423.30000000000007 487.19499999999994,423.30000000000007 487.19499999999994,347.00000000000006 449.42966666666655,347.00000000000006 449.42966666666655,303" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orch" data-to="Result" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="488.2843333333332,303 488.2843333333332,315 664.1099999999999,315 664.1099999999999,327" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Orch" data-to="Ora" data-label="遇到复杂架构/难点">
+  <rect x="32.00000000000001" y="216.8" width="115.66000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="89.83000000000001" y="231.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">遇到复杂架构/难点</text>
+</g>
+<g class="edge-label" data-from="Orch" data-to="Lib" data-label="需要搜库/查文档">
+  <rect x="118.54499999999996" y="354.00000000000006" width="103.78000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="170.43499999999997" y="369.15000000000003" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要搜库/查文档</text>
+</g>
+<g class="edge-label" data-from="Orch" data-to="Exp" data-label="需要摸清代码全貌">
+  <rect x="249.38499999999996" y="184.8" width="112.69000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="305.72999999999996" y="199.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要摸清代码全貌</text>
+</g>
+<g class="edge-label" data-from="Orch" data-to="Des" data-label="需要编写前端/测试 UI">
+  <rect x="462.6464999999999" y="184.8" width="126.946" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="526.1194999999999" y="199.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要编写前端/测试 UI</text>
+</g>
+<g class="edge-label" data-from="Orch" data-to="Fix" data-label="遇到报错/单测失败">
+  <rect x="323.0349999999999" y="354.00000000000006" width="115.66000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="380.8649999999999" y="369.15000000000003" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">遇到报错/单测失败</text>
+</g>
+<g class="edge-label" data-from="Ora" data-to="Orch" data-label="输出解题策略">
+  <rect x="151.65999999999985" y="204.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="196.12499999999986" y="219.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">输出解题策略</text>
+</g>
+<g class="edge-label" data-from="Lib" data-to="Orch" data-label="输出参考资料">
+  <rect x="226.32499999999996" y="354.00000000000006" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="270.78999999999996" y="369.15000000000003" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">输出参考资料</text>
+</g>
+<g class="edge-label" data-from="Exp" data-to="Orch" data-label="输出文件拓扑">
+  <rect x="366.07499999999993" y="184.8" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="410.53999999999996" y="199.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">输出文件拓扑</text>
+</g>
+<g class="edge-label" data-from="Des" data-to="Orch" data-label="输出设计方案">
+  <rect x="593.5925" y="123.9" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="638.0575" y="139.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">输出设计方案</text>
+</g>
+<g class="edge-label" data-from="Fix" data-to="Orch" data-label="输出修复补丁">
+  <rect x="442.69499999999994" y="354.00000000000006" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="487.15999999999997" y="369.15000000000003" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">输出修复补丁</text>
+</g>
+<g class="node" data-id="User" data-label="人类意图 (User Prompt)" data-shape="rectangle">
+  <rect x="649.0924999999999" y="205.2" width="184.22199999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="741.2034999999998" y="223.64999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">人类意图 (User Prompt)</text>
+</g>
+<g class="node" data-id="Orch" data-label="🧙‍♂️ orchestrator (总指挥官)" data-shape="rectangle">
+  <rect x="294.0109999999999" y="266.1" width="233.128" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="410.57499999999993" y="284.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧙‍♂️ orchestrator (总指挥官)</text>
+</g>
+<g class="node" data-id="Ora" data-label="🔮 oracle (智囊顾问)" data-shape="rectangle">
+  <rect x="59.860999999999876" y="106.89999999999999" width="166.438" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="143.07999999999987" y="125.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔮 oracle (智囊顾问)</text>
+</g>
+<g class="node" data-id="Lib" data-label="📚 librarian (图书管理员)" data-shape="rectangle">
+  <rect x="119.26549999999997" y="435.30000000000007" width="193.11399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="215.82249999999996" y="453.75000000000006" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📚 librarian (图书管理员)</text>
+</g>
+<g class="node" data-id="Exp" data-label="🧭 explorer (代码探路者)" data-shape="rectangle">
+  <rect x="260.93199999999996" y="106.89999999999999" width="194.59599999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="358.22999999999996" y="125.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧭 explorer (代码探路者)</text>
+</g>
+<g class="node" data-id="Des" data-label="🎨 designer (UI 设计师)" data-shape="rectangle">
+  <rect x="491.86099999999993" y="36" width="180.517" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="582.1194999999999" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎨 designer (UI 设计师)</text>
+</g>
+<g class="node" data-id="Fix" data-label="🔧 fixer (修复专家)" data-shape="rectangle">
+  <rect x="351.9614999999999" y="435.30000000000007" width="154.582" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="429.2524999999999" y="453.75000000000006" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔧 fixer (修复专家)</text>
+</g>
+<g class="node" data-id="Result" data-label="交付最终代码与执行结果" data-shape="rectangle">
+  <rect x="561.625" y="327" width="204.96999999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="664.11" y="345.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">交付最终代码与执行结果</text>
+</g>
+</svg>

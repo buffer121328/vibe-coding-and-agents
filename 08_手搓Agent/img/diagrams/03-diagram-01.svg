@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.0039999999999 920.1" width="512.0039999999999" height="920.1" style="--bg:#ffffff;--fg:#1f2328;--line:#d1d9e0;--accent:#0969da;--muted:#59636e;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Phase1" data-label="第一阶段：宏观规划 (Planner)">
+  <rect x="153.81899999999996" y="134.9" width="204.36599999999999" height="206.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="153.81899999999996" y="134.9" width="204.36599999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="165.81899999999996" y="148.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第一阶段：宏观规划 (Planner)</text>
+</g>
+<g class="subgraph" data-id="Phase2" data-label="第二阶段：流水线逐项攻克 (Executor)">
+  <rect x="36" y="409.6" width="440.0039999999999" height="375.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="409.6" width="440.0039999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="423.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">第二阶段：流水线逐项攻克 (Executor)</text>
+</g>
+<polyline class="edge" data-from="Goal" data-to="Planner" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,72.9 256.00199999999995,178.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="TodoList" data-to="S1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,325.6 256.00199999999995,453.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S4" data-to="FinalOutput" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,769.2 256.00199999999995,847.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Planner" data-to="TodoList" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,215.8 256.00199999999995,271.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S1" data-to="S2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,490.5 256.00199999999995,546.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S2" data-to="S3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,583.4000000000001 256.00199999999995,639.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S3" data-to="S4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="256.00199999999995,676.3000000000001 256.00199999999995,732.3000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="Goal" data-label="用户宏观目标：'策划一顿简单健康的周末晚餐'" data-shape="stadium">
+  <rect x="83.86299999999997" y="36" width="344.27799999999996" height="36.900000000000006" rx="18.450000000000003" ry="18.450000000000003" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">用户宏观目标：&#39;策划一顿简单健康的周末晚餐&#39;</text>
+</g>
+<g class="node" data-id="FinalOutput" data-label="🎯 输出一份可落地的晚餐执行方案" data-shape="stadium">
+  <rect x="122.76549999999997" y="847.2" width="266.47299999999996" height="36.900000000000006" rx="18.450000000000003" ry="18.450000000000003" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="865.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎯 输出一份可落地的晚餐执行方案</text>
+</g>
+<g class="node" data-id="Planner" data-label="Planner" data-shape="rectangle">
+  <rect x="211.31499999999994" y="178.9" width="89.374" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="197.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Planner</text>
+</g>
+<g class="node" data-id="TodoList" data-label="&quot;📋 生成 Todo 清单：
+[1. 明确饮食需求" data-shape="rectangle">
+  <rect x="169.81899999999996" y="271.8" width="172.36599999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="298.7" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="256.00199999999995" dy="-3.9000000000000012">&quot;📋 生成 Todo 清单：</tspan><tspan x="256.00199999999995" dy="16.900000000000002">[1. 明确饮食需求</tspan></text>
+</g>
+<g class="node" data-id="S1" data-label="执行 Task 1: 明确饮食需求 (状态 -&gt; in_progress -&gt; completed)" data-shape="rectangle">
+  <rect x="52" y="453.6" width="408.0039999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="472.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">执行 Task 1: 明确饮食需求 (状态 -&gt; in_progress -&gt; completed)</text>
+</g>
+<g class="node" data-id="S2" data-label="执行 Task 2: 设计健康菜单 (带入 Task 1 产出上下文)" data-shape="rectangle">
+  <rect x="74.60049999999998" y="546.5" width="362.80299999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="564.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">执行 Task 2: 设计健康菜单 (带入 Task 1 产出上下文)</text>
+</g>
+<g class="node" data-id="S3" data-label="执行 Task 3: 制定采购清单 (带入前序累积上下文)" data-shape="rectangle">
+  <rect x="80.15799999999999" y="639.4000000000001" width="351.68799999999993" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="657.8500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">执行 Task 3: 制定采购清单 (带入前序累积上下文)</text>
+</g>
+<g class="node" data-id="S4" data-label="执行 Task 4: 编排烹饪流程 (终结并汇总交付)" data-shape="rectangle">
+  <rect x="94.97799999999998" y="732.3000000000001" width="322.04799999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="256.00199999999995" y="750.7500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">执行 Task 4: 编排烹饪流程 (终结并汇总交付)</text>
+</g>
+</svg>

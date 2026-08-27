@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326.0129999999999 720.8" width="326.0129999999999" height="720.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="D1" data-label="1. README 与文档质量">
+  <rect x="36" y="36" width="247.34399999999997" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="247.34399999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. README 与文档质量</text>
+</g>
+<g class="subgraph" data-id="D2" data-label="2. 社区活性与健康度">
+  <rect x="36" y="208.69999999999996" width="244.37999999999997" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="208.69999999999996" width="244.37999999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="222.69999999999996" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 社区活性与健康度</text>
+</g>
+<g class="subgraph" data-id="D3" data-label="3. 架构分层与解耦度">
+  <rect x="36" y="381.4" width="254.01299999999995" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="381.4" width="254.01299999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="395.4" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. 架构分层与解耦度</text>
+</g>
+<g class="subgraph" data-id="D4" data-label="4. 测试与现代工具链">
+  <rect x="36" y="554.0999999999999" width="251.78999999999996" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="554.0999999999999" width="251.78999999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="568.0999999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">4. 测试与现代工具链</text>
+</g>
+<g class="node" data-id="A1" data-label="保姆级一键启动脚本
+环境变量 .env.example 说明
+系统架构拓扑图与 API 契约" data-shape="rectangle">
+  <rect x="52" y="80" width="215.34399999999997" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.67199999999997" y="115.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="159.67199999999997" dy="-12.350000000000001">保姆级一键启动脚本</tspan><tspan x="159.67199999999997" dy="16.900000000000002">环境变量 .env.example 说明</tspan><tspan x="159.67199999999997" dy="16.900000000000002">系统架构拓扑图与 API 契约</tspan></text>
+</g>
+<g class="node" data-id="A2" data-label="最近 Commit &lt; 1-2 个月
+Issue / PR 闭环速度快
+Star 历史平稳增长 (非刷量)" data-shape="rectangle">
+  <rect x="52" y="252.69999999999996" width="212.37999999999997" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="158.19" y="288.04999999999995" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="158.19" dy="-12.350000000000001">最近 Commit &lt; 1-2 个月</tspan><tspan x="158.19" dy="16.900000000000002">Issue / PR 闭环速度快</tspan><tspan x="158.19" dy="16.900000000000002">Star 历史平稳增长 (非刷量)</tspan></text>
+</g>
+<g class="node" data-id="A3" data-label="模块化目录划分 (MVC/Clean)
+非面条式单文件臃肿代码
+依赖注入与统一配置中心" data-shape="rectangle">
+  <rect x="52" y="425.4" width="222.01299999999995" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="163.00649999999996" y="460.75" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="163.00649999999996" dy="-12.350000000000001">模块化目录划分 (MVC/Clean)</tspan><tspan x="163.00649999999996" dy="16.900000000000002">非面条式单文件臃肿代码</tspan><tspan x="163.00649999999996" dy="16.900000000000002">依赖注入与统一配置中心</tspan></text>
+</g>
+<g class="node" data-id="A4" data-label="具备自动化单元测试
+现代化包管理器 (uv/pnpm)
+Docker Compose 一键容器化" data-shape="rectangle">
+  <rect x="52" y="598.0999999999999" width="219.78999999999996" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="161.89499999999998" y="633.4499999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="161.89499999999998" dy="-12.350000000000001">具备自动化单元测试</tspan><tspan x="161.89499999999998" dy="16.900000000000002">现代化包管理器 (uv/pnpm)</tspan><tspan x="161.89499999999998" dy="16.900000000000002">Docker Compose 一键容器化</tspan></text>
+</g>
+</svg>

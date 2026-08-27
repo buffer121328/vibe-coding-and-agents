@@ -1,0 +1,6 @@
+graph TD
+    subgraph AttentionFlow ["自注意力全景扫描：'小猫爬上了树梢，因为【它】看见了小鸟'"]
+        It["代词：【它】"] -->|95% 超强注意力雷达关联| Cat["主体：小猫 (The Cat)"]
+        It -.->|3% 微弱注意力| Tree["物体：树梢 (Tree)"]
+        It -.->|2% 微弱注意力| Bird["目标：小鸟 (Bird)"]
+    end

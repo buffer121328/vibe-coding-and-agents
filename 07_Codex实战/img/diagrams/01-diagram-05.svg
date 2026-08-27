@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 976.406 425.7500000000001" width="976.406" height="425.7500000000001" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="SwitchLayer" data-label="CC-Switch 本地中转调度层">
+  <rect x="48" y="154.15000000000003" width="322.92599999999993" height="209.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="48" y="154.15000000000003" width="322.92599999999993" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="60" y="168.15000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">CC-Switch 本地中转调度层</text>
+</g>
+<g class="subgraph" data-id="UpstreamProviders" data-label="上游模型池 (Model Pool)">
+  <rect x="434.926" y="36" width="354.78899999999993" height="254.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="434.926" y="36" width="354.78899999999993" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="446.926" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">上游模型池 (Model Pool)</text>
+</g>
+<polyline class="edge" data-from="CodexClient" data-to="SwitchLayer" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="653.9259999999999,373.7500000000001 641.9259999999999,373.7500000000001 641.9259999999999,377.7500000000001 36,377.7500000000001 36,254.50000000000003 48,254.50000000000003" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LocalRoute" data-to="P1" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="354.92599999999993,225.05000000000004 402.92599999999993,225.05000000000004 402.92599999999993,98.45 450.926,98.45" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LocalRoute" data-to="P2" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="354.92599999999993,225.05000000000004 402.92599999999993,225.05000000000004 402.92599999999993,177.35000000000002 450.926,177.35000000000002" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LocalRoute" data-to="P3" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="354.92599999999993,225.05000000000004 402.92599999999993,225.05000000000004 402.92599999999993,256.25 450.926,256.25" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="KeepAuth" data-to="CodexClient" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="auth.json 保留官方 Access Token" points="354.92599999999993,320.85 416.92599999999993,320.85 416.92599999999993,357.45000000000005 641.9259999999999,357.45000000000005 641.9259999999999,361.45000000000005 653.9259999999999,361.45000000000005" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="KeepAuth" data-to="CodexClient" data-label="auth.json 保留官方 Access Token">
+  <rect x="424.92599999999993" y="341.45000000000005" width="181.00000000000003" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="515.4259999999999" y="356.6" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">auth.json 保留官方 Access Token</text>
+</g>
+<g class="node" data-id="CodexClient" data-label="Codex CLI / 桌面客户端 (Responses API)" data-shape="rectangle">
+  <rect x="653.9259999999999" y="349.1500000000001" width="286.47999999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="797.1659999999999" y="367.6000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Codex CLI / 桌面客户端 (Responses API)</text>
+</g>
+<g class="node" data-id="LocalRoute" data-label="本地路由 127.0.0.1:15721
+(Responses ➔ Chat Completions 协议转换)" data-shape="rectangle">
+  <rect x="64" y="198.15000000000003" width="290.92599999999993" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="209.46299999999997" y="225.05000000000004" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="209.46299999999997" dy="-3.9000000000000012">本地路由 127.0.0.1:15721</tspan><tspan x="209.46299999999997" dy="16.900000000000002">(Responses ➔ Chat Completions 协议转换)</tspan></text>
+</g>
+<g class="node" data-id="KeepAuth" data-label="Codex 应用增强
+(保留官方登录，绕过模型门控)" data-shape="rectangle">
+  <rect x="112.90599999999995" y="293.95000000000005" width="242.01999999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="233.91599999999994" y="320.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="233.91599999999994" dy="-3.9000000000000012">Codex 应用增强</tspan><tspan x="233.91599999999994" dy="16.900000000000002">(保留官方登录，绕过模型门控)</tspan></text>
+</g>
+<g class="node" data-id="P1" data-label="DeepSeek V4 / Kimi / GLM / MiniMax / 小米 MiMo" data-shape="rectangle">
+  <rect x="450.926" y="80" width="322.78899999999993" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="612.3204999999999" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">DeepSeek V4 / Kimi / GLM / MiniMax / 小米 MiMo</text>
+</g>
+<g class="node" data-id="P2" data-label="国内兼容 OpenAI 协议的中转网关" data-shape="rectangle">
+  <rect x="450.926" y="158.9" width="252.39399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="577.1229999999999" y="177.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">国内兼容 OpenAI 协议的中转网关</text>
+</g>
+<g class="node" data-id="P3" data-label="本地 Ollama / vLLM 私有化部署" data-shape="rectangle">
+  <rect x="450.926" y="237.8" width="233.128" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="567.49" y="256.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">本地 Ollama / vLLM 私有化部署</text>
+</g>
+</svg>

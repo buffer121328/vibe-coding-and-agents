@@ -1,0 +1,14 @@
+graph TD
+    subgraph TraditionalMoat ["🧱 传统业务底座 (坚实确定性地基)"]
+        T1["用户鉴权与 RBAC 权限体系"]
+        T2["MySQL/PostgreSQL 事务与 ACID 数据一致性"]
+        T3["库存锁定、秒杀并发控制与微信/支付宝支付网关"]
+    end
+
+    subgraph AIBrain ["🧠 AI 智能体大脑 (柔性意图与理解)"]
+        A1["自然语言模糊意图理解与槽位提取"]
+        A2["多轮复杂上下文规划与意图路由分流"]
+        A3["Function Calling 工具调用与结构化数据回填"]
+    end
+
+    TraditionalMoat <==>|通过 API 契约与状态机双向赋能| AIBrain

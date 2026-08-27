@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 878.2918333333334 826.8" width="878.2918333333334" height="826.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="UserInput" data-label="1. 人类意图 (User Intent)">
+  <rect x="379.1315" y="36" width="318.4799999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="379.1315" y="36" width="318.4799999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="391.1315" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. 人类意图 (User Intent)</text>
+</g>
+<g class="subgraph" data-id="Studio" data-label="2. omo-slim 创意工作室 (多智能体协同调度)">
+  <rect x="36" y="205.8" width="640.4929999999999" height="415.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="205.8" width="640.4929999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="219.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. omo-slim 创意工作室 (多智能体协同调度)</text>
+<g class="subgraph" data-id="Specialists" data-label="智囊与特战专家">
+  <rect x="86" y="249.8" width="296.25" height="295.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="86" y="249.8" width="296.25" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="98" y="263.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">智囊与特战专家</text>
+</g>
+</g>
+<g class="subgraph" data-id="Output" data-label="3. 最终交付物">
+  <rect x="441.2798333333334" y="677" width="357.012" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="441.2798333333334" y="677" width="357.012" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="453.2798333333334" y="691" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. 最终交付物</text>
+</g>
+<polyline class="edge" data-from="Orchestrator" data-to="Designer" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="456.9571666666667,510.40000000000003 456.9571666666667,557 52,557 52,621 818.2918333333334,621 818.2918333333334,123.35 16,123.35 50,123.35 818.2918333333334,123.35 818.2918333333334,329.15 102,329.15" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orchestrator" data-to="Oracle" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="497.66433333333333,510.40000000000003 497.66433333333333,569 64,569 64,621 16,621 16,214.05 28,214.05 50,214.05 16,214.05 16,419.85 102,419.85" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orchestrator" data-to="Browser" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="538.3715,510.40000000000003 538.3715,581 76,581 76,621 830.2918333333334,621 830.2918333333334,296.3 40,296.3 50,296.3 830.2918333333334,296.3 830.2918333333334,502.1 102,502.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="UserInput" data-to="Orchestrator" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="538.3715,149.8 538.3715,205.8 538.3715,422.80000000000007" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Specialists" data-to="Orchestrator" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="50,339.20000000000005 50,415.20000000000005 4,415.20000000000005 4,593 86,593 579.0786666666667,593 579.0786666666667,510.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Orchestrator" data-to="Output" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="619.7858333333334,510.40000000000003 619.7858333333334,621 619.7858333333334,677" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="Prompt" data-label="自然语言需求
+'帮我做一个高颜值 AI 灵感卡片生成器'" data-shape="rectangle">
+  <rect x="395.1315" y="80" width="286.4799999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="538.3715" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="538.3715" dy="-3.9000000000000012">自然语言需求</tspan><tspan x="538.3715" dy="16.900000000000002">&#39;帮我做一个高颜值 AI 灵感卡片生成器&#39;</tspan></text>
+</g>
+<g class="node" data-id="Orchestrator" data-label="🧙‍♂️ Orchestrator (总指挥官)
+• 接收意图并自主制定执行计划
+• 无需手动切换 Plan/Build 模式
+• 统筹分发子任务" data-shape="rectangle">
+  <rect x="416.25" y="422.80000000000007" width="244.243" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="538.3715" y="466.6000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="538.3715" dy="-20.8">🧙‍♂️ Orchestrator (总指挥官)</tspan><tspan x="538.3715" dy="16.900000000000002">• 接收意图并自主制定执行计划</tspan><tspan x="538.3715" dy="16.900000000000002">• 无需手动切换 Plan/Build 模式</tspan><tspan x="538.3715" dy="16.900000000000002">• 统筹分发子任务</tspan></text>
+</g>
+<g class="node" data-id="Designer" data-label="🎨 Designer (UI 设计师)
+挂载 tailwind-ui-master
+负责 5 大主题排版与玻璃拟态" data-shape="rectangle">
+  <rect x="102" y="293.8" width="231.646" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="217.82299999999998" y="329.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="217.82299999999998" dy="-12.350000000000001">🎨 Designer (UI 设计师)</tspan><tspan x="217.82299999999998" dy="16.900000000000002">挂载 tailwind-ui-master</tspan><tspan x="217.82299999999998" dy="16.900000000000002">负责 5 大主题排版与玻璃拟态</tspan></text>
+</g>
+<g class="node" data-id="Oracle" data-label="🔮 Oracle (架构智囊)
+攻克 Canvas 60fps 动效
+与 DOM 转高清图片导出算法" data-shape="rectangle">
+  <rect x="102" y="384.5" width="223.49499999999998" height="70.7" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="213.7475" y="419.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="213.7475" dy="-12.350000000000001">🔮 Oracle (架构智囊)</tspan><tspan x="213.7475" dy="16.900000000000002">攻克 Canvas 60fps 动效</tspan><tspan x="213.7475" dy="16.900000000000002">与 DOM 转高清图片导出算法</tspan></text>
+</g>
+<g class="node" data-id="Browser" data-label="🌐 Agent-Browser (自测验收)
+真实浏览器自动化点击与截图闭环" data-shape="rectangle">
+  <rect x="102" y="475.20000000000005" width="264.25" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="234.125" y="502.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="234.125" dy="-3.9000000000000012">🌐 Agent-Browser (自测验收)</tspan><tspan x="234.125" dy="16.900000000000002">真实浏览器自动化点击与截图闭环</tspan></text>
+</g>
+<g class="node" data-id="App" data-label="✨ 《AI 灵感金句卡片工坊》
+(多主题 / 动效粒子 / 实时预览 / 一键导出 PNG)" data-shape="rectangle">
+  <rect x="457.2798333333334" y="721" width="325.012" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="619.7858333333334" y="747.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="619.7858333333334" dy="-3.9000000000000012">✨ 《AI 灵感金句卡片工坊》</tspan><tspan x="619.7858333333334" dy="16.900000000000002">(多主题 / 动效粒子 / 实时预览 / 一键导出 PNG)</tspan></text>
+</g>
+</svg>

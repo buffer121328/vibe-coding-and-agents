@@ -1,0 +1,7 @@
+graph TD
+    subgraph Hub ["Dify 集成中心 (Integrations) 双轮驱动"]
+        M["🧠 模型供应商 (Model Providers)\n提供思考大脑、向量化、重排序、语音转换能力"]
+        T["🛠️ 工具与插件生态 (Tools & Plugins)\n提供网页抓取、OCR 识别、PDF 解析、MCP 协议与 API 互联"]
+    end
+    M --> App["🎛️ Dify 工作流与 Agent 编排引擎"]
+    T --> App

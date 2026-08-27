@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    participant User as 用户发起请求
+    participant Gateway as 业务网关
+    participant SLM as 1.7B 端侧小模型 (Qwen3-1.7B-LoRA)
+    participant BigLLM as 超大推理模型 (DeepSeek-V4 / GPT)
+    participant DB as 业务系统 API
+
+    User->>Gateway: 发送请求："帮我查下上周五买的耳机发货没"
+    Gateway->>SLM: 1. 毫秒级意图识别与参数抽取
+    Note over SLM: 本地 GPU/端侧耗时仅 40ms，精准识别为【物流查询】
+    SLM-->>Gateway: 返回结构化 JSON: {"intent": "query_logistics", "keyword": "耳机"}
+    Gateway->>DB: 2. 直接命中数据库查出运单状态
+    Note over Gateway: 无需惊动昂贵的超大模型，直接完成闭环！
+
+    alt 遇上极端复杂推理需求 (如编写 1000 字定制营销文案)
+        Gateway->>BigLLM: 3. 仅在需要深度创造时才调用通用大模型
+        BigLLM-->>Gateway: 返回高质量长篇回复
+    end

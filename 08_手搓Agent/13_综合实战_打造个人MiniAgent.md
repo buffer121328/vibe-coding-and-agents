@@ -24,28 +24,12 @@
 1. **🌐 联网搜索（Web Search）**：不再局限于模型训练时的旧知识，随时检索最新资讯、数据、文档；
 2. **🧠 深度思考（Deep Thinking）**：面对复杂问题时，先"想清楚再回答"，可选用 GLM-R1 深度推理端点。
 
-```mermaid
-flowchart TD
-    classDef newStyle fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C,rx:8,ry:8
-    classDef coreStyle fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1,rx:8,ry:8
-
-    User(["👤 用户：多轮对话提问"]) --> Router
-
-    Router{"是否开启<br/>深度思考？"} -- 是 --> Deep["🧠 DeepThink 前置分析<br/>(结构化拆解问题，可走 R1)"]:::newStyle
-    Router -- 否 --> LoopIn
-    Deep --> LoopIn
-
-    subgraph Loop ["🔄 通用工具循环（8.2/8.3 主循环）"]
-        LoopIn["🤖 模型决策"]:::coreStyle
-        LoopIn --> NeedWeb{"需要最新<br/>外部信息？"}
-        NeedWeb -- 是 --> Web["🌐 web_search 联网检索<br/>(返回标题+链接+摘要)"]:::newStyle
-        NeedWeb -- 否 --> Tool["🛠️ 其他工具：exec_bash /<br/>read_file / str_replace /<br/>save_preference"]
-        Web --> LoopIn
-        Tool --> LoopIn
-    end
-
-    Loop --> Finish(["💬 最终回答"])
-```
+<!-- 图表源文件：img/diagrams/13-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/13-diagram-01.svg">
+    <img src="img/diagrams/13-diagram-01.svg" alt="🏗️ 收官整合：一台属于你的「个人 Mini-Agent」" width="760">
+  </a>
+</p>
 
 ***
 

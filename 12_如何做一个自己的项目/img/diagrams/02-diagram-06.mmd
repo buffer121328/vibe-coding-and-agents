@@ -1,0 +1,7 @@
+graph LR
+    Agent["Agent / 大模型（任意厂商）"] -->|MCP 标准协议| MCP1["MCP Server: 商品查询 / 库存扣减"]
+    Agent -->|MCP 标准协议| MCP2["MCP Server: 订单售后 / 发票开具"]
+    Agent -->|MCP 标准协议| MCP3["MCP Server: CRM 商机 / 日程写入"]
+    MCP1 --> DB1["业务数据库"]
+    MCP2 --> DB2["业务数据库"]
+    MCP3 --> DB3["业务数据库"]

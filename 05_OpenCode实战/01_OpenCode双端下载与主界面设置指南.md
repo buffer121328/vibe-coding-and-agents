@@ -13,24 +13,12 @@
 
 最爽的是，**CLI 版与 Desktop 版共享完全相同的底层架构与全局配置文件（`~/.config/opencode/`）**！你在桌面端配置好的模型和密钥，在命令行终端里敲回车就能直接复用，真正做到“双端合一，无缝切换”。
 
-```mermaid
-graph TD
-    subgraph Core ["OpenCode 统一底层核心 (OpenCode Core)"]
-        Config["全局配置文件<br/>(~/.config/opencode/opencode.jsonc)"]
-        Engine["智能体调度引擎 & 沙箱执行器"]
-        Router["多模型中转路由 & MCP/Skills 外挂"]
-    end
-
-    subgraph Client ["双端协同交互形态"]
-        CLI["OpenCode CLI<br/>(命令行极速黑客模式 / 远程 SSH 友好)"]
-        Desktop["OpenCode Desktop<br/>(图形化驾驶舱 / 可视化 Diff / 沉浸式交互)"]
-    end
-
-    Config --> Engine
-    Router --> Engine
-    Engine --> CLI
-    Engine --> Desktop
-```
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-01.svg">
+    <img src="img/diagrams/01-diagram-01.svg" alt="💡 一、生活化大比喻：什么是 OpenCode 的双端体验？" width="760">
+  </a>
+</p>
 
 ***
 
@@ -182,6 +170,7 @@ OpenCode Desktop 提供了开箱即用的跨平台安装包，教程也主要采
 ### 2. 提供商与模型接入（Providers & Models）
 
 <img src="./img/opencode_settings_providers.png" alt="OpenCode 提供商设置" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
+
 OpenCode 拥有极度开放的模型生态，支持主流官方模型、订阅型服务与第三方中转网关：
 
 #### 🌐 支持的常见模型类型：

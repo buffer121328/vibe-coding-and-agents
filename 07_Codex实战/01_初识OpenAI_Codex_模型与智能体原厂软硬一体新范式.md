@@ -11,27 +11,12 @@
 
 我们可以用汽车工业中的“原厂动力总成”来打个生动的比方：
 
-```mermaid
-graph LR
-    subgraph EngineWorld ["原厂底模大脑 (Engine)"]
-        GPT["OpenAI GPT-5.x / 5.6 系列"]
-        Claude["Anthropic Claude 5 系列"]
-        DeepSeek["DeepSeek V4 系列"]
-        Grok["xAI Grok 4.x 系列"]
-    end
-
-    subgraph AgentWorld ["原厂专属智能体 (Transmission & Chassis)"]
-        Codex["OpenAI Codex<br/>(已并入 ChatGPT 桌面端)"]
-        ClaudeCode["Claude Code"]
-        DSHarness["OpenCode / Hermes Agent"]
-        CursorGrok["Cursor / Grok Build"]
-    end
-
-    GPT <===>|"原厂数据闭环 · 软硬深度对齐"| Codex
-    Claude <===>|"原厂数据闭环 · 软硬深度对齐"| ClaudeCode
-    DeepSeek <===>|"原厂数据闭环 · 软硬深度对齐"| DSHarness
-    Grok <===>|"原厂数据闭环 · 软硬深度对齐"| CursorGrok
-```
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-01.svg">
+    <img src="img/diagrams/01-diagram-01.svg" alt="🚗 生活化比喻：原厂发动机与特调变速箱" width="1100">
+  </a>
+</p>
 
 - **第三方客户端拼装**：就像把一台法拉利的发动机强行塞进一辆二手改装车里，虽然马力很大，但变速箱顿挫、底盘调校不匹配，跑起来经常“发呆、漏档（Tool Calling 参数格式偶发错误、重试收敛慢）”；
 - **原厂专属 Agent（如 GPT + Codex）**：是真正的**原厂流水线定制调校**。OpenAI 在训练 GPT 基座模型时，就把 Codex 智能体在终端里的报错、自省、读写文件的真实轨迹（Agent Trajectories）作为核心强化学习（RLHF）语料。因此，**Codex 对 GPT 模型的每一次吐字习惯、参数调用与思维链（Chain of Thought）都有着天生的肌肉记忆！**
@@ -42,18 +27,12 @@ graph LR
 
 如果你横向对比当前市面上顶级的现代 AI 编程桌面端（**ChatGPT 桌面端的 Codex、Trae Work、Cursor、Claude Code**），你会发现一个极其明显的趋势：**在功能架构上，各家已经全面走向趋同与大一统！**
 
-```mermaid
-graph TD
-    subgraph StandardArsenal ["2026 现代 AI 编程智能体的七大标准军火库"]
-        F1["🔌 MCP 万能协议支持 (Model Context Protocol 挂载数据库与工具)"]
-        F2["🧩 插件与技能扩展体系 (Skills / Plugins 动态加载)"]
-        F3["🪝 Hooks 生命周期机制 (Pre/Post 切面安全门禁与拦截)"]
-        F4["🌿 原生 Git 版本控制与分支树 (Diff 审查、Worktree 并行、PR)"]
-        F5["🖥️ 电脑操控与系统级交互 (Computer Use / Terminal 命令直发)"]
-        F6["🌐 内置浏览器与实时热重载 (In-App Live Preview 实时预览与 UI 审查)"]
-        F7["📱 多端远程与云端运行 (Local / Worktree / Cloud / 手机 Remote)"]
-    end
-```
+<!-- 图表源文件：img/diagrams/01-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-02.svg">
+    <img src="img/diagrams/01-diagram-02.svg" alt="🔍 一、功能大一统：现代 Agent 桌面端已无本质鸿沟" width="860">
+  </a>
+</p>
 
 ### 四大主流 Agent 桌面端全景横评（2026-08 时效）
 
@@ -76,18 +55,12 @@ graph TD
 
 理解了“原厂软硬一体”的逻辑，你在选择 AI 辅助开发工具时就会豁然开朗：
 
-```mermaid
-graph TD
-    subgraph DecisionMatrix ["现代 AI 编程工具黄金选型法则"]
-        Q{"你的核心需求与模型偏好是什么？"}
-        
-        Q -->|"最爱 GPT 的超强逻辑推理与生态"| PickCodex["👉 选 OpenAI Codex (GPT-5.6 Sol/Terra/Luna，已并入 ChatGPT)"]
-        Q -->|"偏好 Claude 细腻的代码审美与超长文本"| PickClaude["👉 选 Claude Code (Opus 5 / Fable 5)"]
-        Q -->|"偏好 xAI Grok 的极客敏捷与长推理"| PickCursor["👉 选 Cursor / Grok Build (Grok 4.x)"]
-        Q -->|"追求 DeepSeek 极致性价比与开源自由"| PickDeepSeek["👉 选 OpenCode / Hermes (DeepSeek V4)"]
-        Q -->|"国内网络直连、追求极致福利与低成本"| PickTrae["👉 选 字节 Trae (每日免费额度，首月低至2.5折)"]
-    end
-```
+<!-- 图表源文件：img/diagrams/01-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-03.svg">
+    <img src="img/diagrams/01-diagram-03.svg" alt="🎯 二、选型底层逻辑：选择 Agent 工具，本质就是选底层模型！" width="760">
+  </a>
+</p>
 
 - **要用 GPT 模型 ➔ 选 OpenAI Codex**：2026 年 Codex 已并入 ChatGPT 桌面端，享受 GPT-5.5（1M 上下文、推荐大多数任务）乃至 GPT-5.6 三档模型（**Sol** 旗舰复杂任务 / **Terra** 日常均衡 / **Luna** 高频低成本）的原生支持与零延迟 Prompt 缓存；
 - **要用 Claude 模型 ➔ 选 Claude Code**：享受 Anthropic 原厂对 Opus 5 / Fable 5 / Sonnet 5 代码生成的微调与特化，支持 Agent Teams 多智能体并行与 Computer Use；
@@ -116,24 +89,12 @@ graph TD
 
 拥有一个稳定的 ChatGPT Plus / Pro / Team 订阅或官方 API 账号是关键一步。许多国内同学往往在“支付卡”和“网络环境”上踩坑，这里为你总结一套**最稳健的官方订阅实操法则**：
 
-```mermaid
-graph TD
-    subgraph CardStep ["1. 支付介质准备"]
-        C1["外币信用卡 (Visa / MasterCard)<br/>• 招行/中行/工行等全币种双币卡<br/>• 正规合规国际虚拟卡 (如 WildCard/Depay 等)"]
-    end
-
-    subgraph NetworkStep ["2. 网络节点防护铁律 (极度重要 ⚠️)"]
-        N1["纯净度要高：拒绝万人共用机场脏 IP，选用原生家宽/冷门独立节点"]
-        N2["节点固定：严禁前一分钟在美国、后一分钟跳新加坡 (必触发风控)"]
-        N3["浏览器指纹隔离：使用无痕模式或专属 Chrome 独立 Profile 订阅"]
-    end
-
-    subgraph BindingStep ["3. 绑定与开通"]
-        B1["访问 ChatGPT 桌面端 / chatgpt.com<br/>➔ 登录账号 ➔ 进入 Codex 标签页 / 升级 Plan ➔ 填写账单地址与卡号 ➔ 极速激活！"]
-    end
-
-    CardStep --> NetworkStep --> BindingStep
-```
+<!-- 图表源文件：img/diagrams/01-diagram-04.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-04.svg">
+    <img src="img/diagrams/01-diagram-04.svg" alt="2. 支付与网络风控指南" width="760">
+  </a>
+</p>
 
 ### 🛑 网络节点三大“保命避坑纪律”
 
@@ -158,27 +119,12 @@ graph TD
 
 **CC-Switch** 正是为解决这两个坑而生：用「本地路由」做 Responses→Chat 的协议转换，用「Codex 应用增强 → 切换第三方时保留官方登录」绕过模型门控。
 
-```mermaid
-graph LR
-    CodexClient["Codex CLI / 桌面客户端 (Responses API)"]
-    
-    subgraph SwitchLayer ["CC-Switch 本地中转调度层"]
-        LocalRoute["本地路由 127.0.0.1:15721<br/>(Responses ➔ Chat Completions 协议转换)"]
-        KeepAuth["Codex 应用增强<br/>(保留官方登录，绕过模型门控)"]
-    end
-
-    subgraph UpstreamProviders ["上游模型池 (Model Pool)"]
-        P1["DeepSeek V4 / Kimi / GLM / MiniMax / 小米 MiMo"]
-        P2["国内兼容 OpenAI 协议的中转网关"]
-        P3["本地 Ollama / vLLM 私有化部署"]
-    end
-
-    CodexClient ==> SwitchLayer
-    LocalRoute ==> P1
-    LocalRoute ==> P2
-    LocalRoute ==> P3
-    KeepAuth -.->|"auth.json 保留官方 Access Token"| CodexClient
-```
+<!-- 图表源文件：img/diagrams/01-diagram-05.mmd；视觉风格：Linear 紫色科技感 -->
+<p align="center">
+  <a href="img/diagrams/01-diagram-05.svg">
+    <img src="img/diagrams/01-diagram-05.svg" alt="0. 先懂两个“坑”：为什么不能直接填 API Key" width="960">
+  </a>
+</p>
 
 ### 1. 使用 CC-Switch 极速管理多供应商
 

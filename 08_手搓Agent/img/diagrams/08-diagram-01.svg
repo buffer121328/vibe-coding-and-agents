@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1172.23 1287.73" width="1172.23" height="1287.73" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Raw" data-label="1. 原始未处理长上下文 (臃肿 / 费用爆炸 / 易 Lost in the Middle)">
+  <rect x="383.15600000000006" y="36" width="405.91799999999995" height="375.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="383.15600000000006" y="36" width="405.91799999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="395.15600000000006" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. 原始未处理长上下文 (臃肿 / 费用爆炸 / 易 Lost in the Middle)</text>
+</g>
+<g class="subgraph" data-id="Decision" data-label="2. 上下文工程双轨防御决策">
+  <rect x="36" y="467.6" width="1100.23" height="445.43" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="467.6" width="1100.23" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="481.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 上下文工程双轨防御决策</text>
+</g>
+<g class="subgraph" data-id="Final" data-label="3. 精炼后的紧凑上下文 (安全 / 省钱 / 聚焦)">
+  <rect x="381.67400000000004" y="969.03" width="408.88199999999995" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="381.67400000000004" y="969.03" width="408.88199999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="393.67400000000004" y="983.03" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. 精炼后的紧凑上下文 (安全 / 省钱 / 聚焦)</text>
+</g>
+<polyline class="edge" data-from="Raw" data-to="Decision" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,411.6 586.115,467.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Decision" data-to="Final" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,913.03 586.115,969.03" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R1" data-to="R2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,116.9 586.115,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R2" data-to="R3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,209.8 586.115,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R3" data-to="R4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,302.70000000000005 586.115,358.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D1" data-to="T1" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="截断轨 (0ms / 零成本)" points="627.611,710.9300000000001 627.611,843.23" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D1" data-to="T2" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="工具裁剪轨" points="677.4435000000001,661.0975 677.4435000000001,722.9300000000001 976.99,722.9300000000001 976.99,843.23" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D1" data-to="C1" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="压缩轨 (结构化记忆)" points="577.7785,661.0975000000001 577.7785,722.9300000000001 236.736,722.9300000000001 236.736,843.23" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F1" data-to="F2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,1049.93 586.115,1105.93" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F2" data-to="F3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.115,1142.83 586.115,1198.83" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="D1" data-to="T1" data-label="截断轨 (0ms / 零成本)">
+  <rect x="566.111" y="761.93" width="122.19400000000003" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="627.208" y="777.0799999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">截断轨 (0ms / 零成本)</text>
+</g>
+<g class="edge-label" data-from="D1" data-to="T2" data-label="工具裁剪轨">
+  <rect x="937.99" y="761.93" width="77.05000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="976.515" y="777.0799999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">工具裁剪轨</text>
+</g>
+<g class="edge-label" data-from="D1" data-to="C1" data-label="压缩轨 (结构化记忆)">
+  <rect x="176.236" y="761.93" width="120.41200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="236.442" y="777.0799999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">压缩轨 (结构化记忆)</text>
+</g>
+<g class="node" data-id="R1" data-label="System Prompt (核心设定与规则)" data-shape="rectangle">
+  <rect x="465.105" y="80" width="242.01999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">System Prompt (核心设定与规则)</text>
+</g>
+<g class="node" data-id="R2" data-label="第 1-3 轮对话与超长 300 行终端编译日志" data-shape="rectangle">
+  <rect x="438.7995000000001" y="172.9" width="294.631" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">第 1-3 轮对话与超长 300 行终端编译日志</text>
+</g>
+<g class="node" data-id="R3" data-label="第 4-10 轮排错碎碎念、500 报错堆栈与中间试错代码" data-shape="rectangle">
+  <rect x="399.15600000000006" y="265.8" width="373.91799999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="284.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">第 4-10 轮排错碎碎念、500 报错堆栈与中间试错代码</text>
+</g>
+<g class="node" data-id="R4" data-label="最新第 11 轮提问 (总 Token 4000+，触顶告警)" data-shape="rectangle">
+  <rect x="426.20250000000004" y="358.70000000000005" width="319.825" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="377.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">最新第 11 轮提问 (总 Token 4000+，触顶告警)</text>
+</g>
+<g class="node" data-id="D1" data-label="上下文处理策略决策" data-shape="diamond">
+  <polygon points="627.611,511.6 727.276,611.265 627.611,710.93 527.946,611.265" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="627.611" y="611.265" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">上下文处理策略决策</text>
+</g>
+<g class="node" data-id="T1" data-label="✂️ 滑动窗口截断 (Sliding Window)
+永久锁定 System + 仅留最近 N 轮 (旧记忆硬丢失)" data-shape="rectangle">
+  <rect x="455.472" y="843.23" width="344.278" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="627.611" y="870.13" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="627.611" dy="-3.9000000000000012">✂️ 滑动窗口截断 (Sliding Window)</tspan><tspan x="627.611" dy="16.900000000000002">永久锁定 System + 仅留最近 N 轮 (旧记忆硬丢失)</tspan></text>
+</g>
+<g class="node" data-id="T2" data-label="🪵 工具输出首尾折叠 (Head 20 + Tail 20)" data-shape="rectangle">
+  <rect x="833.75" y="843.23" width="286.47999999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="976.99" y="861.6800000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🪵 工具输出首尾折叠 (Head 20 + Tail 20)</text>
+</g>
+<g class="node" data-id="C1" data-label="📦 /compact 深度语义历史摘要
+(提炼：项目目标、技术选型、已修Bug、修改文件)" data-shape="rectangle">
+  <rect x="52" y="843.23" width="369.472" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="236.736" y="870.13" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="236.736" dy="-3.9000000000000012">📦 /compact 深度语义历史摘要</tspan><tspan x="236.736" dy="16.900000000000002">(提炼：项目目标、技术选型、已修Bug、修改文件)</tspan></text>
+</g>
+<g class="node" data-id="F1" data-label="System Prompt (完整保留)" data-shape="rectangle">
+  <rect x="487.33500000000004" y="1013.03" width="197.55999999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="1031.48" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">System Prompt (完整保留)</text>
+</g>
+<g class="node" data-id="F2" data-label="📋 【/compact 历史背景与前情提要摘要】" data-shape="rectangle">
+  <rect x="432.8715" y="1105.93" width="306.48699999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="1124.38" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📋 【/compact 历史背景与前情提要摘要】</text>
+</g>
+<g class="node" data-id="F3" data-label="最新交互轮次 (总 Token 骤降至 600 以内，释放 80%+)" data-shape="rectangle">
+  <rect x="397.67400000000004" y="1198.83" width="376.88199999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.115" y="1217.28" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">最新交互轮次 (总 Token 骤降至 600 以内，释放 80%+)</text>
+</g>
+</svg>

@@ -1,0 +1,15 @@
+flowchart LR
+
+    subgraph BadState ["❌ 排版错乱典型现象"]
+        B1["中间代码与右侧沙箱重叠"]
+        B2["三栏被挤成上下竖向单列"]
+        B3["黑色背景和文字同色看不清"]
+    end
+
+    subgraph GoodAction ["✅ 30 秒急救解决绝招"]
+        G1["按快捷键 Cmd - (Mac) 或 Ctrl - (Win) 缩小至 80%~90%"]
+        G2["浏览器窗口最大化 / 全屏浏览 (推荐 1280px+ 宽度)"]
+        G3["临时关闭 Dark Reader 等第三方网页强制反色插件"]
+    end
+
+    BadState ==> GoodAction

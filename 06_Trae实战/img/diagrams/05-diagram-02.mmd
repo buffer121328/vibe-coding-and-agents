@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant F as 前端 (index.html)
+    participant B as FastAPI (main.py)
+    participant A as ai_service.py
+    participant L as 大模型云端 (DeepSeek)
+    participant DB as SQLite (blog.db)
+
+    F->>B: POST /api/posts (发布文章)
+    B->>B: 立刻返回 201 (毫秒级响应)
+    B->>A: BackgroundTasks 后台任务 (异步)
+    A->>A: 拼接 System + User 消息 (截断正文前4000字符)
+    A->>L: chat.completions.create (response_format=json_object)
+    L-->>A: 返回 JSON 字符串 (summary / tags / 标题建议)
+    A->>A: json.loads 解析 + 兜底校验
+    A->>DB: 按字段独立回填 (summary/tags 非空即跳过)

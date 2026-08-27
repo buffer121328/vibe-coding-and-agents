@@ -16,17 +16,12 @@
 
 > **“Spec 是代码仓库唯一的真实之源（Source of Truth）。先出蓝图，后写代码；改代码必先改 Spec！”**
 
-```mermaid
-graph LR
-    subgraph Traditional ["❌ 口头需求流 (容易跑偏崩溃)"]
-        T1["模糊一句话 Prompt"] --> T2["AI 脑补瞎猜架构"] --> T3["代码风格混乱、前后不一致"]
-    end
-
-    subgraph SDD ["✅ Spec 驱动流 (严密可控、工程级稳定)"]
-        S1["编写规格说明书 (Spec)"] --> S2["人类审阅确认技术选型与接口契约"]
-        S2 --> S3["Agent 严格按 Spec 编写代码并自动化验收"]
-    end
-```
+<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<p align="center">
+  <a href="img/diagrams/05-diagram-01.svg">
+    <img src="img/diagrams/05-diagram-01.svg" alt="🏗️ 为什么说 Spec（规格说明书）是 Vibe Coding 的定海神针？" width="960">
+  </a>
+</p>
 
 ***
 
@@ -52,13 +47,12 @@ my-project/
 
 ### OpenSpec 标准流转五步法
 
-```mermaid
-graph TD
-    A["1. Propose (提出提案)<br/>在 changes/ 目录下编写新功能的 Spec 蓝图"] --> B["2. Review (人工审查)<br/>确认数据流、API 字段与安全策略无误"]
-    B --> C["3. Apply (Agent 实施)<br/>Agent 严格照着 Spec 跨文件编写代码并跑测试"]
-    C --> D["4. Sync (同步主规范)<br/>将测试通过的新特性合并进 specs/ 永久主库"]
-    D --> E["5. Archive (归档结项)<br/>将本次 changes 提案归档，保持工作区干净"]
-```
+<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：Macaron 马卡龙 -->
+<p align="center">
+  <a href="img/diagrams/05-diagram-02.svg">
+    <img src="img/diagrams/05-diagram-02.svg" alt="OpenSpec 标准流转五步法" width="760">
+  </a>
+</p>
 
 ***
 

@@ -8,16 +8,12 @@
 
 AI Agent 的记忆架构完全借鉴了人类认知科学体系：
 
-```mermaid
-graph TD
-    subgraph MemoryArch ["人类记忆分类 ➔ AI Agent 记忆系统映射"]
-        M1["1. 情景记忆 (Episodic Memory)<br/>【生活例子】：记得上周二和朋友吃了海底捞牛油锅<br/>【AI 表现】：记住上次会话中用户抱怨过哪个接口太慢"]
-        
-        M2["2. 语义记忆 (Semantic Memory)<br/>【生活例子】：记住'地球绕着太阳转'的客观事实<br/>【AI 表现】：记住整个项目的数据库表结构与设计模式"]
-        
-        M3["3. 程序记忆 (Procedural Memory)<br/>【生活例子】：学会游泳、骑自行车后的身体'肌肉记忆'<br/>【AI 表现】：封装好的 Agent Skill 自动化执行工作流"]
-    end
-```
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-01.svg">
+    <img src="img/diagrams/06-diagram-01.svg" alt="🧠 人类心理学三大记忆 vs AI Agent 记忆映射" width="860">
+  </a>
+</p>
 
 > 📖 上面是从“记什么类型”**的角度切分记忆（情景 / 语义 / 程序）；下面我们再从**“能记多久”的时间尺度切一刀，你会发现短期、中期、长期记忆在 Agent 里各司其职、缺一不可。
 
@@ -61,18 +57,12 @@ graph TD
 
 **Agent Skill（技能）** 就是把某个特定专业任务的**规章制度、执行脚本、模版和工具打包成一个可插拔的模块**：
 
-```mermaid
-graph LR
-    subgraph SkillPack ["一个标准 Agent Skill 技能包的内部构成"]
-        D["1. 元数据与触发条件 (何时唤醒此技能)"]
-        S["2. 专家级 SOP 规范文档 (SKILL.md)"]
-        E["3. 自动化执行脚本 (Python / Bash 脚本)"]
-        T["4. 标准产出报告模版 (Templates)"]
-    end
-
-    User["用户说：'对网站做一次安全渗透排查'"] -->|动态按需加载| SkillPack
-    SkillPack --> Output["Agent 像顶级黑客一样严格按规范完成排查并出具报告"]
-```
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：GitHub Dark -->
+<p align="center">
+  <a href="img/diagrams/06-diagram-02.svg">
+    <img src="img/diagrams/06-diagram-02.svg" alt="🧰 什么是 Agent Skills（智能体技能包体系）？" width="960">
+  </a>
+</p>
 
 ### Skills vs 普通 Prompt：为什么不用一大段提示词硬怼？
 

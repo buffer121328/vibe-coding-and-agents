@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412.71 409.20000000000005" width="412.71" height="409.20000000000005" style="--bg:#0d1117;--fg:#e6edf3;--line:#3d444d;--accent:#4493f8;--muted:#9198a1;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="SQL" data-label="1. 关系型数据库 (SQL)">
+  <rect x="36" y="36" width="311.06999999999994" height="147.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="311.06999999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. 关系型数据库 (SQL)</text>
+</g>
+<g class="subgraph" data-id="NoSQL" data-label="2. 非关系型数据库 (NoSQL)">
+  <rect x="36" y="225.60000000000002" width="340.71" height="147.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="225.60000000000002" width="340.71" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="239.60000000000002" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 非关系型数据库 (NoSQL)</text>
+</g>
+<g class="node" data-id="S1" data-label="Excel 电子表格模式
+每行每列严丝合缝
+适合存：用户账单、银行账户、订单
+代表：PostgreSQL / MySQL" data-shape="rectangle">
+  <rect x="52" y="80" width="279.06999999999994" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="191.53499999999997" y="123.80000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="191.53499999999997" dy="-20.8">Excel 电子表格模式</tspan><tspan x="191.53499999999997" dy="16.900000000000002">每行每列严丝合缝</tspan><tspan x="191.53499999999997" dy="16.900000000000002">适合存：用户账单、银行账户、订单</tspan><tspan x="191.53499999999997" dy="16.900000000000002">代表：PostgreSQL / MySQL</tspan></text>
+</g>
+<g class="node" data-id="S2" data-label="自由储物箱模式
+随意存放 JSON 文档与大杂烩
+适合存：社交动态、聊天记录、游戏背包
+代表：MongoDB / Redis" data-shape="rectangle">
+  <rect x="52" y="269.6" width="308.71" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="206.355" y="313.40000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="206.355" dy="-20.8">自由储物箱模式</tspan><tspan x="206.355" dy="16.900000000000002">随意存放 JSON 文档与大杂烩</tspan><tspan x="206.355" dy="16.900000000000002">适合存：社交动态、聊天记录、游戏背包</tspan><tspan x="206.355" dy="16.900000000000002">代表：MongoDB / Redis</tspan></text>
+</g>
+</svg>

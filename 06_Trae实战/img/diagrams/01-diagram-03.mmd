@@ -1,0 +1,14 @@
+graph TD
+    User(["你的核心诉求是什么？"])
+    
+    Q1{"日常办公/工作赋能/非纯代码？"}
+    Q2{"专业软件开发/复杂工程编码？"}
+    Q3{"设计稿转代码/快速出前端原型？"}
+    
+    User --> Q1
+    User --> Q2
+    User --> Q3
+    
+    Q1 -- 是 --> ToolA["首选: Trae Work / WorkBuddy\n(办公自动化 / 网页抓取 / 手机跨端远程)"]
+    Q2 -- 是 --> ToolB["首选: Trae Code / CodeBuddy / Cursor\n(VSCode 生态 / 可视化 Diff / Solo 模式自主闭环)"]
+    Q3 -- 是 --> ToolC["首选: Trae Design\n(多模态图片识别 / 设计稿一键生成页面)"]

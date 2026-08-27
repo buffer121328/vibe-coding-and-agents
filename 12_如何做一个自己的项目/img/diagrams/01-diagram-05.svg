@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 923.1184999999999 395" width="923.1184999999999" height="395" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="Upstream" x1="141.082" y1="70" x2="141.082" y2="365" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="MyFork" x1="398.79999999999995" y1="70" x2="398.79999999999995" y2="365" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Local" x1="664.2984999999999" y1="70" x2="664.2984999999999" y2="365" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="message" data-from="Upstream" data-to="MyFork" data-label="1. 在 GitHub 页面点击 Fork" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="141.082" y1="90" x2="398.79999999999995" y2="90" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="269.941" y="80" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1. 在 GitHub 页面点击 Fork</text>
+</g>
+<g class="message" data-from="MyFork" data-to="Local" data-label="2. git clone 到本地" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="398.79999999999995" y1="130" x2="664.2984999999999" y2="130" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="531.5492499999999" y="120" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">2. git clone 到本地</text>
+</g>
+<g class="message" data-from="Local" data-to="Local" data-label="3. git remote add upstream 绑定上游" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="664.2984999999999,170 694.2984999999999,170 694.2984999999999,190 664.2984999999999,190" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="702.2984999999999" y="180" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">3. git remote add upstream 绑定上游</text>
+</g>
+<g class="message" data-from="Upstream" data-to="Local" data-label="5. 随时 git fetch upstream 拉取上游安全更新与新特性" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="141.082" y1="255" x2="664.2984999999999" y2="255" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="402.69024999999993" y="245" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">5. 随时 git fetch upstream 拉取上游安全更新与新特性</text>
+</g>
+<g class="message" data-from="Local" data-to="Local" data-label="6. 优雅 Rebase 合并，保持代码干净" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="664.2984999999999,295 694.2984999999999,295 694.2984999999999,315 664.2984999999999,315" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="702.2984999999999" y="305" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">6. 优雅 Rebase 合并，保持代码干净</text>
+</g>
+<g class="note" data-position="over" data-actors="Local">
+  <polygon points="536.5344999999999,208 786.0624999999999,208 792.0624999999999,214 792.0624999999999,231 536.5344999999999,231" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="786.0624999999999,208 792.0624999999999,214 786.0624999999999,214" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="664.2984999999999" y="219.5" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">4. 开辟 feature/ai-agent 分支进行非侵入式开发</text>
+</g>
+<g class="actor" data-id="Upstream" data-label="上游官方仓库 (Upstream Repo)" data-type="participant">
+  <rect x="30.000000000000014" y="30" width="222.16399999999996" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="141.082" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">上游官方仓库 (Upstream Repo)</text>
+</g>
+<g class="actor" data-id="MyFork" data-label="个人 Fork 仓库 (GitHub Origin)" data-type="participant">
+  <rect x="292.164" y="30" width="213.27199999999996" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="398.79999999999995" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">个人 Fork 仓库 (GitHub Origin)</text>
+</g>
+<g class="actor" data-id="Local" data-label="本地开发环境 (Local Workspace)" data-type="participant">
+  <rect x="545.4359999999999" y="30" width="237.72499999999997" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="664.2984999999999" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">本地开发环境 (Local Workspace)</text>
+</g>
+</svg>

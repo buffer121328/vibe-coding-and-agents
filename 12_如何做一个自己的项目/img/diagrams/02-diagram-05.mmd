@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant Frontend as 前端 (Web/小程序)
+    participant Backend as 传统业务后端 (FastAPI/Spring)
+    participant Redis as Redis 会话与状态锁
+    participant LLM as 大模型 / Agent 引擎
+    participant DB as 业务数据库 (MySQL)
+
+    Frontend->>Backend: 1. 用户发送自然语言请求
+    Backend->>Redis: 2. 检查会话状态锁 (防止重复并发点击)
+    Backend->>LLM: 3. 发起请求并开启 SSE 流式监听
+    LLM-->>Frontend: 4. [SSE 流式] 打字机逐字输出思考过程与自然语言
+    LLM->>Backend: 5. 触发 Function Calling (如: query_inventory)
+    Backend->>DB: 6. 查库获取商品最新实时库存与价格
+    DB-->>Backend: 7. 返回结构化业务数据
+    Backend->>LLM: 8. 回填数据供大模型继续组织语言
+    Backend-->>Frontend: 9. [SSE 混合流] 推送标准 UI 卡片 JSON 与最终结论
+    Backend->>Redis: 10. 释放会话锁并更新会话记忆

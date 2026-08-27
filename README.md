@@ -4,18 +4,16 @@
   <em>用通俗大白话讲透原理 · 从 0 到 1 手搓 Agent · 打通 Dify / OpenCode / LangChain / LangGraph / RAG 工业级落地</em>
 </p>
 
-<!-- 📖 在线阅读：圆形图标 + 👈 阅读入口同一行 -->
+<!-- 📖 在线阅读：圆角图标 + 👈 阅读入口同一行 -->
 <p align="center">
   <a href="https://buffer121328.github.io/vibe_coding/">
-    <img src="img/image.jpg" alt="在线阅读" width="150" height="150" style="border-radius:50%; vertical-align:middle" />
+    <img src="img/image.svg" alt="在线阅读" width="75" height="75" align="middle" />
   </a>
+  &nbsp;&nbsp;
   <b><a href="https://buffer121328.github.io/vibe_coding/">👈 点这里开始阅读</a></b>
 </p>
 
 <p align="center">
-  <a href="https://github.com/buffer121328/vibe_coding/actions/workflows/deploy-docs.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/buffer121328/vibe_coding/deploy-docs.yml?branch=main&label=%E6%96%87%E6%A1%A3%E9%83%A8%E7%BD%B2" alt="文档部署状态" />
-  </a>
   <img src="https://img.shields.io/github/stars/buffer121328/vibe_coding?style=social" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
@@ -58,7 +56,7 @@ vibe_coding/
 │   └── 06_VibeCoding思维方式与终极演进.md              # 1.6 从苦力码农到交响乐指挥官 
 ├── 02_概念扫盲/                                       # 第二章：核心概念扫盲
 │   ├── README.md                                      # 第二章导读与全景图谱
-│   ├── 01_软件架构基础.md                             # 2.1 前端/后端/数据库/中间件/微服务/同步与异步
+│   ├── 01_软件架构基础.md                             # 2.1 计算机与网络/前端/后端/数据库/中间件/微服务/同步与异步
 │   ├── 02_Git与GitHub极速入门.md                      # 2.2 时光机存盘、GitHub 注册与国内代理配置指南
 │   ├── 03_大模型本质与Transformer.md                  # 2.3 超级文字接龙、高维压缩与自注意力机制
 │   ├── 04_Agent机制与运行原理.md                      # 2.4 Agent 四大支柱与 ReAct 闭环
