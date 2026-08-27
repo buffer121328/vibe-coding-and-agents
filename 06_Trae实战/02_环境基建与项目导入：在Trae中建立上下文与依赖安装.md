@@ -141,7 +141,7 @@ openspec init
 
 在终端弹出的工具适配选择列表中（`Select tools to set up`），使用方向键定位并按空格键选中 **`[x] Trae`**，最后按回车确认：
 
-![OpenSpec 初始化选择 Trae](./img/02_openspec_init_trae.png)
+<img src="./img/02_openspec_init_trae.png" alt="OpenSpec 初始化选择 Trae" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 > 💡 **原理解析**：执行该操作后，OpenSpec 会针对 Trae 的工作机制生成适配的 `.trae/` 目录与 Agent Skills 规则，使 Trae Agent 能够精准识别 OpenSpec 蓝图语法与执行流程。
 
@@ -159,12 +159,12 @@ openspec init
 #### 步骤 1：在 Trae 中开启 `AGENTS.md` 包含开关
 进入 Trae 设置中心 ⮕ 点击左侧 **“规则与记忆”** ⮕ 在导入设置中开启 **“将 AGENTS.md 包含在上下文中”**：
 
-![Trae 设置中心开启 AGENTS.md 上下文](./img/02_trae_rules_settings.png)
+<img src="./img/02_trae_rules_settings.png" alt="Trae 设置中心开启 AGENTS.md 上下文" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 #### 步骤 2：在项目 `.trae/rules/` 下建立三大专属规则文件
 针对我们当前的博客系统二次开发，我们在 `.trae/rules/` 目录下建立 3 个规则文件（如下图所示）：
 
-![Trae 项目级规则目录结构](./img/02_trae_rules_folder_tree.png)
+<img src="./img/02_trae_rules_folder_tree.png" alt="Trae 项目级规则目录结构" width="30%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 1. **`general.md`（通用规则）**：约束全流程的 CodeGraph 优先查询、OpenSpec 规格推进与依赖管理；
 2. **`frontend.md`（前端规则）**：约束单文件 HTML5 + TailwindCSS 玻璃拟态规范、禁止 npm 构建链，并定义了允许调用的前端 Skills 技能包；
@@ -312,7 +312,7 @@ project_01_个人博客系统二次开发/
 #### 步骤 1：打开 Trae 设置面板与 MCP 入口
 在 Trae 左侧或用户头像区域点击设置图标，进入设置中心，在左侧导航栏找到 **MCP** 选项：
 
-![Trae 设置中心与 MCP 入口](./img/02_trae_settings_menu.png)
+<img src="./img/02_trae_settings_menu.png" alt="Trae 设置中心与 MCP 入口" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 #### 步骤 2：添加 CodeGraph MCP 服务配置
 在 **MCP Servers 管理** 区域，点击右上角的 **`+ 添加`（➕ 号）** 按钮，在弹出的 JSON 编辑框中填入以下配置：
@@ -333,7 +333,7 @@ project_01_个人博客系统二次开发/
 
 保存后，Trae 会自动启动并连接 `codegraph` 服务，并成功加载其内置工具能力（如 `codegraph_explore`）：
 
-![Trae MCP 配置与 CodeGraph 启用](./img/02_trae_mcp_codegraph.png)
+<img src="./img/02_trae_mcp_codegraph.png" alt="Trae MCP 配置与 CodeGraph 启用" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 #### 🌟 为什么 CodeGraph MCP 是二次开发的神器？
 - **优先调用的第一工具（PRIMARY TOOL）**：正如 Trae 工具描述所注，在 Agent 回答复杂架构问题或动手修改代码前，它会**首选调用 `codegraph_explore`** 扫描代码调用图谱；
@@ -424,7 +424,7 @@ graph LR
 
 ### 💡 任务二：脑力激荡 —— 为博客系统构思 3 个你最想增加的“杀手级功能”
 - 发挥你的产品经理与全栈架构师思维：如果这个博客是你未来的个人主页与技术影响力阵地，你最希望给它增添什么能力？
-- 💭 *提示：如果一时没有特别的想法，也完全不用焦虑！可以直接跟随我们后续的黄金演进路线：*
+- 💭 *提示：如果一时没有特别的想法，也完全不用焦虑！可以直接跟随我们后续的演进路线：*
   1. **阶段 1：用户注册登录与 JWT 权限隔离系统**；
   2. **阶段 2：评论楼层与点赞互动系统 + 后端分页重构**；
   3. **阶段 3：AI 智能摘要提炼 + 智能自动打标**。
@@ -435,7 +435,7 @@ graph LR
   - 需要新增什么数据库表结构（Models）？
   - 需要提供哪些 RESTful API 接口（路由、请求体、响应体）？
   - 前端界面应该如何布局呈现？
-- 期待在学习社区与交流群中看到同学们充满创意的专属特性规划！
+- 期待看到同学们充满创意的专属特性规划！
 
 ***
 

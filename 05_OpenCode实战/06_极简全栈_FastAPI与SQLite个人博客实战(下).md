@@ -88,7 +88,7 @@ graph TD
 
 当我们让 AI 推进 Phase 2 后端开发时，AI 会在项目根目录下自动创建 `openspec/` 变更集并拆解任务：
 
-![OpenSpec 阶段变更目录树](./img/06_openspec_phase2_folder_tree.png)
+<img src="./img/06_openspec_phase2_folder_tree.png" alt="OpenSpec 阶段变更目录树" width="30%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 1. OpenSpec 阶段四件套结构解析
 
@@ -136,17 +136,16 @@ AI 在 `tasks.md` 中不仅拆解了业务代码实现步骤，还**自觉多出
 
 在开发过程中，AI 会在左侧或弹窗中展示实时任务进度（从 0/6 逐步推进）：
 
-![OpenCode 阶段任务执行中](./img/06_opencode_phase2_todo.png)
+<img src="./img/06_opencode_phase2_todo.png" alt="OpenCode 阶段任务执行中" width="70%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 等待 AI 逐步编写代码并运行测试，当所有测试通过后，`tasks.md` 将全线变成绿色打勾状态 `[x]`：
 
-![OpenSpec 全部任务完成打勾](./img/06_openspec_tasks_completed.png)
-
+<img src="./img/06_openspec_tasks_completed.png" alt="OpenSpec 全部任务完成打勾" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 ***
 
-## 🛡️ 五、人工验收、归档与 Git 提交心智模型
+## 🛡️ 五、人工验收、归档与 Git 提交全流程
 
-当一个阶段的所有任务全部打勾后，请牢记以下心智法则：
+当一个阶段的所有任务全部打勾后，请牢记以下原则：
 
 1. **人工验收与归档**：
    - 尽管在这个轻量博客项目中，AI 可能会由于逻辑简单顺畅而自动完成测试与验收，但**在真实工程中，我们必须人工检查一下核心接口与生成的文件**；
@@ -178,7 +177,7 @@ uv run uvicorn main:app --reload --port 8000
 
 你将看到一个**极高质感的暗黑极客风格个人博客系统**：
 
-![个人博客主页瀑布流卡片效果](./img/06_blog_homepage_preview.png)
+<img src="./img/06_blog_homepage_preview.png" alt="个人博客主页瀑布流卡片效果" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 - **顶部导航**：展示全站文章数、总阅读量统计、全局实时搜索框与紫蓝渐变「✍️ 写文章」按钮；
 - **分类标签胶囊**：动态拉取分类（全部、DevOps、前端、技术等），点击即时过滤；
@@ -190,7 +189,7 @@ uv run uvicorn main:app --reload --port 8000
 
 点击右上角「✍️ 写文章」，弹出双栏创作工坊模态框：
 
-![写文章双栏实时 Markdown 预览模态框](./img/06_blog_write_modal_preview.png)
+<img src="./img/06_blog_write_modal_preview.png" alt="写文章双栏实时 Markdown 预览模态框" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 - **左侧输入**：输入文章标题、分类、标签，并在左栏输入 Markdown 正文；
 - **右侧预览**：监听键盘输入，毫秒级实时将 Markdown 解析渲染为排版精美的富文本（含代码高亮、表格、引用块）；

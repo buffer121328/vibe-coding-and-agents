@@ -40,7 +40,7 @@ graph TD
     end
 
     subgraph Step5 ["第五步：经典轻量全栈与数据库实战"]
-        E1["05 极简全栈实战（上）：基建准备与阶段拆分规划<br/>(OpenSpec / CodeGraph / uv / 阶段拆分心智 / docs 规划)"]
+        E1["05 极简全栈实战（上）：基建准备与阶段拆分规划<br/>(OpenSpec / CodeGraph / uv / 阶段拆分思路 / docs 规划)"]
         E2["06 极简全栈实战（下）：前后端编码落地与全链路交付<br/>(FastAPI CRUD / SQLite 持久化 / TailwindCSS / Markdown 渲染)"]
         E1 --> E2
     end
@@ -67,7 +67,7 @@ graph TD
    - MCP（Model Context Protocol）工具扩展协议本地与远程配置；
    - Agent Skills 技能即插即用战术包挂载；
    - 深度解析 `oh-my-opencode-slim`（omo-slim）：为什么坚决弃用臃肿的原版 OMO 而选择 Slim？六大专家角色分工与白名单权限控制实战。
-3. **[5.3 极速破冰：意图驱动单文件小工具实战（赛博解压木鱼 & 心流番茄钟）](./03_极速破冰_意图驱动单文件小工具实战.md)**
+3. **[5.3 极速破冰：意图驱动单文件小工具实战（赛博解压木鱼 & 专注番茄钟）](./03_极速破冰_意图驱动单文件小工具实战.md)**
    - 体验“一句话动嘴即交付”，通过 Plan/Build 双模对齐与交付，利用 `.opencode/skills/` 中的 `single-file-app` 与 `html5-canvas-artist` 打造兼具 Web Audio 原生合成音效、60fps Canvas 霓虹粒子与 LocalStorage 本地持久化的免依赖单文件交互小工具。
 4. **[5.4 进阶实战：动态交互网页与 AI 灵感卡片生成器](./04_进阶实战_动态交互网页与AI灵感卡片生成器.md)**
    - 玩转 `omo-slim` 专家多智能体协同，借力免费模型零成本配置，结合 `tailwind-ui-master` 与 `html5-canvas-artist` 打造集金句提炼、5 大主题切换、Canvas 粒子动效与一键导出 Retina 高清海报于一体的高质感动态交互作品。

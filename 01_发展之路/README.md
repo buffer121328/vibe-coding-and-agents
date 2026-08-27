@@ -44,7 +44,7 @@ graph TD
    - Dify、Coze（拖拽搭积木做后台）与 Bolt.new、Lovable.dev（浏览器内一句话秒出完整全栈网页）。
    - 现代开发者的“降维打击”组合拳套路。
 
-6. **[1.6 Vibe Coding 心智模型：从“苦力码农”到“交响乐指挥官”](./06_VibeCoding心智模型与终极演进.md)**
+6. **[1.6 Vibe Coding 思维方式：从“苦力码农”到“交响乐指挥官”](./06_VibeCoding思维方式与终极演进.md)**
    - Andrej Karpathy 提出的 Vibe Coding 核心概念到底是什么？
    - 意图讲清楚、上下文喂饱、验证自动化，新手也能爽快开挂不翻车！
 

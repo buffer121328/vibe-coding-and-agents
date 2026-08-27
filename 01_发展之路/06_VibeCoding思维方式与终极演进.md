@@ -1,4 +1,4 @@
-# 1.6 Vibe Coding 心智模型：从“苦力码农”到“交响乐指挥官”
+# 1.6 Vibe Coding 思维方式：从“苦力码农”到“交响乐指挥官”
 
 > **“There's a new kind of coding I call 'vibe coding', where you entirely give in to the vibes, embrace every AI, and forget that the code even exists... I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.”**
 > —— *Andrej Karpathy (前 OpenAI 联合创始人、前 Tesla AI 总监)*
@@ -15,11 +15,11 @@
 
 ```mermaid
 graph LR
-    subgraph S1 ["传统开发心智（底层细节驱动）"]
+    subgraph S1 ["传统开发思维（底层细节驱动）"]
         A1["死记语法与规则"] --> A2["手打繁琐套话代码"] --> A3["通宵肉眼排错找 Bug"]
     end
     
-    subgraph S2 ["Vibe Coding 心智（高层意图驱动）"]
+    subgraph S2 ["Vibe Coding 思维方式（高层意图驱动）"]
         B1["构思产品创意与功能"] --> B2["输入清晰意图指挥 Agent"] --> B3["直接看运行效果验收迭代"]
     end
 ```

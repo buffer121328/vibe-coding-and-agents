@@ -43,7 +43,7 @@ graph TD
 
 下面是 Dify 登录后的核心主页全貌：
 
-![Dify 主界面全貌与功能总览](./img/01_dify_homepage_overview.png)
+<img src="./img/01_dify_homepage_overview.png" alt="Dify 主界面全貌与功能总览" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 结合上方主页，我们逐一拆解 Dify 的核心功能分区：
 
@@ -65,7 +65,7 @@ graph TD
 
 ### 3. 主页推荐：三大核心应用形态
 
-在主页的**“了解 Dify”**专区，官方推荐了三大基石形态：
+在主页的“了解 Dify”专区，官方推荐了三大基石形态：
 
 | 应用形态 | 核心特点 | 生活比喻 | 典型应用场景 |
 | :--- | :--- | :--- | :--- |

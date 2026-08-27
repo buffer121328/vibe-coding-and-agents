@@ -11,7 +11,7 @@ graph TD
     subgraph IDE ["1. AI-Native 编辑器门派 (开箱即用)"]
         T1["Trae (字节跳动免费神器)"]
         T2["Cursor (行业标杆)"]
-        T3["Windsurf (心流感知)"]
+        T3["Windsurf (沉浸体验)"]
     end
 
     subgraph CLI ["2. 终端命令行 Agent 门派 (极客全自主)"]

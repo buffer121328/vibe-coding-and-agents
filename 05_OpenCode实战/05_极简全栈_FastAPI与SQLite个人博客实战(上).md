@@ -94,11 +94,11 @@ openspec init
 
 执行后，终端会出现交互式欢迎配置界面：
 
-![OpenSpec 初始化欢迎界面](./img/05_openspec_init_welcome.png)
+<img src="./img/05_openspec_init_welcome.png" alt="OpenSpec 初始化欢迎界面" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 按下回车键（`Enter`）进入工具选择列表。在支持的工具列表中（共 37+ 种 AI 编程工具），通过上下方向键移动光标，按下空格键（`Space`）选中 **`[x] OpenCode`**，然后按回车确认：
 
-![选择注入 OpenCode 工具](./img/05_openspec_select_opencode.png)
+<img src="./img/05_openspec_select_opencode.png" alt="选择注入 OpenCode 工具" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 4. 初始化后的结构变化
 
@@ -116,7 +116,7 @@ openspec init
 - **官方权威链接**：[CodeGraph MCP 官方代码仓](https://github.com/colbymchenry/codegraph)
 - **痛点场景**：大模型在不了解代码全貌时，经常使用全库 `grep` 或盲目 `read_file` 读取几十个文件，不仅耗费巨量 Token、拖慢响应速度，还会导致上下文窗口过载而产生幻觉。
 - **核心功能**：[CodeGraph](https://github.com/colbymchenry/codegraph) 是一款专为 AI 打造的**轻量级代码语义图谱工具**。它基于 Tree-sitter 语法分析器扫描整个项目，将所有文件中的**函数、类、接口、变量及其相互调用关系**构建成一张拓扑知识图谱。
-- **心智原则**：AI 仅需调用 `mcp_codegraph` 的 `codegraph_explore` 工具，传入符号名称或问题，就能精准获取该符号的定义与引用依赖。**命中符号即视为已读，无需再重复全文读取，大幅节省 80% 以上的上下文消耗！**
+- **核心原则**：AI 仅需调用 `mcp_codegraph` 的 `codegraph_explore` 工具，传入符号名称或问题，就能精准获取该符号的定义与引用依赖。**命中符号即视为已读，无需再重复全文读取，大幅节省 80% 以上的上下文消耗！**
 
 ### 2. 全局安装 CodeGraph CLI
 
@@ -156,11 +156,11 @@ codegraph init
 
 `codegraph init` 执行完成后，CodeGraph 会\*\*立即在后台启动守护进程（Daemon）并自动同步（Auto-Sync）\*\*项目代码图谱——之后每次保存代码都会自动增量同步，无需手动重建索引（机制详见下方「4. 初始化后自动同步」）。首次运行时终端将极速扫描项目文件并构建代码引用拓扑网：
 
-![CodeGraph 初始化完成](./img/05_codegraph_init.png)
+<img src="./img/05_codegraph_init.png" alt="CodeGraph 初始化完成" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 构建完成后，可以在 VS Code / OpenCode 左侧文件树中查看到生成的 `.codegraph/` 数据库与 `.opencode/` 技能树：
 
-![OpenCode Skills 与 CodeGraph 目录全景树](./img/05_opencode_skills_tree.png)
+<img src="./img/05_opencode_skills_tree.png" alt="OpenCode Skills 与 CodeGraph 目录全景树" width="30%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 4. 初始化后自动同步（Auto-Sync）：一次初始化，全程免维护
 
@@ -194,7 +194,7 @@ codegraph init
 - **核心优势**：
   - 🏎️ **极致性能**：由知名团队 Astral（Ruff 的作者）采用 **Rust** 从零重构，包解析与安装速度比传统 `pip` / `pip-tools` 快 **10 到 100 倍**；
   - 🧰 **全能合一**：集 Python 版本管理、虚拟环境创建、依赖锁定（`pyproject.toml` + `uv.lock`）、脚本运行于一体；
-  - 🪄 **零激活心智负担**：告别 `source .venv/bin/activate` 或 Windows 下繁琐的脚本激活，直接通过 `uv run <命令>` 即可在隔离环境中秒级执行！
+  - 🪄 **零激活门槛**：告别 `source .venv/bin/activate` 或 Windows 下繁琐的脚本激活，直接通过 `uv run <命令>` 即可在隔离环境中秒级执行！
 
 ### 2. uv 跨平台极速安装
 
@@ -306,7 +306,7 @@ graph LR
 ### 2. 突破主流模型 200k 上下文窗口限制，养成大型工程习惯
 
 - **技术本质**：当前使用的是免费模型，上下文窗口只有 200k Token 左右。当项目代码量逐渐膨胀，如果把整个项目的所有上下文一股脑塞给 AI，大模型会出现严重的**注意力漂移（Attention Drift）与指令遗忘**；
-- **工程习惯养成**：虽然我们当前的极简博客系统体积轻量（200k 上下文完全充裕），但**我们必须借此养成正规长项目、大工程的 Vibe Coding 阶段驱动心智习惯**！唯有掌握了按阶段规划、按模块推进的工程能力，未来面对几万、几十万行代码的企业级系统重构时，你才能从容不迫地调度 AI。
+- **工程习惯养成**：虽然我们当前的极简博客系统体积轻量（200k 上下文完全充裕），但**我们必须借此养成正规长项目、大工程的 Vibe Coding 阶段驱动的工作方式**！唯有掌握了按阶段规划、按模块推进的工程能力，未来面对几万、几十万行代码的企业级系统重构时，你才能从容不迫地调度 AI。
 
 ***
 

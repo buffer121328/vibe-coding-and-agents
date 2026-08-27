@@ -9,7 +9,7 @@
 如果把传统的编程比作“在工地上徒手搬砖”，那么使用 OpenCode 就相当于给你配备了一套**高科技外骨骼装甲与智能副驾**：
 
 - 🖥️ **OpenCode CLI（终端命令行版）**：就像是**特种兵随身携带的战术多功能瑞士军刀**。无需打开庞大的窗口，在任何终端或远程服务器里敲一行命令，就能让 AI 像闪电一样快速检索代码、定位 Bug、批量修改文件并自动运行测试；
-- 🖼️ **OpenCode Desktop（桌面图形化客户端）**：就像是**现代飞机的全景玻璃驾驶舱**。所有会话历史、项目工作区、代码实时变动（Diff 对比）、AI 思考推理链和终端沙箱执行一目了然，特别适合需要精细审查代码和享受视觉心流的开发者！
+- 🖼️ **OpenCode Desktop（桌面图形化客户端）**：就像是**现代飞机的全景玻璃驾驶舱**。所有会话历史、项目工作区、代码实时变动（Diff 对比）、AI 思考推理链和终端沙箱执行一目了然，特别适合需要精细审查代码和享受极致视觉体验的开发者！
 
 最爽的是，**CLI 版与 Desktop 版共享完全相同的底层架构与全局配置文件（`~/.config/opencode/`）**！你在桌面端配置好的模型和密钥，在命令行终端里敲回车就能直接复用，真正做到“双端合一，无缝切换”。
 
@@ -99,7 +99,7 @@ opencode models --refresh
 opencode
 ```
 
-进入 CLI 交互界面后，`Tab` 键可在 **Plan（规划）/ Build（构建）** 等智能体模式间快速切换，输入 `/` 即可呼出斜杠命令菜单（切换模型、查看智能体等），与 Desktop 版的操作心智完全一致。
+进入 CLI 交互界面后，`Tab` 键可在 **Plan（规划）/ Build（构建）** 等智能体模式间快速切换，输入 `/` 即可呼出斜杠命令菜单（切换模型、查看智能体等），与 Desktop 版的操作习惯完全一致。
 
 ***
 
@@ -133,7 +133,7 @@ OpenCode Desktop 提供了开箱即用的跨平台安装包，教程也主要采
 
 首次启动 OpenCode Desktop 时，你将看到一个极简、清爽且专注于代码创造的现代化界面：
 
-![OpenCode Desktop 主界面](./img/opencode_main_interface.png)
+<img src="./img/opencode_main_interface.png" alt="OpenCode Desktop 主界面" width="70%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 🔍 主界面核心功能分区：
 
@@ -163,7 +163,7 @@ OpenCode Desktop 提供了开箱即用的跨平台安装包，教程也主要采
 
 ### 1. 通用设置（General Settings）
 
-![OpenCode 通用设置](./img/opencode_settings_general.png)
+<img src="./img/opencode_settings_general.png" alt="OpenCode 通用设置" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 #### 📝 核心配置项逐项解析：
 
@@ -171,7 +171,7 @@ OpenCode Desktop 提供了开箱即用的跨平台安装包，教程也主要采
 | :---------------------------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------- |
 | **新布局 (New Layout)**          | 🔘 按需开启        | 开启后启用最新的标签页和主页分栏布局，适合喜欢在多文件和多任务间快速跳转的用户。                                                                                      |
 | **语言 (Language)**             | 🇨🇳 **简体中文**  | 一键切换全中文界面，降低视觉疲劳与认知门槛。                                                                                                        |
-| **自动接受权限 (Auto-approve)**     | ⚠️ **熟练后开启**   | **安全与效率的权衡**：开启后，AI 执行读写文件、运行 Shell 命令将不再弹窗等待你点击确认。- **小白期**：建议**关闭**（人工复核，看清 AI 想干嘛）；- **老手/信任沙箱期**：建议**开启**（彻底解放双手，享受丝滑心流）。 |
+| **自动接受权限 (Auto-approve)**     | ⚠️ **熟练后开启**   | **安全与效率的权衡**：开启后，AI 执行读写文件、运行 Shell 命令将不再弹窗等待你点击确认。- **小白期**：建议**关闭**（人工复核，看清 AI 想干嘛）；- **老手/信任沙箱期**：建议**开启**（彻底解放双手，享受丝滑流畅的体验）。 |
 | **终端 Shell (Terminal Shell)** | 💻 **自动 (默认)** | 自动识别你当前系统的主 Shell（macOS 默认为 `zsh`，Linux 为 `bash`，Windows 为 `powershell`），作为智能体调用系统工具的基础底座。                                    |
 | **显示推理摘要 (Reasoning)**        | ✅ **强烈建议开启**   | **透视 AI 的内心戏！** 针对具备思考能力的大模型（如 DeepSeek-R1、o1/o3、Claude 3.7 Extended Thinking），在时间线中完整展开其思维链（Chain of Thought），让你看清 AI 的推理逻辑。 |
 | **展开 Shell 工具调用**             | ✅ **推荐开启**     | 默认在时间线中展开 AI 敲终端命令的完整细节与标准输出，避免黑盒盲盒操作。                                                                                        |
@@ -181,8 +181,7 @@ OpenCode Desktop 提供了开箱即用的跨平台安装包，教程也主要采
 
 ### 2. 提供商与模型接入（Providers & Models）
 
-![OpenCode 提供商设置](./img/opencode_settings_providers.png)
-
+<img src="./img/opencode_settings_providers.png" alt="OpenCode 提供商设置" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 OpenCode 拥有极度开放的模型生态，支持主流官方模型、订阅型服务与第三方中转网关：
 
 #### 🌐 支持的常见模型类型：

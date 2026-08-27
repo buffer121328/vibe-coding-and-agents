@@ -1,6 +1,6 @@
 # 6.3 阶段一实战：用户认证与 JWT 权限隔离系统
 
-> **本节导读**：在前面的小节中，我们搭建好了 Trae 的作战指挥部与规则上下文网络。从本节开始，我们将正式打响已有博客系统二次开发的第一枪！我们将体验全新的 **Plan 规划模式**，以“指挥官”的心智与 AI 开展交互式方案讨论，选定最具性价比的**最小改造方案**，并放手让 Agent 自动推进编码与 ATDD 自动化测试，最终完成用户登录、密码哈希与 JWT 权限隔离的完美交付！
+> **本节导读**：在前面的小节中，我们搭建好了 Trae 的作战指挥部与规则上下文网络。从本节开始，我们将正式打响已有博客系统二次开发的第一枪！我们将体验全新的 **Plan 规划模式**，以“指挥官”的思路与 AI 开展交互式方案讨论，选定最具性价比的**最小改造方案**，并放手让 Agent 自动推进编码与 ATDD 自动化测试，最终完成用户登录、密码哈希与 JWT 权限隔离的完美交付！
 
 ***
 
@@ -41,12 +41,12 @@ graph TD
 
 ***
 
-## 🧠 二、Plan 模式驱动：以“指挥官”心智与 AI 讨论决策
+## 🧠 二、Plan 模式驱动：以“指挥官”思路与 AI 讨论决策
 
 在现代 Vibe Coding 开发范式中，最忌讳的就是“一股脑让 AI 瞎写”。真正的高手懂得**在动第一行代码前，先用 Plan 模式与 AI 对齐方案与边界**。
 
 ```
-😎 指挥官核心心智：
+😎 指挥官核心思路：
 “在这次实战中，我们是指挥官，负责把控方向与最终拍板决策；
 不用担心选错会做坏项目，那是员工（Agent）该考虑自愈的事情（狗头）！
 对于已有系统二次开发，核心原则永远是 —— 最小改造成本，最大产出效益！”
@@ -56,12 +56,7 @@ graph TD
 
 在 Trae 对话框中切换到 **Plan 模式**，输入我们的宏观需求，要求 AI 针对现有项目给出合理方案并展开讨论：
 
-```
-[Plan] 接下来我们要进行：用户注册登录与 JWT 权限隔离系统
-针对这个项目做出一个合理的方向，并与我进行讨论
-```
-
-![Trae Plan 模式意图输入](./img/03_plan_prompt_input.png)
+<img src="./img/03_plan_prompt_input.png" alt="Trae Plan 模式意图输入" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 2. 交互式方案讨论与决策树选择
 
@@ -75,7 +70,7 @@ Trae 会列出当前系统的 3 种可选方案：
 2. **登录即可管理**：任何登录用户都能增删改所有文章（隔离性弱）；
 3. **角色权限制**：普通用户只读，仅 `admin` 角色可写（最适合单人/团队博客，改造成本最小）。
 
-![Trae 方案交互选择：权限粒度](./img/03_plan_option_permission_level.png)
+<img src="./img/03_plan_option_permission_level.png" alt="Trae 方案交互选择：权限粒度" width="60%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 👉 **指挥官决策**：选择 **“角色权限制”**！遵循**最小改造原则**，既有的 `Post` 表结构完全无需变动，核心开发重心集中在登录鉴权与守卫拦截上。
 
@@ -83,7 +78,7 @@ Trae 会列出当前系统的 3 种可选方案：
 
 Trae 会继续确认账号创建方式与前端改造范围：
 
-![Trae 方案多维度细化讨论](./img/03_plan_option_discussion.png)
+<img src="./img/03_plan_option_discussion.png" alt="Trae 方案多维度细化讨论" width="60%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 👉 **指挥官决策**：
 
@@ -104,7 +99,7 @@ Trae 会继续确认账号创建方式与前端改造范围：
 
 Trae Agent 会依据方案自动建立 10 项清晰的 Task 清单，并按照 **ATDD（验收测试驱动开发）** 的节奏依次推进：
 
-![Agent 任务清单自动化执行进度](./img/03_agent_executing_tasks.png)
+<img src="./img/03_agent_executing_tasks.png" alt="Agent 任务清单自动化执行进度" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ***
 
@@ -339,19 +334,19 @@ graph LR
 
 首次打开页面，右上角展示「登录」按钮，全站文章正常公开浏览，**未登录状态下无法编辑和新增文章**（“写文章”按钮与每篇文章卡片上的“编辑/删除”按钮均被安全隐藏）：
 
-![未登录只读主页](./img/03_ui_readonly_homepage.png)
+<img src="./img/03_ui_readonly_homepage.png" alt="未登录只读主页" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 2. 点击唤起暗黑玻璃拟态登录弹窗
 
 点击「登录」按钮，弹出高颜值的玻璃拟态登录模态框，输入默认超级管理员账密 `admin / admin123`：
 
-![暗黑玻璃拟态登录弹窗](./img/03_ui_login_modal.png)
+<img src="./img/03_ui_login_modal.png" alt="暗黑玻璃拟态登录弹窗" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ### 3. 登录成功态（权限全开）
 
 登录成功后，顶部右上角展示当前登录身份 `admin` 与「退出」按钮，写文章与操作按钮全部点亮，刷新页面依然保持登录状态：
 
-![登录成功状态](./img/03_ui_logged_in_state.png)
+<img src="./img/03_ui_logged_in_state.png" alt="登录成功状态" width="30%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 ***
 
@@ -359,7 +354,7 @@ graph LR
 
 在 Agent 完成编码后，自动化验收套件与 OpenSpec 规范顺利收尾：
 
-![阶段一全链路验收与文档同步](./img/03_phase_completed_acceptance.png)
+<img src="./img/03_phase_completed_acceptance.png" alt="阶段一全链路验收与文档同步" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 1. **🧪 自动化回归测试（42 passed 全部通过）**：
    - 运行 `uv run pytest -v`，覆盖登录成功/失败、Token 过期、401 拦截、403 越权、种子管理员自愈等全套用例，测试通过率 100%！

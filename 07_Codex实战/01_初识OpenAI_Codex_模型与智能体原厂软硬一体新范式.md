@@ -57,22 +57,22 @@ graph TD
 
 ### 四大主流 Agent 桌面端全景横评（2026-08 时效）
 
-| 核心能力                    |   ChatGPT 桌面端 · Codex  |       字节跳动 Trae (Work)      |          Cursor          |    Anthropic Claude Code  |
-| :---------------------- | :------------------: | :-------------------------: | :----------------------: | :---------------------: |
-| **标准 MCP 协议支持**         |        ✅ 原生一等公民       |            ✅ 深度集成           |          ✅ 全面支持          |         ✅ 深度集成         |
-| **内置浏览器实时预览**           |    ✅ 内置 Atlas / Browser  |         ✅ 内置 Web 预览         |       ✅ 内置 Browser       |      ✅ 内置 Web 视图       |
-| **Hooks 与规则拦截**         |  ✅ `AGENTS.md` + Hooks  |    ✅ `.traerules` + Hooks   | ✅ `.cursorrules` + Hooks |   ✅ `CLAUDE.md` + Hooks  |
-| **系统级电脑操控 (OS/Terminal)** |     ✅ 原生 Shell 与视控     |         ✅ 原生终端与系统执行         |         ✅ 原生终端执行         |       ✅ 原生 Bash 与视控      |
-| **多 Agent 并行调度**         |  ✅ Multi-Agent / 并行任务  |            ✅ 持续演进            |    ✅ Background Agents   |  ✅ Agent Teams 体系      |
-| **云端与远程控制**             | ✅ Cloud 运行 + Codex Remote (手机) |      ✅ 云端执行（演进中）      |   ✅ Background Cloud     |   ✅ 云端 Agent（付费）    |
-| **核心基准模型**               | **GPT-5.5 / GPT-5.6 Sol·Terra·Luna** | **主流大模型聚合 (Claude/GPT/DeepSeek)** | **Opus 5 / Fable 5 / Grok / GPT-5.6** | **Claude Opus 5 / Fable 5** |
+| 核心能力                      |          ChatGPT 桌面端 · Codex         |          字节跳动 Trae (Work)         |                 Cursor                |    Anthropic Claude Code    |
+| :------------------------ | :----------------------------------: | :-------------------------------: | :-----------------------------------: | :-------------------------: |
+| **标准 MCP 协议支持**           |               ✅ 原生一等公民               |               ✅ 深度集成              |                 ✅ 全面支持                |            ✅ 深度集成           |
+| **内置浏览器实时预览**             |         ✅ 内置 Atlas / Browser         |            ✅ 内置 Web 预览            |              ✅ 内置 Browser             |         ✅ 内置 Web 视图         |
+| **Hooks 与规则拦截**           |         ✅ `AGENTS.md` + Hooks        |       ✅ `.traerules` + Hooks      |        ✅ `.cursorrules` + Hooks       |    ✅ `CLAUDE.md` + Hooks    |
+| **系统级电脑操控 (OS/Terminal)** |            ✅ 原生 Shell 与视控            |            ✅ 原生终端与系统执行            |                ✅ 原生终端执行               |        ✅ 原生 Bash 与视控        |
+| **多 Agent 并行调度**          |         ✅ Multi-Agent / 并行任务         |               ✅ 持续演进              |          ✅ Background Agents          |       ✅ Agent Teams 体系      |
+| **云端与远程控制**               |    ✅ Cloud 运行 + Codex Remote (手机)    |            ✅ 云端执行（演进中）            |           ✅ Background Cloud          |        ✅ 云端 Agent（付费）       |
+| **核心基准模型**                | **GPT-5.5 / GPT-5.6 Sol·Terra·Luna** | **主流大模型聚合 (Claude/GPT/DeepSeek)** | **Opus 5 / Fable 5 / Grok / GPT-5.6** | **Claude Opus 5 / Fable 5** |
 
 > 💡 **核心破局认知**：
 > 不要再纠结于“哪家界面多了一个按钮，哪家少了一个侧边栏”。各大厂商的核心研发能力都会在数周内互相吸收借鉴。**工具本身只是外骨骼机甲，决定最终输出上限的，永远是里面坐着的“驾驶员大脑” —— 底层大模型！**
 
 ***
 
-## 🎯 二、选型底层心智：选择 Agent 工具，本质就是选底层模型！
+## 🎯 二、选型底层逻辑：选择 Agent 工具，本质就是选底层模型！
 
 理解了“原厂软硬一体”的逻辑，你在选择 AI 辅助开发工具时就会豁然开朗：
 
@@ -103,12 +103,12 @@ graph TD
 
 **Codex 已不再是单独收费产品**，而是包含在 ChatGPT 的各档订阅中（Free / Go / Plus / Pro / Business / Edu / Enterprise）：
 
-| 方案 | 月费 | 适合人群 | Codex 能力 |
-| :--- | :---: | :--- | :--- |
-| **Go** | $8 | 轻量级编程任务 | 基础 Codex，包含 GPT-5.4-mini 等高频本地消息 |
-| **Plus** | $20 | 每周数次专注编码会话 | Codex on web/CLI/IDE/iOS，GPT-5.5 / GPT-5.4 / GPT-5.3-Codex |
-| **Pro** | $100 起（5x / 20x 档） | 重度开发者 / 团队骨干 | 5x~20x 更高频次，GPT-5.3-Codex-Spark（研究预览） |
-| **Business** | $20/人/月（年付） | 成长型团队 | 团队工作空间、SSO、按席位或按用量计费 |
+| 方案           |          月费         | 适合人群         | Codex 能力                                                   |
+| :----------- | :-----------------: | :----------- | :--------------------------------------------------------- |
+| **Go**       |         \$8         | 轻量级编程任务      | 基础 Codex，包含 GPT-5.4-mini 等高频本地消息                           |
+| **Plus**     |         \$20        | 每周数次专注编码会话   | Codex on web/CLI/IDE/iOS，GPT-5.5 / GPT-5.4 / GPT-5.3-Codex |
+| **Pro**      | \$100 起（5x / 20x 档） | 重度开发者 / 团队骨干 | 5x\~20x 更高频次，GPT-5.3-Codex-Spark（研究预览）                     |
+| **Business** |     \$20/人/月（年付）    | 成长型团队        | 团队工作空间、SSO、按席位或按用量计费                                       |
 
 > 📌 关键变化：自 2026-07 起，**独立 Codex 应用并入 ChatGPT 桌面端**，与 Chat、Work 并列三个入口；旧版独立客户端更名为 **ChatGPT Classic** 并保留可用。登录后 Codex 标签页会自动同步历史项目、对话与配置。
 
@@ -180,7 +180,7 @@ graph LR
     KeepAuth -.->|"auth.json 保留官方 Access Token"| CodexClient
 ```
 
-### 1. 使用 CC-Switch 极速管理多供应商（2026-08 时效）
+### 1. 使用 CC-Switch 极速管理多供应商
 
 在 [3.7 节](../03_脚手架搭建/07_中转上游与代理配置_以Codex为例.md) 中我们介绍过的 **CC-Switch**（当前 v3.18.0，GitHub 12.1 万 stars，MIT 协议），是管理 Codex 上游的最轻量利器：
 
@@ -192,7 +192,7 @@ graph LR
 > 💡 六步速通流程：① 切回 OpenAI Official 完成一次官方登录（Free 账号即可）→ ② 开启「Codex 应用增强→保留官方登录」→ ③ 添加第三方供应商预设并填 Key → ④ 开启本地路由并启用 Codex 接管 → ⑤ 切换到该供应商 → ⑥ 完全重启 Codex 加载新配置。
 > 此外，开源项目 **ccswitch-bridge** 提供轻量协议翻译代理，专门支持 Codex 接入 DeepSeek / MiniMax / 小米 MiMo。
 
-### 2. 通过配置文件直接接入第三方兼容接口
+### 2. 通过配置文件直接接入第三方兼容接口（这个一般的中转站都提供教程）
 
 在 Codex 的全局配置文件 `~/.codex/config.toml` 中，通过 `model_provider` + `[model_providers.custom]` 指定自定义网关：
 
@@ -230,15 +230,17 @@ export OPENAI_API_KEY="sk-your-proxy-token-here"
 1. **原厂深度定制**：理解了 Codex 之所以是 GPT 模型的最佳搭档，源于底层训练轨迹与原厂生态的深度对齐；
 2. **产品格局与功能大趋同**：2026 年 Codex 已并入 ChatGPT 桌面端（旧版更名 ChatGPT Classic），现代主流 Agent（Codex、Trae、Cursor、Claude Code）在 MCP、Hooks、Git、内置浏览器、Computer Use 等功能上已全面趋同；
 3. **选型第一性原理**：选择 Agent 实质上就是选择基座大模型（GPT-5.6 Sol/Terra/Luna、Claude Opus 5/Fable 5、Grok 4.x、DeepSeek V4）；
-4. **全套接入实操**：掌握了 ChatGPT 各档订阅（Go $8 / Plus $20 / Pro $100 起）与网络风控防封指南，以及利用 CC-Switch / ccswitch-bridge 接入第三方模型的极客中转方案。
+4. **全套接入实操**：掌握了 ChatGPT 各档订阅（Go $8 / Plus $20 / Pro \$100 起）与网络风控防封指南，以及利用 CC-Switch / ccswitch-bridge 接入第三方模型的极客中转方案。
 
 在下一节 **[7.2 Codex 桌面端工作台全貌与极速上手](./02_Codex桌面端工作台全貌与极速上手.md)** 中，我们将正式打开 Codex 桌面版应用，手把手带你熟悉其多 Agent 线程与内置热重载界面的每一处细节！
 
 ***
 
 > 📎 **参考资料（时效 2026-08）**：
+>
 > - OpenAI Codex 官方 Changelog：<https://developers.openai.com/codex/changelog>
 > - Codex Pricing（含 Go/Plus/Pro/Business 订阅与额度）：<https://developers.openai.com/codex/pricing>
 > - ChatGPT 版本说明 / 定价：<https://help.openai.com> · <https://openai.com/zh-Hans-CN/business/chatgpt-pricing>
 > - CC Switch 官方文档（Codex 应用增强 / 本地路由）：<https://ccswitch.io> · <https://github.com/farion1231/cc-switch>
 > - ccswitch-bridge（DeepSeek/MiniMax/MiMo 协议翻译）：<https://github.com/jimmywuxin/ccswitch-bridge>
+
