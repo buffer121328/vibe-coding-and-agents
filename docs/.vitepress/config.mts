@@ -41,14 +41,25 @@ const categories = [
   { text: '💆 对 Agent 与 AI 的思考', full: '💆 对 Agent 与 AI 的思考（认知碰撞）', link: '/12_如何做一个自己的项目/', prefixes: ['12_', '13_'] },
 ]
 
-// 侧边栏：按六大学习路径分组，组内展示各章节（含子页面）
-const sidebar = categories.map((cat) => ({
-  text: cat.full,
-  collapsed: false,
-  items: cat.prefixes.flatMap((p) =>
-    chapterDirs.filter((d: string) => d.startsWith(p)).map(chapterGroup),
-  ),
-}))
+// 某个分类的侧边栏（仅该分类下的各章节子页）
+function categorySidebar(cat: (typeof categories)[number]) {
+  return {
+    text: cat.full,
+    collapsed: false,
+    items: cat.prefixes.flatMap((p) =>
+      chapterDirs.filter((d: string) => d.startsWith(p)).map(chapterGroup),
+    ),
+  }
+}
+
+// VitePress 侧边栏支持「按路径前缀的对象」形式：把每个章节路由指向其所属分类，
+// 这样点顶部哪一类，侧边栏就只显示该类的子章节
+const sidebar: Record<string, { text: string; collapsed: boolean; items: unknown[] }[]> = {}
+for (const cat of categories) {
+  for (const p of cat.prefixes) {
+    sidebar[`/${p}`] = [categorySidebar(cat)]
+  }
+}
 
 export default withMermaid(defineConfig({
   lang: 'zh-CN',
@@ -81,7 +92,7 @@ export default withMermaid(defineConfig({
       ...categories.map((c) => ({ text: c.text, link: c.link })),
       { text: 'GitHub', link: 'https://github.com/buffer121328/vibe_coding' },
     ],
-    sidebar,
+    sidebar: sidebar as any, // 对象形式（按路径前缀映射到分类侧边栏），类型声明未收录故断言
     outline: { label: '本页目录', level: [2, 3] },
     search: {
       provider: 'local',
