@@ -4,15 +4,11 @@
   <em>用通俗大白话讲透原理 · 从 0 到 1 手搓 Agent · 打通 Dify / OpenCode / LangChain / LangGraph / RAG 工业级落地</em>
 </p>
 
-<!-- 📖 在线阅读：AI 生成的圆形图标，单独一行 -->
+<!-- 📖 在线阅读：圆形图标 + 👈 阅读入口同一行 -->
 <p align="center">
   <a href="https://buffer121328.github.io/vibe_coding/">
-    <img src="img/image.png" alt="在线阅读" width="150" height="150" style="border-radius:50%" />
+    <img src="img/image.jpg" alt="在线阅读" width="150" height="150" style="border-radius:50%; vertical-align:middle" />
   </a>
-</p>
-
-<!-- 👈 左手指向在线阅读入口 -->
-<p align="center">
   <b><a href="https://buffer121328.github.io/vibe_coding/">👈 点这里开始阅读</a></b>
 </p>
 
