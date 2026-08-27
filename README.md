@@ -241,5 +241,3 @@ vibe_coding/
 ## 💬 学习交流群
 
 感兴趣的朋友欢迎扫码加入学习交流群，一起交流 AI 编程与 Agent 学习心得。
-
-<img src="./交流群.jpg" alt="AI 学习交流群二维码" width="50%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
