@@ -1,5 +1,6 @@
 // docs/.vitepress/config.mts —— VitePress 站点配置（侧边栏按章节自动生成）
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -29,7 +30,7 @@ const sidebar = readdirSync(docsRoot)
     return { text: dir.replace(/^\d{2}_/, ''), items }
   })
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   lang: 'zh-CN',
   title: 'Vibe Coding 知识库',
   description: 'AI 辅助编程与 Agent 智能体全景教学知识库',
@@ -87,3 +88,4 @@ export default defineConfig({
     },
   },
 })
+)
