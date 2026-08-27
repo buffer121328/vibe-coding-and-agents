@@ -4,11 +4,14 @@
 [![AI Era: 2026](https://img.shields.io/badge/AI_Era-2026_Frontier-blue.svg)](https://github.com)
 [![Status: Actively Developing](https://img.shields.io/badge/Status-Actively_Updating-orange.svg)](https://github.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com)
+[![在线阅读](https://img.shields.io/badge/📖在线阅读-VitePress-4f46e5)](https://buffer121328.github.io/vibe_coding/)
 
 > **“There's a new kind of coding I call 'vibe coding', where you entirely give in to the vibes, embrace every AI, and forget that the code even exists... I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.”**
 > —— *Andrej Karpathy (前 OpenAI 联合创始人、前 Tesla AI 总监)*
 
 ***
+
+> 📖 **在线阅读**：[Vibe Coding 在线文档站](https://buffer121328.github.io/vibe_coding/)（VitePress 渲染 · 全文搜索 · 侧边栏目录 · 章节 md 自动同步）
 
 ## 📖 项目简介 (About The Project)
 
