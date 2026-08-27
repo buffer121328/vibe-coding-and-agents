@@ -31,17 +31,24 @@ function chapterGroup(dir: string) {
   return { text: dir.replace(/^\d{2}_/, ''), items }
 }
 
-const sidebar = chapterDirs.map(chapterGroup)
-
-// 顶部导航按学习路径分为六大类，点击直达该类入口章节
+// 学习路径六大类（与根 README「章节导览：按学习路径分类」保持一致）
 const categories = [
-  { text: '🧭 入门概念', link: '/01_发展之路/' },
-  { text: '🛠️ 主流工具进阶', link: '/04_Dify实战/' },
-  { text: '🤖 底层理解 Agent', link: '/08_手搓Agent/' },
-  { text: '🏭 主流 Agent 框架实战', link: '/09_LangChain搭建Agent/' },
-  { text: '📚 RAG 实战', link: '/11_RAG实战/' },
-  { text: '💆 心理按摩', link: '/12_如何做一个自己的项目/' },
+  { text: '🧭 入门概念', full: '🧭 入门概念（打地基）', link: '/01_发展之路/', prefixes: ['01_', '02_', '03_'] },
+  { text: '🛠️ 主流工具实战', full: '🛠️ 主流工具实战（多备几把趁手的刀）', link: '/04_Dify实战/', prefixes: ['04_', '05_', '06_', '07_'] },
+  { text: '🤖 从底层理解 Agent', full: '🤖 从底层理解 Agent（开天眼）', link: '/08_手搓Agent/', prefixes: ['08_'] },
+  { text: '🏭 主流 Agent 框架', full: '🏭 主流 Agent 框架（最成熟的生产方案）', link: '/09_LangChain搭建Agent/', prefixes: ['09_', '10_'] },
+  { text: '📚 RAG 实战', full: '📚 RAG 实战（知识库长期工程）', link: '/11_RAG实战/', prefixes: ['11_'] },
+  { text: '💆 对 Agent 与 AI 的思考', full: '💆 对 Agent 与 AI 的思考（认知碰撞）', link: '/12_如何做一个自己的项目/', prefixes: ['12_', '13_'] },
 ]
+
+// 侧边栏：按六大学习路径分组，组内展示各章节（含子页面）
+const sidebar = categories.map((cat) => ({
+  text: cat.full,
+  collapsed: false,
+  items: cat.prefixes.flatMap((p) =>
+    chapterDirs.filter((d: string) => d.startsWith(p)).map(chapterGroup),
+  ),
+}))
 
 export default withMermaid(defineConfig({
   lang: 'zh-CN',
@@ -71,7 +78,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      ...categories,
+      ...categories.map((c) => ({ text: c.text, link: c.link })),
       { text: 'GitHub', link: 'https://github.com/buffer121328/vibe_coding' },
     ],
     sidebar,
