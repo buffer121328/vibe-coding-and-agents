@@ -106,7 +106,8 @@ vibe_coding/
 │   ├── 10_Subagents子代理协作.md                      # 8.10 上下文隔离、子任务派发与 DeepResearch
 │   ├── 11_会话持久化与多分支管理.md                    # 8.11 SessionStore 存档读档、树状 fork 与断点续跑
 │   ├── 12_可观测性与性能评估.md                        # 8.12 EventBus 事件总线、Token 账单审计与评测套件
-│   └── 13_综合实战_打造个人MiniAgent.md                # 8.13 Rich 高亮终端、LoopGuard 熔断与整机交付 MiniAgent
+│   ├── 13_综合实战_打造个人MiniAgent.md                # 8.13 Rich 高亮终端、LoopGuard 熔断与整机交付 MiniAgent
+│   └── 14_常见问题与排查指南.md                        # 8.14 常见问题与排障指南：长时间卡住、Gradio排版错乱、环境与权限避坑
 ├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent（LCEL 管道流与工业级智能体编排）
 │   ├── README.md                                      # 第九章导读、10步进阶全景路线图与技术雷达
 │   ├── 01_初识LangChain与生态架构.md                  # 9.1 langchain-core 拆分、统一模型工厂与流式/批量调用
@@ -160,6 +161,8 @@ vibe_coding/
 ***
 
 ## 🎓 项目状态与后续更新 (Status & Roadmap)
+
+> **本项目是初版，仍在不断完善中。**
 
 目前框架和实战项目已经搭建完成，后续会不断迭代和吸纳新的知识！
 
