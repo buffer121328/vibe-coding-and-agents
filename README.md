@@ -124,17 +124,20 @@ vibe_coding/
 │   ├── 13_综合实战_打造个人MiniAgent.md                # 8.13 Rich 高亮终端、LoopGuard 熔断与整机交付 MiniAgent
 │   └── 14_常见问题与排查指南.md                        # 8.14 常见问题与排障指南：长时间卡住、Gradio排版错乱、环境与权限避坑
 ├── 09_LangChain搭建Agent/                             # 第九章：LangChain 搭建 Agent（LCEL 管道流与工业级智能体编排）
-│   ├── README.md                                      # 第九章导读、10步进阶全景路线图与技术雷达
+│   ├── README.md                                      # 第九章导读、13步进阶全景路线图与技术雷达
 │   ├── 01_初识LangChain与生态架构.md                  # 9.1 langchain-core 拆分、统一模型工厂与流式/批量调用
 │   ├── 02_Prompt模板与上下文消息流.md                 # 9.2 四大消息模型、ChatPromptTemplate 与 MessagesPlaceholder
 │   ├── 03_LCEL表达式语言与流式调度.md                 # 9.3 管道符 '|'、Runnable 协议族、并行流与 Fallbacks 容灾
 │   ├── 04_结构化输出与容错解析.md                     # 9.4 with_structured_output、Pydantic 强类型与 JSON 修复
 │   ├── 05_自定义工具生态与参数校验.md                 # 9.5 @tool 装饰器、Pydantic 参数防御与 bind_tools 底层机制
-│   ├── 06_记忆管理与会话状态持久化.md                 # 9.6 RunnableWithMessageHistory、会话隔离与 trim_messages 裁剪
+│   ├── 06_记忆管理与会话状态持久化.md                 # 9.6 Checkpointer 短期记忆、Store 长期记忆与 trim_messages 裁剪
 │   ├── 07_Callbacks回调与可观测性中间件.md            # 9.7 BaseCallbackHandler、Token 账单审计与敏感信息脱敏
 │   ├── 08_RAG核心链路与向量检索增强.md                # 9.8 语义切块、Chroma 向量入库与 LCEL 标准 RAG 检索问答
-│   ├── 09_Agent现代架构与create_agent.md              # 9.9 现代 Tool Calling Agent、Scratchpad 推理与中间步骤审计
-│   └── 10_综合实战_AI智能数码选购与避坑决策Agent.md # 9.10 综合实战：SmartBuyer 数码选购参谋与 10-Tab Gradio 工作台
+│   ├── 09_Agent现代架构与create_agent.md              # 9.9 现代 Tool Calling Agent、state_schema 自定义状态与 HITL 人类在环
+│   ├── 10_上下文工程与动态上下文注入.md               # 9.10 三类上下文 + 三数据源、动态 Prompt/工具/画像注入
+│   ├── 11_自定义中间件与生命周期钩子.md               # 9.11 Node/Wrap 两类钩子、state_schema 与状态更新机制
+│   ├── 12_生产级防护_护栏安全与测试评估.md            # 9.12 确定性/模型性护栏、PII 脱敏、Prompt 注入防护与测试评估
+│   └── 13_综合实战_AI智能数码选购与避坑决策Agent.md   # 9.13 综合实战：SmartBuyer 数码选购参谋，9.1~9.12 全零件融会贯通整机交付
 ├── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流（意图图编排与多智能体实战）
 │   ├── README.md                                      # 第十章导读与核心概念
 │   ├── 01_初识LangGraph与状态机.md                    # 10.1 解决传统Agent不可控痛点，图与状态流转
@@ -178,7 +181,8 @@ vibe_coding/
     ├── 03_到底需不需要订阅CodingPlan和AgentPlan.md    # 14.3 订阅包月 vs BYOK 算账、2026官方价对比、四类人群决策树与防割指南
     ├── 04_国外模型的使用方式.md                       # 14.4 海外三大顶流、网络环境排查、支付门槛与 OpenRouter 聚合分发
     ├── 05_中转站和代充.md                             # 14.5 OneAPI原理、官转/逆向/掺水鉴别、黑卡代充陷阱与防坑自保
-    └── 06_如何正确的使用AI.md                         # 14.6 RCCO结构化提问、长会话污染与切会话4大信号、Agent步长控制
+    ├── 06_如何正确的使用AI.md                         # 14.6 RCCO结构化提问、长会话污染与切会话4大信号、Agent步长控制
+    └── 07_思考等级与多模型分工_用最便宜的方式把事做对.md # 14.7 规划-执行-审查流水线、思考等级路由、弱执行+强验证与实战组合
 ```
 
 ***

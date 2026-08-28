@@ -1,0 +1,19 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "background": "#eff1f5",
+    "primaryColor": "#e6e9ef",
+    "primaryTextColor": "#4c4f69",
+    "primaryBorderColor": "#9ca0b0",
+    "lineColor": "#9ca0b0",
+    "secondaryColor": "#f4f5f9",
+    "tertiaryColor": "#e6e9ef",
+    "clusterBkg": "#eff1f5",
+    "clusterBorder": "#9ca0b0",
+    "nodeBorder": "#bcc0cc",
+    "nodeTextColor": "#4c4f69",
+    "edgeLabelBackground": "#eff1f5",
+    "titleColor": "#4c4f69",
+    "fontFamily": "Inter, PingFang SC, Microsoft YaHei, sans-serif"
+  }
+}
