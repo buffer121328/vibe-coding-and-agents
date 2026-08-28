@@ -1,0 +1,18 @@
+flowchart TD
+
+    Start["👤 用户输入复合指令 (User Input)"]
+
+    subgraph AgentLoop ["🔄 Agent 思考-行动-观察自治闭环 (LangGraph 状态机)"]
+        Think["🧠 LLM 综合上下文与消息流水线深度思考"]
+        Decide{"需要调用外部工具吗？"}
+        CallTool["⚙️ 执行目标工具 (Weather / Calculator / Search)"]
+        Observe["📋 Observation: 将工具结果作为 ToolMessage 写回消息列表"]
+        
+        Think --> Decide
+        Decide -- "需要工具" --> CallTool
+        CallTool --> Observe
+        Observe --> Think
+    end
+
+    Start ==> Think
+    Decide -- "无需工具 / 信息已充足" ==> FinalAnswer["🎉 最终汇总并回答用户 (Final Output)"]

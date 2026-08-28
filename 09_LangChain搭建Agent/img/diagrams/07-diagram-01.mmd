@@ -1,0 +1,18 @@
+flowchart TD
+
+    subgraph LLMLifecycle ["🔄 LLM / Agent 执行生命周期事件流"]
+        E1["1. on_llm_start (发起请求，触发敏感信息脱敏与计时)"]
+        E2["2. on_tool_start / end (工具调用拦截与参数审计)"]
+        E3["3. on_llm_end (请求完毕，捕获 Token 消耗与计费)"]
+        E4["4. on_llm_error (异常捕获与报警)"]
+        E1 --> E2 --> E3
+        E1 -. 异常 .-> E4
+    end
+
+    subgraph CustomCallbacks ["🔍 BaseCallbackHandler 监听探针"]
+        C1["📊 PerformanceAndCostCallback (耗时与 Token 账单)"]
+        C2["🛡️ SensitiveDataRedactCallback (隐私正则脱敏)"]
+        C3["🎛️ AgentMiddleware 观测钩子\n(before_model / after_model)"]
+    end
+
+    LLMLifecycle <==> CustomCallbacks

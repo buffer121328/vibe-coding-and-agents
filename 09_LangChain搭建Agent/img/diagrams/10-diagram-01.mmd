@@ -1,0 +1,24 @@
+flowchart LR
+
+    subgraph Sources ["📦 三种数据源 (9.6 已铺垫)"]
+        RC["Runtime Context\n静态配置: user_id / 权限"]
+        ST["State\n短期记忆: 消息列表 / 认证状态"]
+        SO["Store\n长期记忆: 用户画像 / 偏好"]
+    end
+
+    subgraph Middleware ["🧩 中间件: 运行时动态注入"]
+        DP["@dynamic_prompt\n动态生成系统提示"]
+        WO["wrap_model_call\nrequest.override 裁剪工具 / 换模型"]
+    end
+
+    subgraph Model ["🧠 模型调用"]
+        M["LLM 看到正确的上下文"]
+    end
+
+    RC --> DP
+    ST --> DP
+    SO --> DP
+    RC --> WO
+    ST --> WO
+    DP --> M
+    WO --> M

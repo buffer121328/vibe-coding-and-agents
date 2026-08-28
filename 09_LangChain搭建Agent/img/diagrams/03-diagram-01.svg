@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 319.948 557.4" width="319.948" height="557.4" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="ParallelPipe" data-label="⚡ RunnableParallel 并行多分支">
+  <rect x="41.489000000000004" y="118.9" width="236.96999999999997" height="153.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="41.489000000000004" y="118.9" width="236.96999999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="53.489000000000004" y="132.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">⚡ RunnableParallel 并行多分支</text>
+</g>
+<polyline class="edge" data-from="In" data-to="ParallelPipe" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="159.974,72.9 159.974,118.9" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="ParallelPipe" data-to="AggPrompt" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="159.974,272.70000000000005 159.974,318.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AggPrompt" data-to="LLM" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="159.974,355.6 159.974,401.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLM" data-to="Out" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="159.974,438.5 159.974,484.5" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<g class="node" data-id="In" data-label="📥 输入: {topic}" data-shape="rectangle">
+  <rect x="95.27999999999999" y="36" width="129.388" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.974" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📥 输入: {topic}</text>
+</g>
+<g class="node" data-id="AggPrompt" data-label="📝 综合点评 Prompt" data-shape="rectangle">
+  <rect x="78.978" y="318.70000000000005" width="161.992" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.974" y="337.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📝 综合点评 Prompt</text>
+</g>
+<g class="node" data-id="LLM" data-label="🧠 LLM 统一决策" data-shape="rectangle">
+  <rect x="85.2765" y="401.6" width="149.39499999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.974" y="420.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 LLM 统一决策</text>
+</g>
+<g class="node" data-id="Out" data-label="📄 StrOutputParser 纯净文本输出" data-shape="rectangle">
+  <rect x="36" y="484.5" width="247.94799999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.974" y="502.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📄 StrOutputParser 纯净文本输出</text>
+</g>
+<g class="node" data-id="B1" data-label="Branch 1: 赞美诗生成链" data-shape="rectangle">
+  <rect x="57.489000000000004" y="162.9" width="185.70399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="150.341" y="181.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Branch 1: 赞美诗生成链</text>
+</g>
+<g class="node" data-id="B2" data-label="Branch 2: 犀利吐槽生成链" data-shape="rectangle">
+  <rect x="57.489000000000004" y="219.8" width="204.96999999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="159.974" y="238.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Branch 2: 犀利吐槽生成链</text>
+</g>
+</svg>

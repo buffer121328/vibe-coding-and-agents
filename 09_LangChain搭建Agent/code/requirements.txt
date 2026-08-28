@@ -1,0 +1,21 @@
+# LangChain 1.0 核心生态体系依赖清单（2026 版）
+# 注意：langchain-community 已于 2026 年 6 月 Sunset，本清单已全面改用独立伙伴包
+langchain>=1.0.0
+langchain-core>=1.0.0
+langchain-openai>=0.3.0
+langgraph>=1.0.0
+
+# 向量检索与数据处理（独立伙伴包，替代已归档的 langchain-community）
+langchain-chroma>=0.2.0
+chromadb>=1.0.0
+langchain-text-splitters>=0.3.0
+pydantic>=2.7.0
+tiktoken>=0.7.0
+
+# 联网搜索（duckduckgo-search 官方库，替代 community 的 DuckDuckGoSearchRun）
+duckduckgo-search>=6.0.0
+
+# 交互式 Web 界面与环境配置
+gradio>=4.30.0
+python-dotenv>=1.0.1
+rich>=13.7.0

@@ -1,0 +1,21 @@
+flowchart TD
+
+    subgraph Indexing ["📥 离线构建阶段 (Indexing)"]
+        RawDoc["📄 原始技术规范 / PDF / Markdown"]
+        Splitter["✂️ RecursiveCharacterTextSplitter (按段落语义切块)"]
+        Embed["🧮 Embeddings 向量化"]
+        VDB["🗄️ Chroma 向量数据库 (语义坐标存储)"]
+        RawDoc --> Splitter --> Embed --> VDB
+    end
+
+    subgraph QueryPipe ["⚡ 实时查询与生成阶段 (LCEL RAG Pipeline)"]
+        UserQ["❓ 用户实时提问"]
+        Retriever["🔍 Retriever 相似度 Top-K 检索"]
+        Prompt["📝 RAG Prompt (注入 Context + Question)"]
+        LLM["🧠 大模型开卷总结与归纳"]
+        Answer["💡 精准、附带引用来源的答案"]
+
+        UserQ --> Retriever
+        VDB -. 向量比对 .-> Retriever
+        Retriever & UserQ --> Prompt --> LLM --> Answer
+    end

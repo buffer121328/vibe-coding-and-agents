@@ -1,0 +1,14 @@
+flowchart TD
+
+    subgraph AgentLoop ["🔄 Agent 生命周期 (两类钩子插桩点)"]
+        BA["before_agent\n(启动前·每次调用一次)"]
+        BM["before_model\n(模型调用前)"]
+        MC["🧠 模型调用\nwrap_model_call 包裹"]
+        AM["after_model\n(模型响应后)"]
+        TC["⚙️ 工具调用\nwrap_tool_call 包裹"]
+        AA["after_agent\n(结束后·每次调用一次)"]
+
+        BA --> BM --> MC --> AM --> TC
+        TC -->|"需要更多工具"| BM
+        TC --> AA
+    end

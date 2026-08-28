@@ -1,0 +1,9 @@
+flowchart TD
+
+    Raw["📰 非结构化原始文本\n(长篇财报新闻/用户嘈杂留言)"]
+    Schema["📋 Pydantic BaseModel\n(定义字段、类型注解、数值边界)"]
+
+    Raw & Schema ==> LLM["🧠 LLM + with_structured_output()\n(底座 Function Calling 强制结构化)"]
+
+    LLM ==> Output["✅ 强类型 Python 对象 (Pydantic Instance)\ndata.company_name / data.sentiment_score"]
+    Output ==> Downstream["💾 直接入库 (PostgreSQL / Redis / 业务 API)"]

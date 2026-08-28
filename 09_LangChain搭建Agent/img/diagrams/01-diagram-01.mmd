@@ -1,0 +1,22 @@
+flowchart TD
+
+    subgraph UserLayer ["👤 开发者调用层"]
+        U["统一调用 API: invoke() / stream() / batch()"]
+    end
+
+    subgraph CoreLayer ["🧩 LangChain 1.0 标准化抽象层 (langchain-core)"]
+        LCEL["LCEL 管道协议 (Runnable)"]
+        Prompt["ChatPromptTemplate"]
+        Parser["OutputParser"]
+        Tool["@tool 契约规范"]
+    end
+
+    subgraph ProviderLayer ["🌐 底层多厂商模型层 (OpenAI / DeepSeek / Anthropic / Gemini / Ollama)"]
+        M1["OpenAI (GPT 系列)"]
+        M2["DeepSeek / 火山方舟"]
+        M3["Anthropic (Claude 系列)"]
+        M4["本地 SLM / Ollama"]
+    end
+
+    UserLayer ==> CoreLayer
+    CoreLayer ==> ProviderLayer

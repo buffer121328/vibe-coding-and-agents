@@ -1,0 +1,15 @@
+flowchart TD
+
+    U1["👤 用户 Alice (thread_id=alice)"]
+    U2["👤 用户 Bob (thread_id=bob)"]
+
+    subgraph CheckpointStore ["🗄️ Checkpointer 会话隔离存储库"]
+        H1["📁 Alice 专属对话卷宗"]
+        H2["📁 Bob 专属对话卷宗"]
+    end
+
+    U1 ==> H1
+    U2 ==> H2
+
+    H1 ==> Trim["✂️ trim_messages 智能滑动窗口裁剪\n(保留 System 指令 + 裁剪最早多余 Token)"]
+    Trim ==> Agent["🤖 create_agent + LangGraph 运行时"]

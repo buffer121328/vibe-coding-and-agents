@@ -1,0 +1,11 @@
+flowchart TD
+
+    subgraph PromptTemplate ["🎬 ChatPromptTemplate 动态组装流水线"]
+        S["SystemMessage: 角色定义与人设规则"]
+        H["MessagesPlaceholder: 历史多轮对话活页夹"]
+        U["HumanMessage: 用户当期动态提问 {input}"]
+        S --> H --> U
+    end
+
+    PromptTemplate ==> LLM["🧠 LLM 中枢决策大脑"]
+    LLM ==> Out["AIMessage: 模型生成的思考与响应"]

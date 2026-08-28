@@ -1,0 +1,12 @@
+flowchart TD
+
+    subgraph ToolDefinition ["🛠️ LangChain @tool 封装规范"]
+        Code["Python 函数实现\ncalculate_loan(...)"]
+        Doc["函数文档说明 (Docstring)\nAI 意图路由契约"]
+        Schema["Pydantic args_schema\n强类型/边界范围防御"]
+        Code & Doc & Schema
+    end
+
+    ToolDefinition ==> Bind["🔗 llm.bind_tools([tools...])"]
+    Bind ==> LLMDecision["🧠 大模型理解意图并触发 tool_calls"]
+    LLMDecision ==> SafetyExec["⚙️ 自动校验并安全执行工具"]

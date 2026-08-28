@@ -1,0 +1,20 @@
+flowchart TD
+
+    subgraph Input ["🚪 输入侧 (确定性护栏)"]
+        IN["用户输入"]
+        BF["before_agent 黑名单拦截\n(关键词命中即收尾)"]
+        PII1["PIIMiddleware 输入脱敏\n(邮箱/信用卡/API Key)"]
+    end
+
+    subgraph Core ["🤖 Agent 执行"]
+        AG["模型 + 工具调用"]
+        HITL["HumanInTheLoop 高危审批\n(发邮件/删库需人工签字)"]
+    end
+
+    subgraph Output ["🚪 输出侧 (确定性 + 模型性护栏)"]
+        PII2["PIIMiddleware 输出脱敏"]
+        AF["after_agent 安全复核\n(LLM 判定 SAFE/UNSAFE)"]
+        OUT["最终回复"]
+    end
+
+    IN --> BF --> PII1 --> AG --> HITL --> PII2 --> AF --> OUT

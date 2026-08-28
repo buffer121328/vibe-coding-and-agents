@@ -1,0 +1,39 @@
+flowchart TD
+
+    subgraph Phase1 ["🌱 第一阶段：基础基建与管道编排 (9.1 - 9.3)"]
+        S01["9.1 初识生态与统一 I/O\n(langchain-core 拆分与 invoke/stream/batch)"]
+        S02["9.2 Prompt 模板与上下文流\n(ChatPromptTemplate 与 MessagesPlaceholder)"]
+        S03["9.3 LCEL 表达式语言与调度\n(管道符 '|'、RunnableParallel 与 Fallbacks)"]
+        S01 --> S02 --> S03
+    end
+
+    subgraph Phase2 ["🛠️ 第二阶段：精准控制与手脚工具 (9.4 - 9.5)"]
+        S04["9.4 结构化输出与容错解析\n(with_structured_output 与 Pydantic 约束)"]
+        S05["9.5 自定义工具生态与校验\n(@tool 装饰器与 Pydantic 参数防御)"]
+        S04 --> S05
+    end
+
+    subgraph Phase3 ["🧠 第三阶段：长效状态与可观测性 (9.6 - 9.7)"]
+        S06["9.6 记忆管理与会话状态持久化\n(Checkpointer 短期记忆 + Store 长期记忆)"]
+        S07["9.7 Callbacks 与可观测性中间件\n(BaseCallbackHandler、Token 账单与脱敏探针)"]
+        S06 --> S07
+    end
+
+    subgraph Phase4 ["🚀 第四阶段：知识检索与现代智能体 (9.8 - 9.9)"]
+        S08["9.8 RAG 核心链路与向量检索\n(文档切块、langchain-chroma 向量入库与 LCEL 问答)"]
+        S09["9.9 Agent 现代架构与闭环\n(create_agent、Tool Calling 与消息流水线审计)"]
+        S08 --> S09
+    end
+
+    subgraph Phase5 ["🛡️ 第五阶段：上下文工程与生产级防护 (9.10 - 9.12)"]
+        S10["9.10 上下文工程\n(三类上下文 + 三数据源动态注入)"]
+        S11["9.11 自定义中间件\n(Node/Wrap 钩子与状态更新)"]
+        S12["9.12 生产级防护\n(护栏、PII 脱敏与测试评估)"]
+        S10 --> S11 --> S12
+    end
+
+    subgraph Phase6 ["🏁 终极交付：综合实战 (9.13)"]
+        S13["9.13 综合实战：SmartBuyer 融会贯通版\n(9.1~9.12 全零件整机总装 + 13-Tab Gradio 工作台)"]
+    end
+
+    Phase1 ==> Phase2 ==> Phase3 ==> Phase4 ==> Phase5 ==> Phase6

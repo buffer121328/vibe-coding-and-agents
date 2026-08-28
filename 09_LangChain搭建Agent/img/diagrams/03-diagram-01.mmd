@@ -1,0 +1,14 @@
+flowchart TD
+
+    In["📥 输入: {topic}"]
+
+    subgraph ParallelPipe ["⚡ RunnableParallel 并行多分支"]
+        direction TB
+        B1["Branch 1: 赞美诗生成链"]
+        B2["Branch 2: 犀利吐槽生成链"]
+    end
+
+    In ==> ParallelPipe
+    ParallelPipe ==> AggPrompt["📝 综合点评 Prompt"]
+    AggPrompt ==> LLM["🧠 LLM 统一决策"]
+    LLM ==> Out["📄 StrOutputParser 纯净文本输出"]

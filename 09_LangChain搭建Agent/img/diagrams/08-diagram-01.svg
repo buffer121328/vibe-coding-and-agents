@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 531.3399166666666 1060.4" width="531.3399166666666" height="1060.4" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Indexing" data-label="📥 离线构建阶段 (Indexing)">
+  <rect x="92.38591666666665" y="36" width="402.9539999999999" height="375.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="92.38591666666665" y="36" width="402.9539999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="104.38591666666665" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">📥 离线构建阶段 (Indexing)</text>
+</g>
+<g class="subgraph" data-id="QueryPipe" data-label="⚡ 实时查询与生成阶段 (LCEL RAG Pipeline)">
+  <rect x="36" y="555.9000000000001" width="351.32525" height="468.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="555.9000000000001" width="351.32525" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="569.9000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">⚡ 实时查询与生成阶段 (LCEL RAG Pipeline)</text>
+</g>
+<polyline class="edge" data-from="VDB" data-to="Retriever" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="向量比对" points="293.8629166666666,395.6 293.8629166666666,692.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="RawDoc" data-to="Splitter" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="293.8629166666666,116.9 293.8629166666666,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Splitter" data-to="Embed" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="293.8629166666666,209.8 293.8629166666666,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Embed" data-to="VDB" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="293.8629166666666,302.70000000000005 293.8629166666666,358.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="UserQ" data-to="Retriever" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="152.59041666666664,636.8000000000001 152.59041666666664,664.8000000000001 255.13174999999995,664.8000000000001 255.13174999999995,692.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Retriever" data-to="Prompt" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="255.13174999999995,729.7 255.13174999999995,741.7 238.04666666666662,741.7 238.04666666666662,785.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="UserQ" data-to="Prompt" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="152.59041666666664,636.8000000000001 152.59041666666664,664.8000000000001 191.53499999999997,664.8000000000001 191.53499999999997,785.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Prompt" data-to="LLM" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="191.53499999999997,822.6000000000001 191.53499999999997,878.6000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLM" data-to="Answer" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="191.53499999999997,915.5000000000001 191.53499999999997,971.5000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="VDB" data-to="Retriever" data-label="向量比对">
+  <rect x="260.8629166666666" y="468.6" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="293.4479166666666" y="483.75" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">向量比对</text>
+</g>
+<g class="node" data-id="RawDoc" data-label="📄 原始技术规范 / PDF / Markdown" data-shape="rectangle">
+  <rect x="166.9249166666666" y="80" width="253.87599999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="293.8629166666666" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📄 原始技术规范 / PDF / Markdown</text>
+</g>
+<g class="node" data-id="Splitter" data-label="✂️ RecursiveCharacterTextSplitter (按段落语义切块)" data-shape="rectangle">
+  <rect x="108.38591666666665" y="172.9" width="370.9539999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="293.8629166666666" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">✂️ RecursiveCharacterTextSplitter (按段落语义切块)</text>
+</g>
+<g class="node" data-id="Embed" data-label="🧮 Embeddings 向量化" data-shape="rectangle">
+  <rect x="204.7159166666666" y="265.8" width="178.29399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="293.8629166666666" y="284.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧮 Embeddings 向量化</text>
+</g>
+<g class="node" data-id="VDB" data-label="🗄️ Chroma 向量数据库 (语义坐标存储)" data-shape="rectangle">
+  <rect x="150.2524166666666" y="358.70000000000005" width="287.221" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="293.8629166666666" y="377.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🗄️ Chroma 向量数据库 (语义坐标存储)</text>
+</g>
+<g class="node" data-id="UserQ" data-label="❓ 用户实时提问" data-shape="rectangle">
+  <rect x="78.63391666666664" y="599.9000000000001" width="147.913" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="152.59041666666664" y="618.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">❓ 用户实时提问</text>
+</g>
+<g class="node" data-id="Retriever" data-label="🔍 Retriever 相似度 Top-K 检索" data-shape="rectangle">
+  <rect x="138.93824999999998" y="692.8000000000001" width="232.38699999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="255.13174999999995" y="711.2500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔍 Retriever 相似度 Top-K 检索</text>
+</g>
+<g class="node" data-id="Prompt" data-label="📝 RAG Prompt (注入 Context + Question)" data-shape="rectangle">
+  <rect x="52" y="785.7" width="279.06999999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="191.53499999999997" y="804.1500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📝 RAG Prompt (注入 Context + Question)</text>
+</g>
+<g class="node" data-id="LLM" data-label="🧠 大模型开卷总结与归纳" data-shape="rectangle">
+  <rect x="87.93849999999998" y="878.6000000000001" width="207.19299999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="191.53499999999997" y="897.0500000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 大模型开卷总结与归纳</text>
+</g>
+<g class="node" data-id="Answer" data-label="💡 精准、附带引用来源的答案" data-shape="rectangle">
+  <rect x="73.11849999999997" y="971.5000000000001" width="236.833" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="191.53499999999997" y="989.9500000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">💡 精准、附带引用来源的答案</text>
+</g>
+</svg>

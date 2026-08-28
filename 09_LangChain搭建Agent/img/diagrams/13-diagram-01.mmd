@@ -1,0 +1,42 @@
+flowchart TD
+
+    User["👤 用户选购诉求 (如：预算 5000 选轻薄编程本)"]
+
+    subgraph GuardLayer ["🛡️ 护栏层 (9.12 纵深防御)"]
+        GF["before_agent\n黑名单关键词拦截"]
+        PII["PIIMiddleware\n邮箱/信用卡输入脱敏"]
+    end
+
+    subgraph CtxLayer ["🧭 上下文工程 (9.10 三数据源动态注入)"]
+        RC["Runtime Context\n顾客身份: user_id"]
+        SO["Store 长期画像\n沟通风格 / 关注点"]
+        ST["State 会话消息\n聊得久自动长话短说"]
+        DP["@dynamic_prompt\n动态拼装系统提示"]
+        RC --> DP
+        SO --> DP
+        ST --> DP
+    end
+
+    subgraph AgentCore ["🧠 智能体中枢 (9.9 create_agent + 9.11 中间件栈)"]
+        MW["LoggingMiddleware 日志\nCallCounterMiddleware 调用限流\nretry_model 自动重试 (9.11)"]
+        CP["Checkpointer\nthread_id 会话记忆隔离 (9.6)"]
+        CB["PerformanceAndCostCallback\nToken 成本审计 (9.7)"]
+        Plan["⚡ Tool Calling 自主推理与规划"]
+    end
+
+    subgraph ToolEcosystem ["🛠️ 工具生态 (9.5 @tool 装饰器)"]
+        T1["📚 内置数码避坑宝典\nChroma 向量检索 (9.8)"]
+        T2["🌐 全网真实差评搜索\nDDGS 联网检索"]
+        T3["🧮 硬件参数与性价比\n精准测算器"]
+    end
+
+    subgraph OutputModes ["📋 双模交互输出"]
+        Mode1["💬 多轮交互式选购问诊"]
+        Mode2["📑 Pydantic 结构化决策报表 (9.4)"]
+    end
+
+    User ==> GuardLayer
+    GuardLayer ==> CtxLayer
+    CtxLayer ==> AgentCore
+    AgentCore <==> ToolEcosystem
+    AgentCore ==> OutputModes
