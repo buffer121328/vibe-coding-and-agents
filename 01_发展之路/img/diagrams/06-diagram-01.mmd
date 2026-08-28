@@ -1,8 +1,13 @@
-graph LR
-    subgraph S1 ["传统开发思维（底层细节驱动）"]
-        A1["死记语法与规则"] --> A2["手打繁琐套话代码"] --> A3["通宵肉眼排错找 Bug"]
+graph TD
+    subgraph S1 ["低代码与可视化工作流 (Dify / Coze)"]
+        A["用户发来消息"] --> B["LLM 智能识别意图"]
+        B -->|需要查手册| C["RAG 知识库检索模块"]
+        B -->|需要查天气/股票| D["外部 API 插件模块"]
+        C --> E["组装回答并格式化"]
+        D --> E
+        E --> F["一键生成标准后端 API 接口"]
     end
     
-    subgraph S2 ["Vibe Coding 思维方式（高层意图驱动）"]
-        B1["构思产品创意与功能"] --> B2["输入清晰意图指挥 Agent"] --> B3["直接看运行效果验收迭代"]
+    subgraph S2 ["极速前端建站 (Bolt.new / Lovable / Cursor)"]
+        F -.->|一键对接 API| G["精美的 Web / 小程序 / App 前端"]
     end

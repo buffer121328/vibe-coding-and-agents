@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 785.1189999999999 307.8" width="785.1189999999999" height="307.8" style="--bg:#eceff4;--fg:#2e3440;--line:#aab1c0;--accent:#5e81ac;--muted:#7b88a1;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.653 787.9999999999999" width="456.653" height="787.9999999999999" style="--bg:#eceff4;--fg:#2e3440;--line:#aab1c0;--accent:#5e81ac;--muted:#7b88a1;background:var(--bg)">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
   text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
@@ -26,42 +26,61 @@
     <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
   </marker>
 </defs>
-<g class="subgraph" data-id="S1" data-label="传统开发思维（底层细节驱动）">
-  <rect x="36" y="36" width="613.8249999999999" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="36" width="613.8249999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">传统开发思维（底层细节驱动）</text>
+<g class="subgraph" data-id="S1" data-label="低代码与可视化工作流 (Dify / Coze)">
+  <rect x="36" y="36" width="384.653" height="494.79999999999995" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="384.653" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">低代码与可视化工作流 (Dify / Coze)</text>
 </g>
-<g class="subgraph" data-id="S2" data-label="Vibe Coding 思维方式（高层意图驱动）">
-  <rect x="36" y="174.9" width="713.1189999999999" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="174.9" width="713.1189999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="188.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Vibe Coding 思维方式（高层意图驱动）</text>
+<g class="subgraph" data-id="S2" data-label="极速前端建站 (Bolt.new / Lovable / Cursor)">
+  <rect x="92.24275" y="655.0999999999999" width="262.905" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="92.24275" y="655.0999999999999" width="262.905" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="104.24275" y="669.0999999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">极速前端建站 (Bolt.new / Lovable / Cursor)</text>
 </g>
-<polyline class="edge" data-from="A1" data-to="A2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="197.69,98.45 249.69,98.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="A2" data-to="A3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="410.2,98.45 462.2,98.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="B1" data-to="B2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="227.32999999999998,237.35000000000002 279.33,237.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="B2" data-to="B3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="476.14899999999994,237.35000000000002 528.1489999999999,237.35000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="node" data-id="A1" data-label="死记语法与规则" data-shape="rectangle">
-  <rect x="52" y="80" width="145.69" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="124.845" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">死记语法与规则</text>
+<polyline class="edge" data-from="F" data-to="G" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="一键对接 API" points="223.69525,514.8 223.69525,699.0999999999999" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="A" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.69525,116.9 223.69525,162.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="C" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要查手册" points="250.69391666666667,199.8 250.69391666666667,211.8 317.3585,211.8 317.3585,312.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="D" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要查天气/股票" points="196.69658333333334,199.8 196.69658333333334,211.8 130.032,211.8 130.032,312.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C" data-to="E" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="317.3585,349 317.3585,372 223.69525,372 223.69525,395" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D" data-to="E" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="130.032,349 130.032,372 223.69525,372 223.69525,395" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E" data-to="F" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.69525,431.9 223.69525,477.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="F" data-to="G" data-label="一键对接 API">
+  <rect x="181.69525" y="577.8" width="83.584" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="223.48725" y="592.9499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">一键对接 API</text>
 </g>
-<g class="node" data-id="A2" data-label="手打繁琐套话代码" data-shape="rectangle">
-  <rect x="249.69" y="80" width="160.51" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="329.945" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">手打繁琐套话代码</text>
+<g class="edge-label" data-from="B" data-to="C" data-label="需要查手册">
+  <rect x="278.35850000000005" y="240.8" width="77.05000000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="316.8835" y="255.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要查手册</text>
 </g>
-<g class="node" data-id="A3" data-label="通宵肉眼排错找 Bug" data-shape="rectangle">
-  <rect x="462.2" y="80" width="171.62499999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="548.0124999999999" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">通宵肉眼排错找 Bug</text>
+<g class="edge-label" data-from="B" data-to="D" data-label="需要查天气/股票">
+  <rect x="78.03200000000001" y="240.8" width="103.78000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="129.92200000000003" y="255.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要查天气/股票</text>
 </g>
-<g class="node" data-id="B1" data-label="构思产品创意与功能" data-shape="rectangle">
-  <rect x="52" y="218.9" width="175.32999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="139.665" y="237.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">构思产品创意与功能</text>
+<g class="node" data-id="A" data-label="用户发来消息" data-shape="rectangle">
+  <rect x="158.26024999999998" y="80" width="130.87" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.69525" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">用户发来消息</text>
 </g>
-<g class="node" data-id="B2" data-label="输入清晰意图指挥 Agent" data-shape="rectangle">
-  <rect x="279.33" y="218.9" width="196.81899999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="377.73949999999996" y="237.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">输入清晰意图指挥 Agent</text>
+<g class="node" data-id="B" data-label="LLM 智能识别意图" data-shape="rectangle">
+  <rect x="142.69925" y="162.9" width="161.992" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.69525" y="181.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">LLM 智能识别意图</text>
 </g>
-<g class="node" data-id="B3" data-label="直接看运行效果验收迭代" data-shape="rectangle">
-  <rect x="528.1489999999999" y="218.9" width="204.96999999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="630.6339999999999" y="237.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">直接看运行效果验收迭代</text>
+<g class="node" data-id="C" data-label="RAG 知识库检索模块" data-shape="rectangle">
+  <rect x="230.06400000000002" y="312.1" width="174.58899999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="317.3585" y="330.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">RAG 知识库检索模块</text>
+</g>
+<g class="node" data-id="D" data-label="外部 API 插件模块" data-shape="rectangle">
+  <rect x="52" y="312.1" width="156.06400000000002" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="130.032" y="330.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">外部 API 插件模块</text>
+</g>
+<g class="node" data-id="E" data-label="组装回答并格式化" data-shape="rectangle">
+  <rect x="143.44025" y="395" width="160.51" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.69525" y="413.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">组装回答并格式化</text>
+</g>
+<g class="node" data-id="F" data-label="一键生成标准后端 API 接口" data-shape="rectangle">
+  <rect x="116.02325000000002" y="477.9" width="215.34399999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.69525" y="496.34999999999997" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">一键生成标准后端 API 接口</text>
+</g>
+<g class="node" data-id="G" data-label="精美的 Web / 小程序 / App 前端" data-shape="rectangle">
+  <rect x="108.24275" y="699.0999999999999" width="230.905" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.69525" y="717.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">精美的 Web / 小程序 / App 前端</text>
 </g>
 </svg>

@@ -38,7 +38,7 @@ const categories = [
   { text: '🤖 从底层理解 Agent', full: '🤖 从底层理解 Agent（开天眼）', link: '/08_手搓Agent/', prefixes: ['08_'] },
   { text: '🏭 主流 Agent 框架', full: '🏭 主流 Agent 框架（最成熟的生产方案）', link: '/09_LangChain搭建Agent/', prefixes: ['09_', '10_'] },
   { text: '📚 RAG 实战', full: '📚 RAG 实战（知识库长期工程）', link: '/11_RAG实战/', prefixes: ['11_'] },
-  { text: '💆 对 Agent 与 AI 的思考', full: '💆 对 Agent 与 AI 的思考（认知碰撞）', link: '/12_如何做一个自己的项目/', prefixes: ['12_', '13_'] },
+  { text: '💆 对 Agent 与 AI 的思考', full: '💆 对 Agent 与 AI 的思考与高效驾驭（认知碰撞与实战指南）', link: '/12_如何做一个自己的项目/', prefixes: ['12_', '13_', '14_'] },
 ]
 
 // 某个分类的侧边栏（仅该分类下的各章节子页）

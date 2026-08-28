@@ -1,5 +1,8 @@
 graph TD
-    A["1. 传统手写时代\n纯手工打铁 / 错个标点直接崩溃 / 天天看报错秃头"] --> B["2. AI 网页对话时代\nChatGPT / Claude / 问一句答一段 / 人肉切屏搬运"]
-    B --> C["3. AI 插件辅助时代\nCopilot / Continue / 住在代码软件里 / 智能联想按 Tab 键"]
-    C --> D["4. Agent 自主编程时代\nCursor / Devin / Claude Code / 自带手脚 / 自己改多个文件跑测试"]
-    D --> E["5. 🌊 Vibe Coding 时代\nBolt.new / Lovable / Dify / 动嘴提需求当总指挥 / 几分钟出产品"]
+    A["1. 传统手写时代\n纯手工打铁 / 错个标点直接崩溃 / 天天看报错秃头"] --> B["2. AI 代码补全时代\nCopilot (2021) / 幽灵文字 / 按 Tab 键采纳"]
+    B --> C["3. 对话式 AI 时代\nChatGPT (2022) / Claude / 问一句答一段 / 人肉切屏搬运"]
+    C --> D["4. AI 原生 IDE 时代\nCursor / Windsurf / Trae / 理解整个项目"]
+    D --> E["5. Coding Agent 时代\nClaude Code / Devin / 自带手脚 / 自己改多个文件跑测试"]
+    E --> F["6. 🌊 Vibe Coding 思维方式\nKarpathy (2025) / 说清目标 + 喂饱上下文 + 看结果验收"]
+    E -.->|"并行支线"| G["低代码与工作流平台\nDify / Coze / Bolt / Lovable / 拖拽搭积木"]
+    A -.-> R1["自己写每一行"] --> R2["AI 猜你的下一行"] --> R3["你告诉 AI 怎么写"] --> R4["AI 理解整个项目"] --> R5["AI 自己动手执行"] --> R6["你说目标 + 给上下文 + 看结果"]

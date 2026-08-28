@@ -1,16 +1,9 @@
-sequenceDiagram
-    autonumber
-    actor User as 你（开发者/产品经理）
-    participant Web as AI 网页端 (Claude / ChatGPT / DeepSeek / Gemini)
-    participant IDE as 本地代码编辑器 (VS Code)
-    participant Run as 你的电脑运行环境
-
-    User->>Web: 提问：“帮我用 Next.js 写一个带数据统计图表的看板”
-    Web-->>User: 展开深度思考链路，输出完整代码块与可视化预览
-    User->>User: 鼠标点击“复制代码”
-    User->>IDE: 切换窗口，粘贴进本地文件
-    User->>Run: 运行代码
-    Run-->>User: 终端弹出红字报错或缺少依赖
-    User->>Web: 复制报错信息，发回给 AI ：“报错了，帮我修”
-    Web-->>User: 自我反思并给出修正后的完整代码
-    User->>IDE: 再次手动覆盖粘贴
+graph TD
+    subgraph S1 ["在代码编辑器内部"]
+        A["你在写代码，光标停在第 20 行"] --> B["插件默默扫描光标前后的代码"]
+        C["插件顺带瞄一眼你打开的其他标签页"] --> B
+        B --> D["AI 秒级生成灰色半透明推荐代码"]
+        D --> E{"你满不满意？"}
+        E -->|"超满意：按一下 Tab 键"| F["灰色代码瞬间变成正式代码"]
+        E -->|"不满意：继续打自己的字"| G["灰色推荐自动消失"]
+    end
