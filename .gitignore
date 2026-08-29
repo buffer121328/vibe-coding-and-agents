@@ -20,6 +20,11 @@ site-packages/
 # 运行时 SQLite 数据库
 *.db
 
+# Agent 演示运行时产物：记忆文件与 Gradio 会话数据（不入库）
+agent_memory.json
+gradio_agent_memory.json
+gradio_sessions/
+
 # VitePress 文档站：docs 章节内容为 sync 脚本生成的产物（不入库），配置/首页/脚本入库
 docs/[0-9][0-9]_*/
 docs/.vitepress/dist/
