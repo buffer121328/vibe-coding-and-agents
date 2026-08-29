@@ -39,7 +39,7 @@
   "mcpServers": {
     "local-filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/cheng/Desktop/vibe_coding"]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/cheng/Desktop/vibe-coding-and-agents"]
     },
     "postgres-database": {
       "command": "npx",

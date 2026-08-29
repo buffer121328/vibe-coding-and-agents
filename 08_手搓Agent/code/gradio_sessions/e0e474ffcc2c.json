@@ -1,0 +1,44 @@
+{
+  "session_id": "e0e474ffcc2c",
+  "title": "修复登录服务内存泄漏 · 分支",
+  "parent_id": "97639744ad30",
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一名资深 Python 后端工程师，负责诊断并修复 Web 服务内存泄漏。"
+    },
+    {
+      "role": "user",
+      "content": "服务连续运行 3 天后，内存占用从 200MB 一路涨到 3GB，帮我定位根因。"
+    },
+    {
+      "role": "assistant",
+      "content": "已初步检查日志：怀疑全局缓存未清理 + 长连接未释放，先深入阅读代码确认。"
+    },
+    {
+      "role": "user",
+      "content": "我怀疑是 event_listener 注册表无限增长，帮忙重点排查。"
+    },
+    {
+      "role": "assistant",
+      "content": "已 grep 全局注册表，定位到 cache_store 与 ws_pool 两处高度可疑的点。"
+    },
+    {
+      "role": "assistant",
+      "content": "方案 B：改用 WeakValueDictionary 弱引用缓存，让 GC 自动回收。"
+    },
+    {
+      "role": "user",
+      "content": "先别改代码，我要先对比 A/B 两套方案的压测数据再拍板。"
+    },
+    {
+      "role": "user",
+      "content": "压测完成：方案 B 峰值内存更低、吞吐更稳，决定采用方案 B。"
+    },
+    {
+      "role": "assistant",
+      "content": "✅ 已按弱引用方案完成重构，内存曲线回归平稳，问题闭环。"
+    }
+  ],
+  "created_at": "2026-08-27 16:06:35"
+}

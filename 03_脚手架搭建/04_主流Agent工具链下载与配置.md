@@ -39,7 +39,7 @@
 npm install -g @anthropic-ai/claude-code
 
 # 2. 进入你的项目文件夹并启动 Claude Code
-cd /Users/cheng/Desktop/vibe_coding
+cd /Users/cheng/Desktop/vibe-coding-and-agents
 claude
 
 # 3. 首次启动时，终端会弹出一个网页授权链接，登录 Anthropic 账号即可完成认证！
