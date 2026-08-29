@@ -1,0 +1,7 @@
+flowchart TD
+
+    Q["❓ 用户问题"]
+    Q --> M["多路召回 (Dense Top-20 + BM25 Top-20)"]
+    M --> F["RRF 融合粗排 (Top-10)"]
+    F --> P["Cross-Encoder 重排精排 (Top-3)"]
+    P --> O["最终上下文喂给 LLM"]

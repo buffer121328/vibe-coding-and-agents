@@ -1,0 +1,23 @@
+flowchart TD
+
+    subgraph SRC ["📚 数据侧 data/docs"]
+        D["4 篇种子文档\n(差旅 / FAQ / 故障 / 安全)"]
+    end
+    D --> I["📥 ingest.py\n解析 → 清洗 → 切块\n内容哈希幂等同步"]
+    I --> VI["🧭 Chroma 向量索引"]
+    I --> BI["📖 BM25 稀疏索引"]
+
+    Q["❓ 用户问题"] --> H["🔀 retrieval.py\n双路召回 + 手写 RRF 融合"]
+    VI --> H
+    BI --> H
+    H --> G{"🚦 n_grade\n相关性分级"}
+    G -->|"无依据：拒答"| R["🛑 拒答 + 转人工"]
+    G -->|"有依据"| GE["✍️ n_generate\n接地 Prompt + [编号] 引用"]
+    GE --> CK{"🧾 n_check\n幽灵引用程序校验"}
+    CK -->|"引用失真"| GE
+    CK -->|"通过"| VF{"🔍 n_verify\n忠实度复检"}
+    VF -->|"发现编造"| GE
+    VF -->|"通过"| OUT["✅ 答案 + citations 出处"]
+
+    EV["🧪 evaluate.py\n黄金评测集回归门禁"] -.->|"每次改动必跑"| H
+    SV["🌐 server.py\nFastAPI + SSE 流式"] -.->|"同一套闸门"| GE

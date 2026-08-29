@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623.2859999999998 507.30000000000007" width="623.2859999999998" height="507.30000000000007" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Fail" data-label="❌ 向量 RAG：孤岛便签，无法连接">
+  <rect x="36" y="36" width="248.82599999999994" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="36" width="248.82599999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">❌ 向量 RAG：孤岛便签，无法连接</text>
+</g>
+<g class="subgraph" data-id="Ok" data-label="✅ 知识图谱：关系网一眼看穿">
+  <rect x="318.8259999999999" y="36" width="268.46" height="435.30000000000007" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="318.8259999999999" y="36" width="268.46" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="330.8259999999999" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">✅ 知识图谱：关系网一眼看穿</text>
+</g>
+<polyline class="edge" data-from="V1" data-to="V2" data-style="dotted" data-arrow-start="false" data-arrow-end="false" points="160.41299999999995,116.9 160.41299999999995,172.9" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" />
+<polyline class="edge" data-from="V2" data-to="V3" data-style="dotted" data-arrow-start="false" data-arrow-end="false" points="160.41299999999995,209.8 160.41299999999995,257.5" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" />
+<polyline class="edge" data-from="N1" data-to="N2" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="主导" points="455.6494999999999,116.9 455.6494999999999,257.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="N2" data-to="N3" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="弃用" points="434.70233333333323,294.40000000000003 434.70233333333323,298.1 388.03449999999987,298.1 388.03449999999987,418.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="N2" data-to="N4" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="迁移至" points="476.5966666666666,294.40000000000003 476.5966666666666,298.1 523.2644999999999,298.1 523.2644999999999,418.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="N1" data-to="N2" data-label="主导">
+  <rect x="434.64949999999993" y="167.9" width="41.41" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="455.3544999999999" y="183.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">主导</text>
+</g>
+<g class="edge-label" data-from="N2" data-to="N3" data-label="弃用">
+  <rect x="367.0344999999999" y="337.1" width="41.41" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="387.7394999999999" y="352.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">弃用</text>
+</g>
+<g class="edge-label" data-from="N2" data-to="N4" data-label="迁移至">
+  <rect x="496.2644999999999" y="337.1" width="53.29" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="522.9094999999999" y="352.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">迁移至</text>
+</g>
+<g class="node" data-id="V1" data-label="片段A: 张三主导支付重构" data-shape="rectangle">
+  <rect x="58.29849999999999" y="80" width="204.22899999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="160.41299999999995" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">片段A: 张三主导支付重构</text>
+</g>
+<g class="node" data-id="V2" data-label="片段B: 支付系统弃用 Oracle" data-shape="rectangle">
+  <rect x="52" y="172.9" width="216.82599999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="160.41299999999995" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">片段B: 支付系统弃用 Oracle</text>
+</g>
+<g class="node" data-id="V3" data-label="片段C: 李四引入 TiDB" data-shape="rectangle">
+  <rect x="72.00699999999998" y="257.5" width="176.81199999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="160.41299999999995" y="275.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">片段C: 李四引入 TiDB</text>
+</g>
+<g class="node" data-id="N1" data-label="👤 张三" data-shape="rectangle">
+  <rect x="411.33299999999986" y="80" width="88.633" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="455.6494999999999" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">👤 张三</text>
+</g>
+<g class="node" data-id="N2" data-label="⚙️ 支付系统" data-shape="rectangle">
+  <rect x="392.8079999999999" y="257.5" width="125.68299999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="455.6494999999999" y="275.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">⚙️ 支付系统</text>
+</g>
+<g class="node" data-id="N3" data-label="🗄️ Oracle" data-shape="rectangle">
+  <rect x="334.8259999999999" y="418.40000000000003" width="106.41699999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="388.0344999999999" y="436.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🗄️ Oracle</text>
+</g>
+<g class="node" data-id="N4" data-label="🗄️ TiDB" data-shape="rectangle">
+  <rect x="475.2429999999999" y="418.40000000000003" width="96.043" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="523.2644999999999" y="436.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🗄️ TiDB</text>
+</g>
+</svg>

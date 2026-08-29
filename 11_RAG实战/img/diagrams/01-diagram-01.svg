@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 705.0925 1882.1" width="705.0925" height="1882.1" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="L1" data-label="① 数据准备层（离线，慢工出细活）">
+  <rect x="36" y="469.00000000000006" width="450.03450000000004" height="482.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="36" y="469.00000000000006" width="450.03450000000004" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="48" y="483.00000000000006" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">① 数据准备层（离线，慢工出细活）</text>
+</g>
+<g class="subgraph" data-id="L2" data-label="② 检索层（在线，毫秒级召回）">
+  <rect x="210.14250000000007" y="1095.8" width="325.63124999999997" height="375.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="210.14250000000007" y="1095.8" width="325.63124999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="222.14250000000007" y="1109.8" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">② 检索层（在线，毫秒级召回）</text>
+</g>
+<g class="subgraph" data-id="L3" data-label="③ 生成层（在线，组织语言）">
+  <rect x="261.3832500000001" y="1539.3999999999999" width="239.19299999999998" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="261.3832500000001" y="1539.3999999999999" width="239.19299999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="273.3832500000001" y="1553.3999999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">③ 生成层（在线，组织语言）</text>
+</g>
+<g class="subgraph" data-id="L4" data-label="④ 评估与运维层（闭环，驱动迭代）">
+  <rect x="353.8065000000001" y="48" width="293.28599999999994" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="353.8065000000001" y="48" width="293.28599999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="365.8065000000001" y="62" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">④ 评估与运维层（闭环，驱动迭代）</text>
+</g>
+<polyline class="edge" data-from="L3" data-to="L4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="277.3832500000001,1822.1 277.3832500000001,1834.1 657.0925,1834.1 657.0925,36 369.8065000000001,36 369.8065000000001,48" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D5" data-to="R3" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="查询向量/图结构" points="332.8165,935.5 332.8165,1077.8 435.9255,1077.8 435.92550000000006,1281.6 421.93391666666673,1281.6 421.93391666666673,1325.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="L1" data-to="D5" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="离线写入" points="405.8645,0 405.8645,371.6 336.5356666666667,371.6 336.5356666666667,415.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R4" data-to="G1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="380.9797500000001,1455.4 380.9797500000001,1583.3999999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E3" data-to="L1" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="反馈调优" points="469.0048333333334,314.70000000000005 469.00483333333335,380.70000000000005 451.8645,380.70000000000005 451.8645,469.00000000000006" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E3" data-to="L2" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="反馈调优" points="531.8941666666667,314.70000000000005 531.8941666666667,1001.5 549.0345,1001.5 549.0345,1077.8 445.9255,1077.8 445.9255,1095.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D1" data-to="D2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.76850000000002,549.9000000000001 223.76850000000002,605.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D2" data-to="D3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.76850000000002,642.8000000000001 223.76850000000002,698.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D3" data-to="D4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.76850000000002,735.7 223.76850000000002,791.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D4" data-to="D5" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="223.76850000000002,828.6000000000001 223.76850000000002,840.6000000000001 293.0973333333334,840.6000000000001 293.0973333333334,884.6000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R1" data-to="R2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="326.03400000000005,1176.7 326.03400000000005,1232.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R2" data-to="R3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="326.03400000000005,1269.6 326.03400000000005,1281.6 340.02558333333343,1281.6 340.02558333333343,1325.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R3" data-to="R4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="380.9797500000001,1362.5 380.9797500000001,1418.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G1" data-to="G2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="380.9797500000001,1620.3 380.9797500000001,1676.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G2" data-to="G3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="380.9797500000001,1713.1999999999998 380.9797500000001,1769.1999999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E1" data-to="E2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="500.44950000000006,128.9 500.44950000000006,184.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E2" data-to="E3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="500.44950000000006,221.8 500.44950000000006,277.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="D5" data-to="R3" data-label="查询向量/图结构">
+  <rect x="280.8165" y="1008.5" width="103.78000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="332.7065" y="1023.65" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">查询向量/图结构</text>
+</g>
+<g class="edge-label" data-from="L1" data-to="D5" data-label="离线写入">
+  <rect x="372.8645" y="140.2" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="405.4495" y="155.35" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">离线写入</text>
+</g>
+<g class="edge-label" data-from="E3" data-to="L1" data-label="反馈调优">
+  <rect x="418.8645" y="387.70000000000005" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="451.4495" y="402.85" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">反馈调优</text>
+</g>
+<g class="edge-label" data-from="E3" data-to="L2" data-label="反馈调优">
+  <rect x="516.0345" y="1008.5" width="65.17" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="548.6195" y="1023.65" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">反馈调优</text>
+</g>
+<g class="node" data-id="D1" data-label="📄 多格式文档 (PDF/Word/HTML/Markdown/SQL)" data-shape="rectangle">
+  <rect x="52" y="513" width="343.53700000000003" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.76850000000002" y="531.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📄 多格式文档 (PDF/Word/HTML/Markdown/SQL)</text>
+</g>
+<g class="node" data-id="D2" data-label="🧹 解析与清洗 (去页眉页脚/还原表格/OCR)" data-shape="rectangle">
+  <rect x="68.6725" y="605.9000000000001" width="310.19200000000006" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.76850000000002" y="624.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧹 解析与清洗 (去页眉页脚/还原表格/OCR)</text>
+</g>
+<g class="node" data-id="D3" data-label="✂️ 智能切块 (递归/标题/语义/父子)" data-shape="rectangle">
+  <rect x="91.27300000000002" y="698.8000000000001" width="264.991" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.76850000000002" y="717.2500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">✂️ 智能切块 (递归/标题/语义/父子)</text>
+</g>
+<g class="node" data-id="D4" data-label="🧮 向量嵌入 (Embedding 模型)" data-shape="rectangle">
+  <rect x="111.28000000000003" y="791.7" width="224.97699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="223.76850000000002" y="810.1500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧮 向量嵌入 (Embedding 模型)</text>
+</g>
+<g class="node" data-id="D5" data-label="🗄️ 向量库 + 文档库 + 知识图谱" data-shape="cylinder">
+  <rect x="213.65900000000002" y="891.6000000000001" width="238.315" height="36.900000000000006" fill="var(--_node-fill)" stroke="none" />
+  <line x1="213.65900000000002" y1="891.6000000000001" x2="213.65900000000002" y2="928.5000000000001" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="451.97400000000005" y1="891.6000000000001" x2="451.97400000000005" y2="928.5000000000001" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <ellipse cx="332.8165" cy="928.5000000000001" rx="119.1575" ry="7" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <ellipse cx="332.8165" cy="891.6000000000001" rx="119.1575" ry="7" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="332.8165" y="910.0500000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🗄️ 向量库 + 文档库 + 知识图谱</text>
+</g>
+<g class="node" data-id="R1" data-label="❓ 用户问题 (Query)" data-shape="rectangle">
+  <rect x="243.55600000000004" y="1139.8" width="164.95600000000002" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="326.03400000000005" y="1158.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">❓ 用户问题 (Query)</text>
+</g>
+<g class="node" data-id="R2" data-label="✏️ 查询重写与意图路由" data-shape="rectangle">
+  <rect x="226.14250000000007" y="1232.7" width="199.783" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="326.03400000000005" y="1251.15" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">✏️ 查询重写与意图路由</text>
+</g>
+<g class="node" data-id="R3" data-label="🔍 多路召回 (向量 + BM25 + 图谱)" data-shape="rectangle">
+  <rect x="258.11725000000007" y="1325.6" width="245.725" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="380.9797500000001" y="1344.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔍 多路召回 (向量 + BM25 + 图谱)</text>
+</g>
+<g class="node" data-id="R4" data-label="⚖️ 融合与重排 (RRF / Cross-Encoder)" data-shape="rectangle">
+  <rect x="242.1857500000001" y="1418.5" width="277.58799999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="380.9797500000001" y="1436.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">⚖️ 融合与重排 (RRF / Cross-Encoder)</text>
+</g>
+<g class="node" data-id="G1" data-label="🧩 上下文拼装与压缩" data-shape="rectangle">
+  <rect x="292.2032500000001" y="1583.3999999999999" width="177.55299999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="380.9797500000001" y="1601.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧩 上下文拼装与压缩</text>
+</g>
+<g class="node" data-id="G2" data-label="🧠 LLM 开卷归纳生成" data-shape="rectangle">
+  <rect x="291.4622500000001" y="1676.3" width="179.03499999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="380.9797500000001" y="1694.75" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 LLM 开卷归纳生成</text>
+</g>
+<g class="node" data-id="G3" data-label="💡 带证据溯源的最终回答" data-shape="rectangle">
+  <rect x="277.3832500000001" y="1769.1999999999998" width="207.19299999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="380.9797500000001" y="1787.6499999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">💡 带证据溯源的最终回答</text>
+</g>
+<g class="node" data-id="E1" data-label="📊 指标打分 (RAG 三元组)" data-shape="rectangle">
+  <rect x="399.81700000000006" y="92" width="201.265" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="500.44950000000006" y="110.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📊 指标打分 (RAG 三元组)</text>
+</g>
+<g class="node" data-id="E2" data-label="🛰️ 链路可观测 (Trace/Token 账单)" data-shape="rectangle">
+  <rect x="369.8065000000001" y="184.9" width="261.28599999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="500.44950000000006" y="203.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🛰️ 链路可观测 (Trace/Token 账单)</text>
+</g>
+<g class="node" data-id="E3" data-label="🔄 Badcase 回归与调优" data-shape="rectangle">
+  <rect x="406.11550000000005" y="277.8" width="188.668" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="500.44950000000006" y="296.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🔄 Badcase 回归与调优</text>
+</g>
+</svg>

@@ -1,0 +1,8 @@
+flowchart TD
+
+    Q1{"数据规模与环境?"}
+    Q1 -- 本地教学/快速 Demo --> C["Chroma (pip 一键)"]
+    Q1 -- 已有 PostgreSQL --> P["Pgvector (免新集群)"]
+    Q1 -- 生产级 / 复杂过滤 / 需混合检索 --> Q["Qdrant (Rust 稳准狠)"]
+    Q1 -- 超 1 亿条 / 需分布式 --> M["Milvus"]
+    Q1 -- 云端免运维 --> Pi["Pinecone"]

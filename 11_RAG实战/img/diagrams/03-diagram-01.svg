@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 907.2469999999998 187.8" width="907.2469999999998" height="187.8" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="I" data-to="M" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="327.667,54.45 353.667,54.45 353.667,93.9 379.667,93.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="T" data-to="M" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="327.667,133.35000000000002 353.667,133.35000000000002 353.667,93.9 379.667,93.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="M" data-to="H" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="656.5139999999999,93.9 708.5139999999999,93.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="I" data-label="🖼️ 页面截图 (柱状图)" data-shape="rectangle">
+  <rect x="147.891" y="36" width="179.77599999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="237.779" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🖼️ 页面截图 (柱状图)</text>
+</g>
+<g class="node" data-id="M" data-label="🌐 统一多模态语义空间 (CLIP/ColPali)" data-shape="rectangle">
+  <rect x="379.667" y="75.45" width="276.8469999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="518.0904999999999" y="93.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🌐 统一多模态语义空间 (CLIP/ColPali)</text>
+</g>
+<g class="node" data-id="T" data-label="❓ 文字查询 '2025 各季度净利润柱状图'" data-shape="rectangle">
+  <rect x="36" y="114.9" width="291.667" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="181.8335" y="133.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">❓ 文字查询 &#39;2025 各季度净利润柱状图&#39;</text>
+</g>
+<g class="node" data-id="H" data-label="🎯 精准命中该截图" data-shape="rectangle">
+  <rect x="708.5139999999999" y="75.45" width="162.733" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="789.8804999999999" y="93.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎯 精准命中该截图</text>
+</g>
+</svg>

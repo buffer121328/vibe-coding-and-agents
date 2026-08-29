@@ -1,0 +1,14 @@
+flowchart TD
+
+    subgraph Fail ["❌ 向量 RAG：孤岛便签，无法连接"]
+        V1["片段A: 张三主导支付重构"]
+        V2["片段B: 支付系统弃用 Oracle"]
+        V3["片段C: 李四引入 TiDB"]
+        V1 -.- V2 -.- V3
+    end
+
+    subgraph Ok ["✅ 知识图谱：关系网一眼看穿"]
+        N1["👤 张三"] -->|"主导"| N2["⚙️ 支付系统"]
+        N2 -->|"弃用"| N3["🗄️ Oracle"]
+        N2 -->|"迁移至"| N4["🗄️ TiDB"]
+    end

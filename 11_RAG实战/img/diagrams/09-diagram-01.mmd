@@ -1,0 +1,8 @@
+flowchart LR
+
+    Q["❓ 问题"]
+    C["📄 检索上下文"]
+    A["💡 答案"]
+    Q <==>|"① 上下文相关性\n(Context Relevance)"| C
+    C <==>|"② 忠实度\n(Faithfulness)"| A
+    A <==>|"③ 答案相关性\n(Answer Relevance)"| Q
