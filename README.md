@@ -152,19 +152,33 @@ vibe-coding-and-agents/
 │   ├── 05_图的可视化与流式调试.md                     # 10.5 Mermaid/PNG 可视化与 stream 逐节点状态流转
 │   ├── 06_Memory与Human-in-the-loop.md                # 10.6 Checkpointer存档与危险动作人类签字拦截
 │   ├── 07_MultiAgent分层架构.md                       # 10.7 大堂经理与后厨专家的路由转交状态栈
-│   └── 08_综合实战_旅行助手项目.md                    # 10.8 综合实战：企业级全能旅行助手项目重构剖析
+│   ├── 08_工具调用循环与预构建组件.md                 # 10.8 bind_tools/ToolNode 循环闭环与 create_agent 高层快车道
+│   ├── 09_工作流设计模式.md                           # 10.9 官方五大模式速查：路由/编排者-工人/评估者-优化者选型
+│   ├── 10_长期记忆与TimeTravel.md                     # 10.10 Store 跨线程记忆、语义检索与回放改道时间穿梭
+│   ├── 11_持久执行与容错.md                           # 10.11 断点续跑、RetryPolicy 重试、超时与缓存
+│   ├── 12_子图与多智能体全谱.md                       # 10.12 真子图嵌套与 Network/Supervisor/Handoffs 编队全谱
+│   ├── 13_HITL进阶.md                                 # 10.13 interrupt() 动态中断 + Command(resume) 与多级审批
+│   ├── 14_FunctionalAPI与两套API选型.md               # 10.14 @entrypoint/@task 与 Graph/Functional API 选型对照
+│   ├── 15_部署与可观测性.md                           # 10.15 LangGraph Server/Studio 部署与可观测性取舍（暂不引入观测平台）
+│   └── 16_综合实战_旅行助手项目.md                    # 10.16 收官实战：全能旅行助手整机剖析与知识对号入座
 ├── 11_现代RAG与知识库实战/                            # 第十一章：现代 RAG 系统（完整生命周期分层 + 问题驱动实战）
 │   ├── README.md                                      # 第十一章导读、全景路线图与技术雷达
 │   ├── 01_RAG完整生命周期分层.md                      # 11.1 数据准备/检索/生成/评估运维四大层次全景，RAG 与微调/长上下文/Agent 边界
-│   ├── 02_文档解析清洗与切块.md                        # 11.2 痛点"数据脏乱"：多格式解析、去噪清洗、四类切块与父子切块
+│   ├── 02_文档解析清洗与切块.md                        # 11.2 痛点"数据脏乱"：多格式解析、去噪清洗、四类切块、父子切块与 MinerU/Docling 深水区
 │   ├── 03_向量嵌入与多模态.md                          # 11.3 痛点"机器不懂语义"：Embedding、三种度量、手写最近邻与 MRL 降维
 │   ├── 04_向量库与ANN索引.md                           # 11.4 痛点"海量查不快"：HNSW/IVF-PQ、Qdrant 建库与元数据过滤
 │   ├── 05_混合检索与重排.md                            # 11.5 痛点"搜不准搜不全"：手写 RRF、BM25+Dense 混合与 Cross-Encoder 重排
 │   ├── 06_查询重写与意图路由.md                        # 11.6 痛点"提问含糊"：HyDE/Multi-Query/Step-Back 与结构化意图路由
 │   ├── 07_知识图谱与GraphRAG.md                        # 11.7 痛点"宏观答不了"：实体关系抽取、社区发现与 Global/Local 检索
 │   ├── 08_Agentic_RAG自省自校正.md                     # 11.8 痛点"幻觉与答非所问"：Self-RAG/CRAG/Adaptive RAG 与 LangGraph 闭环
-│   ├── 09_评估与可观测性.md                            # 11.9 痛点"无法度量"：RAG 三元组、手写指标、Ragas 打分与链路可观测
-│   └── code/                                           # 配套代码：s02 数据管道、s03 嵌入、s04 向量库、s05 混合检索、s06 查询重写、s07 GraphRAG、s08 Agentic RAG、s09 评估
+│   ├── 09_评估与可观测性.md                            # 11.9 痛点"无法度量"：RAG 三元组、手写指标、Ragas 打分、链路可观测与上线后持续治理
+│   ├── 10_工业级落地与主流框架选型.md                  # 11.10 选型地图：Dify/飞书Aily/FastGPT/MaxKB 低代码平台 + RAGFlow/LlamaIndex/Haystack/DSPy 框架
+│   ├── 11_迟交互与稀疏检索.md                          # 11.11 检索进阶：ColBERT 迟交互 MaxSim、SPLADE 稀疏学习、ColPali 视觉检索与多库语义调度
+│   ├── 12_生成层防幻觉与引用溯源.md                    # 11.12 生成层：编号引用协议、幽灵引用校验、忠实度复检、拒答兜底与流式生成
+│   ├── 13_工程化部署与安全.md                          # 11.13 生产化：FastAPI/SSE 服务化、三级缓存降本、多租户 ACL、增量更新与 Prompt 注入防护
+│   ├── 14_多模态与垂直场景RAG.md                       # 11.14 多模态：三条技术路线、图文混排组合拳、跨语言 BGE-M3、音视频转写、表格问答与端侧
+│   ├── 15_端到端综合实战_KnowledgeForge_lite.md        # 11.15 总装实战：以开源 KnowledgeForge 为蓝本的 600 行蒸馏版，混合检索+四道闸门+双层评估(Ragas)+SSE
+│   └── code/                                           # 配套代码：s02 数据管道、s03 嵌入、s04 向量库、s05 混合检索、s06 查询重写、s07 GraphRAG、s08 Agentic RAG、s09 评估、s11 迟交互与稀疏、s12 引用溯源、s13 部署安全、s14 多模态；KnowledgeForge_lite/ 为 11.15 总装项目
 ├── 12_如何做一个自己的项目/                           # 第十二章：如何做一个自己的项目（个人与应届生 AI 落地实战）
 │   ├── README.md                                      # 第十二章导读与全景知识图谱
 │   ├── 00_什么是生产级Agent项目.md                    # 12.0 生产级七维分水岭、垂直领域深耕与 Demo 针对性迭代
