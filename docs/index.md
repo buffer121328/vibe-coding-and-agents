@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Vibe Coding
+  name: Vibe Coding & Agents
   text: 现代 AI 辅助编程与 Agent 智能体知识库
   tagline: 用通俗大白话讲透原理，用严谨架构图打通认知，从 0 到 1 手搓 Agent，再到 Dify / LangChain / LangGraph 工业级落地
   actions:
@@ -11,7 +11,7 @@ hero:
       link: /01_发展之路/
     - theme: alt
       text: ⭐ GitHub 仓库
-      link: https://github.com/buffer121328/vibe_coding
+      link: https://github.com/buffer121328/vibe-coding-and-agents
 
 features:
   - title: 🧠 概念扫盲

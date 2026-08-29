@@ -63,9 +63,9 @@ for (const cat of categories) {
 
 export default withMermaid(defineConfig({
   lang: 'zh-CN',
-  title: 'Vibe Coding 知识库',
+  title: 'Vibe Coding 与 AI Agent 全景知识库',
   description: 'AI 辅助编程与 Agent 智能体全景教学知识库',
-  base: '/vibe_coding/',
+  base: '/vibe-coding-and-agents/',
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: true, // 书稿中存在指向项目子文件/未同步页面的交叉引用，跳过死链检查
@@ -90,7 +90,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: '首页', link: '/' },
       ...categories.map((c) => ({ text: c.text, link: c.link })),
-      { text: 'GitHub', link: 'https://github.com/buffer121328/vibe_coding' },
+      { text: 'GitHub', link: 'https://github.com/buffer121328/vibe-coding-and-agents' },
     ],
     sidebar: sidebar as any, // 对象形式（按路径前缀映射到分类侧边栏），类型声明未收录故断言
     outline: { label: '本页目录', level: [2, 3] },

@@ -1,4 +1,4 @@
-<h1 align="center">🌊 Vibe Coding 极速通关与现代 AI Agent 知识库</h1>
+<h1 align="center">🌊 Vibe Coding 与 AI Agent 全景知识库</h1>
 
 <p align="center">
   <em>用通俗大白话讲透原理 · 从 0 到 1 手搓 Agent · 打通 Dify / OpenCode / LangChain / LangGraph / RAG 工业级落地</em>
@@ -6,15 +6,15 @@
 
 <!-- 📖 在线阅读：圆角图标 + 👈 阅读入口同一行 -->
 <p align="center">
-  <a href="https://buffer121328.github.io/vibe_coding/">
+  <a href="https://buffer121328.github.io/vibe-coding-and-agents/">
     <img src="img/image.svg" alt="在线阅读" width="75" height="75" align="middle" />
   </a>
   &nbsp;&nbsp;
-  <b><a href="https://buffer121328.github.io/vibe_coding/">👈 点这里开始阅读</a></b>
+  <b><a href="https://buffer121328.github.io/vibe-coding-and-agents/">👈 点这里开始阅读</a></b>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/buffer121328/vibe_coding?style=social" alt="GitHub Stars" />
+  <img src="https://img.shields.io/github/stars/buffer121328/vibe-coding-and-agents?style=social" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
 </p>
@@ -26,7 +26,7 @@
 
 ## 📖 项目简介 (About The Project)
 
-欢迎来到 **`vibe_coding`** 开源知识库！
+欢迎来到 **`vibe-coding-and-agents`** 开源知识库！
 
 本项目是一个**完全开源、面向零基础到进阶开发者的现代 AI 辅助编程与 Agent 智能体全景指南**。
 
@@ -42,7 +42,7 @@
 ## 🗂️ 知识库完整目录体系 (Table of Contents)
 
 ```
-vibe_coding/
+vibe-coding-and-agents/
 ├── LICENSE                                            # MIT 开源许可证
 ├── README.md                                          # 项目介绍与全景目录总纲
 ├── agents.md                                          # 智能体协作规则指南 (AI Rules 类似 CLAUDE.md)
@@ -200,6 +200,8 @@ vibe_coding/
 ## 📂 章节导览：按学习路径分类 (Chapter Guide)
 
 本项目十四个章节看似很多，其实可以按学习路径分成几段，帮大家快速定位适合自己的内容：
+
+> 💡 **一句话看懂全书结构**：**上半部「Vibe Coding 实战」（3-7 章）**教你如何驾驭 AI 编程工具高效做项目；**下半部「Agent 工程」（8-11 章）**深入内核与框架，讲清这些工具背后的 Agent 到底如何运转。先用起来，再懂原理，两条线可以按需取用。
 
 - **01-03｜入门概念（打地基）**：这部分是入门概念，主要是让后续学习时遇到专属名词不陌生，先把"黑话"扫清。
 - **04-07｜主流工具实战（多备几把趁手的刀）**：主流工具的使用，这里建议大家**多学几个**。因为模型厂商的模型在高发期会"降智"，这是没办法避免的事情——算力不够。所以多掌握几个工具，在模型降智的时候能及时切换，不至于卡壳。
