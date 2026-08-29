@@ -6,7 +6,7 @@
 
 为了解决这个问题，[LangGraph](https://langchain-ai.github.io/langgraph/) 应运而生。它引入了图论（图、节点、边）和状态机概念，让开发者可以画出严谨的“轨道”，而让大模型仅仅负责在十字路口做路由决策。
 
-> **本章核心目标**：从零理解状态图（StateGraph），掌握条件路由、并行分发、图的可视化与流式调试等基础基建，再进阶到人工干预（Human-in-the-loop）机制，并最终通过一个企业级的**多智能体（Multi-Agent）旅行助手**开源项目，彻底吃透当前最前沿的 AI 应用落地范式！
+> **本章核心目标**：从零理解状态图（StateGraph），掌握条件路由、并行分发、图的可视化与流式调试等基础基建，进阶到人工干预（Human-in-the-loop）机制，通过一个企业级的**多智能体（Multi-Agent）旅行助手**开源项目吃透当前最前沿的 AI 应用落地范式；再以进阶专题补齐工具调用循环、设计模式、长期记忆、持久执行、子图、Functional API 与部署观测的完整版图。
 
 ## 📚 目录结构
 
@@ -17,11 +17,40 @@
 * [05_图的可视化与流式调试](05_图的可视化与流式调试.md) - 把图画出来（Mermaid/PNG），用 stream 逐节点观察状态流转。
 * [06_Memory与Human-in-the-loop](06_Memory与Human-in-the-loop.md) - 存档机制，以及如何在执行危险动作前暂停让“人类签字同意”。
 * [07_MultiAgent分层架构](07_MultiAgent分层架构.md) - 了解“大堂经理”与“专职子助理”之间的任务分发与状态栈退回机制。
-* [08_综合实战_旅行助手项目](08_综合实战_旅行助手项目.md) - 将整个旅行助手（包含机票、酒店、租车业务）的源代码拆解与运行测试。
 
-> 💡 **参考资料**：本章基础小节（03-05）主要依据 **LangGraph 1.x 官方文档**（图 API 概念、使用图 API、流式输出等），并参考了 **[Langchain1.0-Langgraph1.0-Learning](https://github.com/BrandPeng/Langchain1.0-Langgraph1.0-Learning)** 及 PocketFlow、Matt Harrison 等社区教程进行扩展，各小节末尾均附有完整扩展阅读链接。
+**进阶专题**（对照 LangGraph 1.x 官方文档主线补全）：
 
-## 💻 本章实战源码库
-本章的终极实战项目 **Trip Assistant** 已提供在本目录的 `code/travel_agent_v2/` 中，代码完全基于 LangGraph 1.x 最佳实践进行了企业级模块化重构，并对所有的 API Key 进行了脱敏处理。
+* [08_工具调用循环与预构建组件](08_工具调用循环与预构建组件.md) - 补上 Agent 的心脏：bind_tools/ToolNode/tools_condition 循环闭环，及 create_agent + middleware 高层快车道。
+* [09_工作流设计模式](09_工作流设计模式.md) - 官方五大模式速查（路由/编排者-工人/评估者-优化者等），建立“先选型再动手”的条件反射。
+* [10_长期记忆与TimeTravel](10_长期记忆与TimeTravel.md) - Store 跨线程会员档案、语义检索，以及 get_state_history/update_state 回放与改道。
+* [11_持久执行与容错](11_持久执行与容错.md) - 断点续跑、RetryPolicy 自动重试、超时与缓存，跑到一半崩了能复活。
+* [12_子图与多智能体全谱](12_子图与多智能体全谱.md) - 真子图（Subgraph）嵌套，Network/Supervisor/Hierarchical/Handoffs 编队与官方编队库。
+* [13_HITL进阶](13_HITL进阶.md) - 节点内动态中断 interrupt() + Command(resume)，条件拦截与多级审批。
+* [14_FunctionalAPI与两套API选型](14_FunctionalAPI与两套API选型.md) - @entrypoint/@task 给现有 Python 函数加持久化，Graph API vs Functional API 选型对照。
+* [15_部署与可观测性](15_部署与可观测性.md) - LangGraph Server/Studio/Platform 部署，可观测性取舍（暂不引入 LangSmith/Langfuse，用调试三板斧替代）与追踪生态认知。
+
+**收官实战**：
+
+* [16_综合实战_旅行助手项目](16_综合实战_旅行助手项目.md) - 用企业级全能旅行助手把全章零件装进一台整机：源码拆解、运行测试与知识对号入座。
+
+## 🛠️ 环境准备与两套 API 总览
+
+开始学习前建议先装好环境（Python 3.10+）：
+
+```bash
+pip install -U langgraph langchain langchain-openai
+```
+
+两个版本注意点：
+
+1. **LangGraph 1.x 已弃用 `create_react_agent`**，高层 Agent API 统一迁移到 LangChain 的 `create_agent` + middleware（见 08 节）；老教程里 `langgraph.prebuilt.create_react_agent` 的写法会遇到弃用警告。
+2. **LangGraph 有两套并列 API**：Graph API（StateGraph 画轨道图，本第 01~07、08~12 节主线）与 Functional API（@entrypoint/@task 给现有 Python 代码加持久化，见 14 节）。前者适合新建的复杂编排与多智能体，后者适合给已有流程最小改动加记忆/HITL，详细选型见 [官方对比](https://docs.langchain.com/oss/python/langgraph/choosing-apis)。
+
+> 💡 **参考资料**：本章基础小节主要依据 **LangGraph 1.x 官方文档**（图 API 概念、使用图 API、流式输出等），并参考了 PocketFlow、Matt Harrison 等社区教程进行扩展，各小节末尾均附有完整扩展阅读链接。
+
+## 💻 本章示例与实战源码
+
+- **[code/examples/](code/examples/)**：02~14 每节一个最小可运行示例，**全部无需 API Key**（用 langchain-core 内置假模型模拟大模型环节），装好 `langgraph` 后逐个 `python xxx.py` 即可跑通。
+- **[code/travel_agent_v2/](code/travel_agent_v2/README.md)**：16 节收官实战的企业级 Multi-Agent 项目，完全基于 LangGraph 1.x 最佳实践重构，API Key 已脱敏（配置方式见其 README 与 `.env.example`）。
 
 准备好进入 Agent 工业流水线的时代了吗？让我们开始吧！

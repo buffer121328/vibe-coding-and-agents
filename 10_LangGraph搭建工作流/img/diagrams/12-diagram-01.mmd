@@ -1,0 +1,15 @@
+graph TD
+    subgraph FlightSub ["子图：航班助理"]
+        FA["航班助理节点"] --> FT["航班工具集 (安全/敏感)"]
+        FT --> FA
+    end
+
+    subgraph HotelSub ["子图：酒店助理"]
+        HA["酒店助理节点"] --> HT["酒店工具集 (安全/敏感)"]
+        HT --> HA
+    end
+
+    Entry["父图主助理 (意图识别)"] -->|工具调用委派| FlightSub
+    Entry -->|工具调用委派| HotelSub
+    FlightSub -.-> Entry
+    HotelSub -.-> Entry

@@ -1,0 +1,10 @@
+graph TD
+    START --> Classify["意图分类节点"]
+    Classify -->|"返回 review"| Review["代码评审节点"]
+    Classify -->|"返回 translate"| Translate["翻译节点"]
+    Classify -->|"返回 summarize"| Summarize["摘要节点"]
+    Classify -->|"返回 chat"| Chat["闲聊节点"]
+    Review --> END
+    Translate --> END
+    Summarize --> END
+    Chat --> END

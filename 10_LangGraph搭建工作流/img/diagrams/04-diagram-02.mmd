@@ -1,0 +1,9 @@
+graph TD
+    User["用户输入 (帮我同时查 3 个城市的机票)"] --> Planner["规划节点 planner (Map)"]
+    Planner -->|Send 派发| W1["search_one_city 实例1 北京"]
+    Planner -->|Send 派发| W2["search_one_city 实例2 上海"]
+    Planner -->|Send 派发| W3["search_one_city 实例3 成都"]
+    W1 -->|reducer 拼接 quotes| Agg["汇总节点 aggregate (Reduce)"]
+    W2 -->|reducer 拼接 quotes| Agg
+    W3 -->|reducer 拼接 quotes| Agg
+    Agg --> Out["最低价回答 END"]

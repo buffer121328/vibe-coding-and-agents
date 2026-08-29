@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 498 326.7" width="498" height="326.7" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="FlightSub" data-label="子图：航班助理">
+  <rect x="20" y="120.9" width="207" height="181.79999999999998" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="20" y="120.9" width="207" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="32" y="134.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">子图：航班助理</text>
+</g>
+<g class="subgraph" data-id="HotelSub" data-label="子图：酒店助理">
+  <rect x="251" y="120.9" width="207" height="181.79999999999998" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="251" y="120.9" width="207" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="263" y="134.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">子图：酒店助理</text>
+</g>
+<polyline class="edge" data-from="FA" data-to="FT" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="123.5,201.8 123.5,249.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FT" data-to="FA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="211,268.25 243,268.25 243,183.35 180,183.35" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="HA" data-to="HT" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="354.5,201.8 354.5,249.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="HT" data-to="HA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="442,268.25 474,268.25 474,183.35 411,183.35" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Entry" data-to="FlightSub" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="120,72.9 120,96.9 123.5,96.9 123.5,120.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Entry" data-to="FlightSub" data-label="工具调用委派">
+  <rect x="81.75" y="85.9" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="121.75" y="96.9" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">工具调用委派</text>
+</g>
+<polyline class="edge" data-from="Entry" data-to="HotelSub" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="120,72.9 120,96.9 354.5,96.9 354.5,120.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Entry" data-to="HotelSub" data-label="工具调用委派">
+  <rect x="197.25" y="85.9" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="237.25" y="96.9" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">工具调用委派</text>
+</g>
+<polyline class="edge" data-from="FlightSub" data-to="Entry" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="227,211.8 243,211.8 243,54.45 204,54.45" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="HotelSub" data-to="Entry" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="458,211.8 474,211.8 474,54.45 204,54.45" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<g class="node" data-id="FA" data-label="航班助理节点" data-shape="rectangle">
+  <rect x="67" y="164.9" width="113" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="123.5" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="123.5" dy="4.55">航班助理节点</tspan></text>
+</g>
+<g class="node" data-id="FT" data-label="航班工具集 (安全/敏感)" data-shape="rectangle">
+  <rect x="36" y="249.8" width="175" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="123.5" y="268.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="123.5" dy="4.55">航班工具集 (安全/敏感)</tspan></text>
+</g>
+<g class="node" data-id="HA" data-label="酒店助理节点" data-shape="rectangle">
+  <rect x="298" y="164.9" width="113" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="354.5" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="354.5" dy="4.55">酒店助理节点</tspan></text>
+</g>
+<g class="node" data-id="HT" data-label="酒店工具集 (安全/敏感)" data-shape="rectangle">
+  <rect x="267" y="249.8" width="175" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="354.5" y="268.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="354.5" dy="4.55">酒店工具集 (安全/敏感)</tspan></text>
+</g>
+<g class="node" data-id="Entry" data-label="父图主助理 (意图识别)" data-shape="rectangle">
+  <rect x="36" y="36" width="168" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="120" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="120" dy="4.55">父图主助理 (意图识别)</tspan></text>
+</g>
+</svg>

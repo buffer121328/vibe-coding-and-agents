@@ -1,0 +1,6 @@
+graph TD
+    User["用户提问"] --> Model["大模型节点 (思考)"]
+    Model -->|输出 tool_calls| Route{"tools_condition"}
+    Route -->|调用工具| Tools["ToolNode 执行工具"]
+    Tools -->|结果回填| Model
+    Route -->|直接回答| Finish["最终回答 END"]

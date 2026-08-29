@@ -1,0 +1,8 @@
+graph TD
+    START["开始节点"] --> AgentNode["大模型节点 (思考与决策)"]
+    
+    subgraph Routing ["条件路由（十字路口）"]
+        AgentNode -->|需要使用工具| ToolNode["工具执行节点"]
+        ToolNode -->|执行完毕，把结果放回书包| AgentNode
+        AgentNode -->|任务完成| END["结束节点"]
+    end

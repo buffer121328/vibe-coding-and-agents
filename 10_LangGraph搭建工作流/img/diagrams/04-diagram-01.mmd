@@ -1,0 +1,8 @@
+graph TD
+    Planner["规划节点"] --> A["查航班"]
+    Planner --> B["查酒店"]
+    Planner --> C["查天气"]
+    A --> Merge["汇总节点"]
+    B --> Merge
+    C --> Merge
+    Merge --> END

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 621.639 463.9" width="621.639" height="463.9" style="--bg:#1e1e2e;--fg:#cdd6f4;--line:#585b70;--accent:#cba6f7;--muted:#6c7086;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="START" data-to="Classify" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="319.09999999999997,72.9 319.09999999999997,128.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Classify" data-to="Review" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="返回 review" points="279.83899999999994,165.8 279.83899999999994,197.8 101.435,197.8 101.435,330.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Classify" data-to="Translate" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="返回 translate" points="306.013,165.8 306.013,209.8 251.485,209.8 251.485,298.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Classify" data-to="Summarize" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="返回 summarize" points="332.18699999999995,165.8 332.18699999999995,209.8 386.71500000000003,209.8 386.715,298.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Classify" data-to="Chat" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="返回 chat" points="358.361,165.8 358.361,197.8 521.945,197.8 521.9449999999999,330.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Review" data-to="END" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="101.435,367 101.435,379 319.1,379 319.1,391" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Translate" data-to="END" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="251.485,335 251.485,379 319.1,379 319.1,391" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Summarize" data-to="END" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="386.71500000000003,335 386.71500000000003,379 319.1,379 319.1,391" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Chat" data-to="END" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="521.9449999999999,367 521.9449999999999,379 319.1,379 319.1,391" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Classify" data-to="Review" data-label="返回 review">
+  <rect x="63.435" y="248.79999999999998" width="75.268" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="101.069" y="263.95" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">返回 review</text>
+</g>
+<g class="edge-label" data-from="Classify" data-to="Translate" data-label="返回 translate">
+  <rect x="208.985" y="216.8" width="84.77200000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="251.37100000000004" y="231.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">返回 translate</text>
+</g>
+<g class="edge-label" data-from="Classify" data-to="Summarize" data-label="返回 summarize">
+  <rect x="339.21500000000003" y="216.8" width="94.27600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="386.35300000000007" y="231.95000000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">返回 summarize</text>
+</g>
+<g class="edge-label" data-from="Classify" data-to="Chat" data-label="返回 chat">
+  <rect x="489.945" y="248.79999999999998" width="63.388000000000005" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="521.639" y="263.95" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">返回 chat</text>
+</g>
+<g class="node" data-id="START" data-label="START" data-shape="rectangle">
+  <rect x="275.895" y="36" width="86.41" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="319.09999999999997" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">START</text>
+</g>
+<g class="node" data-id="Classify" data-label="意图分类节点" data-shape="rectangle">
+  <rect x="253.66499999999996" y="128.9" width="130.87" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="319.09999999999997" y="147.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">意图分类节点</text>
+</g>
+<g class="node" data-id="Review" data-label="代码评审节点" data-shape="rectangle">
+  <rect x="36" y="330.1" width="130.87" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="101.435" y="348.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">代码评审节点</text>
+</g>
+<g class="node" data-id="Translate" data-label="翻译节点" data-shape="rectangle">
+  <rect x="200.87" y="298.1" width="101.22999999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="251.485" y="316.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">翻译节点</text>
+</g>
+<g class="node" data-id="Summarize" data-label="摘要节点" data-shape="rectangle">
+  <rect x="336.1" y="298.1" width="101.22999999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="386.71500000000003" y="316.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">摘要节点</text>
+</g>
+<g class="node" data-id="Chat" data-label="闲聊节点" data-shape="rectangle">
+  <rect x="471.33" y="330.1" width="101.22999999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="521.9449999999999" y="348.55" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">闲聊节点</text>
+</g>
+<g class="node" data-id="END" data-label="END" data-shape="rectangle">
+  <rect x="284.78700000000003" y="391" width="68.62599999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="319.1" y="409.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">END</text>
+</g>
+</svg>

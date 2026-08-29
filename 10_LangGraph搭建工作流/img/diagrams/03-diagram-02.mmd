@@ -1,0 +1,4 @@
+graph TD
+    Generate["内容生成节点"] --> Judge["质量裁判节点 (LLM)"]
+    Judge -->|"no，不合格"| Generate
+    Judge -->|"yes，合格"| END
