@@ -47,9 +47,18 @@ class PerformanceAndCostCallback(BaseCallbackHandler):
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
         elapsed = time.time() - self.start_time
         self.events_log.append({"event": "LLM_END", "elapsed": elapsed})
-        
-        # 尝试从 llm_output 提取 token 使用量
-        token_usage = response.llm_output.get("token_usage", {}) if response.llm_output else {}
+
+        # 优先从 llm_output 提取；新版伙伴包把用量挂在 generations[0].message.usage_metadata
+        token_usage = (response.llm_output or {}).get("token_usage", {})
+        if not token_usage and response.generations:
+            top = response.generations[0]
+            first = top[0] if top else None
+            usage_metadata = getattr(getattr(first, "message", None), "usage_metadata", None) or {}
+            token_usage = {
+                "prompt_tokens": usage_metadata.get("input_tokens", 0),
+                "completion_tokens": usage_metadata.get("output_tokens", 0),
+                "total_tokens": usage_metadata.get("total_tokens", 0),
+            }
         self.prompt_tokens = token_usage.get("prompt_tokens", 0)
         self.completion_tokens = token_usage.get("completion_tokens", 0)
         self.total_tokens = token_usage.get("total_tokens", self.prompt_tokens + self.completion_tokens)

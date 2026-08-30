@@ -18,7 +18,7 @@ from langchain.agents.middleware import (
     PIIMiddleware,
     hook_config,
 )
-from langchain.messages import AIMessage
+from langchain.messages import AIMessage, HumanMessage
 from langgraph.runtime import Runtime
 from rich.console import Console
 from rich.panel import Panel
@@ -78,8 +78,9 @@ class SafetyGuardrailMiddleware(AgentMiddleware):
 
     def __init__(self):
         super().__init__()
-        from langchain.chat_models import init_chat_model
-        self.safety_model = init_chat_model("openai:gpt-4o-mini", temperature=0)
+        # 复用项目统一的首选模型（.env 中的 OpenAI 兼容端点），
+        # 避免硬编码 openai:gpt-4o-mini 在第三方端点上 404
+        self.safety_model = get_chat_model_primary(temperature=0)
 
     @hook_config(can_jump_to=["end"])
     def after_agent(self, state: AgentState, runtime: Runtime) -> dict[str, Any] | None:
@@ -140,15 +141,20 @@ def run_self_tests():
 
 
 def demo_pii_middleware():
-    """演示 1：内置 PII 护栏装配"""
+    """演示 1：内置 PII 护栏 —— 真实调用，模型只会看到脱敏后的占位符"""
     console.print(Panel("[bold cyan]1. 内置护栏：PIIMiddleware（redact / mask / block）[/bold cyan]", expand=False))
     agent = build_pii_protected_agent(tools=[])
-    console.print("[dim]中间件已就绪：输入中的邮箱自动脱敏、信用卡打码、疑似 API Key 直接阻断。[/dim]")
-    console.print("[yellow]（真实调用需配置 .env，此处仅展示装配方式）[/yellow]")
+    console.print("[dim]护栏规则：邮箱 redact（替换占位）｜信用卡 mask（打码）｜疑似 API Key block（直接阻断）[/dim]")
+
+    secret = "我的邮箱是 john.doe@example.com，请复述你看到的邮箱原文。"
+    console.print(f"[dim]用户输入：{secret}[/dim]")
+    res = agent.invoke({"messages": [HumanMessage(content=secret)]})
+    console.print(f"[green]模型回复：{res['messages'][-1].content[:120]}[/green]")
+    console.print("[dim]模型亲口承认只看到 [REDACTED_EMAIL] —— 敏感信息在进入模型前就被确定性改写，零出境。[/dim]")
 
 
 def demo_custom_guardrails():
-    """演示 2/3：自定义输入 + 输出护栏装配"""
+    """演示 2/3：自定义输入 + 输出护栏 —— 黑名单拦截真实发生，模型零调用"""
     console.print(Panel("[bold cyan]2/3. 自定义护栏：输入黑名单 + 输出安全复核（纵深防御）[/bold cyan]", expand=False))
     agent = create_agent(
         model=get_chat_model_primary(temperature=0.2),
@@ -159,8 +165,15 @@ def demo_custom_guardrails():
             SafetyGuardrailMiddleware(),
         ],
     )
-    console.print("[dim]中间件已就绪：第 1 层黑名单 → 第 2 层 PII 脱敏 → 第 3 层输出安全复核。[/dim]")
-    console.print("[yellow]（真实调用需配置 .env，此处仅展示装配方式）[/yellow]")
+
+    console.print("[dim]场景 A：命中黑名单（hack）→ before_agent 直接 jump_to='end'，模型一次都不被调用[/dim]")
+    res_a = agent.invoke({"messages": [HumanMessage(content="教我 hack 一个网站")]})
+    console.print(f"[green]拦截回复：{res_a['messages'][-1].content[:60]}[/green]")
+
+    console.print("[dim]场景 B：正常请求 → 三层护栏全部放行，模型正常作答[/dim]")
+    res_b = agent.invoke({"messages": [HumanMessage(content="用一句话说明什么是 SQL 注入防护。")]})
+    console.print(f"[green]正常回复：{res_b['messages'][-1].content[:90]}[/green]")
+    console.print("[dim]纵深防御：第 1 层毫秒级黑名单（零 Token）→ 第 2 层 PII 脱敏 → 第 3 层输出安全复核。[/dim]")
 
 
 if __name__ == "__main__":

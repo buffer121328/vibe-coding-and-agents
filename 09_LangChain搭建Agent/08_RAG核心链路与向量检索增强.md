@@ -71,6 +71,8 @@ embeddings = OpenAIEmbeddings(
     api_key=os.getenv("OPENAI_API_KEY"),     # 从 .env 读取 Embedding API Key
     base_url=os.getenv("OPENAI_API_BASE"),   # 从 .env 读取 OpenAI 兼容服务地址
     model=os.getenv("EMBEDDING_MODEL"),      # 从 .env 读取向量模型名称
+    check_embedding_ctx_length=False,        # 关键：国产端点（方舟/MiMo 等）只接受字符串，
+    tiktoken_enabled=False,                  # 必须禁用 OpenAI 式「先分词再发数组」的优化
 )
 vectorstore = Chroma.from_documents(
     documents=splits,
@@ -78,6 +80,12 @@ vectorstore = Chroma.from_documents(
     persist_directory="./chroma_db",   # 可选：落盘持久化
 )
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
+
+> **⚠️ 国产端点踩坑实录**：`OpenAIEmbeddings` 默认会用 tiktoken 把文本预分词成 token 数组再发请求（OpenAI 官方优化），
+> 但火山方舟、小米 MiMo 等国产 OpenAI 兼容端点的 `/embeddings` 只接受**原始字符串**，收到数组会报
+> `expected a string, but got [...]`。解法就是上面那两个参数：`check_embedding_ctx_length=False` + `tiktoken_enabled=False`，
+> 让 LangChain 直接发送原文。若端点完全不可用，代码中还保留了本地 `DeterministicFakeEmbedding` 降级兜底，
+> 保证教学链路永远能跑通（检索退化为非语义匹配，会在终端打印黄色提示）。
 ```
 
 > 🆕 **1.x 补充：`init_embeddings` 统一嵌入工厂**。与 `init_chat_model` 同理，LangChain 1.x 提供 `langchain.embeddings.init_embeddings` 一行初始化任意厂商嵌入模型：

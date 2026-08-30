@@ -104,7 +104,9 @@ def init_hardware_rag():
     embeddings = OpenAIEmbeddings(
         api_key=api_key or "sk-dummy",
         base_url=api_base,
-        model=model
+        model=model,
+        check_embedding_ctx_length=False,   # 方舟等国产端点只接受字符串输入
+        tiktoken_enabled=False,
     )
     try:
         return Chroma.from_documents(splits, embeddings, collection_name="smart_buyer_kb")

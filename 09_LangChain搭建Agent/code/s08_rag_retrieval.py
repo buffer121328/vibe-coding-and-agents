@@ -33,10 +33,13 @@ def get_embeddings():
     model = os.getenv("EMBEDDING_MODEL", "")
 
     # 若有可用 key 则走标准 embedding，否则使用兼容模式
+    # 方舟等国产端点只接受字符串输入：禁用 tiktoken 预分词，直接发送原文
     return OpenAIEmbeddings(
         api_key=api_key or "sk-dummy",
         base_url=api_base,
-        model=model
+        model=model,
+        check_embedding_ctx_length=False,
+        tiktoken_enabled=False,
     )
 
 def prepare_knowledge_base():
@@ -65,7 +68,7 @@ def prepare_knowledge_base():
     return raw_docs
 
 def build_vector_store(docs: List[Document]):
-    """切分并向量化入库"""
+    """切分并向量化入库；远端 Embedding 端点不可用时自动降级为本地确定性向量"""
     # 1. 文本切块
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=200,
@@ -74,14 +77,23 @@ def build_vector_store(docs: List[Document]):
     )
     splits = text_splitter.split_documents(docs)
     console.print(f"[dim]已将文档切分为 {len(splits)} 个语义 Chunk 片段。[/dim]")
-    
-    # 2. 向量入库 (Chroma)
-    embeddings = get_embeddings()
-    vectorstore = Chroma.from_documents(
-        documents=splits,
-        embedding=embeddings,
-        collection_name="enterprise_knowledge_demo"
-    )
+
+    # 2. 向量入库 (Chroma)；端点不可用 → 兼容模式（本地伪向量，保证链路可演示）
+    try:
+        embeddings = get_embeddings()
+        vectorstore = Chroma.from_documents(
+            documents=splits,
+            embedding=embeddings,
+            collection_name="enterprise_knowledge_demo"
+        )
+    except Exception as e:
+        from langchain_core.embeddings import DeterministicFakeEmbedding
+        console.print(f"[yellow]远端 Embedding 不可用（{str(e)[:80]}…），切换本地确定性向量兼容模式。[/yellow]")
+        vectorstore = Chroma.from_documents(
+            documents=splits,
+            embedding=DeterministicFakeEmbedding(size=384),
+            collection_name="enterprise_knowledge_demo"
+        )
     return vectorstore
 
 def format_docs(docs: List[Document]) -> str:

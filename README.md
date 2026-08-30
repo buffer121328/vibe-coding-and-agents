@@ -136,12 +136,12 @@ vibe-coding-and-agents/
 │   ├── 04_结构化输出与容错解析.md                     # 9.4 with_structured_output、Pydantic 强类型与 JSON 修复
 │   ├── 05_自定义工具生态与参数校验.md                 # 9.5 @tool 装饰器、Pydantic 参数防御与 bind_tools 底层机制
 │   ├── 06_记忆管理与会话状态持久化.md                 # 9.6 Checkpointer 短期记忆、Store 长期记忆与 trim_messages 裁剪
-│   ├── 07_Callbacks回调与可观测性中间件.md            # 9.7 BaseCallbackHandler、Token 账单审计与敏感信息脱敏
-│   ├── 08_RAG核心链路与向量检索增强.md                # 9.8 语义切块、Chroma 向量入库与 LCEL 标准 RAG 检索问答
+│   ├── 07_Callbacks回调与可观测性中间件.md            # 9.7 BaseCallbackHandler、Token 账单审计（含新版 usage_metadata 兼容）与敏感信息脱敏
+│   ├── 08_RAG核心链路与向量检索增强.md                # 9.8 语义切块、Chroma 向量入库与 LCEL 标准 RAG 检索问答（含国产端点 Embedding 兼容）
 │   ├── 09_Agent现代架构与create_agent.md              # 9.9 现代 Tool Calling Agent、state_schema 自定义状态与 HITL 人类在环
-│   ├── 10_上下文工程与动态上下文注入.md               # 9.10 三类上下文 + 三数据源、动态 Prompt/工具/画像注入
-│   ├── 11_自定义中间件与生命周期钩子.md               # 9.11 Node/Wrap 两类钩子、state_schema 与状态更新机制
-│   ├── 12_生产级防护_护栏安全与测试评估.md            # 9.12 确定性/模型性护栏、PII 脱敏、Prompt 注入防护与测试评估
+│   ├── 10_上下文工程与动态上下文注入.md               # 9.10 三类上下文 + 三数据源、动态 Prompt/工具/画像注入（真实调用双场景演示）
+│   ├── 11_自定义中间件与生命周期钩子.md               # 9.11 Node/Wrap 两类钩子、state_schema 与状态更新（熔断/重试真实演示）
+│   ├── 12_生产级防护_护栏安全与测试评估.md            # 9.12 确定性/模型性护栏、PII 脱敏、Prompt 注入防护（真实调用演示）与测试评估
 │   └── 13_综合实战_AI智能数码选购与避坑决策Agent.md   # 9.13 综合实战：SmartBuyer 数码选购参谋，9.1~9.12 全零件融会贯通整机交付
 ├── 10_LangGraph搭建工作流/                            # 第十章：LangGraph 搭建工作流（意图图编排与多智能体实战）
 │   ├── README.md                                      # 第十章导读与核心概念
@@ -177,7 +177,7 @@ vibe-coding-and-agents/
 │   ├── 12_生成层防幻觉与引用溯源.md                    # 11.12 生成层：编号引用协议、幽灵引用校验、忠实度复检、拒答兜底与流式生成
 │   ├── 13_工程化部署与安全.md                          # 11.13 生产化：FastAPI/SSE 服务化、三级缓存降本、多租户 ACL、增量更新与 Prompt 注入防护
 │   ├── 14_多模态与垂直场景RAG.md                       # 11.14 多模态：三条技术路线、图文混排组合拳、跨语言 BGE-M3、音视频转写、表格问答与端侧
-│   ├── 15_端到端综合实战_KnowledgeForge_lite.md        # 11.15 总装实战：以开源 KnowledgeForge 为蓝本的 600 行蒸馏版，混合检索+四道闸门+双层评估(Ragas)+SSE
+│   ├── 15_端到端综合实战_KnowledgeForge_lite.md        # 11.15 总装实战：以开源 KnowledgeForge 为蓝本的约 900 行蒸馏版，混合检索+Neo4j 知识图谱+四道闸门+双层评估(Ragas)+Air 聊天页
 │   └── code/                                           # 配套代码：s02 数据管道、s03 嵌入、s04 向量库、s05 混合检索、s06 查询重写、s07 GraphRAG、s08 Agentic RAG、s09 评估、s11 迟交互与稀疏、s12 引用溯源、s13 部署安全、s14 多模态；KnowledgeForge_lite/ 为 11.15 总装项目
 ├── 12_如何做一个自己的项目/                           # 第十二章：如何做一个自己的项目（个人与应届生 AI 落地实战）
 │   ├── README.md                                      # 第十二章导读与全景知识图谱

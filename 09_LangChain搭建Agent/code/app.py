@@ -206,7 +206,7 @@ def tab3_parallel_stream(topic):
         "【主题】：{topic}\n【赞美】：{praise}\n【吐槽】：{roast}\n请给出 20 字以内的综合点评。")
         | llm | parser)
 
-    yield "", "", f"[{now()}] [阶段 1/3] RunnableParallel 同时派发两条支流（真并发，注意时间戳交错）…"
+    yield "", "", "", f"[{now()}] [阶段 1/3] RunnableParallel 同时派发两条支流（真并发，注意时间戳交错）…"
     t0 = time.time()
     try:
         res = parallel.invoke({"topic": topic})
@@ -228,18 +228,29 @@ def tab3_parallel_stream(topic):
 SCHEMA_JSON = FinancialReportAnalysis.model_json_schema()
 
 def tab4_extract_stream(text):
-    log = [f"[{now()}] [1/3] with_structured_output(Schema)：把 Pydantic 模型转成 JSON Schema 注入请求（见下方「报关单」）"]
-    yield "⏳ 提取中…", "\n".join(log)
+    """流式结构化提取：等待期实时反馈进度（首包 → 流式接收 → Pydantic 校验），
+    不再让页面干等 8~15 秒没有动静。"""
+    t0 = time.time()
+    log = [f"[{now()}] [1/3] with_structured_output(Schema)：把 Pydantic 模型转成 JSON Schema 注入请求（见下方「报关单」）",
+           f"[{now()}] ⏳ Function Calling 已发出，等待模型首包（通常 8~15 秒，含思考时间）…"]
+    yield "⏳ 模型思考中…", "\n".join(log)
     try:
-        llm = get_chat_model_primary()
-        structured_llm = llm.with_structured_output(FinancialReportAnalysis)
-        data = structured_llm.invoke(text)
-        log.append(f"[{now()}] [2/3] 模型经 Function Calling 返回符合 Schema 的 JSON")
-        log.append(f"[{now()}] [3/3] Pydantic 校验通过 ✓（字段名/类型/取值范围全部合规）→ 直接得到强类型对象")
-        return json.dumps(data.model_dump(), indent=2, ensure_ascii=False), "\n".join(log)
+        llm = get_chat_model_primary(temperature=0)
+        structured_llm = llm.with_structured_output(FinancialReportAnalysis, strict=True)
+        first_at = None
+        data = None
+        for partial in structured_llm.stream(text):
+            if first_at is None:
+                first_at = time.time() - t0
+                log.append(f"[{now()}] [2/3] 首包到达（{first_at:.1f}s）→ 模型开始返回字段，流式接收中…")
+            data = partial
+            filled = sum(1 for v in (data.model_dump() or {}).values() if v not in (None, "", []))
+            yield f"⏳ 已接收 {filled} 个字段…", "\n".join(log)
+        log.append(f"[{now()}] [3/3] Pydantic 校验通过 ✓（字段名/类型/取值范围全部合规）→ 强类型对象，总耗时 {time.time()-t0:.1f}s")
+        yield json.dumps(data.model_dump(), indent=2, ensure_ascii=False), "\n".join(log)
     except Exception as e:
         log.append(f"❌ 提取失败：{e}")
-        return f"提取失败：{e}", "\n".join(log)
+        yield f"提取失败：{e}", "\n".join(log)
 
 # ==============================================================================
 # 9.5 自定义工具
@@ -313,17 +324,30 @@ def tab6_trim(count, budget):
         msgs, max_tokens=int(budget), token_counter=len,
         strategy="last", start_on="human", include_system=True)
     kept = {(m.type, m.content) for m in trimmed}
-    lines = [f"原始 {len(msgs)} 条 → 裁剪后保留 {len(trimmed)} 条（预算 {int(budget)}）", "─" * 42]
+
+    # 左栏：原始完整对话（裁剪前模型看到的全部历史）
+    raw_lines = [f"共 {len(msgs)} 条（Token 预算 {int(budget)}）", "─" * 36]
     for i, m in enumerate(msgs):
-        mark = "✅ 保留" if (m.type, m.content) in kept else "✂️ 裁掉 "
-        lines.append(f"{mark}  #{i} [{m.type:7s}] {str(m.content)[:36]}")
+        icon = {"system": "🧭", "human": "👤", "ai": "🤖"}.get(m.type, "💬")
+        raw_lines.append(f"#{i} {icon} [{m.type:6s}] {str(m.content)[:34]}")
+
+    # 右栏：逐条命运标注（对照视图）
+    fate_lines = [f"原始 {len(msgs)} 条 → 裁剪后保留 {len(trimmed)} 条", "─" * 36]
+    for i, m in enumerate(msgs):
+        mark = "✅ 保留" if (m.type, m.content) in kept else "✂️ 裁掉"
+        icon = {"system": "🧭", "human": "👤", "ai": "🤖"}.get(m.type, "💬")
+        fate_lines.append(f"{mark}  #{i} {icon} [{m.type:6s}] {str(m.content)[:30]}")
+    if len(trimmed) < len(msgs):
+        fate_lines.append("─" * 36)
+        fate_lines.append(f"（{len(msgs) - len(trimmed)} 条旧消息被滑出窗口：预算 {int(budget)} 只够装下最近的对话）")
+
     log = (f"[{now()}] 策略解读：\n"
            f"  · strategy=\"last\" —— 从最新往回保留（最近的上下文最重要）\n"
            f"  · include_system=True —— 顶层 System 人设永远不动（大脑设定不能丢）\n"
            f"  · start_on=\"human\" —— 裁完的第一条有效消息必须是 human，符合对话开启惯例\n"
            f"[{now()}] token_counter=len 是教学用的简化计数，生产环境请用 tiktoken。\n"
            f"[{now()}] 进阶：SummarizationMiddleware 会把旧消息「摘要」而非丢弃（见 9.6 课件）。")
-    return "\n".join(lines), log
+    return "\n".join(raw_lines), "\n".join(fate_lines), log
 
 # ==============================================================================
 # 9.7 Callbacks 与脱敏
@@ -522,117 +546,275 @@ def tab13_report(demand):
 
 custom_css = """
 /* ===== 设计令牌：第九章「实验台控制台」 ===== */
+body { background:#f3f4fb; }
 .gradio-container {
-    --paper:#f6f7fc; --card:#ffffff; --line:#e3e5f1;
-    --ink:#1e1b4b; --chain:#4f46e5; --spark:#7c3aed; --amber:#f59e0b; --muted:#5c5f78;
-    --serif:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+    --paper:#f3f4fb; --card:#ffffff; --line:#e5e7f3;
+    --ink:#1b1850; --chain:#4f46e5; --spark:#7c3aed; --amber:#f59e0b; --mint:#10b981; --muted:#63668a;
     --mono:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", Roboto, sans-serif;
     max-width: min(1560px, 97vw) !important;
     margin: 0 auto !important;
-    background: var(--paper);
+    color: var(--ink);
+    background:
+        radial-gradient(1100px 480px at 88% -120px, rgba(124, 58, 237, .09), transparent 62%),
+        radial-gradient(900px 420px at -8% -60px, rgba(79, 70, 229, .08), transparent 58%),
+        radial-gradient(800px 520px at 50% 112%, rgba(16, 185, 129, .05), transparent 60%),
+        var(--paper);
     overflow-x: clip;
 }
+/* ===== 全局细滚动条 ===== */
+.gradio-container ::-webkit-scrollbar { width:8px; height:8px; }
+.gradio-container ::-webkit-scrollbar-track { background:transparent; }
+.gradio-container ::-webkit-scrollbar-thumb { background:#c7cbe4; border-radius:8px; }
+.gradio-container ::-webkit-scrollbar-thumb:hover { background:#aab0d6; }
+/* ===== 全局输入件圆角 ===== */
+.gradio-container textarea,
+.gradio-container input[type="text"],
+.gradio-container input[type="number"] { border-radius: 12px !important; }
 /* ===== 侧边栏 ===== */
-#nav-sidebar { background: #f1f2fa !important; border-right: 1px solid var(--line); }
-#nav-logo { text-align: center; padding: 12px 6px 4px 6px; }
-#nav-logo h2 { margin: 0 0 6px 0; font-family: var(--serif); font-size: 1.22em; letter-spacing: 1px; color: var(--chain); }
-#nav-logo p { margin: 0; font-family: var(--mono); font-size: 0.72em; letter-spacing: 0.16em; color: var(--muted); }
-#nav-radio .wrap { gap: 5px !important; }
-#nav-radio label {
-    background: transparent; border: 1px solid transparent !important;
-    border-radius: 9px !important; padding: 6px 10px !important;
-    transition: all .15s ease; cursor: pointer;
-    color: var(--ink) !important; font-size: 0.9em;
+#nav-sidebar { background: linear-gradient(180deg, #f9f9ff 0%, #f0f1fa 100%) !important; border-right: 1px solid var(--line) !important; }
+#nav-logo { text-align: center; padding: 16px 8px 10px 8px; }
+#nav-logo h2 {
+    margin: 0 0 7px 0; font-size: 1.24em; font-weight: 800; letter-spacing: 1px;
+    color: #4f46e5;
+    background: linear-gradient(92deg, #4f46e5 10%, #7c3aed 60%, #a855f7);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
-#nav-radio label:hover { background: #ffffff; border-color: var(--line) !important; }
+#nav-logo p { margin: 0; font-family: var(--mono); font-size: 0.68em; letter-spacing: 0.2em; color: var(--muted); }
+#nav-radio .wrap { gap: 11px !important; padding: 4px 2px !important; }
+#nav-radio label {
+    background: rgba(255, 255, 255, .85); border: 1px solid #e0e3f4 !important;
+    border-radius: 11px !important; padding: 9px 12px !important;
+    transition: all .16s ease; cursor: pointer;
+    color: var(--ink) !important; font-size: 0.9em;
+    box-shadow: 0 1px 3px rgba(27, 24, 80, .07);
+}
+#nav-radio label:hover {
+    border-color: #c7ccf5 !important; box-shadow: 0 4px 12px rgba(79, 70, 229, .12);
+    transform: translateY(-1px);
+}
 #nav-radio label.selected {
-    background: linear-gradient(90deg, var(--chain), var(--spark)) !important;
+    background: linear-gradient(120deg, #4f46e5, #7c3aed) !important;
     border-color: transparent !important;
-    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.30);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, .32);
+    transform: translateY(-1px);
 }
 #nav-radio label.selected, #nav-radio label.selected * { color: #ffffff !important; }
 #nav-radio label input { display: none; }
-/* ===== Hero 控制台横幅 ===== */
+/* ===== Hero 控制台横幅：点阵网格 + 琥珀辉光 ===== */
 .hero {
-    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-    background: linear-gradient(115deg, #312e81 0%, #4338ca 55%, #6d28d9 100%);
-    border-radius: 16px; padding: 20px 26px; margin-bottom: 16px;
-    color: #f8fafc; box-shadow: 0 8px 26px rgba(67, 56, 202, 0.22);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    background: linear-gradient(118deg, #1e1b4b 0%, #3730a3 48%, #6d28d9 100%);
+    border-radius: 20px; padding: 26px 30px; margin-bottom: 18px;
+    color: #f8fafc;
+    box-shadow: 0 14px 38px -14px rgba(67, 56, 202, .48), inset 0 1px 0 rgba(255, 255, 255, .08);
 }
-.hero .eyebrow { font-family: var(--mono); font-size: 0.74em; letter-spacing: 0.22em; color: #fcd34d; margin-bottom: 6px; }
-.hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(1.3em, 2.3vw, 1.85em); letter-spacing: 0.5px; }
-.hero p { margin: 8px 0 0; max-width: 820px; color: #d9dcf5; font-size: 0.9em; line-height: 1.7; }
+.hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, .13) 1px, transparent 1.4px);
+    background-size: 24px 24px; opacity: .45;
+}
+.hero::after {
+    content: ""; position: absolute; width: 460px; height: 460px; right: -150px; top: -260px; pointer-events: none;
+    background: radial-gradient(circle at center, rgba(252, 211, 77, .30), transparent 62%);
+    filter: blur(18px);
+}
+.hero > * { position: relative; z-index: 1; }
+.hero .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 0.72em; letter-spacing: 0.24em; color: #fcd34d !important;
+    background: rgba(252, 211, 77, .10); border: 1px solid rgba(252, 211, 77, .35);
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+}
+.hero h1 { margin: 0; font-size: clamp(1.4em, 2.4vw, 1.95em); font-weight: 800; letter-spacing: .5px; color: #ffffff; text-shadow: 0 2px 18px rgba(0, 0, 0, .25); }
+.hero p { margin: 10px 0 0; max-width: 860px; color: #d6daf7 !important; font-size: 0.92em; line-height: 1.75; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.hero-tags span {
+    font-size: 0.76em; color: #e0e7ff !important; background: rgba(255, 255, 255, .10);
+    border: 1px solid rgba(255, 255, 255, .20); padding: 4px 12px; border-radius: 999px;
+    backdrop-filter: blur(4px);
+}
+.hero-side { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .hero-chain {
     font-family: var(--mono); font-size: 0.92em; color: #e0e7ff;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
-    padding: 12px 18px; border-radius: 12px; white-space: nowrap;
+    background: rgba(15, 10, 50, .35); border: 1px solid rgba(255, 255, 255, .18);
+    padding: 13px 20px; border-radius: 14px; white-space: nowrap;
     max-width: 100%; overflow-x: auto;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
 }
 .hero-chain b { color: #fcd34d; font-weight: 700; padding: 0 2px; }
-/* ===== 页头说明条 ===== */
+.hero-chain-cap { font-family: var(--mono); font-size: 0.68em; letter-spacing: 0.18em; color: #a5b4fc; }
+/* ===== 页头说明条：编号徽章 + 公式芯片 ===== */
 .tab-head {
-    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--chain);
-    border-radius: 12px; padding: 11px 18px; margin-bottom: 14px;
+    display: flex; gap: 15px; align-items: flex-start;
+    background: linear-gradient(90deg, #ffffff 55%, #fbfbff);
+    border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 18px; margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(27, 24, 80, .05), 0 14px 34px -22px rgba(27, 24, 80, .16);
 }
-.tab-head h3 { margin: 0 0 3px 0; font-family: var(--serif); font-size: 1.1em; color: var(--ink); }
-.tab-head p { margin: 0 0 7px 0; font-size: 0.86em; color: var(--muted); }
+.tab-badge {
+    flex: 0 0 auto; font-family: var(--mono); font-weight: 800; font-size: 1.05em; letter-spacing: .03em;
+    color: #ffffff; background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-radius: 12px; padding: 9px 13px;
+    box-shadow: 0 6px 16px rgba(79, 70, 229, .30);
+}
+.tab-body { min-width: 0; }
+.tab-body h3 { margin: 0 0 4px 0; font-size: 1.12em; font-weight: 700; color: var(--ink); }
+.tab-body p { margin: 0 0 8px 0; font-size: 0.87em; color: var(--muted); line-height: 1.65; }
 .pipe-line {
-    display: inline-block; font-family: var(--mono); font-size: 0.8em;
-    color: var(--chain); background: #eef0fe; border: 1px dashed #c4c9f6;
-    border-radius: 7px; padding: 3px 10px;
+    display: inline-block; font-family: var(--mono); font-size: 0.78em; color: #4338ca;
+    background: #eef0fe; border: 1px solid #dfe3fc; border-radius: 8px; padding: 4px 12px;
+    box-shadow: inset 0 1px 0 #ffffff;
 }
+.pipe-line::before { content: "λ "; color: #7c3aed; font-weight: 700; }
 .pipe-line b { color: #b45309; font-weight: 700; }
-/* ===== 过程透视终端 ===== */
-.console textarea {
-    background: #0f172a !important; color: #86efac !important;
-    font-family: var(--mono) !important; font-size: 0.84em !important;
-    line-height: 1.7 !important;
-    border: 1px solid #1e293b !important; border-radius: 12px !important;
+@media (max-width: 760px) { .tab-head { flex-direction: column; } }
+/* ===== 过程透视终端：样式表末尾统一 rules（避免被 dedupe 置为 initial，见文件尾） ===== */
+.console .label-wrap span::before { content: "▍ "; color: #34d399; }
+.console ::-webkit-scrollbar-thumb { background: #2c3a5c; }
+/* ===== 卡片：白底浮卡 + 更清晰的边界 ===== */
+.col-card {
+    display: flex; flex-direction: column; row-gap: 12px !important;
+    background: var(--card); border: 1.5px solid #d3d7ee; border-radius: 16px;
+    padding: 14px 16px 16px 16px;
+    box-shadow: 0 2px 6px rgba(27, 24, 80, .07), 0 14px 34px -20px rgba(27, 24, 80, .16);
 }
-/* ===== 卡片：弹性等高、留白透气 ===== */
-.col-card { display: flex; flex-direction: column; row-gap: 16px !important; }
+/* 卡片与相邻组件拉开间距，避免按钮/卡片贴在一起 */
+.col-card { margin-bottom: 10px; }
+.gradio-container .gap-normal { gap: 14px !important; }
 .col-card > :last-child { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .col-card > :last-child > * { flex: 1 1 auto; min-height: 0; }
 .col-card > :last-child label { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .col-card > :last-child textarea { flex: 1 1 auto; min-height: 150px; resize: none !important; }
 .col-card > :last-child .cm-editor,
 .col-card > :last-child .CodeMirror { height: 100% !important; }
-#log-9 textarea { height: calc(54vh + 96px) !important; min-height: 280px; }
-#log-13 textarea { height: calc(44vh + 120px) !important; min-height: 220px; }
-/* ===== 按钮（shadcn/ui 风格） ===== */
+.col-card textarea,
+.col-card input[type="text"],
+.col-card input[type="number"] {
+    background: #f8f9fe !important; border-color: #e4e7f5 !important;
+}
+.col-card textarea:focus,
+.col-card input[type="text"]:focus,
+.col-card input[type="number"]:focus {
+    background: #ffffff !important; border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .15) !important;
+}
+#log-9 textarea { height: calc(62vh + 60px) !important; min-height: 320px; }
+#log-13 textarea { height: calc(50vh + 100px) !important; min-height: 240px; }
+/* ===== 按钮（渐变主按钮紧凑版，与卡片明确分隔） ===== */
 .gradio-container button.primary {
     background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
     border: none !important; color: #ffffff !important; font-weight: 600 !important;
     letter-spacing: 0.02em;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28);
+    box-shadow: 0 3px 10px rgba(79, 70, 229, 0.26);
     transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
 .gradio-container button.primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.36);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.34);
     filter: saturate(1.08);
 }
-.gradio-container button.primary:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28); }
+.gradio-container button.primary:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(79, 70, 229, 0.26); }
 .gradio-container button.secondary {
     background: #ffffff !important;
     border: 1px solid #d5d8ec !important; color: #312e81 !important; font-weight: 500;
+    box-shadow: 0 1px 3px rgba(27, 24, 80, 0.07) !important;
     transition: all .15s ease;
 }
 .gradio-container button.secondary:hover {
     border-color: #a5b4fc !important; background: #eef2ff !important;
-    color: #4338ca !important; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.10);
+    color: #4338ca !important; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.10) !important;
 }
-.gradio-container button.lg { padding: 13px 24px !important; font-size: 1.02em !important; border-radius: 12px !important; }
-.gradio-container button.sm { border-radius: 10px !important; }
-/* ===== 会话窗口（Codex 式气泡） ===== */
+/* 默认按钮尺寸收紧：内边距与高度都下调，避免撑成大色块 */
+.gradio-container button.lg { padding: 6px 14px !important; font-size: 0.88em !important; border-radius: 9px !important; min-height: 0 !important; }
+.gradio-container button.sm { border-radius: 8px !important; padding: 5px 12px !important; font-size: 0.86em !important; min-height: 0 !important; }
+.gradio-container .gr-button-block { width: 100% !important; margin: 0 !important; }
+/* ===== 按钮动作行：多按钮并排、行内自适应宽度、间距紧凑 ===== */
+.btn-row { gap: 8px !important; align-items: center !important; margin: 2px 0 10px 0 !important; }
+.btn-row button {
+    width: auto !important; min-width: 0 !important; flex: 0 0 auto !important;
+    padding: 6px 14px !important; font-size: 0.86em !important; min-height: 0 !important;
+}
+/* 右下角贴附：按钮行右对齐、紧贴输入框下缘 */
+.btn-row.tail { justify-content: flex-end; margin: 8px 0 2px 0 !important; }
+.btn-row.tail button { padding: 8px 18px !important; font-size: 0.92em !important; }
+/* 等分动作行：按钮放大、各占一列（与下方三卡对齐） */
+.btn-row.split { gap: 12px !important; margin: 2px 0 12px 0 !important; }
+.btn-row.split button { flex: 1 1 0 !important; padding: 10px 14px !important; font-size: 0.95em !important; }
+/* ===== 输入单元：外壳即输入框，按钮悬浮在框内右下角 ===== */
+.input-unit {
+    background: var(--card); border: 1.5px solid #d3d7ee; border-radius: 16px;
+    padding: 2px 6px 6px 6px; margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(27, 24, 80, .07), 0 14px 34px -20px rgba(27, 24, 80, .16);
+}
+.input-unit:focus-within { border-color: #6366f1; }
+/* 输入框自身隐形：外框就是唯一边界，按钮才能「长在框里」 */
+.input-unit label.container { border: none !important; background: transparent !important; box-shadow: none !important; }
+.input-unit textarea,
+.input-unit input[type="text"],
+.input-unit input[type="number"] {
+    border: none !important; background: transparent !important; box-shadow: none !important;
+}
+.input-unit .btn-row { margin-bottom: 0 !important; }
+.input-unit .btn-row.tail { margin: 0 8px 2px 0 !important; }
+/* ===== 虚线次级框：滑杆等控制件区块 ===== */
+.dashed-zone {
+    border: 1.5px dashed #c9cff2 !important; border-radius: 14px !important;
+    background: rgba(248, 249, 254, .6) !important;
+    padding: 10px 12px !important;
+}
+/* ===== 输入单元内容垂直居中（滑杆页等无文本框场景） ===== */
+.input-unit.center-content { display: flex; flex-direction: column; justify-content: center; }
+/* ===== 输入单元为弹性列时，输入区吃满剩余高度，按钮钉在框内右下 ===== */
+.input-unit.fill { display: flex; flex-direction: column; }
+.input-unit.fill > :first-child { flex: 1 1 auto !important; min-height: 0 !important; }
+/* center-content + fill 组合：滑杆等控件组垂直居中，按钮行仍钉在最底部 */
+.input-unit.fill.center-content { justify-content: flex-start; }
+.input-unit.fill.center-content > :nth-child(2) { margin-top: auto !important; }
+.input-unit.fill label.container { height: 100% !important; display: flex; flex-direction: column; }
+.input-unit.fill textarea { flex: 1 1 auto !important; height: 100% !important; resize: none !important; }
+/* 灰块修复：fill 拉伸时 text-container 自带的浅灰底/圆角会露出来 */
+.input-unit.fill .input-container,
+.input-unit.fill .text-container,
+.input-unit.fill .wrap,
+.input-unit.fill .form,
+.input-unit.fill .block:not(.input-unit) {
+    background: transparent !important; border: none !important; box-shadow: none !important;
+}
+/* 兜底：input-unit 内任何直接子层不允许自带背景 */
+.input-unit > div > div { background: transparent !important; }
+.input-unit.fill .btn-row.tail { flex: 0 0 auto !important; margin-top: auto !important; }
+/* ===== 聊天输入条：外壳即框（9.9/9.13），发送/清空嵌在框内右下 ===== */
+.chat-input-unit {
+    background: var(--card); border: 1.5px solid #d3d7ee; border-radius: 16px;
+    padding: 6px 10px 8px 12px; margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(27, 24, 80, .07), 0 14px 34px -20px rgba(27, 24, 80, .16);
+}
+.chat-input-unit:focus-within { border-color: #6366f1; }
+.chat-input-unit label.container { border: none !important; background: transparent !important; box-shadow: none !important; }
+.chat-input-unit textarea {
+    border: none !important; background: transparent !important; box-shadow: none !important;
+    padding: 8px 4px !important;
+}
+/* 卡片内按钮行不参与纵向拉伸（修复卡片尾部大片空白） */
+.col-card > .btn-row:last-child { flex: 0 0 auto !important; }
+/* 兼容旧类名（若有遗留）：同样并排 */
+.btn-stack { row-gap: 8px !important; }
+.btn-stack button {
+    width: auto !important; min-width: 0 !important;
+    align-self: flex-start !important;
+    padding: 6px 14px !important; font-size: 0.86em !important;
+    min-height: 0 !important;
+}
+/* ===== 会话窗口（Codex 式气泡，无头像版） ===== */
 #chat-9 .bubble, #chat-13 .bubble {
     border-radius: 16px !important;
     padding: 10px 16px !important;
     border: 1px solid #e8eaf6;
     box-shadow: 0 1px 3px rgba(30, 27, 75, 0.08);
     font-size: 0.95em; line-height: 1.68;
-    max-width: min(80%, 660px);
+    max-width: min(86%, 760px);
 }
 #chat-9 .bubble.bot, #chat-13 .bubble.bot,
 #chat-9 .bot-row .bubble, #chat-13 .bot-row .bubble {
@@ -643,6 +825,7 @@ custom_css = """
     background: linear-gradient(135deg, #eef2ff, #f5f0ff) !important;
     border: 1px solid #ddd6fe !important; color: #312e81 !important;
     border-top-right-radius: 5px !important;
+    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.10);
 }
 #chat-9 .avatar-container img, #chat-13 .avatar-container img {
     border-radius: 50% !important;
@@ -660,12 +843,18 @@ custom_css = """
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
 }
 #session-13 input { font-family: var(--mono); font-size: 0.9em; }
-/* ===== 会话输入行：大输入框 + 右侧紧凑按钮（带间隙） ===== */
-#composer-row-9, #composer-row-13 { align-items: center; gap: 14px !important; }
+/* ===== 滑杆与开关的主题色 ===== */
+.gradio-container input[type="range"] { accent-color: #4f46e5; }
+/* ===== 会话输入行：紧凑输入框 + 右侧小按钮 ===== */
+#composer-row-9, #composer-row-13 { align-items: flex-end; gap: 12px !important; }
 #composer-row-9 button, #composer-row-13 button {
-    padding: 9px 18px !important; font-size: 0.92em !important;
+    padding: 7px 16px !important; font-size: 0.9em !important;
     border-radius: 10px !important;
     min-width: 0 !important; width: auto !important; flex: 0 0 auto !important;
+    min-height: 0 !important; max-height: 52px !important;
+}
+#composer-row-9 textarea, #composer-row-13 textarea {
+    min-height: 0 !important;
 }
 #composer-row-9 button.secondary + button.secondary,
 #composer-row-13 button.secondary { margin-left: 6px; }
@@ -673,8 +862,29 @@ custom_css = """
 .gr-group { background: transparent !important; border: none !important; box-shadow: none !important; }
 .styler { background: transparent !important; }
 /* ===== 页脚 ===== */
-.footer { text-align: center; color: var(--muted); font-size: 0.85em; margin-top: 26px; padding: 14px 0; border-top: 1px solid var(--line); }
-.footer a { color: var(--chain); text-decoration: none; }
+.footer {
+    text-align: center; color: var(--muted); font-size: 0.85em;
+    margin-top: 28px; padding: 18px 0 26px 0; border-top: 1px solid var(--line);
+}
+.footer b { color: var(--ink); }
+.footer a { color: var(--chain); text-decoration: none; font-weight: 600; }
+.footer a:hover { text-decoration: underline; }
+.footer-line { margin-bottom: 6px; }
+.footer-note { margin-top: 6px; font-family: var(--mono); font-size: 0.92em; opacity: .75; }
+/* ===== 过程透视终端（dedupe 会把同属性 !important 合并到高特异性规则，
+   故这里用与 Gradio 升级版同构的双前缀 + 重复类名，特异性压过 .col-card 浅底） ===== */
+.gradio-container.gradio-container-6-26-0 .contain .gradio-container.gradio-container-6-26-0 .contain .console textarea,
+.gradio-container.gradio-container-6-26-0 .contain .console textarea,
+.gradio-container .console textarea {
+    background-image: linear-gradient(180deg, #0d1428, #0a0f1f) !important;
+    background-color: #0a0f1f !important;
+    color: #eaf6ee !important;
+    font-family: var(--mono) !important; font-size: 0.88em !important;
+    line-height: 1.75 !important;
+    border: 1px solid #27324f !important; border-radius: 14px !important;
+    box-shadow: inset 0 0 36px rgba(59, 130, 246, .08), inset 0 1px 0 rgba(255, 255, 255, .05);
+    caret-color: #4ade80;
+}
 """
 
 THEME = gr.themes.Soft(
@@ -703,7 +913,7 @@ PAGES = [
 with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
 
     # ================= 左侧边栏 =================
-    with gr.Sidebar(open=True, elem_id="nav-sidebar", width="16%"):
+    with gr.Sidebar(open=True, elem_id="nav-sidebar", width="280px"):
         gr.HTML("""<div id="nav-logo"><h2>🌊 Vibe Coding</h2><p>LANGCHAIN 1.X LAB · CH09</p></div>""")
         page_selector = gr.Radio(choices=PAGES, value=PAGES[0], label="章节导航",
                                  elem_id="nav-radio", show_label=False, container=True)
@@ -711,31 +921,42 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
     # ================= 顶部横幅 =================
     gr.HTML("""
     <div class="hero">
-      <div>
+      <div class="hero-main">
         <div class="eyebrow">VIBE CODING · CHAPTER 09 LAB</div>
         <h1>LangChain 1.x Agent 教学工作台</h1>
         <p>十三道递进实验关卡。每一页都有「过程透视」终端：模板渲染结果、并行支流、工具调用链、裁剪明细、脱敏对照、检索片段——拒绝黑盒，看得见才学得会。</p>
+        <div class="hero-tags">
+          <span>🧩 LCEL 管道</span><span>🤖 create_agent</span><span>🛠️ 工具调用</span>
+          <span>🧠 记忆裁剪</span><span>📚 RAG</span><span>🛡️ 护栏中间件</span>
+        </div>
       </div>
-      <div class="hero-chain">prompt <b>|</b> llm <b>|</b> tools <b>|</b> memory <b>|</b> agent</div>
+      <div class="hero-side">
+        <div class="hero-chain">prompt <b>|</b> llm <b>|</b> tools <b>|</b> memory <b>|</b> agent</div>
+        <div class="hero-chain-cap">THE LCEL PIPELINE</div>
+      </div>
     </div>
     """)
 
     def head(num, emoji, title, formula, desc):
-        return f"""<div class="tab-head"><h3>{emoji} {num} {title}</h3>
-        <p>{desc}</p><div class="pipe-line">{formula}</div></div>"""
+        return f"""<div class="tab-head"><div class="tab-badge">{num}</div>
+        <div class="tab-body"><h3>{emoji} {title}</h3>
+        <p>{desc}</p><div class="pipe-line">{formula}</div></div></div>"""
 
     # ================= 页面 9.1：控制台式布局（上输入、中输出、下双面板） =================
     with gr.Group(visible=True) as pg1:
         gr.HTML(head("9.1", "📡", "模型统一 I/O 与元数据捕获",
                      "prompt <b>|</b> llm <b>|</b> response_metadata",
                      "invoke() 同步 ｜ stream() 逐 chunk 流式 ｜ .profile 模型能力档案（零 Token）。下方终端逐步打印发生了什么。"))
-        t1_prompt = gr.Textbox(label="Prompt 提示词", lines=3, value="请用一句话解释什么是 LangChain 1.x？")
-        with gr.Row(equal_height=True):
-            t1_temp = gr.Slider(0.0, 1.0, value=0.7, label="Temperature (多样性)",
-                                info="越高越发散，越低越严谨", scale=3)
-            t1_btn = gr.Button("🚀 同步调用 (invoke)", variant="primary", scale=2)
-            t1_stream_btn = gr.Button("⚡ 流式打字机 (stream)", scale=2)
-            t1_profile_btn = gr.Button("🪪 能力档案 (.profile)", scale=2)
+        with gr.Column(elem_classes=["input-unit"]):
+            t1_prompt = gr.Textbox(label="Prompt 提示词", lines=4,
+                                   value="请用一句话解释什么是 LangChain 1.x？")
+            with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                t1_temp = gr.Slider(0.0, 1.0, value=0.7, label="Temperature",
+                                    info="越高越发散", scale=2, min_width=200,
+                                    elem_classes=["dashed-zone"])
+                t1_btn = gr.Button("🚀 同步调用", variant="primary", size="sm")
+                t1_stream_btn = gr.Button("⚡ 流式输出", size="sm")
+                t1_profile_btn = gr.Button("🪪 能力档案", size="sm")
         t1_out = gr.Textbox(label="模型回复（实时流式）", lines=8,
                             placeholder="点击上方任意按钮后，这里实时输出模型回复…")
         with gr.Row(equal_height=True):
@@ -753,14 +974,19 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         gr.HTML(head("9.2", "🎭", "ChatPromptTemplate 动态模板与消息流",
                      "system <b>|</b> human <b>|</b> template_vars",
                      "模板不是黑盒：先「仅渲染」看变量如何填进 System/Human 消息，再调用模型；Few-Shot 演示展示示例如何注入。"))
-        with gr.Row(equal_height=True):
-            with gr.Column(scale=2, elem_classes=["col-card"]):
-                t2_domain = gr.Textbox(label="专业领域", value="AI 智能体与编译器技术")
-                t2_lang = gr.Textbox(label="目标语言", value="中文 (信达雅风格)")
-                t2_text = gr.Textbox(label="待翻译文本 / 测试评论", lines=4, value="LangChain provides standardized abstractions and LCEL piping for composing complex LLM chains.")
-                t2_render_btn = gr.Button("🔍 仅渲染模板 (免费)", variant="primary")
-                t2_btn = gr.Button("🎬 渲染并流式翻译")
-                t2_fewshot_btn = gr.Button("🎯 Few-Shot 示例注入演示 (免费)")
+        with gr.Row(equal_height=False):
+            with gr.Column(scale=2, elem_classes=["input-unit"]):
+                t2_text = gr.Textbox(label="待翻译文本 / 测试评论", lines=9, scale=5,
+                                     value="LangChain provides standardized abstractions and LCEL piping for composing complex LLM chains.")
+                with gr.Row(equal_height=False):
+                    t2_domain = gr.Textbox(label="专业领域", value="AI 智能体与编译器技术", scale=1,
+                                           elem_classes=["dashed-zone"])
+                    t2_lang = gr.Textbox(label="目标语言", value="中文 (信达雅风格)", scale=1,
+                                         elem_classes=["dashed-zone"])
+                with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                    t2_render_btn = gr.Button("🔍 仅渲染模板 (免费)", variant="primary", size="sm")
+                    t2_btn = gr.Button("🎬 渲染并流式翻译", size="sm")
+                    t2_fewshot_btn = gr.Button("🎯 Few-Shot 注入演示", size="sm")
             with gr.Column(scale=3, elem_classes=["col-card"]):
                 t2_msgs = gr.Textbox(label="渲染后的消息列表（模型实际看到的完整输入）", lines=13,
                                      placeholder="点击「仅渲染模板」后，这里显示填充完成的消息列表…")
@@ -779,8 +1005,10 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         gr.HTML(head("9.3", "⚡", "LCEL 管道与 RunnableParallel 并行分支",
                      "RunnableParallel <b>|</b> summary_prompt <b>|</b> llm <b>|</b> parser",
                      "赞美与吐槽两条支流「同时」执行：左右两张支流卡同时填充，终端时间戳交错可见并发证据。"))
-        t3_topic = gr.Textbox(label="讨论主题", lines=2, value="开源大模型与闭源商业模型的竞争")
-        t3_btn = gr.Button("🔀 并行执行双分支 (赞美 + 吐槽 ➔ 综合)", variant="primary")
+        with gr.Column(elem_classes=["input-unit"]):
+            t3_topic = gr.Textbox(label="讨论主题", lines=2, value="开源大模型与闭源商业模型的竞争")
+            with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                t3_btn = gr.Button("🔀 并行执行双分支（赞美 + 吐槽 → 综合）", variant="primary", size="sm")
         with gr.Row(equal_height=True):
             t3_praise = gr.Textbox(label="🌸 赞美支流输出（并行分支 1）", lines=7, placeholder="支流 1 的结果…")
             t3_roast = gr.Textbox(label="🌶️ 吐槽支流输出（并行分支 2）", lines=7, placeholder="支流 2 的结果…")
@@ -800,13 +1028,15 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
                      "下方实时展示注入给模型的 JSON Schema——模型按单填表，Pydantic 质检通过后才返回强类型对象。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
-                t4_text = gr.Textbox(label="非结构化财报新闻文本", lines=9, value="""TechStar 2025Q3 营收 158.6 亿元，同比超预期增长 28.5%，其中 AI 业务占比 42%；净利润 24.1 亿元符合预期。面临海外供应链限制与算力成本上升风险。综合评级买入，情绪评分 88。""")
-                t4_btn = gr.Button("🧾 一键强类型提取 (Pydantic Schema)", variant="primary")
+                with gr.Column(elem_classes=["input-unit fill"]):
+                    t4_text = gr.Textbox(label="非结构化财报新闻文本", lines=13, value="""TechStar 2025Q3 营收 158.6 亿元，同比超预期增长 28.5%，其中 AI 业务占比 42%；净利润 24.1 亿元符合预期。面临海外供应链限制与算力成本上升风险。综合评级买入，情绪评分 88。""")
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                        t4_btn = gr.Button("🧾 一键强类型提取 (Pydantic)", variant="primary", size="sm")
                 t4_console = gr.Textbox(label="🔍 过程透视", lines=6, interactive=False, elem_classes=["console"],
                                         placeholder="点击按钮后，这里打印注入 → 调用 → 校验三步…")
             with gr.Column(scale=3, elem_classes=["col-card"]):
-                t4_out = gr.Code(label="结构化 JSON 输出", language="json", lines=9)
-                t4_schema = gr.JSON(label="注入给模型的 JSON Schema（模型要填的「报关单」）", value=SCHEMA_JSON, max_height=280)
+                t4_out = gr.Code(label="结构化 JSON 输出", language="json", lines=13)
+                t4_schema = gr.JSON(label="注入给模型的 JSON Schema（模型要填的「报关单」）", value=SCHEMA_JSON, max_height=340)
         t4_btn.click(tab4_extract_stream, inputs=t4_text, outputs=[t4_out, t4_console])
 
     # ================= 页面 9.5：参数一行 + 三卡并排 =================
@@ -814,14 +1044,14 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         gr.HTML(head("9.5", "🛠️", "自定义工具：Schema → tool_calls → 执行",
                      "@tool → args_schema → bind_tools → tool_calls",
                      "三段式拆解工具调用全流程：① 看 Schema 怎么生成 ② 模型「点名」工具与参数 ③ 运行时才真正执行。"))
-        with gr.Row(equal_height=True):
+        with gr.Row(equal_height=False):
             t5_p = gr.Number(label="贷款本金 (万元)", value=100, scale=1)
             t5_y = gr.Number(label="贷款年限 (年)", value=30, scale=1)
             t5_r = gr.Number(label="年化利率 (%)", value=3.2, scale=1)
-        with gr.Row(equal_height=True):
-            t5_schema_btn = gr.Button("🔍 查看工具 Schema (免费)", variant="primary", scale=1)
-            t5_model_btn = gr.Button("🤖 模型自主调用全流程 (bind_tools)", scale=1)
-            t5_direct_btn = gr.Button("⚡ 直接执行工具 (校验演示)", scale=1)
+        with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
+            t5_schema_btn = gr.Button("🔍 查看工具 Schema (免费)", variant="primary", size="sm")
+            t5_model_btn = gr.Button("🤖 模型自主调用全流程", size="sm")
+            t5_direct_btn = gr.Button("⚡ 直接执行工具 (校验演示)", size="sm")
         with gr.Row(equal_height=True):
             with gr.Column(scale=1, elem_classes=["col-card"]):
                 t5_schema_out = gr.JSON(label="工具 JSON Schema（Docstring + 类型注解自动生成）", max_height=260)
@@ -837,22 +1067,28 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
                            outputs=[t5_result, t5_calls_out, t5_result, t5_console])
         t5_direct_btn.click(tab5_direct_run, inputs=[t5_p, t5_y, t5_r], outputs=[t5_result, t5_console])
 
-    # ================= 页面 9.6：左控制台右明细 =================
+    # ================= 页面 9.6：原始对话 vs 裁剪命运 对照 =================
     with gr.Group(visible=False) as pg6:
         gr.HTML(head("9.6", "🧠", "trim_messages 智能滑动窗口裁剪",
                      "checkpointer + thread_id <b>|</b> trim_messages",
-                     "裁剪不再是黑盒：每一条历史消息都会标注 ✅保留 / ✂️裁掉，直观理解策略如何工作。"))
+                     "左边是裁剪前模型看到的完整历史，右边逐条标注 ✅保留 / ✂️裁掉——拖动预算滑杆，看旧消息如何被滑出窗口。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
-                t6_count = gr.Slider(1, 9, value=9, step=1, label="模拟历史总消息条数")
-                t6_tok = gr.Slider(15, 100, value=30, step=5, label="Token/长度预算限制", info="预算越小，裁得越狠")
-                t6_btn = gr.Button("✂️ 执行裁剪并查看明细", variant="primary")
+                with gr.Column(elem_classes=["input-unit fill center-content"]):
+                    t6_count = gr.Slider(1, 9, value=9, step=1, label="模拟历史总消息条数",
+                                         info="对话累计的完整历史")
+                    t6_tok = gr.Slider(3, 15, value=9, step=1, label="滑动窗口预算（保留最近 N 条消息）",
+                                       info="strategy='last'：从最新往回保留——预算 5 就是只带最近 5 条进上下文")
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                        t6_btn = gr.Button("✂️ 执行裁剪并查看明细", variant="primary", size="sm")
                 t6_console = gr.Textbox(label="🔍 过程透视", lines=8, interactive=False, elem_classes=["console"],
                                         placeholder="点击按钮后，这里解读裁剪策略…")
             with gr.Column(scale=3, elem_classes=["col-card"]):
-                t6_out = gr.Textbox(label="裁剪明细（逐条标注保留/裁掉）", lines=15,
-                                    placeholder="点击按钮后，这里逐条标注每条消息的命运…")
-        t6_btn.click(tab6_trim, inputs=[t6_count, t6_tok], outputs=[t6_out, t6_console])
+                t6_raw = gr.Textbox(label="📜 原始完整对话（裁剪前模型看到的全部历史）", lines=15,
+                                    placeholder="点击「执行裁剪」后，这里显示原始消息列表…")
+                t6_out = gr.Textbox(label="🎯 裁剪明细（逐条标注保留/裁掉）", lines=15,
+                                    placeholder="点击「执行裁剪」后，这里逐条标注每条消息的命运…")
+        t6_btn.click(tab6_trim, inputs=[t6_count, t6_tok], outputs=[t6_raw, t6_out, t6_console])
 
     # ================= 页面 9.7：左脱敏右账单 =================
     with gr.Group(visible=False) as pg7:
@@ -861,9 +1097,11 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
                      "脱敏前后的 Prompt 对照、黑匣子记录的耗时与 Token 账单——全部摆上桌面。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
-                t7_in = gr.Textbox(label="输入包含敏感信息的内容", lines=5,
-                                   value="请帮我查询客户 13912345678（邮箱 foo.bar@qq.com）的购买意向，并分析产品核心价值。")
-                t7_btn = gr.Button("📼 触发带审计探针的链路调用", variant="primary")
+                with gr.Column(elem_classes=["input-unit fill"]):
+                    t7_in = gr.Textbox(label="输入包含敏感信息的内容", lines=8,
+                                       value="请帮我查询客户 13912345678（邮箱 foo.bar@qq.com）的购买意向，并分析产品核心价值。")
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                        t7_btn = gr.Button("📼 触发带审计探针的链路调用", variant="primary", size="sm")
                 t7_console = gr.Textbox(label="🔍 过程透视", lines=6, interactive=False, elem_classes=["console"],
                                         placeholder="点击按钮后，这里打印回调生命周期…")
             with gr.Column(scale=3, elem_classes=["col-card"]):
@@ -878,10 +1116,11 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         gr.HTML(head("9.8", "📚", "ChromaDB 向量检索增强 (RAG)",
                      "retriever <b>|</b> format_docs <b>|</b> prompt <b>|</b> llm",
                      "开卷考试也要看见「翻到了哪页」：先展示命中的知识片段，再看基于片段的回答。"))
-        with gr.Row(equal_height=True):
-            t8_q = gr.Textbox(label="向企业技术规范库提问", lines=2, scale=4,
+        with gr.Column(elem_classes=["input-unit"]):
+            t8_q = gr.Textbox(label="向企业技术规范库提问", lines=3,
                               value="系统灰度金丝雀发布的初始流量比例和观察时间是多少？")
-            t8_btn = gr.Button("🔎 检索知识库并回答", variant="primary", scale=1)
+            with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                t8_btn = gr.Button("🔎 检索知识库并回答", variant="primary", size="sm")
         with gr.Row(equal_height=True):
             with gr.Column(scale=3, elem_classes=["col-card"]):
                 t8_frags = gr.Textbox(label="命中的知识片段（向量检索 Top-2）", lines=12,
@@ -898,16 +1137,18 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
                      "create_agent(model, tools) → messages pipeline",
                      "Codex 式左右气泡：你的消息在右、Agent 在左。回复逐 token 流式，右侧流水线实时记录每次工具调用。"))
         with gr.Row(equal_height=True):
-            with gr.Column(scale=3):
-                t9_chat = gr.Chatbot(label="Agent 对话", height="54vh", elem_id="chat-9", resizable=True,
-                                     buttons=["copy"], avatar_images=("🧑‍💻", "🤖"),
+            with gr.Column(scale=5):
+                t9_chat = gr.Chatbot(label="Agent 对话", height="62vh", elem_id="chat-9", resizable=True,
+                                     buttons=None, avatar_images=(None, None),
                                      layout="bubble", group_consecutive_messages=False,
                                      placeholder="给我一条复合指令，例如：算一道数学题 + 查天气 + 换汇率…")
-                with gr.Row(equal_height=True, elem_id="composer-row-9"):
-                    t9_in = gr.Textbox(lines=3, scale=10, show_label=False, container=False,
-                                       placeholder="", elem_id="composer-9")
-                    t9_send = gr.Button("🚀 发送", variant="primary", scale=1, size="sm")
-                    t9_clear = gr.Button("🗑️ 清空", scale=1, size="sm")
+                with gr.Column(elem_classes=["chat-input-unit"]):
+                    t9_in = gr.Textbox(lines=4, scale=10, show_label=False, container=False,
+                                       placeholder="给我一条复合指令，例如：算一道数学题 + 查天气 + 换汇率…",
+                                       elem_id="composer-9", max_lines=6)
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"], elem_id="composer-row-9"):
+                        t9_clear = gr.Button("🗑️ 清空", size="sm")
+                        t9_send = gr.Button("🚀 发送", variant="primary", size="sm")
             with gr.Column(scale=2):
                 t9_steps = gr.Textbox(label="🔍 推理与工具调用流水线（实时刷新）", lines=6, interactive=False,
                                       buttons=["copy"], elem_id="log-9")
@@ -919,7 +1160,7 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
     with gr.Group(visible=False) as pg10:
         gr.HTML(head("9.10", "🧩", "上下文工程与动态上下文注入",
                      "@dynamic_prompt(request) → Runtime <b>|</b> State <b>|</b> Store",
-                     "三类上下文 × 三数据源：点击任一演示，终端打印该模式注入前后的 System Prompt 与工具清单对比。"))
+                     "三类上下文 × 三数据源：每个演示都真实调用模型——对比两种场景下注入的 System Prompt、可见工具与回复风格差异。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
                 gr.Markdown("""### 三种数据源
@@ -932,9 +1173,13 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
 - 动态工具选择（`@wrap_model_call` 裁剪工具清单）
 - 画像注入（Store + Context 双剑合璧）""")
             with gr.Column(scale=3, elem_classes=["col-card"]):
-                t10_run1 = gr.Button("📝 演示 1：动态 System Prompt（按会话长度自适应）", variant="primary")
-                t10_run2 = gr.Button("🧰 演示 2：动态工具选择（按认证状态裁剪工具）")
-                t10_run3 = gr.Button("🗄️ 演示 3：Store 长期画像注入")
+                with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
+                    t10_run1 = gr.Button("📝 动态 System Prompt", variant="primary", size="sm")
+                    t10_run2 = gr.Button("🧰 动态工具选择", size="sm")
+                    t10_run3 = gr.Button("🗄️ Store 画像注入", size="sm")
+                gr.Markdown("""- **演示 1**：短对话 vs 长对话，System Prompt 自动追加「简洁」指令
+- **演示 2**：未认证时 `private_search` 被真实裁掉，模型只能调用 public 工具
+- **演示 3**：老用户（简洁直接画像）vs 新用户的回复风格对比""")
         t10_console = gr.Textbox(label="🔍 演示终端输出（来自 code/s10_context_engineering.py）", lines=17,
                                  interactive=False, elem_classes=["console"],
                                  placeholder="点击演示按钮后，这里显示脚本完整运行输出…")
@@ -946,7 +1191,7 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
     with gr.Group(visible=False) as pg11:
         gr.HTML(head("9.11", "🔧", "自定义中间件与生命周期钩子",
                      "@before_model → @wrap_model_call → @after_model",
-                     "Node-style 4 钩子 + Wrap-style 2 钩子：点一个演示，终端打印每个钩子被调用的时机与状态变化。"))
+                     "Node-style 熔断 / Wrap-style 重试 / 类式计数限流：每个演示都真实执行——对比放行与熔断、观察失败→重试自愈全过程。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
                 gr.Markdown("""### 两种钩子风格
@@ -957,9 +1202,13 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
 - 类式中间件（同步 + 异步双实现）
 - `state_schema` 自定义状态，让中间件拥有「记忆」""")
             with gr.Column(scale=3, elem_classes=["col-card"]):
-                t11_run1 = gr.Button("🚦 演示 1：Node-style（消息上限熔断 + 响应日志）", variant="primary")
-                t11_run2 = gr.Button("🔁 演示 2：Wrap-style（模型调用自动重试）")
-                t11_run3 = gr.Button("🧱 演示 3：类式中间件（自定义状态计数）")
+                with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
+                    t11_run1 = gr.Button("🚦 Node-style 钩子", variant="primary", size="sm")
+                    t11_run2 = gr.Button("🔁 Wrap-style 重试", size="sm")
+                    t11_run3 = gr.Button("🧱 类式中间件", size="sm")
+                gr.Markdown("""- **演示 1**：正常放行 vs 50 条历史触发 `jump_to='end'` 零 Token 熔断
+- **演示 2**：模拟网络抖动，wrap_model_call 失败自动重试 3 次后自愈
+- **演示 3**：日志中间件 + `state_schema` 调用计数真实累计""")
         t11_console = gr.Textbox(label="🔍 演示终端输出（来自 code/s11_custom_middleware.py）", lines=17,
                                  interactive=False, elem_classes=["console"],
                                  placeholder="点击演示按钮后，这里显示脚本完整运行输出…")
@@ -971,19 +1220,21 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
     with gr.Group(visible=False) as pg12:
         gr.HTML(head("9.12", "🛡️", "生产级防护：护栏、PII 与注入防护",
                      "before_agent 拦截 → PII redact → after_agent 审查",
-                     "先玩免费的「本地安检门」（零 Token 毫秒级），再跑完整中间件演示看模型性护栏如何工作。"))
+                     "先玩免费的「本地安检门」（零 Token 毫秒级），再跑真实调用演示：看模型亲口承认只看到脱敏占位符、黑名单请求被零 Token 拦截。"))
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
-                t12_in = gr.Textbox(label="输入测试文本（试试黑名单词或邮箱）", lines=5,
-                                    value="联系我 admin@example.com，我想学习 hack 技术")
-                t12_check_btn = gr.Button("🚪 本地安检门检测 (免费 · 确定性护栏)", variant="primary")
-                t12_selftest_btn = gr.Button("🧪 运行出厂自测（免费 · run_self_tests）")
+                with gr.Column(elem_classes=["input-unit fill"]):
+                    t12_in = gr.Textbox(label="输入测试文本（试试黑名单词或邮箱）", lines=7,
+                                        value="联系我 admin@example.com，我想学习 hack 技术")
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                        t12_check_btn = gr.Button("🚪 本地安检门 (免费)", variant="primary", size="sm")
+                        t12_selftest_btn = gr.Button("🧪 出厂自测", size="sm")
             with gr.Column(scale=3, elem_classes=["col-card"]):
                 t12_out = gr.Textbox(label="安检结果（拦截判定 + 脱敏后文本）", lines=8,
                                      placeholder="点击「本地安检门」后立即出结果…")
-        with gr.Row(equal_height=True):
-            t12_run1 = gr.Button("🛡️ 演示：PII 中间件（LLM）", scale=1)
-            t12_run2 = gr.Button("🧱 演示：自定义输入/输出护栏（LLM）", scale=1)
+        with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
+            t12_run1 = gr.Button("🛡️ 演示：PII 中间件", size="sm")
+            t12_run2 = gr.Button("🧱 演示：自定义护栏", size="sm")
         t12_console = gr.Textbox(label="🔍 演示终端输出（来自 code/s12_guardrails_and_testing.py）", lines=12,
                                  interactive=False, elem_classes=["console"],
                                  placeholder="点击 LLM 演示或自测后，这里显示脚本运行输出…")
@@ -997,37 +1248,46 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         gr.HTML(head("9.13", "🌟", "SmartBuyer 综合实战（9.1~9.12 全零件总装）",
                      "RAG <b>|</b> search <b>|</b> calc <b>|</b> 护栏 <b>|</b> 画像注入",
                      "整机规格：避坑 RAG + 差评搜索 + 性价比测算 + 三层中间件栈 + 动态画像剧本。填「顾客 ID」体验 Store 画像让参谋换一种说话风格！"))
-        with gr.Row(equal_height=True):
-            preset1 = gr.Button("💻 5000元编程轻薄本", scale=1)
-            preset2 = gr.Button("🎧 2000元降噪耳机", scale=1)
-            preset3 = gr.Button("📱 3000元性能手机", scale=1)
-            preset4 = gr.Button("🖥️ 千元4K显示器避坑", scale=1)
+        with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
+            preset1 = gr.Button("💻 5000元轻薄本", size="sm")
+            preset2 = gr.Button("🎧 2000元降噪耳机", size="sm")
+            preset3 = gr.Button("📱 3000元性能手机", size="sm")
+            preset4 = gr.Button("🖥️ 千元4K显示器", size="sm")
         with gr.Row(equal_height=True):
             with gr.Column(scale=3):
                 with gr.Row(equal_height=True):
-                    t13_session = gr.Textbox(label="会话 ID（一份记忆）", value="buyer_user_01",
-                                             elem_id="session-13", scale=1)
-                    t13_uid = gr.Textbox(label="顾客 ID（Store 画像注入，可换着试）", value="user-veteran",
-                                         placeholder="如 user-veteran / user-newbie", scale=1)
-                t13_chat = gr.Chatbot(label="SmartBuyer 选购问诊", height="44vh", elem_id="chat-13", resizable=True,
-                                      buttons=["copy"], avatar_images=("🧑‍🛒", "🛡️"),
+                    t13_session = gr.Dropdown(label="会话 ID（一份记忆）", value="buyer_user_01",
+                                              choices=["buyer_user_01", "buyer_user_02", "buyer_user_03"],
+                                              allow_custom_value=True, elem_id="session-13", scale=1)
+                    t13_uid = gr.Dropdown(label="顾客 ID（Store 画像注入，可换着试）", value="user-veteran",
+                                          choices=["user-veteran", "user-rookie", "user-guest"],
+                                          allow_custom_value=True, scale=1)
+                t13_chat = gr.Chatbot(label="SmartBuyer 选购问诊", height="50vh", elem_id="chat-13", resizable=True,
+                                      buttons=["copy"], avatar_images=(None, None),
                                       layout="bubble", group_consecutive_messages=False,
                                       placeholder="说说你的预算、用途和纠结点，参谋马上开工…")
-                with gr.Row(equal_height=True, elem_id="composer-row-13"):
-                    t13_query = gr.Textbox(lines=3, scale=10, show_label=False, container=False,
-                                           placeholder="", elem_id="composer-13")
-                    t13_btn = gr.Button("🛒 发送", variant="primary", scale=1, size="sm")
-                    t13_new = gr.Button("🔄 新会话", scale=1, size="sm")
+                with gr.Column(elem_classes=["chat-input-unit"]):
+                    t13_query = gr.Textbox(lines=4, scale=10, show_label=False, container=False,
+                                           placeholder="说说你的预算、用途和纠结点，参谋马上开工…",
+                                           elem_id="composer-13", max_lines=6)
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"], elem_id="composer-row-13"):
+                        t13_new = gr.Button("🔄 新会话", size="sm")
+                        t13_btn = gr.Button("🛒 发送", variant="primary", size="sm")
                 t13_tip = gr.Markdown("")
             with gr.Column(scale=2):
-                t13_steps = gr.Textbox(label="🔍 工具调用与画像注入明细（实时）", lines=10, interactive=False,
+                t13_profile = gr.JSON(label="🧠 Store 长期画像（当前顾客 ID 命中的画像，随上方下拉切换）",
+                                      value=smart_buyer_agent.store.get(("buyers",), "user-veteran").value,
+                                      max_height=200)
+                t13_steps = gr.Textbox(label="🔍 工具调用与画像注入明细（实时）", lines=8, interactive=False,
                                        buttons=["copy"], elem_id="log-13")
                 t13_audit = gr.Textbox(label="📊 Token 与财务账单", lines=3, interactive=False)
         with gr.Row(equal_height=True):
             with gr.Column(scale=2, elem_classes=["col-card"]):
-                t13_demand = gr.Textbox(label="一键结构化报表：输入预算与要求", lines=4,
-                                        value="预算 2000 元，想买一款佩戴舒服、降噪给力、音质好的头戴式耳机，经常坐飞机和高铁使用。")
-                t13_report_btn = gr.Button("🧾 生成 Pydantic 标准决策报表", variant="primary")
+                with gr.Column(elem_classes=["input-unit fill"]):
+                    t13_demand = gr.Textbox(label="一键结构化报表：输入预算与要求", lines=5,
+                                            value="预算 2000 元，想买一款佩戴舒服、降噪给力、音质好的头戴式耳机，经常坐飞机和高铁使用。")
+                    with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
+                        t13_report_btn = gr.Button("🧾 生成标准决策报表", variant="primary", size="sm")
             with gr.Column(scale=3, elem_classes=["col-card"]):
                 t13_report = gr.Code(label="标准选购决策 JSON (ShoppingDecisionReport)", language="json", lines=6)
         preset1.click(lambda: "预算 5000 左右，买什么轻薄本适合写代码、日常办公，续航长一点，内存最好 32G。", outputs=t13_query)
@@ -1039,6 +1299,15 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
         t13_query.submit(tab13_buyer_chat, inputs=[t13_query, t13_chat, t13_session, t13_uid],
                          outputs=[t13_chat, t13_steps, t13_audit]).then(lambda: "", outputs=t13_query)
         t13_new.click(tab13_clear, inputs=t13_session, outputs=[t13_chat, t13_steps, t13_tip])
+
+        def refresh_profile(uid):
+            """顾客 ID 变化 → 实时读 Store 画像（无画像则提示新客）"""
+            rec = smart_buyer_agent.store.get(("buyers",), uid or "")
+            if rec is None:
+                return {"提示": f"Store 中暂无 {uid or '（空）'} 的画像 —— 新客首次对话后可由中间件写入偏好"}
+            return rec.value
+
+        t13_uid.change(refresh_profile, inputs=t13_uid, outputs=t13_profile)
         t13_report_btn.click(tab13_report, inputs=t13_demand, outputs=t13_report)
 
     # ================= 导航切换 =================
@@ -1052,10 +1321,10 @@ with gr.Blocks(title="LangChain 1.x Agent 教学工作台") as demo:
     # ================= 页脚 =================
     gr.HTML("""
     <div class="footer">
-      🌊 <b>Vibe Coding 开源教学知识库</b> · 第九章配套实验台（13 关卡）｜
+      <div class="footer-line">🌊 <b>Vibe Coding 开源教学知识库</b> · 第九章配套实验台（13 关卡）｜
       📖 <a href="https://docs.langchain.com/" target="_blank">LangChain 官方文档</a> ｜
-      🔍 每页都有「过程透视」终端 · 拒绝黑盒
-      <br/>Powered by LangChain 1.x · Gradio · 模型密钥存放于 .env，请勿外传
+      🔍 每页都有「过程透视」终端 · 拒绝黑盒</div>
+      <div class="footer-note">Powered by LangChain 1.x · Gradio · 模型密钥存放于 .env，请勿外传</div>
     </div>
     """)
 

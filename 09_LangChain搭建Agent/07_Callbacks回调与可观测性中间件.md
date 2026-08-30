@@ -55,7 +55,18 @@ class PerformanceAndCostCallback(BaseCallbackHandler):
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
         elapsed = time.time() - self.start_time
-        token_usage = response.llm_output.get("token_usage", {}) if response.llm_output else {}
+        # 版本兼容：旧版伙伴包把用量放在 llm_output；新版（langchain-openai ≥ 0.3）
+        # 的 llm_output 常为 None，用量改挂在 generations[0].message.usage_metadata
+        token_usage = (response.llm_output or {}).get("token_usage", {})
+        if not token_usage and response.generations:
+            top = response.generations[0]
+            first = top[0] if top else None
+            usage = getattr(getattr(first, "message", None), "usage_metadata", None) or {}
+            token_usage = {
+                "prompt_tokens": usage.get("input_tokens", 0),
+                "completion_tokens": usage.get("output_tokens", 0),
+                "total_tokens": usage.get("total_tokens", 0),
+            }
         self.prompt_tokens = token_usage.get("prompt_tokens", 0)
         self.completion_tokens = token_usage.get("completion_tokens", 0)
         self.total_tokens = token_usage.get("total_tokens", self.prompt_tokens + self.completion_tokens)

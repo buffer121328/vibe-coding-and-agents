@@ -42,10 +42,10 @@ uv run python app.py
 | **`s05_custom_tools.py`** | 9.5 自定义工具生态与校验 | `@tool` 装饰器、Pydantic args_schema 参数校验、Docstring 意图契约、底层 bind_tools 与 **工具 `extras`** |
 | **`s06_memory_and_trimming.py`** | 9.6 记忆管理与状态持久化 | create_agent + LangGraph Checkpointer 线程级记忆、RunnableWithMessageHistory 经典方案、trim_messages 滑动窗口裁剪与预算控制 |
 | **`s07_callbacks_and_tracing.py`** | 9.7 Callbacks 与可观测性中间件 | BaseCallbackHandler 探针、Token 账单自动审计、耗时统计、敏感隐私数据拦截脱敏与 **官方预置中间件 (ModelRetry / PII)** |
-| **`s08_rag_retrieval.py`** | 9.8 RAG 核心链路与向量检索 | 文本切块 (TextSplitter)、langchain-chroma 向量入库、LCEL 标准 RAG 检索问答管道 |
+| **`s08_rag_retrieval.py`** | 9.8 RAG 核心链路与向量检索 | 文本切块 (TextSplitter)、langchain-chroma 向量入库、LCEL 标准 RAG 检索问答管道；国产端点 Embedding 兼容（`tiktoken_enabled=False` 直发原文）+ 不可用时本地确定性向量降级 |
 | **`s09_modern_agent.py`** | 9.9 Modern Agent 智能体闭环 | 1.x 标准 `create_agent`（SystemMessage 系统提示 + **ModelRetry 中间件**）、多模工具调用、messages 流水线审计、**response_format 结构化答复**与 **v3 流式协议** |
-| **`s10_context_engineering.py`** | 9.10 上下文工程 | 动态 System Prompt（`@dynamic_prompt`）、动态工具选择（`wrap_model_call` + `request.override`）、Store + Runtime Context 画像注入 |
-| **`s11_custom_middleware.py`** | 9.11 自定义中间件 | Node-style 钩子（`before_model`/`after_model`）+ Wrap-style 钩子（`wrap_model_call`）、类式中间件、`state_schema` 调用次数限流 |
-| **`s12_guardrails_and_testing.py`** | 9.12 生产级防护 | 内置 `PIIMiddleware` 脱敏、`before_agent` 黑名单拦截、`after_agent` 安全复核、确定性护栏轻量自测（可进 CI） |
+| **`s10_context_engineering.py`** | 9.10 上下文工程 | 动态 System Prompt（`@dynamic_prompt`）、动态工具选择（`wrap_model_call` + `request.override`）、Store + Runtime Context 画像注入；三个演示均为**真实调用**的双场景对比（短 vs 长对话 / 未认证裁工具 / 新老用户画像） |
+| **`s11_custom_middleware.py`** | 9.11 自定义中间件 | Node-style 钩子（`before_model`/`after_model`）+ Wrap-style 钩子（`wrap_model_call`）、类式中间件、`state_schema` 调用次数限流；三个演示真实执行（50 条消息零 Token 熔断 / FakeChatModel 模拟抖动验证重试 / 计数累计） |
+| **`s12_guardrails_and_testing.py`** | 9.12 生产级防护 | 内置 `PIIMiddleware` 脱敏、`before_agent` 黑名单拦截、`after_agent` 安全复核（复核模型复用项目统一端点，硬编码 gpt-4o-mini 会 404）、确定性护栏轻量自测（可进 CI）；演示为真实调用（模型亲口承认只见占位符 / 黑名单零 Token 拦截） |
 | **`s13_smart_buyer.py`** | 9.13 综合实战 SmartBuyer | 🌟 **终极实战（融会贯通版）**：9.1~9.12 全零件整机总装——护栏纵深防御 + 中间件治理栈 + 顾客画像动态注入 + 数码避坑 RAG + 差评搜索 + 参数测算 + Pydantic 选购报告 |
-| **`app.py`** | 综合可视化界面 | 13 关卡侧边栏教学工作台：每页「过程透视」终端透明展示中间产物，Codex 式气泡会话，全链路实时流式 |
+| **`app.py`** | 综合可视化界面 | 13 关卡侧边栏教学工作台：每页「过程透视」暗色终端透明展示中间产物；输入区「外壳即输入框」——按钮悬浮在框内右下角；9.9/9.13 大输入框内嵌发送按钮；9.5/9.10/9.11 等分动作行；9.13 会话/顾客 ID 下拉可切换且联动 Store 画像面板 |
