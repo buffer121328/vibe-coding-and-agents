@@ -1,0 +1,8 @@
+graph TD
+    User(["用户请求"]) --> Reception["分诊台 (Router 节点)"]
+    Reception -->|"查数据库"| SQL["SQL 专员"]
+    Reception -->|"查知识库"| RAG["RAG 专员"]
+    Reception -->|"写代码"| Code["Code 专员"]
+    SQL --> FinalA["答案"]
+    RAG --> FinalA
+    Code --> FinalA

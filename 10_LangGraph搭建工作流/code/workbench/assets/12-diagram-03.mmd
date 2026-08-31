@@ -1,0 +1,8 @@
+graph TD
+    User(["用户请求"]) --> Sup["Supervisor 主管 (拆任务/派活/收活)"]
+    Sup -->|"派活"| Research["调研专员"]
+    Sup -->|"派活"| Writer["写作专员"]
+    Research -->|"交回结果"| Sup
+    Writer -->|"交回结果"| Sup
+    Sup -->|"全员完工"| Agg["汇总节点 (Aggregator)"]
+    Agg --> Final(["最终报告"])

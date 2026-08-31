@@ -1,0 +1,10 @@
+graph TD
+__start__["开始"]
+    plan["plan"]
+    search_one_city["search_one_city"]
+    aggregate["aggregate"]
+    __end__["结束"]
+    __start__ --> plan
+    plan --> __end__
+    plan -.->|"Send"| search_one_city
+    search_one_city -.->|"Send"| aggregate

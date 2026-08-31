@@ -1,0 +1,10 @@
+graph TD
+__start__["开始"]
+    primary["primary"]
+    flight_department["flight_department"]
+    report["report"]
+    __end__["结束"]
+    __start__ --> primary
+    flight_department --> report
+    primary --> flight_department
+    report --> __end__

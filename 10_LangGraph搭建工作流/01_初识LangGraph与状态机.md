@@ -36,6 +36,20 @@ LangGraph 1.x 引入了许多强大的特性，核心解决的是“可控性”
 2. **Persistence（记忆与持久化）**：自带的 Checkpointer（检查点机制）。就像单机游戏里的“自动存档”。如果跑到一半出错了，下次可以从存档点继续跑，而不是从头再来。
 3. **Human-in-the-loop（人类介入 / 拦截）**：可以在执行某个危险动作（比如“确认转账”或“预订不可退款酒店”）之前，自动暂停运行，把控制权交给人类。人类点击“同意”或修改参数后，再继续执行。
 
+## 4. 多智能体框架怎么选？LangGraph vs AutoGen vs CrewAI
+
+能做 Multi-Agent 的框架不止 LangGraph 一家。用开公司来比喻三家定位：
+
+| 框架 | 定位（一句话） | 生活化比喻 | 适合谁 |
+| :--- | :--- | :--- | :--- |
+| [LangGraph](https://langchain-ai.github.io/langgraph/) | 把智能体系统建模为**有状态图**，节点、边、循环、并行全部显式可控 | **自建厂房 + 流水线**：轨道自己画，闸门自己装 | 要精确控制状态、路由、循环、并行、HITL 的生产级系统 |
+| [AutoGen](https://microsoft.github.io/autogen/stable/)（微软） | 多个 Agent **对话协作**完成任务，团队内置轮转/选主等聊天编队 | **圆桌会议**：一群专家围着桌子聊，聊着聊着任务就办了 | 研究、原型验证、以对话为主的协作场景 |
+| [CrewAI](https://github.com/crewAIInc/crewAI) | 角色分工的**班组（Crew）** + 事件驱动的**流程（Flow）** | **剧组制**：导演定角色（CEO 助理、研究员、写手），各演各的再合戏 | 快速搭建“角色扮演式”团队，上手门槛最低 |
+
+**怎么选**：如果你的系统是“几个 Agent 自由讨论、角色扮演、协作完成”，CrewAI / AutoGen 往往上手更直接；但如果流程长这样——Agent A 判断 → B/C 并行 → Reviewer 评审 → 不合格重试 → 人工审批 → 收尾——那本质已经不是一个“聊天群”，而是一台**需要状态机的 Agent 工作流**，LangGraph 的图编排、持久化与人工介入闸门就值回票价。
+
+> 💡 三者的边界也在打通：LangChain 生态官方提供多智能体模式总览与选型矩阵（[Multi-Agent 文档](https://docs.langchain.com/oss/python/langchain/multi-agent)），并配套 [langgraph-supervisor](https://github.com/langchain-ai/langgraph-supervisor)、[langgraph-swarm](https://github.com/langchain-ai/langgraph-swarm) 等现成编队库，12 节会逐一亮相。
+
 ---
 
 **下一节：** 我们将通过代码真正构建一个简单的 LangGraph 状态图，看看状态（State）是如何在图中流动的。

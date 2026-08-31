@@ -1,0 +1,6 @@
+graph TD
+    User(["需求"]) --> Plan["Planner 规划师"]
+    Plan --> Exec["Executor 执行者"]
+    Exec --> Review{"Reviewer 评审员"}
+    Review -->|"needs_fix 打回重做"| Exec
+    Review -->|"pass 通过"| Final(["交付"])

@@ -1,0 +1,14 @@
+graph TD
+__start__["开始"]
+    classify["classify"]
+    translate_node["translate_node"]
+    summarize_node["summarize_node"]
+    chat_node["chat_node"]
+    __end__["结束"]
+    __start__ --> classify
+    classify -.-> chat_node
+    classify -.-> summarize_node
+    classify -.-> translate_node
+    chat_node --> __end__
+    summarize_node --> __end__
+    translate_node --> __end__

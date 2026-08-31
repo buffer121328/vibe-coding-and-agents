@@ -1,0 +1,9 @@
+graph TD
+__start__["开始"]
+    assistant["assistant"]
+    tools["tools"]
+    __end__["结束"]
+    __start__ --> assistant
+    assistant -.-> __end__
+    assistant -.-> tools
+    tools --> assistant

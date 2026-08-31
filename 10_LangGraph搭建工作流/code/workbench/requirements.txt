@@ -1,0 +1,10 @@
+# 图工作台（LangGraph Workbench）依赖清单
+# 安装：uv venv --python 3.13 && uv pip install --python .venv/bin/python -r requirements.txt
+# 版本基准：与 09 章 Gradio 工作台已验证共存版本对齐（gradio 6.26 + langgraph 1.2.11）
+
+# 前端工作台：Gradio Blocks 单文件应用（零前端构建，官方 https://www.gradio.app/docs）
+gradio>=6.26,<7
+
+# 被可视化的主角：13 个分节示例所用的 LangGraph 1.x（官方 https://langchain-ai.github.io/langgraph/）
+langgraph>=1.2,<2.0
+langchain-core>=1.6,<2.0

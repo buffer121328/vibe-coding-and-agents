@@ -24,7 +24,7 @@
 * [09_工作流设计模式](09_工作流设计模式.md) - 官方五大模式速查（路由/编排者-工人/评估者-优化者等），建立“先选型再动手”的条件反射。
 * [10_长期记忆与TimeTravel](10_长期记忆与TimeTravel.md) - Store 跨线程会员档案、语义检索，以及 get_state_history/update_state 回放与改道。
 * [11_持久执行与容错](11_持久执行与容错.md) - 断点续跑、RetryPolicy 自动重试、超时与缓存，跑到一半崩了能复活。
-* [12_子图与多智能体全谱](12_子图与多智能体全谱.md) - 真子图（Subgraph）嵌套，Network/Supervisor/Hierarchical/Handoffs 编队与官方编队库。
+* [12_子图与多智能体全谱](12_子图与多智能体全谱.md) - 真子图（Subgraph）嵌套，三大多智能体范式实战（Router / Supervisor / Planner-Executor-Reviewer），Network/Supervisor/Hierarchical/Handoffs 编队与官方编队库。
 * [13_HITL进阶](13_HITL进阶.md) - 节点内动态中断 interrupt() + Command(resume)，条件拦截与多级审批。
 * [14_FunctionalAPI与两套API选型](14_FunctionalAPI与两套API选型.md) - @entrypoint/@task 给现有 Python 函数加持久化，Graph API vs Functional API 选型对照。
 * [15_部署与可观测性](15_部署与可观测性.md) - LangGraph Server/Studio/Platform 部署，可观测性取舍（暂不引入 LangSmith/Langfuse，用调试三板斧替代）与追踪生态认知。
@@ -51,6 +51,7 @@ pip install -U langgraph langchain langchain-openai
 ## 💻 本章示例与实战源码
 
 - **[code/examples/](code/examples/)**：02~14 每节一个最小可运行示例，**全部无需 API Key**（用 langchain-core 内置假模型模拟大模型环节），装好 `langgraph` 后逐个 `python xxx.py` 即可跑通。
+- **[code/workbench/](code/workbench/README.md)**：🌟 **图工作台**（本章配套可视化演示）——把 14 个关卡（含 10.12b 多智能体三范式）的真实 LangGraph 图搬上交互台：House 风格 SVG 图结构 + 节点逐步点亮 + 「过程透视」终端逐节点打印状态增量 + 两阶段人工审批流，同样零 API Key，`python app.py` 一键起台。
 - **[code/travel_agent_v2/](code/travel_agent_v2/README.md)**：16 节收官实战的企业级 Multi-Agent 项目，完全基于 LangGraph 1.x 最佳实践重构，API Key 已脱敏（配置方式见其 README 与 `.env.example`）。
 
 准备好进入 Agent 工业流水线的时代了吗？让我们开始吧！
