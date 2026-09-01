@@ -1,0 +1,8 @@
+flowchart LR
+
+    DF["📜 Dockerfile\n（镜像的菜谱）"] -->|"① build 按菜谱做一版"| IMG["📦 镜像 Image\n只读模板（类安装光盘）"]
+    IMG -->|"② run 装一台跑起来"| CT["🚢 容器 Container\n运行中的隔离实例"]
+    CT -.->|"改动不写回镜像"| IMG
+    REG["🏬 镜像仓库 Registry\n(Docker Hub / 私有仓库)"] -->|"pull 拉现成镜像"| IMG
+    YML["🎼 docker-compose.yml\n整套服务的乐谱"] ==>|"compose up 一键起全套"| ALL["🧩 多容器编排\nneo4j + forge-lite 各一间"]
+    ALL --> CT

@@ -77,12 +77,23 @@ def caption_image(image_b64: str) -> str:
 
 ```python
 # 11.14 跨语言检索：多语言嵌入一库通吃
-from langchain_huggingface import HuggingFaceEmbeddings
+# 路线 A（默认，零下载）：直接用 .env 里的多语言 Embedding API 端点
+# （方舟 doubao-embedding、OpenAI text-embedding-3 等）——见 code/shared_corpus.py
+from shared_corpus import make_embeddings
+import numpy as np
 
-emb = HuggingFaceEmbeddings(model_name="BAAI/bge-m3")   # 100+ 语言对齐
-# 中文文档入库后，英文问题可以直接命中：
-# emb.embed_query("How many days to submit the expense report?")
-#   ≈ emb.embed_query("差旅报销单须在几天内提交？")   余弦相似度极高
+emb = make_embeddings()
+doc_v = np.array(emb.embed_query("差旅报销单须在返回工作地后 5 个工作日内提交 OA 系统。"))
+q_v = np.array(emb.embed_query("How many days to submit the expense report?"))
+sim = doc_v @ q_v / (np.linalg.norm(doc_v) * np.linalg.norm(q_v))
+# 实测英文问题 ≈ 0.56，中文问题 ≈ 0.70——跨语言命中足够排队第一
+
+# 路线 B（本地部署，可选）：BGE-M3 约 2.3GB，数据不出门时用
+# pip install sentence-transformers
+# from sentence_transformers import SentenceTransformer
+# emb = SentenceTransformer("BAAI/bge-m3")   # 100+ 语言对齐
+# 或用 Ollama / Xinference 起本地 OpenAI 兼容 Embedding 服务，把
+# .env 的 OPENAI_API_BASE 指过去，代码零改动。
 ```
 
 > ⚠️ **跨语言的隐藏坑在生成层**：检索命中了，但模型可能用英文回答中文文档。解法是在 11.12 的接地 Prompt 里加一条硬规则——“**使用用户提问的语言回答，引用原文保持原文语言**”。
@@ -148,6 +159,47 @@ def transcribe_with_timestamps(audio_path: str, window_sec: int = 45) -> list[di
 | 桌面知识库成品 | [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)（11.10 选型地图里的“本地私有”选手） |
 
 端侧的代价是模型小、上下文短——**切块要更小（11.2）、重排要更省（11.5）、生成层 Prompt 要更精简（11.12）**，本章所有“省着用”的技巧在端侧全部是刚需。
+
+## 🧪 多模态评估不能只看“模型描述得像不像”
+
+文本化、跨模态检索和 VLM 作答是三段不同能力，应分别测：
+
+| 阶段 | 评测问题 | 典型指标/用例 |
+| :--- | :--- | :--- |
+| OCR/ASR/图片描述 | 原始信息有没有被正确转成可检索内容 | 字错率、数字准确率、表格结构、说话人、时间戳 |
+| 跨模态检索 | 文字问题能否找到正确页面/片段 | Recall@K、MRR、页级命中率 |
+| VLM/工具作答 | 命中原图后能否正确读数与推理 | 答案正确性、引用页、坐标/时间定位 |
+
+一张图描述得很流畅，关键数字却写错，仍然是失败。评测集应包含小字号、旋转扫描、跨页表格、相似图表、多人对话、口音、背景噪声和跨语言问题。
+
+## 📄 图文 PDF 要保留“页面坐标协议”
+
+把图片描述存进向量库时，同时保存 `page_id`、原图路径、边界框、解析器版本和 OCR 置信度。命中后前端才能跳到正确页面并高亮区域。若只保存一句 caption，用户无法核查，重新解析后引用也可能漂移。
+
+低 OCR 置信度的金额、日期和编号应进入人工复核或 VLM 二次读取，不能悄悄混进知识库。文本路线与视觉路线都命中同一页面时，可融合排名；两者结论冲突时应保留原图并提示复核。
+
+## 🎙️ 音视频不只需要时间戳，还需要说话人和置信度
+
+会议中“王经理说可以延期”和“客户不同意延期”含义相反。Chunk 元数据至少应保存开始/结束时间、说话人、ASR 置信度、媒体版本和访问权限。切窗要有重叠，但重叠片段进入上下文前需要去重。
+
+视频可以把 ASR、关键帧描述、屏幕 OCR 和章节标题按时间轴对齐。检索命中后返回可播放区间，引用格式可写成 `review.mp4#t=12:30-12:48`。
+
+## 🧮 Text-to-SQL 必须运行在笼子里
+
+把计算交给 SQL/pandas比让 LLM 口算可靠，但工具调用增加了新的风险：
+
+1. 数据库使用只读账号和允许表/列白名单；
+2. 禁止 DDL/DML、多语句、外部函数和任意文件访问；
+3. 设置查询超时、扫描行数、结果行数和费用预算；
+4. 在执行前解析 SQL，而不是只用关键词正则；
+5. 行级权限由服务端身份注入，模型不能自行选择租户；
+6. 返回答案同时附查询、数据快照时间和结果来源。
+
+配套脚本增加了只读操作门禁和独立的 ASR 时间窗函数，保留最低置信度，方便对低质量片段送审。
+
+## 📱 端侧能力也要按设备分层
+
+“本地运行”不代表所有设备能力相同。桌面 GPU、普通笔记本和手机的内存、功耗、模型格式都不同。应记录冷启动、峰值内存、电量/温度、索引大小和离线更新时间；数据加密、系统备份和设备丢失后的远程擦除也属于端侧安全边界。
 
 ---
 

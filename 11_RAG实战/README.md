@@ -5,7 +5,7 @@
 
 ---
 
-## 🧭 本章学习路径：两种视角
+## 🧭 本章学习路径：三种视角
 
 ### 视角一：先看全局 —— RAG 完整生命周期（11.1）
 
@@ -33,12 +33,13 @@
 | 11.8 | 答非所问、还一本正经胡说 | Agentic RAG | Self-RAG、CRAG、LangGraph 自省闭环 |
 | 11.9 | 说不清系统到底变好没有 | 评估与可观测性 | RAG 三元组、Ragas、LangSmith/Phoenix |
 
-### 视角三：最后进阶 —— 生产级深水区（11.11 - 11.14）
+### 视角三：最后进阶 —— 选型与生产级深水区（11.10 - 11.14）
 
-主干打通之后，再补上真实生产里**最容易卡住的四块短板**：
+主干打通之后，再补上选型、生产深水区与端到端总装：
 
 | 序号 | 生产里的拦路虎 | 对应解法 | 技术关键词 |
 | :--- | :--- | :--- | :--- |
+| 11.10 | 零件很多，不知道买、改还是自研 | 平台与框架选型 | 约束清单、PoC、退出成本、总拥有成本 |
 | 11.11 | 词级细节被一句话一向量抹平 | 迟交互与稀疏检索 | ColBERT MaxSim、SPLADE、ColPali、多库调度 |
 | 11.12 | 答案没出处，没人敢用 | 生成层防幻觉与引用溯源 | 接地生成、引用标注、忠实度复检、拒答、流式 |
 | 11.13 | Notebook 跑通但上不了生产 | 工程化部署与安全 | FastAPI 流式、语义缓存、多租户 ACL、增量更新、注入防护 |
@@ -78,7 +79,7 @@
 14. **[11.14 知识不止是文字 —— 多模态与垂直场景 RAG](./14_多模态与垂直场景RAG.md)**
     - **核心内容**：多模态三条路线（文本化/多模态嵌入/VLM 直读）怎么选；图文混排 PDF 组合拳；跨语言 RAG 三方案；音视频转写 + 时间戳元数据；表格问答“计算下放”与端侧 RAG。
 15. **[11.15 端到端综合实战 —— KnowledgeForge Lite](./15_端到端综合实战_KnowledgeForge_lite.md)**
-    - **核心内容**：把 11.2~11.14 的零件总装成一台能跑的机器——以开源项目 [KnowledgeForge](https://github.com/buffer121328/KnowledgeForge) 为蓝本蒸馏出的 600 行教学版（`code/KnowledgeForge_lite/`）；总装图与三个关键接缝；双层评估（手写门禁 + Ragas 全量三元组）；两个“破坏性实验”验证防线；从 Lite 升级到工业完整版的路线图。
+    - **核心内容**：把 11.2~11.14 的零件总装成一台能跑的机器——以开源项目 [KnowledgeForge](https://github.com/buffer121328/KnowledgeForge) 为蓝本蒸馏出的约 900 行教学版（`code/KnowledgeForge_lite/`）；总装图与四个关键接缝；混合检索 + Neo4j 知识图谱（Cypher 查询，NetworkX 兜底）；双层评估（手写门禁 + Ragas 全量三元组）；Air 纯 Python 聊天页；Docker 五概念补课（镜像/容器/Dockerfile/Compose/仓库）与 docker compose 一键起全套；两个“破坏性实验”验证防线；从 Lite 升级到工业完整版的路线图。
 
 ---
 
@@ -98,10 +99,13 @@
 本章代码采用**问题驱动、随讲随练**的方式：
 
 1. **正文内联代码**：每个小节内都包含聚焦该问题的、可直接复制运行的 Python 代码片段（基于 LangChain / LangGraph 生态，并逐行注释）；
-2. **`code/` 目录脚本**：与 11.2 - 11.9、11.11 - 11.14 一一对应的 12 个完整可运行脚本（`s02_data_pipeline.py` … `s09_evaluation.py`、`s11_colbert_sparse.py` … `s14_multimodal_rag.py`），详见 [code/README.md](code/README.md)；
-3. **`code/KnowledgeForge_lite/` 总装项目**：11.15 端到端综合实战的完整代码——完整版 [KnowledgeForge](https://github.com/buffer121328/KnowledgeForge) 的蒸馏教学版，约 600 行，含 4 篇种子文档、四个入口脚本（入库/问答/回归门禁/Ragas 打分）与独立依赖清单。
+2. **`code/` 目录脚本**：与 11.2 - 11.9、11.11 - 11.14 一一对应的 12 个完整可运行脚本（`s02_data_pipeline.py` … `s09_evaluation.py`、`s11_colbert_sparse.py` … `s14_multimodal_rag.py`）。所有检索/评估/引用演示都跑在 `testdata/` 的 8 份真实文档（28 个页级 Chunk，页 ID 可追溯）上；公共语料加载器与模型工厂见 `code/shared_corpus.py`，详见 [code/README.md](code/README.md)；
+3. **`code/rag_workbench/` RAG 质量控制台与工作台**：🌟 默认首页无需密钥，可直接检查四份测试语料、版本冲突、引用完整性和提示注入；其余页面把 12 个脚本搬上交互台，运行方式见 [code/rag_workbench/README.md](code/rag_workbench/README.md)；
+4. **`code/KnowledgeForge_lite/` 总装项目**：11.15 端到端综合实战的完整代码——完整版 [KnowledgeForge](https://github.com/buffer121328/KnowledgeForge) 的蒸馏教学版，约 750 行，含 4 篇种子文档、五个入口脚本（入库/问答/回归门禁/Ragas 打分/图谱建图）、Air 纯 Python 聊天页与独立依赖清单。
 
 > 📌 注意：完整版“综合实战”大项目（含 Celery/Kafka/Neo4j/多租户的生产级形态）作者另有安排；11.15 的 KnowledgeForge Lite 是它的蒸馏教学版，动手从 [11.15](./15_端到端综合实战_KnowledgeForge_lite.md) 开始即可。11.10 是“选型地图”章节，不附带代码脚本；想动手的读者可跳回 11.2~11.9 对应脚本。
+
+> 🧪 **新增离线质量门禁**：`code/rag_quality.py` 把检索指标、引用完整性、上下文去重、Agent 循环预算、缓存作用域和蓝绿索引变成可测试代码；`code/testdata/` 提供现行制度、废止旧版、故障手册、含注入网页与真实RAG演示文档（协作手册/差旅/设备/HR）共 8 组多页语料。无需 API Key 即可运行 `python -m unittest discover -s code/tests -v`。
 
 ---
 

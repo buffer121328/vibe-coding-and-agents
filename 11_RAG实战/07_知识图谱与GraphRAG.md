@@ -139,6 +139,40 @@ print("（在 Neo4j Desktop / Browser 中执行上面的 Cypher 即可可视化�
 
 > 💡 **工程选型提示**：如果只是几十万条以内的“中等图谱”，完全可以用 networkx + 社区摘要自己搭轻量版；只有图谱达到百万级节点、需要复杂图查询时，才值得引入 Neo4j 这类专业图数据库。
 
+## 🧭 GraphRAG 不是一个固定算法，也不是所有问题都走图
+
+微软 GraphRAG 当前提供多种查询方式，像医院分诊不同科室：
+
+| 方法 | 主要上下文 | 适合的问题 | 不适合的问题 |
+| :--- | :--- | :--- | :--- |
+| **Basic** | 普通 Top-K 文本单元 | 单点事实、直接条款 | 全局主题归纳 |
+| **Local** | 目标实体、邻居、关系与关联文本 | “谁依赖谁”“某实体有什么关系” | 无明确实体的全局题 |
+| **Global** | 分层社区报告 Map-Reduce | “主要主题是什么”“整体如何演进” | 简单事实题，成本不划算 |
+| **DRIFT** | 社区起步，再沿局部证据迭代 | 既要广度又要追到细节的探索题 | 低延迟、低预算问答 |
+
+生产系统应先做问题路由，普通事实题继续走混合检索。若所有问题都走 GraphRAG，建图与查询成本会吞掉收益。官方也提供 Standard 与更便宜但图更嘈杂的 FastGraphRAG 索引方法，应按实体保真需求选择。[GraphRAG 方法说明](https://microsoft.github.io/graphrag/index/methods/)
+
+## 🧹 建图最难的不是画边，而是实体对齐
+
+同一个系统可能写作“用户中心”“User Center”“IAM”；同名“支付服务”也可能属于不同地区。若不消歧，会出现两个相反问题：
+
+- **没合并**：一个实体裂成多个节点，关系链断掉；
+- **错合并**：两个不同实体被揉成一个，图上产生不存在的关系。
+
+工程上要保存实体的规范名、别名、类型、来源 Chunk、抽取置信度与时间范围。低置信边不能直接进入关键决策；抽样人工审核发现的错误要回流到 Prompt、白名单与别名表。
+
+## 🕰️ 图谱也有版本和保鲜期
+
+“订单服务依赖 MySQL”在迁移 TiDB 后会过期。边应带 `valid_from`、`valid_to` 和来源，新索引完成后重新生成受影响的社区报告。不能只增不删，否则图会把历史关系当成当前事实。
+
+更新成本通常包括：文本切块 → 实体关系抽取 → 实体对齐 → 社区发现 → 社区报告生成。GraphRAG 官方资料指出，标准流程的图抽取占索引成本的大头；因此应支持增量更新、受影响社区重算和索引版本回滚。
+
+## 📏 GraphRAG 要单独评估“图有没有帮忙”
+
+除了最终答案，还应测：实体识别准确率、别名合并错误率、关系正确率、证据来源覆盖、Global/Local 路由准确率，以及相对普通 RAG 的质量增益、索引费用和查询延迟。最有说服力的实验不是“GraphRAG 得了 90 分”，而是同一评测集上：Basic、混合检索、Global、Local、DRIFT 各自在哪类问题胜出。
+
+配套脚本新增了可解释的 Basic/Local/Global/DRIFT 路由基线和实体规范化函数；它们用于讲清决策边界，不冒充完整 GraphRAG 实现。
+
 ---
 
 ## 🔗 权威官方参考
@@ -146,4 +180,5 @@ print("（在 Neo4j Desktop / Browser 中执行上面的 Cypher 即可可视化�
 - [微软 GraphRAG 官方仓库（microsoft/graphrag）](https://github.com/microsoft/graphrag)
 - [GraphRAG 官方文档与案例](https://microsoft.github.io/graphrag/)
 - [GraphRAG 核心论文：From Local to Global（arXiv:2404.16130）](https://arxiv.org/abs/2404.16130)
+- [GraphRAG DRIFT Search 官方说明](https://microsoft.github.io/graphrag/query/drift_search/)
 - [Neo4j LangChain 集成指南](https://python.langchain.com/docs/integrations/graphs/neo4j_cypher/)

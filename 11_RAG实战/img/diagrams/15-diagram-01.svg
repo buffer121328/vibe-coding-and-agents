@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 843 1263.3" width="843" height="1263.3" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 878 1280.2" width="878" height="1280.2" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
   text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
@@ -32,52 +32,59 @@
   <text x="32" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">📚 数据侧 data/docs</text>
 </g>
 <polyline class="edge" data-from="D" data-to="I" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="135,89.8 135,135.8 115.5,135.8 115.5,181.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="D" data-to="GX" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="135,89.8 135,135.8 383.5,135.8 383.5,181.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <polyline class="edge" data-from="I" data-to="VI" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="115.5,252.5 117,344.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <polyline class="edge" data-from="I" data-to="BI" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="115.5,252.5 115.5,298.5 365,298.5 365,344.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Q" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="343.5,72.9 343.5,273.15 133,273.15 133,473.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="VI" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="117,381.4 117,427.4 133,427.4 133,473.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="BI" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="365,381.4 365,427.4 133,427.4 133,473.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="H" data-to="G" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="133,527.1999999999999 133,573.2 88,573.2 88,619.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="G" data-to="R" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="88,673 88,719 105,719 105,765" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="GX" data-to="GDB" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="383.5,235.60000000000002 383.5,290.05 557.5,290.05 557.5,344.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="343.5,72.9 343.5,281.6 133,281.6 133,490.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="VI" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="117,381.4 117,435.85 133,435.85 133,490.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BI" data-to="H" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="365,381.4 365,435.85 133,435.85 133,490.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="GDB" data-to="H" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="557.5,398.3 557.5,444.3 133,444.3 133,490.3" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="GDB" data-to="H" data-label="Cypher 实体邻接补充 (11.7 Local Search)">
+  <rect x="235.80706787109375" y="433.3" width="218.8858642578125" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="345.25" y="444.3" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">Cypher 实体邻接补充 (11.7 Local Search)</text>
+</g>
+<polyline class="edge" data-from="H" data-to="G" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="133,544.1 133,590.1 88,590.1 88,636.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G" data-to="R" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="88,689.9 88,735.9000000000001 105,735.9000000000001 105,781.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="G" data-to="R" data-label="无依据：拒答">
-  <rect x="56.5" y="708" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="96.5" y="719" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">无依据：拒答</text>
+  <rect x="56.5" y="724.9000000000001" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="96.5" y="735.9000000000001" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">无依据：拒答</text>
 </g>
-<polyline class="edge" data-from="G" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="88,673 88,719 388,719 388,765" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="88,689.9 88,735.9000000000001 388,735.9000000000001 388,781.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="G" data-to="GE" data-label="有依据">
-  <rect x="214.5" y="708" width="47" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="238" y="719" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">有依据</text>
+  <rect x="214.5" y="724.9000000000001" width="47" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="238" y="735.9000000000001" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">有依据</text>
 </g>
-<polyline class="edge" data-from="GE" data-to="CK" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="388,818.8 388,864.8 106,864.8 106,910.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="CK" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="176,937.6999999999999 502,937.6999999999999 502,791.9 486,791.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="GE" data-to="CK" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="388,835.7 388,881.7 106,881.7 106,927.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CK" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="176,954.6 502,954.6 502,808.8000000000001 486,808.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="CK" data-to="GE" data-label="引用失真">
-  <rect x="473" y="853.8" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="502" y="864.8" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">引用失真</text>
+  <rect x="473" y="870.7" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="502" y="881.7" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">引用失真</text>
 </g>
-<polyline class="edge" data-from="CK" data-to="VF" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="106,964.5999999999999 106,1010.5999999999999 87,1010.5999999999999 87,1056.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CK" data-to="VF" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="106,981.5 106,1027.5 87,1027.5 87,1073.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="CK" data-to="VF" data-label="通过">
-  <rect x="78.5" y="999.5999999999999" width="36" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="96.5" y="1010.5999999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">通过</text>
+  <rect x="78.5" y="1016.5" width="36" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="96.5" y="1027.5" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">通过</text>
 </g>
-<polyline class="edge" data-from="VF" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="138,1083.5 502,1083.5 502,791.9 486,791.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="VF" data-to="GE" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="138,1100.4 502,1100.4 502,808.8000000000001 486,808.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="VF" data-to="GE" data-label="发现编造">
-  <rect x="473" y="926.7" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="502" y="937.7" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">发现编造</text>
+  <rect x="473" y="943.6000000000001" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="502" y="954.6000000000001" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">发现编造</text>
 </g>
-<polyline class="edge" data-from="VF" data-to="OUT" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="87,1110.3999999999999 87,1156.3999999999999 128.5,1156.3999999999999 128.5,1202.3999999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="VF" data-to="OUT" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="87,1127.3 87,1173.3 128.5,1173.3 128.5,1219.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="VF" data-to="OUT" data-label="通过">
-  <rect x="89.75" y="1145.3999999999999" width="36" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="107.75" y="1156.3999999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">通过</text>
+  <rect x="89.75" y="1162.3" width="36" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="107.75" y="1173.3" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">通过</text>
 </g>
-<polyline class="edge" data-from="EV" data-to="H" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="530,89.8 530,281.59999999999997 133,281.59999999999997 133,473.4" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="EV" data-to="H" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="540.5,89.8 540.5,290.05 133,290.05 133,490.3" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="EV" data-to="H" data-label="每次改动必跑">
-  <rect x="291.5" y="270.59999999999997" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="331.5" y="281.59999999999997" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">每次改动必跑</text>
+  <rect x="296.75" y="279.05" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="336.75" y="290.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">每次改动必跑</text>
 </g>
-<polyline class="edge" data-from="SV" data-to="GE" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="741,89.8 741,427.4 388,427.4 388,765" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SV" data-to="GE" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="769,89.8 769,435.85 388,435.85 388,781.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="SV" data-to="GE" data-label="同一套闸门">
-  <rect x="530" y="416.4" width="69" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="564.5" y="427.4" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">同一套闸门</text>
+  <rect x="544" y="424.85" width="69" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="578.5" y="435.85" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">同一套闸门</text>
 </g>
 <g class="node" data-id="D" data-label="4 篇种子文档\n(差旅 / FAQ / 故障 / 安全)" data-shape="rectangle">
   <rect x="36" y="36" width="198" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
@@ -87,6 +94,10 @@
   <rect x="36" y="181.8" width="159" height="70.69999999999999" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="115.5" y="217.15" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="115.5" dy="-12.349999999999998">📥 ingest.py</tspan><tspan x="115.5" dy="16.9">解析 → 清洗 → 切块</tspan><tspan x="115.5" dy="16.9">内容哈希幂等同步</tspan></text>
 </g>
+<g class="node" data-id="GX" data-label="🧠 knowledge_graph.py\nLLM 抽取实体关系三元组" data-shape="rectangle">
+  <rect x="290" y="181.8" width="187" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="383.5" y="208.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="383.5" dy="-3.8999999999999995">🧠 knowledge_graph.py</tspan><tspan x="383.5" dy="16.9">LLM 抽取实体关系三元组</tspan></text>
+</g>
 <g class="node" data-id="VI" data-label="🧭 Chroma 向量索引" data-shape="rectangle">
   <rect x="36" y="344.5" width="162" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="117" y="362.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="117" dy="4.55">🧭 Chroma 向量索引</tspan></text>
@@ -95,44 +106,48 @@
   <rect x="290" y="344.5" width="150" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="365" y="362.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="365" dy="4.55">📖 BM25 稀疏索引</tspan></text>
 </g>
+<g class="node" data-id="GDB" data-label="🕸️ Neo4j 图数据库 (Cypher)\nNetworkX 兜底" data-shape="rectangle">
+  <rect x="453" y="344.5" width="209" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="557.5" y="371.4" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="557.5" dy="-3.8999999999999995">🕸️ Neo4j 图数据库 (Cypher)</tspan><tspan x="557.5" dy="16.9">NetworkX 兜底</tspan></text>
+</g>
 <g class="node" data-id="Q" data-label="❓ 用户问题" data-shape="rectangle">
   <rect x="290" y="36" width="107" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="343.5" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="343.5" dy="4.55">❓ 用户问题</tspan></text>
 </g>
 <g class="node" data-id="H" data-label="🔀 retrieval.py\n双路召回 + 手写 RRF 融合" data-shape="rectangle">
-  <rect x="36" y="473.4" width="194" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="133" y="500.29999999999995" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="133" dy="-3.8999999999999995">🔀 retrieval.py</tspan><tspan x="133" dy="16.9">双路召回 + 手写 RRF 融合</tspan></text>
+  <rect x="36" y="490.3" width="194" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="133" y="517.2" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="133" dy="-3.8999999999999995">🔀 retrieval.py</tspan><tspan x="133" dy="16.9">双路召回 + 手写 RRF 融合</tspan></text>
 </g>
 <g class="node" data-id="G" data-label="🚦 n_grade\n相关性分级" data-shape="diamond">
-  <polygon points="88,607.2 124,646.1 88,685 52,646.1" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="88" y="646.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="88" dy="-3.8999999999999995">🚦 n_grade</tspan><tspan x="88" dy="16.9">相关性分级</tspan></text>
+  <polygon points="88,624.1 124,663 88,701.9 52,663" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="88" y="663" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="88" dy="-3.8999999999999995">🚦 n_grade</tspan><tspan x="88" dy="16.9">相关性分级</tspan></text>
 </g>
 <g class="node" data-id="R" data-label="🛑 拒答 + 转人工" data-shape="rectangle">
-  <rect x="36" y="765" width="138" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="105" y="783.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="105" dy="4.55">🛑 拒答 + 转人工</tspan></text>
+  <rect x="36" y="781.9000000000001" width="138" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="105" y="800.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="105" dy="4.55">🛑 拒答 + 转人工</tspan></text>
 </g>
 <g class="node" data-id="GE" data-label="✍️ n_generate\n接地 Prompt + [编号] 引用" data-shape="rectangle">
-  <rect x="290" y="765" width="196" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="388" y="791.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="388" dy="-3.8999999999999995">✍️ n_generate</tspan><tspan x="388" dy="16.9">接地 Prompt + [编号] 引用</tspan></text>
+  <rect x="290" y="781.9000000000001" width="196" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="388" y="808.8000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="388" dy="-3.8999999999999995">✍️ n_generate</tspan><tspan x="388" dy="16.9">接地 Prompt + [编号] 引用</tspan></text>
 </g>
 <g class="node" data-id="CK" data-label="🧾 n_check\n幽灵引用程序校验" data-shape="diamond">
-  <polygon points="106,898.8 142,937.6999999999999 106,976.5999999999999 70,937.6999999999999" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="106" y="937.6999999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="106" dy="-3.8999999999999995">🧾 n_check</tspan><tspan x="106" dy="16.9">幽灵引用程序校验</tspan></text>
+  <polygon points="106,915.7 142,954.6 106,993.5 70,954.6" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="106" y="954.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="106" dy="-3.8999999999999995">🧾 n_check</tspan><tspan x="106" dy="16.9">幽灵引用程序校验</tspan></text>
 </g>
 <g class="node" data-id="VF" data-label="🔍 n_verify\n忠实度复检" data-shape="diamond">
-  <polygon points="87,1044.6 123,1083.5 87,1122.3999999999999 51,1083.5" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="87" y="1083.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="87" dy="-3.8999999999999995">🔍 n_verify</tspan><tspan x="87" dy="16.9">忠实度复检</tspan></text>
+  <polygon points="87,1061.5 123,1100.4 87,1139.3 51,1100.4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="87" y="1100.4" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="87" dy="-3.8999999999999995">🔍 n_verify</tspan><tspan x="87" dy="16.9">忠实度复检</tspan></text>
 </g>
 <g class="node" data-id="OUT" data-label="✅ 答案 + citations 出处" data-shape="rectangle">
-  <rect x="36" y="1202.3999999999999" width="185" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="128.5" y="1220.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="128.5" dy="4.55">✅ 答案 + citations 出处</tspan></text>
+  <rect x="36" y="1219.3" width="185" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="128.5" y="1237.75" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="128.5" dy="4.55">✅ 答案 + citations 出处</tspan></text>
 </g>
-<g class="node" data-id="EV" data-label="🧪 evaluate.py\n黄金评测集回归门禁" data-shape="rectangle">
-  <rect x="453" y="36" width="154" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="530" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="530" dy="-3.8999999999999995">🧪 evaluate.py</tspan><tspan x="530" dy="16.9">黄金评测集回归门禁</tspan></text>
+<g class="node" data-id="EV" data-label="🧪 evaluate.py\n门禁 + Ragas 双层评估" data-shape="rectangle">
+  <rect x="453" y="36" width="175" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="540.5" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="540.5" dy="-3.8999999999999995">🧪 evaluate.py</tspan><tspan x="540.5" dy="16.9">门禁 + Ragas 双层评估</tspan></text>
 </g>
-<g class="node" data-id="SV" data-label="🌐 server.py\nFastAPI + SSE 流式" data-shape="rectangle">
-  <rect x="663" y="36" width="156" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="741" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="741" dy="-3.8999999999999995">🌐 server.py</tspan><tspan x="741" dy="16.9">FastAPI + SSE 流式</tspan></text>
+<g class="node" data-id="SV" data-label="🌐 server.py\nAir 聊天页 + SSE 流式" data-shape="rectangle">
+  <rect x="684" y="36" width="170" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="769" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="769" dy="-3.8999999999999995">🌐 server.py</tspan><tspan x="769" dy="16.9">Air 聊天页 + SSE 流式</tspan></text>
 </g>
 </svg>

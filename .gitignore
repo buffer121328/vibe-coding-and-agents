@@ -25,6 +25,9 @@ agent_memory.json
 gradio_agent_memory.json
 gradio_sessions/
 
+# RAG 教程运行时产物：11 章 s11 脚本生成的检索索引（删掉重跑即重建）
+11_RAG实战/code/indexes/
+
 # VitePress 文档站：docs 章节内容为 sync 脚本生成的产物（不入库），配置/首页/脚本入库
 docs/[0-9][0-9]_*/
 docs/.vitepress/dist/

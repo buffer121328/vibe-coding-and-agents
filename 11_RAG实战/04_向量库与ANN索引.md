@@ -41,13 +41,15 @@
 ### IVF-PQ：先分小区，再压缩图片
 
 - **IVF（倒排）**：用 K-Means 把 1000 万个向量先分成 1000 个“小区”，查询只进最近几个小区找；
-- **PQ（乘积量化）**：把高维向量压成短编码（类似“图片缩略图”），内存直降 80%~90%——适合内存吃紧的十亿级场景，但精度比 HNSW 略低。
+- **PQ（乘积量化）**：把高维向量压成短编码（类似“图片缩略图”），可显著降低内存——具体比例由原始维度、子空间数、编码位数和是否保留原向量决定；适合内存吃紧的大规模场景，但通常会损失召回率。
 
 ---
 
-## 🧑‍💻 代码实现一：亲手做一个“暴力 vs HNSW”小实验
+## 🧑‍💻 代码实现一：亲手做一个“暴力 vs 近似候选”小实验
 
 > 我们先不看库，自己用 numpy 复现两种检索，直观感受“精确但慢”与“近似但快”的差距，以及召回率（Recall@k）怎么算。
+
+> 📌 这里的随机投影分桶只是 ANN 思想演示，并不是手写 HNSW。真正的 HNSW 建图、搜索与过滤行为由后面的 Qdrant 示例承担。
 
 ```python
 import time
@@ -68,13 +70,16 @@ for q in queries:
     true_topk.append(np.argsort(-sims)[:10])
 brute_time = time.perf_counter() - t0
 
-# 简单“分桶”近似：按第一个坐标的符号粗筛一半候选，再精确算
+# 随机投影生成 8 位签名，只精排汉明距离 <= 2 的候选
+projections = rng.normal(size=(128, 8)).astype(np.float32)
+db_codes = (db @ projections) >= 0
 t0 = time.perf_counter()
 approx_topk = []
 for q in queries:
-    cand = np.where((db @ q) > 0)[0]          # 粗筛：只保留正相似候选
-    if len(cand) == 0:
-        cand = np.arange(len(db))
+    query_code = (q @ projections) >= 0
+    cand = np.where(np.count_nonzero(db_codes != query_code, axis=1) <= 2)[0]
+    if len(cand) < 10:
+        cand = np.where(np.count_nonzero(db_codes != query_code, axis=1) <= 3)[0]
     sims = db[cand] @ q
     approx_topk.append(cand[np.argsort(-sims)[:10]])
 approx_time = time.perf_counter() - t0
@@ -85,7 +90,7 @@ recall = hits / (100 * 10)
 
 print(f"暴力检索: {brute_time*1000:.1f} ms/批, 精确度 100%")
 print(f"近似检索: {approx_time*1000:.1f} ms/批, Recall@10 = {recall:.2%}")
-print("=> 结论：牺牲约 10% 召回率，换来数倍速度提升（真实 ANN 会更极致）")
+print("=> 结论：候选越少通常越快，但 Recall 会掉；参数必须用真实数据评测。")
 ```
 
 ---
@@ -107,11 +112,8 @@ client.create_collection(
     vectors_config=qm.VectorParams(size=128, distance=qm.Distance.COSINE),
     hnsw_config=qm.HnswConfigDiff(m=32, ef_construct=200),  # 建图参数：更密的图
 )
-# 查询时调 ef_search 控制召回率与延迟（Qdrant 里叫 ef）
-client.update_collection(
-    collection_name="enterprise_kb",
-    hnsw_config=qm.HnswConfigDiff(ef=128),
-)
+# 生产服务查询时可传 qm.SearchParams(hnsw_ef=128) 热调参。
+# 本地内存模式执行精确搜索，hnsw_ef 不生效，因此演示时不传。
 
 # 3. 插入带业务元数据（payload）的向量与文本
 payloads = [
@@ -125,10 +127,10 @@ client.upsert(
     points=[qm.PointStruct(id=i, vector=vectors[i], payload=payloads[i]) for i in range(3)],
 )
 
-# 4. 带过滤的近似检索：只看研发部(dept=rd) 且 2025 年的文档
-results = client.search(
+# 4. 带过滤检索：只看研发部(dept=rd) 且 2025 年的文档
+results = client.query_points(
     collection_name="enterprise_kb",
-    query_vector=[0.15] * 128,
+    query=[0.15] * 128,
     limit=2,
     query_filter=qm.Filter(
         must=[
@@ -136,7 +138,7 @@ results = client.search(
             qm.FieldCondition(key="year", match=qm.MatchValue(value=2025)),
         ]
     ),
-)
+).points
 for hit in results:
     print(f"score={hit.score:.4f}  text={hit.payload['text']}")
 ```
@@ -150,10 +152,10 @@ for hit in results:
 | 向量库 | 架构/语言 | 部署方式 | 核心亮点 | 适用场景 |
 | :--- | :--- | :--- | :--- | :--- |
 | **[Chroma](https://github.com/chroma-core/chroma)** | Python/C++ | 进程内/单机 Docker | 零配置、与 LangChain 深度集成 | 原型验证、轻量单机 |
-| **[Qdrant](https://qdrant.tech/documentation/)（推荐生产）** | Rust | 单机/分布式 | 极致性能、Payload 过滤最强、原生混合检索 | 中大型企业知识库 |
+| **[Qdrant](https://qdrant.tech/documentation/)** | Rust | 单机/分布式 | Payload 过滤、多租户分区、混合检索 | 中大型企业知识库 |
 | **[Milvus](https://milvus.io/docs)** | Go/C++ | 云原生分布式 | 十亿级向量、存储计算分离 | 互联网级海量检索 |
 | **[Pgvector](https://github.com/pgvector/pgvector)** | PostgreSQL 插件 | 原生扩展 | 与业务表 Join、支持 ACID | 已有 PG 系统的平滑升级 |
-| **[Pinecone](https://www.pinecone.io/)** | 闭源 SaaS | 全托管云 | 零运维 | 出海/无运维团队 |
+| **[Pinecone](https://www.pinecone.io/)** | 闭源 SaaS | 全托管云 | 托管运维、按服务能力使用 | 出海/不自建向量基础设施的团队 |
 
 ### 选型决策树
 
@@ -175,6 +177,32 @@ for hit in results:
 | 降低内存 | PQ / 量化、删减 `M` | 精度下降 |
 
 **工程口诀**：先离线用你的真实数据跑一组 Recall@k 与延迟的“成本-收益曲线”，再选一个折中参数，而不是照抄网上默认值。
+
+## 🧭 索引调优不能只看一条平均耗时
+
+ANN 的参数像高速公路的车道数：车多时扩车道能提速，但建路、占地和维护成本也会上升。可靠压测应同时记录：
+
+| 阶段 | 指标 | 回答的问题 |
+| :--- | :--- | :--- |
+| 建库 | 吞吐、峰值内存、索引大小、构建时长 | 数据每天更新时能否按时建完 |
+| 查询 | Recall@K、P50/P95/P99、QPS | 普通请求和最慢请求分别怎样 |
+| 过滤 | 不同租户/标签选择率下的 Recall 与延迟 | 过滤后候选很少时索引是否退化 |
+| 更新 | 写入可见延迟、删除滞留、重建影响 | 新制度多久能搜到，旧制度多久消失 |
+| 故障 | 节点失效、恢复时间、备份恢复 | 服务挂一台是否仍可查、能否恢复 |
+
+### 过滤检索有“先筛还是先搜”的坑
+
+假设全库有一千万条，用户只允许查看财务部的一千条。若先在全库搜 Top-10 再做权限过滤，很可能十条全部被删光；若数据库能把过滤条件带入 ANN 搜索，才有机会在那一千条里找真正的 Top-10。
+
+因此元数据字段要提前建索引，并按真实过滤组合压测。权限字段还必须由服务端根据身份注入，不能相信前端传来的 `tenant=xxx`。
+
+### 选择向量库前先问约束，不先看“性能冠军”
+
+1. 已有 PostgreSQL，规模中等且要频繁 Join 业务表：优先评估 pgvector；
+2. 大量复杂 Payload 过滤、多租户向量服务：评估 Qdrant 等专用库；
+3. 十亿级、分布式与冷热分层要求明确：评估 Milvus 等分布式系统；
+4. 团队不想运维：评估托管服务，但把数据驻留、退出成本和备份导出写进 PoC；
+5. 无论选谁，都用自己的向量、过滤比例、并发和硬件复现基准。
 
 ---
 
