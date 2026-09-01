@@ -113,7 +113,7 @@ vibe-coding-and-agents/
 │   └── 06_架构演进与目录治理：从SpringBoot三层架构到现代化全栈解耦.md # 6.6 SpringBoot三层思想、AI上帝文件防腐、生产级目录治理蓝图与进阶宝典
 ├── 07_Codex实战/                                      # 第七章：Codex 实战
 ├── 08_手搓Agent/                                      # 第八章：手搓 Agent（基于智谱 BigModel GLM-5.3-Flash 从零构建）
-│   ├── README.md                                      # 第八章导读、13步演进全景路线图与技术雷达
+│   ├── README.md                                      # 第八章导读、13步路线图与 Gradio 真模型/Mock 运行说明
 │   ├── 01_环境基建与模型接入.md                        # 8.1 智谱 BigModel API (GLM-5.3-Flash) 接入与客户端封装
 │   ├── 02_ReAct思考范式.md                            # 8.2 极简 Thought-Action-Observation 闭环
 │   ├── 03_Plan_and_Execute规划范式.md                 # 8.3 任务清单拆解、Todo 状态机与动态重排
@@ -156,11 +156,12 @@ vibe-coding-and-agents/
 │   ├── 09_工作流设计模式.md                           # 10.9 官方五大模式速查：路由/编排者-工人/评估者-优化者选型
 │   ├── 10_长期记忆与TimeTravel.md                     # 10.10 Store 跨线程记忆、语义检索与回放改道时间穿梭
 │   ├── 11_持久执行与容错.md                           # 10.11 断点续跑、RetryPolicy 重试、超时与缓存
-│   ├── 12_子图与多智能体全谱.md                       # 10.12 真子图嵌套与 Network/Supervisor/Handoffs 编队全谱
+│   ├── 12_子图与多智能体全谱.md                       # 10.12 真子图嵌套与 Router/Subagents/Custom workflow 重点实现
 │   ├── 13_HITL进阶.md                                 # 10.13 interrupt() 动态中断 + Command(resume) 与多级审批
 │   ├── 14_FunctionalAPI与两套API选型.md               # 10.14 @entrypoint/@task 与 Graph/Functional API 选型对照
 │   ├── 15_部署与可观测性.md                           # 10.15 LangGraph Server/Studio 部署与可观测性取舍（暂不引入观测平台）
-│   └── 16_综合实战_旅行助手项目.md                    # 10.16 收官实战：全能旅行助手整机剖析与知识对号入座
+│   ├── 16_综合实战_旅行助手项目.md                    # 10.16 收官实战：全能旅行助手整机剖析与知识对号入座
+│   └── code/                                          # 分节示例 examples（零 Key 直跑+工作台双入口）、图工作台 workbench（可视化演示）、Web 层 skills、16 节实战 travel_agent_v2
 ├── 11_现代RAG与知识库实战/                            # 第十一章：现代 RAG 系统（完整生命周期分层 + 问题驱动实战）
 │   ├── README.md                                      # 第十一章导读、全景路线图与技术雷达
 │   ├── 01_RAG完整生命周期分层.md                      # 11.1 数据准备/检索/生成/评估运维四大层次全景，RAG 与微调/长上下文/Agent 边界
@@ -178,7 +179,7 @@ vibe-coding-and-agents/
 │   ├── 13_工程化部署与安全.md                          # 11.13 生产化：FastAPI/SSE 服务化、三级缓存降本、多租户 ACL、增量更新与 Prompt 注入防护
 │   ├── 14_多模态与垂直场景RAG.md                       # 11.14 多模态：三条技术路线、图文混排组合拳、跨语言 BGE-M3、音视频转写、表格问答与端侧
 │   ├── 15_端到端综合实战_KnowledgeForge_lite.md        # 11.15 总装实战：以开源 KnowledgeForge 为蓝本的约 900 行蒸馏版，混合检索+Neo4j 知识图谱+四道闸门+双层评估(Ragas)+Air 聊天页
-│   └── code/                                           # 配套代码：s02 数据管道、s03 嵌入、s04 向量库、s05 混合检索、s06 查询重写、s07 GraphRAG、s08 Agentic RAG、s09 评估、s11 迟交互与稀疏、s12 引用溯源、s13 部署安全、s14 多模态；KnowledgeForge_lite/ 为 11.15 总装项目
+│   └── code/                                           # 配套代码：s02~s14 分节脚本（模型经环境变量可切换）、rag_workbench/ 为 RAG 可视化教学工作台（输入/检索/过程可见）、skills/、KnowledgeForge_lite/ 为 11.15 总装项目
 ├── 12_如何做一个自己的项目/                           # 第十二章：如何做一个自己的项目（个人与应届生 AI 落地实战）
 │   ├── README.md                                      # 第十二章导读与全景知识图谱
 │   ├── 00_什么是生产级Agent项目.md                    # 12.0 生产级七维分水岭、垂直领域深耕与 Demo 针对性迭代

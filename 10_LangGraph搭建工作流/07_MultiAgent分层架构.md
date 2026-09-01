@@ -1,10 +1,10 @@
-# 07 Multi-Agent 分层架构设计
+# 07 Multi-Agent 状态栈交接：Handoffs 入门
 
 随着你的业务越来越复杂，你可能会发现一个严重的问题：**一个大模型的 Prompt 塞不下了**。
 
 如果你想做一个“全能旅行助手”，它既要懂航班改签规则，又要懂租车计费标准，还要负责酒店退款。如果你把所有的规则、几十个工具全写在一个 Prompt 里，大模型一定会犯晕，产生“认知负荷过载”（通俗点说就是大脑超载，开始胡言乱语或者用错工具）。
 
-怎么解决？答案是：**Multi-Agent（多智能体协作）**。
+一种解法是 **Multi-Agent（多智能体协作）**。但不要为了角色多就拆 Agent：如果只是按需加载一段专业知识，12 节会介绍更轻的 Skills；本节聚焦“专业助理需要直接接手多轮对话”的 Handoffs 场景。
 
 ## 1. 架构理念：前台大堂经理与后厨专家
 
@@ -30,7 +30,7 @@
 
 ## 2. 在 LangGraph 中如何实现？
 
-在 LangGraph 中，这本质上是一个**包含多个子图的巨型网络**。但为了保持状态干净，我们通常使用一种被称为 **“状态栈” (Dialog State Stack)** 的技巧。
+这个入门版先把主助理与专业助理平铺在同一张图里，用 **状态栈（Dialog State Stack）**记录当前谁在接待用户。它还不是真子图：12 节会再讲如何把一个完整子图作为父图节点。按当前官方分类，本节这种“活跃角色写进状态、专业助理直接继续和用户对话”的体验更接近 **Handoffs**。
 
 ### Step 1: 在状态中加入对讲机频段 (Dialog State)
 
@@ -73,7 +73,26 @@ class CompleteOrEscalate(BaseModel):
 
 当子助理调用这个工具时，LangGraph 会将 `dialog_state` 的栈顶元素 `pop` 掉，重新回到主助理的逻辑分支。
 
-通过这种“呼之即来，挥之即去”的转交机制，我们就构建出了一个高度解耦、可无限扩展的智能体团队！
+通过这种压栈、弹栈和工具回执配对，我们得到了一套可观察的控制权交接。不过 Agent 越多，路由成本、上下文传递和排错成本也越高，不能理解成可以“无限扩展”。
+
+## 3. 交接时到底传什么？
+
+**生活化比喻：** 客服转接电话时，原客服既不能只说“你接一下”，也不该把用户十年的所有录音都发给同事。至少要交代：用户当前要办什么、已经查过什么、哪些工具调用还没回执。
+
+本例为了教学透明，共享完整 `messages`。生产项目要明确三件事：
+
+1. 转交工具的名字和描述是否让主助理知道“什么时候该交给谁”；
+2. 接手者收到完整历史、筛选后的消息，还是一段结构化摘要；
+3. 交回主助理时，是返回最终结果，还是把整个子助理轨迹塞回来。
+
+这就是多智能体的上下文工程。传得太少会缺背景，传得太多会烧 Token、泄露无关信息，还可能破坏 tool call 与 ToolMessage 的配对。
+
+## 4. 扩展阅读
+
+**官方文档**
+- Multi-agent 总览与五种当前模式：[docs.langchain.com/oss/python/langchain/multi-agent](https://docs.langchain.com/oss/python/langchain/multi-agent)
+- Handoffs（活跃 Agent 状态、消息交接与实现方式）：[docs.langchain.com/oss/python/langchain/multi-agent/handoffs](https://docs.langchain.com/oss/python/langchain/multi-agent/handoffs)
+- Subagents（主 Agent 把专家作为工具调用，与本节对比）：[docs.langchain.com/oss/python/langchain/multi-agent/subagents](https://docs.langchain.com/oss/python/langchain/multi-agent/subagents)
 
 > 📁 **本节示例代码**：[code/examples/07_multiagent_stack_demo.py](code/examples/07_multiagent_stack_demo.py) —— 无需 API Key 即可运行，可与本文对照着跑。
 

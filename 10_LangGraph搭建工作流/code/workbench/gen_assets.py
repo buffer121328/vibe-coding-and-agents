@@ -76,20 +76,33 @@ def main():
     export("09-map-diagram", graph_to_mmd(m["09"].build_map_graph()))
     export("09-eo-diagram", graph_to_mmd(m["09"].build_eo_graph()))
     dump("10", m["10"].build_tt_graph())
+    export("10-store-diagram", graph_to_mmd(m["10"].build_assistant_graph()))
     dump("11", m["11"].build_retry_graph())
+    export("11-rescue-diagram", graph_to_mmd(m["11"].build_rescue_graph()))
     dump("12", m["12"].build_graph())
     dump("13", m["13"].build_graph())
 
-    # 14 Functional API：不画图，手工补一张「三道工序」流程图（节点 id 与工序名一致）
+    # 12b 三张图也从真实编译图生成，避免展示节点 ID 与 Python 节点名脱节，
+    # 导致工作台收到流事件却无法点亮 SVG。
+    m12b = import_module("12b_multiagent_paradigms_demo")
+    export("12-diagram-02", graph_to_mmd(m12b.build_router_graph()))
+    export("12-diagram-03", graph_to_mmd(m12b.build_supervisor_graph()))
+    export("12-diagram-04", graph_to_mmd(m12b.build_per_graph()))
+
+    # 14 Functional API：不画图，手工补一张 future 并行 + 审批流程图
     export("14-diagram", """
     __start__["输入：作文题目"]
-    write_essay["@task 写初稿"]
+    translate["@task 翻译 future"]
+    summarize["@task 摘要 future"]
+    write_essay["统一 .result() 后写初稿"]
     review["@task 人工审阅（interrupt）"]
-    __end__["产出：最终文稿"]
-    __start__ --> write_essay
+    __end__["产出：完整文稿 / 修改单"]
+    __start__ --> translate
+    __start__ --> summarize
+    translate --> write_essay
+    summarize --> write_essay
     write_essay --> review
-    review -->|"批准"| __end__
-    review -.->|"驳回：给理由"| write_essay
+    review -->|"批准发布 / 驳回并返回修改单"| __end__
 """)
 
 

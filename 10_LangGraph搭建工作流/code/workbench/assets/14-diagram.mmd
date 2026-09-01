@@ -1,9 +1,13 @@
 graph TD
 __start__["输入：作文题目"]
-    write_essay["@task 写初稿"]
+    translate["@task 翻译 future"]
+    summarize["@task 摘要 future"]
+    write_essay["统一 .result() 后写初稿"]
     review["@task 人工审阅（interrupt）"]
-    __end__["产出：最终文稿"]
-    __start__ --> write_essay
+    __end__["产出：完整文稿 / 修改单"]
+    __start__ --> translate
+    __start__ --> summarize
+    translate --> write_essay
+    summarize --> write_essay
     write_essay --> review
-    review -->|"批准"| __end__
-    review -.->|"驳回：给理由"| write_essay
+    review -->|"批准发布 / 驳回并返回修改单"| __end__

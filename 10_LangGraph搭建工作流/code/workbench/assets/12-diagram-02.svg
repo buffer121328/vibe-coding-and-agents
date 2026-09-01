@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 354.7" width="520" height="354.7" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 466 483.6" width="466" height="483.6" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
   text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
@@ -26,42 +26,35 @@
     <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
   </marker>
 </defs>
-<polyline class="edge" data-from="Reception" data-to="SQL" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="116.5,72.9 116.5,118.9 81,118.9 81,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="edge-label" data-from="Reception" data-to="SQL" data-label="查数据库">
-  <rect x="69.75" y="107.9" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="98.75" y="118.9" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">查数据库</text>
+<polyline class="edge" data-from="__start__" data-to="reception" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="81,72.9 81.5,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="reception" data-to="code_agent" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="81.5,201.8 81.5,247.8 389,247.8 389,293.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="reception" data-to="rag_agent" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="81.5,201.8 81.5,247.8 232.5,247.8 232.5,293.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="reception" data-to="sql_agent" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="81.5,201.8 82.5,293.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="code_agent" data-to="__end__" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="389,330.7 389,376.70000000000005 81,376.70000000000005 81,422.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="rag_agent" data-to="__end__" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="232.5,330.7 232.5,376.70000000000005 81,376.70000000000005 81,422.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="sql_agent" data-to="__end__" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="82.5,330.7 81,422.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="__start__" data-label="开始" data-shape="rectangle">
+  <rect x="36" y="36" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">开始</tspan></text>
 </g>
-<polyline class="edge" data-from="Reception" data-to="RAG" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="116.5,72.9 116.5,118.9 298.5,118.9 298.5,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="edge-label" data-from="Reception" data-to="RAG" data-label="查知识库">
-  <rect x="178.5" y="107.9" width="58" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="207.5" y="118.9" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">查知识库</text>
+<g class="node" data-id="reception" data-label="reception" data-shape="rectangle">
+  <rect x="36" y="164.9" width="91" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81.5" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81.5" dy="4.55">reception</tspan></text>
 </g>
-<polyline class="edge" data-from="Reception" data-to="Code" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="116.5,72.9 116.5,118.9 448,118.9 448,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="edge-label" data-from="Reception" data-to="Code" data-label="写代码">
-  <rect x="258.75" y="107.9" width="47" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="282.25" y="118.9" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">写代码</text>
+<g class="node" data-id="sql_agent" data-label="sql_agent" data-shape="rectangle">
+  <rect x="36" y="293.8" width="93" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="82.5" y="312.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="82.5" dy="4.55">sql_agent</tspan></text>
 </g>
-<polyline class="edge" data-from="SQL" data-to="FinalA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="81,201.8 81,293.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="RAG" data-to="FinalA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="298.5,201.8 298.5,247.8 81,247.8 81,293.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Code" data-to="FinalA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="448,201.8 448,247.8 81,247.8 81,293.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="node" data-id="Reception" data-label="分诊台 (Router 节点)" data-shape="rectangle">
-  <rect x="36" y="36" width="161" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="116.5" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="116.5" dy="4.55">分诊台 (Router 节点)</tspan></text>
+<g class="node" data-id="rag_agent" data-label="rag_agent" data-shape="rectangle">
+  <rect x="185" y="293.8" width="95" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="232.5" y="312.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="232.5" dy="4.55">rag_agent</tspan></text>
 </g>
-<g class="node" data-id="SQL" data-label="SQL 专员" data-shape="rectangle">
-  <rect x="36" y="164.9" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="81" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">SQL 专员</tspan></text>
+<g class="node" data-id="code_agent" data-label="code_agent" data-shape="rectangle">
+  <rect x="336" y="293.8" width="106" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="389" y="312.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="389" dy="4.55">code_agent</tspan></text>
 </g>
-<g class="node" data-id="RAG" data-label="RAG 专员" data-shape="rectangle">
-  <rect x="253" y="164.9" width="91" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="298.5" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="298.5" dy="4.55">RAG 专员</tspan></text>
-</g>
-<g class="node" data-id="Code" data-label="Code 专员" data-shape="rectangle">
-  <rect x="400" y="164.9" width="96" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="448" y="183.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="448" dy="4.55">Code 专员</tspan></text>
-</g>
-<g class="node" data-id="FinalA" data-label="答案" data-shape="rectangle">
-  <rect x="36" y="293.8" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="81" y="312.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">答案</tspan></text>
+<g class="node" data-id="__end__" data-label="结束" data-shape="rectangle">
+  <rect x="36" y="422.70000000000005" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81" y="441.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">结束</tspan></text>
 </g>
 </svg>

@@ -48,7 +48,7 @@ def assistant(state: State, *, store: BaseStore):
     # ... 把 context 拼进 Prompt ...
 ```
 
-> 💡 **进阶：语义检索**。`InMemoryStore` 支持 `index` 配置接入 Embedding 模型，之后 `store.search(query, query="用户不能吃什么")` 就能按**语义相似度**翻档案，而不是按前缀精确匹配——档案多到翻不动时特别有用。生产环境可换 `PostgresStore` 等持久化实现。
+> 💡 **进阶：语义检索**。`InMemoryStore` 支持 `index` 配置接入 Embedding 模型，之后 `store.search(("user_123",), query="用户不能吃什么")` 就能在指定 namespace 中按**语义相似度**翻档案，而不是只列出整个抽屉——档案多到翻不动时特别有用。生产环境可换 `PostgresStore` 等持久化实现。
 
 **该记什么、谁来记？** 两个常见做法：一是把“记忆写入”做成一个工具，让模型在对话中自己决定“这条值得记下来”（可参考官方 langmem 库）；二是在对话结束后用一个小模型批量总结“本次会话值得沉淀的事实”。别什么都记——档案塞满垃圾，翻起来比没档案还慢。
 
@@ -64,16 +64,23 @@ for i, snap in enumerate(graph.get_state_history(config)):
     print(i, snap.values["messages"][-1].content[:30])
     print("   由节点", snap.next, "继续可走到下一步")
 
-# 2. 回放：拿历史某一刻的 config 原样重跑（参数全不变，结果一般也不变）
+# 2. 回放：拿历史某一刻的 config 继续；该快照之后的节点会重新执行
 old_config = next(s.config for s in graph.get_state_history(config))
-graph.invoke(None, old_config)   # 传 None 表示“接着这个快照往下走”
+replayed = graph.invoke(None, old_config)
+# 如果后面有 LLM、外部 API 或 interrupt，它们都会重新触发，结果可能与第一次不同
 
 # 3. 改道（Fork）：回到过去某一步，改掉当时的状态，然后分岔出新历史
-graph.update_state(old_config, {"messages": [HumanMessage("改成去大阪，预算砍半")]})
-graph.invoke(None, old_config)   # 同一个快照，但输入已变 → 长出一条新分支
+fork_config = graph.update_state(
+    old_config,
+    {"messages": [HumanMessage("改成去大阪，预算砍半")]},
+    as_node="planner",
+)
+graph.invoke(None, fork_config)   # 从新检查点继续 → 长出一条新分支
 ```
 
-`update_state` 还有个重要参数 `as_node`：它声明“这次修改**假装**是哪个节点写的”。如果不指定，修改会被算作系统强插；指定 `as_node` 后，图会从该节点之后的边继续正常流转——这是 06 节“伪造 ToolMessage 拒绝工具调用”手法的正式版。
+**Replay 不是播放录像。** 棋谱里已经完成的旧步骤会被跳过，但选中检查点之后的节点会真实重跑：模型可能换一种回答，接口可能返回新价格，副作用也可能再次发生。因此回放之前仍要检查幂等性；不要把“参数一样”误认为“结果必然一样”。
+
+`update_state` 还有个重要参数 `as_node`：它声明“这次修改**相当于**哪个节点写的”，从而决定下一步沿哪条边继续。06 节跳过敏感工具的正式驳回就是这个用法。应接住 `update_state` 返回的新 config，再从这个新检查点继续，代码意图更清楚。
 
 Time Travel 最实用的三个场景：
 

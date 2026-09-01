@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 179 483.6" width="179" height="483.6" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 179 612.5" width="179" height="612.5" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
   text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
@@ -28,7 +28,8 @@
 </defs>
 <polyline class="edge" data-from="__start__" data-to="propose" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="81,72.9 81,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <polyline class="edge" data-from="propose" data-to="sensitive_tool" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="81,201.8 81,247.8 95.5,247.8 95.5,293.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="sensitive_tool" data-to="__end__" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="95.5,330.7 95.5,376.70000000000005 81,376.70000000000005 81,422.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="sensitive_tool" data-to="summarize" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="95.5,330.7 95.5,376.70000000000005 86.5,376.70000000000005 86.5,422.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="summarize" data-to="__end__" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="86.5,459.6 86.5,505.6 81,505.6 81,551.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="node" data-id="__start__" data-label="开始" data-shape="rectangle">
   <rect x="36" y="36" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="81" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">开始</tspan></text>
@@ -41,8 +42,12 @@
   <rect x="36" y="293.8" width="119" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
   <text x="95.5" y="312.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="95.5" dy="4.55">sensitive_tool</tspan></text>
 </g>
+<g class="node" data-id="summarize" data-label="summarize" data-shape="rectangle">
+  <rect x="36" y="422.70000000000005" width="101" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="86.5" y="441.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="86.5" dy="4.55">summarize</tspan></text>
+</g>
 <g class="node" data-id="__end__" data-label="结束" data-shape="rectangle">
-  <rect x="36" y="422.70000000000005" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="81" y="441.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">结束</tspan></text>
+  <rect x="36" y="551.6" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="81" y="570.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="81" dy="4.55">结束</tspan></text>
 </g>
 </svg>

@@ -48,8 +48,12 @@ def seed_store(store: InMemoryStore):
 
 
 # ============ 演示二：Time Travel 回放与改道 ============
-class SimpleState(TypedDict):
+class SimpleState(TypedDict, total=False):
     text: str
+    step_b_runs: int
+
+
+_STEP_B_COUNTER = {"count": 0}
 
 
 def step_a(state: SimpleState):
@@ -57,7 +61,16 @@ def step_a(state: SimpleState):
 
 
 def step_b(state: SimpleState):
-    return {"text": state["text"] + " -> B"}
+    # 用计数器模拟“每次调用结果都可能不同”的 LLM / 外部 API。
+    _STEP_B_COUNTER["count"] += 1
+    return {
+        "text": state["text"] + " -> B",
+        "step_b_runs": _STEP_B_COUNTER["count"],
+    }
+
+
+def reset_step_b_counter():
+    _STEP_B_COUNTER["count"] = 0
 
 
 def build_tt_graph():
@@ -92,6 +105,7 @@ def main():
                        config={"configurable": {"thread_id": "brand_new_session"}})["reply"])
 
     # ============ 演示二：Time Travel 回放与改道 ============
+    reset_step_b_counter()
     tt_graph = build_tt_graph()
     config = {"configurable": {"thread_id": "tt-1"}}
     tt_graph.invoke({"text": "起点"}, config)
@@ -100,10 +114,20 @@ def main():
     history = list(tt_graph.get_state_history(config))
     print("历史快照数（含起点）：", len(history))
 
+    # 回放（Replay）：回到 step_a 之后，让 step_b 再执行一次。
+    # text 仍是“起点 -> A -> B”，但 step_b_runs 从 1 变成 2，证明下游节点真的重跑了。
+    replay_config = next(s.config for s in history if s.values.get("text", "").endswith("-> A"))
+    replayed = tt_graph.invoke(None, replay_config)
+    print("回放后 step_b 的执行次数：", replayed["step_b_runs"])
+
     # 改道（Fork）：回到 step_a 之后那一刻，替换 text，长出一条新历史
     fork_config = next(s.config for s in history if s.values.get("text", "").endswith("-> A"))
-    tt_graph.update_state(fork_config, {"text": "起点 -> A（被人类改写）"}, as_node="step_a")
-    new_result = tt_graph.invoke(None, fork_config)   # 从改写后的快照继续
+    new_config = tt_graph.update_state(
+        fork_config,
+        {"text": "起点 -> A（被人类改写）"},
+        as_node="step_a",
+    )
+    new_result = tt_graph.invoke(None, new_config)   # 从改写后的快照继续
     print("改道后的新历史：", new_result["text"])
 
 

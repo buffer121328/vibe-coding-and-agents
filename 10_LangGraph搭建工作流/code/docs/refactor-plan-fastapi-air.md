@@ -73,7 +73,7 @@ travel_agent_v2/
 | :--- | :--- | :--- | :--- |
 | `POST /api/chat` | `{"message": str}` | snapshot | `chat_turn(message)`；挂起中收到消息视为"驳回+修改意见" |
 | `POST /api/approve` | 无 | snapshot | `approve()`：`stream(None)` 续跑 |
-| `POST /api/reject` | 无 | snapshot | `reject()`：伪造 ToolMessage |
+| `POST /api/reject` | 无 | snapshot | `reject()`：`Command(resume={approved: false})`，审批节点补齐 ToolMessage |
 | `POST /api/session` | 无 | snapshot | `new_session()`：换 thread_id |
 | `GET /api/state` | – | snapshot | `_snapshot()` |
 

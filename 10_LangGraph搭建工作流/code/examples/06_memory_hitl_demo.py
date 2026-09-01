@@ -8,6 +8,7 @@
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
+from langchain_core.messages import AIMessage, ToolMessage
 from langgraph.checkpoint.memory import MemorySaver
 
 
@@ -16,22 +17,48 @@ class State(TypedDict):
 
 
 def propose(state: State):
-    """实习生节点：提出要执行敏感操作"""
-    return {"messages": [("assistant", "我想调用『清空购物车』工具，请求审批。")]}
+    """实习生节点：生成一条带 tool_call_id 的敏感工具调用请求。"""
+    return {
+        "messages": [
+            AIMessage(
+                content="我准备清空购物车，请审批。",
+                tool_calls=[{
+                    "name": "clear_cart",
+                    "args": {},
+                    "id": "call_clear_cart_001",
+                    "type": "tool_call",
+                }],
+            )
+        ]
+    }
 
 
 def sensitive_tool(state: State):
-    """敏感操作节点：在 interrupt_before 名单里，必须老板签字才能进"""
-    return {"messages": [("assistant", "敏感操作已执行：购物车已清空。")]}
+    """敏感操作节点：执行后必须用匹配的 tool_call_id 回一条 ToolMessage。"""
+    tool_call = state["messages"][-1].tool_calls[0]
+    return {
+        "messages": [ToolMessage(
+            content="敏感操作已执行：购物车已清空。",
+            tool_call_id=tool_call["id"],
+        )]
+    }
+
+
+def summarize(state: State):
+    """把批准或驳回的工具回执整理成用户能看懂的最终答复。"""
+    result = state["messages"][-1].content
+    return {"messages": [("assistant", f"审批流程结束：{result}")]}
 
 
 def _builder():
     builder = StateGraph(State)
     builder.add_node("propose", propose)
     builder.add_node("sensitive_tool", sensitive_tool)
+    builder.add_node("summarize", summarize)
     builder.add_edge(START, "propose")
     builder.add_edge("propose", "sensitive_tool")
-    builder.add_edge("sensitive_tool", END)
+    builder.add_edge("sensitive_tool", "summarize")
+    builder.add_edge("summarize", END)
     return builder
 
 
@@ -41,8 +68,32 @@ def build_graph():
 
 
 def build_guarded():
-    """演示二：interrupt_before 敏感操作拦截版"""
+    """演示二：静态 interrupt_before 拦截版（用于理解存档与恢复）。"""
     return _builder().compile(checkpointer=MemorySaver(), interrupt_before=["sensitive_tool"])
+
+
+def reject_pending(graph, config: dict, reason: str):
+    """正式驳回：补齐 ToolMessage，伪装成敏感工具节点已返回，再从下一节点继续。
+
+    `update_state(..., as_node="sensitive_tool")` 不会执行真正的敏感节点；它只是告诉
+    LangGraph：“把这条拒绝回执当成 sensitive_tool 的输出”。这样 AIMessage 中的每个
+    tool_call 都有配对的 ToolMessage，消息历史保持合法。
+    """
+    snap = graph.get_state(config)
+    tool_calls = snap.values["messages"][-1].tool_calls
+    rejections = [
+        ToolMessage(
+            content=f"工具调用被用户拒绝。原因：{reason}",
+            tool_call_id=call["id"],
+        )
+        for call in tool_calls
+    ]
+    fork_config = graph.update_state(
+        config,
+        {"messages": rejections},
+        as_node="sensitive_tool",
+    )
+    return graph.invoke(None, fork_config)
 
 
 def main():
@@ -65,10 +116,16 @@ def main():
     print("\n== 演示二：HITL 拦截 ==")
     print("程序停在了：", state_now.next, "（等待老板签字）")
 
-    # 老板同意：不传新消息，直接传 None，图从存档继续跑（stream 是惰性的，记得消费它）
-    for _ in guarded.stream(None, config2):
+    # 老板不同意：用 update_state 写入匹配 tool_call_id 的拒绝回执，跳过真正工具节点。
+    rejected = reject_pending(guarded, config2, "这是演示账号，不能清空购物车")
+    print("驳回后最后一条消息：", rejected["messages"][-1].content)
+
+    # 再开一个线程演示批准：不传新消息，直接传 None，从同一个存档继续。
+    config3 = {"configurable": {"thread_id": "user_wangwu_789"}}
+    guarded.invoke({"messages": [("user", "帮我清空购物车")]}, config3)
+    for _ in guarded.stream(None, config3):
         pass
-    state_after = guarded.get_state(config2)
+    state_after = guarded.get_state(config3)
     print("批准后执行完毕，最后一条消息：", state_after.values["messages"][-1].content)
 
 

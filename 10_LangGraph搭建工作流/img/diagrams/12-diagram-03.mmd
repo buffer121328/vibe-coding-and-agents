@@ -1,5 +1,5 @@
 graph TD
-    User(["用户请求"]) --> Sup["Supervisor 主管 (拆任务/派活/收活)"]
+    User(["用户请求"]) --> Sup["主 Agent / Supervisor (把专家当工具调度)"]
     Sup -->|"派活"| Research["调研专员"]
     Sup -->|"派活"| Writer["写作专员"]
     Research -->|"交回结果"| Sup

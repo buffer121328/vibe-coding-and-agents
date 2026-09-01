@@ -7,7 +7,7 @@
 **生活化比喻：**
 传统的 Agent 就像一个“一根筋的快递员”。你给了他一个地址，他骑着车就跑了。如果路上遇到修路（报错），他不知道绕路，只会在修路的地方一直撞墙；如果他送错小区的楼号了，你也没法中途打电话叫他回来，只能等他彻底失败或者超时。
 
-为了解决这个问题，[LangGraph 1.x](https://langchain-ai.github.io/langgraph/) 诞生了。它并不是一个全新的大模型框架，而是 LangChain 官方推出的**意图流（Workflow）与图编排框架**。
+为了解决这个问题，[LangGraph 1.x](https://docs.langchain.com/oss/python/langgraph/overview) 诞生了。它并不是一个全新的大模型框架，而是 LangChain 官方推出的**意图流（Workflow）与图编排框架**。
 
 ## 2. 什么是状态机 (State Machine) 与图 (Graph)？
 
@@ -42,13 +42,13 @@ LangGraph 1.x 引入了许多强大的特性，核心解决的是“可控性”
 
 | 框架 | 定位（一句话） | 生活化比喻 | 适合谁 |
 | :--- | :--- | :--- | :--- |
-| [LangGraph](https://langchain-ai.github.io/langgraph/) | 把智能体系统建模为**有状态图**，节点、边、循环、并行全部显式可控 | **自建厂房 + 流水线**：轨道自己画，闸门自己装 | 要精确控制状态、路由、循环、并行、HITL 的生产级系统 |
+| [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) | 把智能体系统建模为**有状态图**，节点、边、循环、并行全部显式可控 | **自建厂房 + 流水线**：轨道自己画，闸门自己装 | 要精确控制状态、路由、循环、并行、HITL 的生产级系统 |
 | [AutoGen](https://microsoft.github.io/autogen/stable/)（微软） | 多个 Agent **对话协作**完成任务，团队内置轮转/选主等聊天编队 | **圆桌会议**：一群专家围着桌子聊，聊着聊着任务就办了 | 研究、原型验证、以对话为主的协作场景 |
 | [CrewAI](https://github.com/crewAIInc/crewAI) | 角色分工的**班组（Crew）** + 事件驱动的**流程（Flow）** | **剧组制**：导演定角色（CEO 助理、研究员、写手），各演各的再合戏 | 快速搭建“角色扮演式”团队，上手门槛最低 |
 
 **怎么选**：如果你的系统是“几个 Agent 自由讨论、角色扮演、协作完成”，CrewAI / AutoGen 往往上手更直接；但如果流程长这样——Agent A 判断 → B/C 并行 → Reviewer 评审 → 不合格重试 → 人工审批 → 收尾——那本质已经不是一个“聊天群”，而是一台**需要状态机的 Agent 工作流**，LangGraph 的图编排、持久化与人工介入闸门就值回票价。
 
-> 💡 三者的边界也在打通：LangChain 生态官方提供多智能体模式总览与选型矩阵（[Multi-Agent 文档](https://docs.langchain.com/oss/python/langchain/multi-agent)），并配套 [langgraph-supervisor](https://github.com/langchain-ai/langgraph-supervisor)、[langgraph-swarm](https://github.com/langchain-ai/langgraph-swarm) 等现成编队库，12 节会逐一亮相。
+> 💡 三者的边界也在打通。LangChain 当前用 Subagents、Handoffs、Skills、Router、Custom workflow 五种模式帮助选型（[Multi-Agent 文档](https://docs.langchain.com/oss/python/langchain/multi-agent)）。生态中仍有 [langgraph-supervisor-py](https://github.com/langchain-ai/langgraph-supervisor-py) 与 [langgraph-swarm-py](https://github.com/langchain-ai/langgraph-swarm-py)，但新项目应先按官方模式与上下文需求选型，12 节细讲。
 
 ---
 

@@ -1,11 +1,13 @@
-"""12b 多智能体三大实战范式 —— 最小可运行示例
-对应文档：10_LangGraph搭建工作流/12_子图与多智能体全谱.md 第 3 节
+"""12b 当前多智能体分类下的三种重点实现 —— 最小可运行示例
+对应文档：10_LangGraph搭建工作流/12_子图与多智能体全谱.md 第 2~3 节
 运行：python 12b_multiagent_paradigms_demo.py   （无需任何 API Key）
 
-三大范式各建一张图（真实项目由 LLM 做决策，这里用规则模拟，图的机制完全一致）：
+三种实现各建一张图（真实项目由 LLM 做决策，这里用规则模拟）：
 - Router 路由分流：分诊台先把问题分类，再交给对应专员
-- Supervisor 主管派活：主管循环派活收活，专家各管一摊，最后汇总
-- Planner-Executor-Reviewer：规划 → 执行 → 评审，不通过打回重做（带重试上限保险丝）
+- Subagents（Supervisor 教学变体）：主管循环派活收活，专家各管一摊，最后汇总
+- Custom workflow：Planner → Executor → Reviewer，不通过打回重做（带重试上限保险丝）
+
+当前官方完整分类还包括 Handoffs 与 Skills；它们的差异与上下文工程见正文。
 """
 import operator
 from typing import TypedDict, Annotated
@@ -61,7 +63,7 @@ def build_router_graph():
     )
 
 
-# ============ 范式二：Supervisor 主管派活 ============
+# ============ 实现二：Subagents（Supervisor 教学变体） ============
 class SupState(TypedDict):
     task: str
     cursor: int                                # 派活进度游标
@@ -93,7 +95,7 @@ def aggregator(state: SupState):
 
 
 def build_supervisor_graph():
-    """范式二 Supervisor：编译图（命令行与工作台共用）"""
+    """Subagents/Supervisor：用显式节点循环展示集中调度（命令行与工作台共用）。"""
     return (
         StateGraph(SupState)
         .add_node("supervisor", supervisor)
@@ -111,7 +113,7 @@ def build_supervisor_graph():
     )
 
 
-# ============ 范式三：Planner-Executor-Reviewer ============
+# ============ 实现三：Custom workflow（Planner-Executor-Reviewer） ============
 class PerState(TypedDict):
     requirement: str
     plan: str
@@ -147,7 +149,7 @@ def route_after_review(state: PerState) -> str:
 
 
 def build_per_graph():
-    """范式三 Planner-Executor-Reviewer：编译图（命令行与工作台共用）"""
+    """Custom workflow：Planner-Executor-Reviewer 编译图。"""
     return (
         StateGraph(PerState)
         .add_node("planner", planner)
@@ -167,11 +169,11 @@ def main():
     print(build_router_graph().invoke(
         {"question": "帮我查一下上个月的数据库订单量", "kind": "", "answer": ""})["answer"])
 
-    print("\n== Supervisor 主管派活 ==")
+    print("\n== Subagents（Supervisor 教学变体）==")
     print(build_supervisor_graph().invoke(
         {"task": "写一份行业调研报告", "cursor": 0, "reports": [], "final": ""})["final"])
 
-    print("\n== Planner-Executor-Reviewer ==")
+    print("\n== Custom workflow：Planner-Executor-Reviewer ==")
     result = build_per_graph().invoke(
         {"requirement": "做一个数据看板", "plan": "", "draft": "", "verdict": "", "revision": 0})
     print(f"计划：{result['plan']}")

@@ -15,6 +15,7 @@ sys.path.insert(0, str(HERE))
 
 import os
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
+os.environ["WORKBENCH_ANIMATION_DELAY"] = "0"
 
 import app  # noqa: E402  （导入即装配 Blocks，但不 launch）
 
@@ -48,17 +49,25 @@ def run_all(gen, n_expected_last=1):
 
 
 def chips_done(html: str) -> set:
-    """从徽章 HTML 中解析已点亮（done/cur）的节点集合"""
+    """从徽章 HTML 中解析已点亮（done/cur）的节点集合，忽略 START/END 边界标记。"""
     import re
-    return set(re.findall(r'class="chip (?:done|cur)">(?:✓|●) ([^<]+)</span>', html))
+    return {n for n in re.findall(r'class="chip (?:done|cur)">(?:✓|●) ([^<]+)</span>', html)
+            if n not in {"START", "END"}}
 
 
 def main():
     # ---------- 10.2 ----------
     def t02():
-        (chips, svg, snap, console), n = run_all(app.t02_run("你好，今天天气怎么样？"))
+        frames = list(app.t02_run("你好，今天天气怎么样？"))
+        assert any("START" in frame[0] and "正在执行" in frame[0] for frame in frames), "缺少 START 入口帧"
+        assert any("END" in frame[0] and "状态已更新" in frame[0] for frame in frames), "缺少 END 出口帧"
+        assert any("State 摘要" in frame[0] for frame in frames), "图下方缺少 State 摘要"
+        assert any("状态速览" in frame[3] for frame in frames), "终端缺少状态速览摘要"
+        chips, svg, snap, console = frames[-1]
         assert chips_done(chips) == {"greeter", "echo"}, f"点亮不全：{chips_done(chips)}"
         assert "greeter" in svg and "data-lit" in svg, "SVG 未注入点亮标记"
+        assert chips.count('class="mstate"') >= 3, "状态机透视缺 State 徽标（每节点一枚）"
+        assert "读取 State" not in chips, "结束帧不应再有「读取 State」徽标"
         snap_obj = json.loads(snap)
         assert any("打招呼节点" in str(m) for m in snap_obj["messages"]), "State 缺 greeter 产物"
         assert "节点 greeter 完成" in console, "终端缺 greeter 记录"
@@ -106,6 +115,11 @@ def main():
         chips2, _, snap2, console2, p2, o2, n2 = outs[-1]
         assert "sensitive_tool" in chips_done(chips2)
         assert "已批准" in console2
+        # 重新发起一条请求验证正式驳回：sensitive_tool 不应点亮，拒绝回执应进入 State
+        list(app.t06_run("帮我清空购物车"))
+        chips3, _, snap3, console3, p3, o3, n3 = app.t06_reject()
+        assert "sensitive_tool" not in chips_done(chips3)
+        assert "update_state" in console3 and "工具调用被用户拒绝" in snap3
     check("10.6 HITL：拦截 → 批准续跑", t06)
 
     # ---------- 10.7（状态栈） ----------
@@ -126,7 +140,8 @@ def main():
 
     # ---------- 10.9（三模式） ----------
     def t09a():
-        (chips, svg, snap, console), _ = run_all(app.t09a_run("这个东西多少钱？"))
+        (chips, svg, snap, console), frames = run_all(app.t09a_run("这个东西多少钱？"))
+        assert frames >= 6, f"Routing 应逐节点流式展示，实际只有 {frames} 帧"
         assert "pricing" in chips_done(chips)
         assert "99 元" in json.loads(snap)["answer"]
     check("10.9 Routing：价格支路点亮", t09a)
@@ -144,11 +159,12 @@ def main():
 
     # ---------- 10.10（Store + TimeTravel） ----------
     def t10_store():
-        chips, svg, snap, console = app.t10_store_demo()
+        (chips, svg, snap, console), frames = run_all(app.t10_store_demo())
         obj = json.loads(snap)
-        assert "allergy" in obj["store_抽屉"][0][0] or any(
-            k == "allergy" for k, _ in obj["store_抽屉"]), f"抽屉缺卡片：{obj}"
-        assert "花生" in obj["图回复"] or "allergy" in obj["图回复"]
+        assert frames >= 4, "Store assistant 图应展示 START、节点和 END 流转"
+        assert "allergy" in obj["长期_Store"][0][0] or any(
+            k == "allergy" for k, _ in obj["长期_Store"]), f"抽屉缺卡片：{obj}"
+        assert "花生" in obj["短期_State"]["reply"] or "allergy" in obj["短期_State"]["reply"]
     check("10.10 Store：跨会话档案", t10_store)
 
     def t10_fork():
@@ -158,13 +174,23 @@ def main():
         assert "新历史" in console
     check("10.10 Time Travel：改道长出新历史", t10_fork)
 
+    def t10_replay():
+        chips, svg, snap, console = app.t10_replay()
+        obj = json.loads(snap)
+        assert obj["第一次"]["step_b_runs"] == 1
+        assert obj["回放后"]["step_b_runs"] == 2
+        assert "B 真实重跑" in console
+    check("10.10 Time Travel：Replay 重新执行下游节点", t10_replay)
+
     # ---------- 10.11（重试 + 崩溃复活） ----------
     def t11():
-        chips, svg, snap, console = app.t11_retry()
-        assert "共被调用 3 次" in console
-        chips, svg, snap, console = app.t11_boom()
+        (chips, svg, snap, console), retry_frames = run_all(app.t11_retry())
+        assert retry_frames >= 5 and "第 3 次成功" in console
+        assert len(json.loads(snap)["RetryPolicy 调用轨迹"]) == 3
+        (chips, svg, snap, console), boom_frames = run_all(app.t11_boom())
+        assert boom_frames >= 3
         assert "崩溃" in console and "step_1" in snap
-        chips, svg, snap, console = app.t11_rescue()
+        (chips, svg, snap, console), rescue_frames = run_all(app.t11_rescue())
         obj = json.loads(snap)
         assert obj["steps"] == ["step_1", "boom"], f"复活结果：{obj}"
         assert "没有被重新执行" in console
@@ -179,10 +205,11 @@ def main():
         assert "xray=True（透视）" in console
     check("10.12 子图：共享键透传 + xray", t12)
 
-    # ---------- 10.12b（多智能体三范式） ----------
+    # ---------- 10.12b（当前分类下的三种重点实现） ----------
     def t12b_router():
-        (chips, svg, snap, console), _ = run_all(app.t12b_a_run("帮我查一下上个月的数据库订单量"))
+        (chips, svg, snap, console), frames = run_all(app.t12b_a_run("帮我查一下上个月的数据库订单量"))
         done = chips_done(chips)
+        assert frames >= 6 and 'data-id="sql_agent" data-lit="done"' in svg, "Router SVG 未按真实节点名流转"
         assert "sql_agent" in done and "rag_agent" not in done, f"Router 路由点错支路：{done}"
         assert "SQL 专员" in json.loads(snap)["answer"]
     check("10.12b Router：SQL 支路点亮", t12b_router)
@@ -192,7 +219,7 @@ def main():
         done = chips_done(chips)
         assert {"researcher", "writer", "aggregator"} <= done, f"派活不全：{done}"
         assert "最终报告" in json.loads(snap)["final"]
-    check("10.12b Supervisor：循环派活 + 汇总", t12b_supervisor)
+    check("10.12b Subagents（Supervisor）：循环派活 + 汇总", t12b_supervisor)
 
     def t12b_per():
         (chips, svg, snap, console), _ = run_all(app.t12b_c_run())
@@ -223,10 +250,19 @@ def main():
 
     # ---------- 10.14（Functional API 两阶段） ----------
     def t14():
-        snap, console, pending, ok, no = app.t14_start("机器人安全")
-        assert pending["visible"] and "人工审阅" in pending["value"]
-        snap, console, pending, ok, no = app.t14_approve()
+        outs = list(app.t14_start("机器人安全"))
+        assert len(outs) >= 4, "Functional API 应展示 START、并行、汇合、审阅四个阶段"
+        assert "START" in outs[0][0] and "正在执行" in outs[0][0], "缺少 START 入口帧"
+        assert "translate" in outs[1][0] and "summarize" in outs[1][0], "两个 Future 未同时进入执行中状态"
+        assert "write_essay" in outs[2][0] and "translate" in outs[2][0], "Future 汇合阶段未点亮"
+        assert "State 摘要" in outs[2][0], "Functional API 图下方缺少 State 摘要"
+        _, _, document, snap, console, modal = outs[-1]
+        assert modal["visible"], "人工审阅弹窗未弹出"
+        assert "三道安全护栏" in document, "弹窗中应能看到完整初稿"
+        _, _, document, snap, console, modal = app.t14_approve("")
+        assert not modal["visible"], "批准后弹窗应关闭"
         assert "最终产出" in console and "《机器人安全》" in console
+        assert "三道安全护栏" in document and len(document) > 300, "批准后应展示完整文稿"
     check("10.14 Functional API：interrupt → resume", t14)
 
     print(f"\n{'全部通过' if fail_count == 0 else f'{fail_count} 个用例失败'}（{ok_count} 通过 / {fail_count} 失败）")

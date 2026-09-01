@@ -9,7 +9,7 @@
 
 1. **模块级单例**：图在应用启动时构建一次，所有请求共享；
 2. **会话 = `thread_id`**：每个会话一个 `thread_id`，通过 `config={"configurable": {...}}` 传入；
-3. **中断不是异常**：`interrupt_before` 触发时 `stream/invoke` **正常返回**，用 `graph.get_state(config).next` 判断是否挂起。
+3. **中断不是普通异常**：节点内 `interrupt()` 会让本次 `stream/invoke` 正常结束并保存检查点；从 `StateSnapshot.tasks[*].interrupts` 读取结构化数据包，用 `Command(resume=...)` 恢复。
 
 ```python
 # app 启动时（模块级，只执行一次）
@@ -21,7 +21,7 @@ config = {"configurable": {"passenger_id": PASSENGER_ID, "thread_id": thread_id}
 for _ in GRAPH.stream({"messages": [("user", message)]}, config, stream_mode="values"):
     pass                      # stream 返回惰性迭代器，必须消费！
 snap = GRAPH.get_state(config)
-pending = bool(snap.next)     # True = 被 interrupt 刹住，等待批准
+pending = any(task.interrupts for task in snap.tasks) or bool(snap.next)
 ```
 
 ## 2. 本项目已踩实的关键模式（来自 web_ui.py 与 tests/）
@@ -29,10 +29,10 @@ pending = bool(snap.next)     # True = 被 interrupt 刹住，等待批准
 | 模式 | 代码要点 |
 | :--- | :--- |
 | 消费 stream | `for _ in GRAPH.stream(...): pass` —— 不消费等于没执行 |
-| 判断挂起 | `GRAPH.get_state(config).next` 非空即挂起 |
-| 看穿子图内部 | `snap.tasks[0].state` 是**子图的 checkpoint config**，再 `GRAPH.get_state(它).next` 拿子图内部待执行节点 |
-| 批准 | `GRAPH.stream(None, config)` —— 传 None 从存档续跑 |
-| 驳回+修改 | 注入一条 `ToolMessage(tool_call_id=..., content="被拒绝，原因：...")` 再 stream |
+| 判断挂起 | 普通图读 `snap.tasks[*].interrupts`；嵌套子图还要沿 `task.state` 读取子图快照 |
+| 看穿子图内部 | `task.state` 是**子图的 checkpoint config**；递归读取子图 `next/tasks/interrupts`，得到路径与数据包 |
+| 批准 | `GRAPH.stream(Command(resume={"approved": True}), config)` |
+| 驳回+修改 | `Command(resume={"approved": False, "reason": ...})`；图内审批节点为每个调用补齐 ToolMessage |
 | 取完整历史 | `GRAPH.get_state(config).values["messages"]`，按 `AIMessage/ToolMessage/human` 分类渲染 |
 
 ## 3. FastAPI 路由设计（与现有处理函数一一对应）

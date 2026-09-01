@@ -20,19 +20,24 @@ class State(TypedDict):
 
 # ---------- 演示一：RetryPolicy 自动重试（瞬时故障自愈） ----------
 flaky_attempts = {"n": 0}
+flaky_trace = []
 
 
 def reset_flaky():
     """重置 flaky 计数器（工作台每次运行前调用，防串台）"""
     flaky_attempts["n"] = 0
+    flaky_trace.clear()
 
 
 def flaky_api(state: State):
     """前两次调用抛超时，第三次成功——模拟不稳定的第三方接口"""
     flaky_attempts["n"] += 1
+    flaky_trace.append({"attempt": flaky_attempts["n"], "result": "调用接口"})
     print(f"    flaky_api 第 {flaky_attempts['n']} 次被调用")
     if flaky_attempts["n"] < 3:
+        flaky_trace[-1]["result"] = "TimeoutError，交给 RetryPolicy"
         raise TimeoutError("模拟接口超时")
+    flaky_trace[-1]["result"] = "成功，返回状态增量"
     return {"steps": ["flaky_api 成功"]}
 
 

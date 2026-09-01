@@ -20,9 +20,17 @@ from langgraph.func import entrypoint, task
 from langgraph.checkpoint.memory import MemorySaver
 
 @task
-def write_essay(topic: str) -> str:
-    """工序一：写初稿（结果自动存档）"""
-    return llm.invoke(f"写一篇关于{topic}的短文").content
+def translate_topic(topic: str) -> str:
+    return llm.invoke(f"把 {topic} 翻译成英文提纲").content
+
+@task
+def summarize_topic(topic: str) -> str:
+    return llm.invoke(f"给 {topic} 写三句话摘要").content
+
+@task
+def write_essay(topic: str, materials: list[str]) -> str:
+    """工序一：根据并行准备好的材料写初稿"""
+    return llm.invoke(f"围绕 {topic} 写短文，参考：{materials}").content
 
 @task
 def review(essay: str) -> str:
@@ -32,7 +40,11 @@ def review(essay: str) -> str:
 
 @entrypoint(checkpointer=MemorySaver())
 def essay_flow(topic: str):
-    draft = write_essay(topic).result()      # .result() 拿到工序产出
+    # 先把两张工单都派出去，再统一等结果：这才是真并行
+    translation_future = translate_topic(topic)
+    summary_future = summarize_topic(topic)
+    materials = [translation_future.result(), summary_future.result()]
+    draft = write_essay(topic, materials).result()
     final = review(draft).result()
     return final
 
@@ -41,10 +53,23 @@ config = {"configurable": {"thread_id": "user-42"}}
 essay_flow.invoke("机器人安全", config)
 ```
 
-注意 `@task` 返回的不是结果本身而是一个 **future（对未来的承诺）**，调用 `.result()` 才真正取值——这让不互相依赖的工序可以先“下单”后“取货”，天然支持并行：
+配套工作台不会再用一句“机器人应当……”冒充产出：两个 future 同时点亮，合流后展示完整 Markdown 初稿；人工通过后保留完整文稿并把状态标为 `published`，驳回则展示修改意见和 `needs_revision`。左侧“文稿预览”给读者看业务产物，右侧“原始状态”用来理解框架返回值，两者不要混成一个黑盒 JSON。
+
+注意 `@task` 返回的不是结果本身而是一个 **future（对未来的承诺）**。要让互不依赖的任务并行，必须先创建所有 future，再统一 `.result()`：
 
 ```python
-a = translate_to_en(text).result()   # 也可以先发起 b、c 再统一取值
+translation_future = translate_to_en(text)
+summary_future = summarize(text)
+
+# 两张工单都已发出，现在再统一等待结果
+a = translation_future.result()
+b = summary_future.result()
+```
+
+下面这种写法看起来也用了 future，实际仍是串行，应该避免：
+
+```python
+a = translate_to_en(text).result()  # 在这里等完，下一张工单还没发
 b = summarize(text).result()
 ```
 

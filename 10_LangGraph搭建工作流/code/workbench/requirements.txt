@@ -5,6 +5,6 @@
 # 前端工作台：Gradio Blocks 单文件应用（零前端构建，官方 https://www.gradio.app/docs）
 gradio>=6.26,<7
 
-# 被可视化的主角：13 个分节示例所用的 LangGraph 1.x（官方 https://langchain-ai.github.io/langgraph/）
+# 被可视化的主角：14 个分节示例所用的 LangGraph 1.x（官方 https://docs.langchain.com/oss/python/langgraph/overview）
 langgraph>=1.2,<2.0
 langchain-core>=1.6,<2.0

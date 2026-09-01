@@ -1,6 +1,6 @@
 # Gradio 图工作台前端 Skill（第十章 workbench）
 
-> **何时读**：要改 `../workbench/app.py` 的版式、配色、交互，或给 13 关之外新增关卡时，先读本文再动手。
+> **何时读**：要改 `../workbench/app.py` 的版式、配色、交互，或给现有 14 关之外新增关卡时，先读本文再动手。
 > 活样板：本文件与 `../workbench/app.py` 互为对照；更大的先例是 09 章实验台 `../../09_LangChain搭建Agent/code/app.py`（约 1560 行，本 skill 的规范源头）。
 
 ## 1. 排版规范

@@ -1,8 +1,14 @@
 graph TD
-    User(["用户请求"]) --> Reception["分诊台 (Router 节点)"]
-    Reception -->|"查数据库"| SQL["SQL 专员"]
-    Reception -->|"查知识库"| RAG["RAG 专员"]
-    Reception -->|"写代码"| Code["Code 专员"]
-    SQL --> FinalA["答案"]
-    RAG --> FinalA
-    Code --> FinalA
+__start__["开始"]
+    reception["reception"]
+    sql_agent["sql_agent"]
+    rag_agent["rag_agent"]
+    code_agent["code_agent"]
+    __end__["结束"]
+    __start__ --> reception
+    reception -.-> code_agent
+    reception -.-> rag_agent
+    reception -.-> sql_agent
+    code_agent --> __end__
+    rag_agent --> __end__
+    sql_agent --> __end__
