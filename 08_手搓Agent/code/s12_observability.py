@@ -1,7 +1,7 @@
 """s12_observability.py - 8.12 可观测性与性能评估 (EventBus 事件总线 + TokenCostAudit 费用审计 + EvalSuite 评估套件)"""
 import json, random, time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Union
 try:
     import tiktoken  # 可选依赖：未安装时自动降级为字符数估算
 except ImportError:
@@ -24,6 +24,14 @@ class AgentEvent:
         return {"event_type": self.event_type, "tool_name": self.tool_name, "content": self.content,
                 "tokens": self.tokens, "latency_ms": round(self.latency_ms, 2), "timestamp": round(self.timestamp, 3)}
 
+
+@dataclass
+class EvalCase:
+    """一条可验证任务：prompt 是题目，validator 用执行结果判断答案是否真的正确。"""
+    name: str
+    prompt: str
+    validator: Callable[[str], bool]
+
 # ========== 2️⃣ EventBus 事件总线：subscribe 订阅 / emit 广播（参考 Pi 事件驱动设计） ==========
 class EventBus:
     """📡 事件总线：让外部模块实时感知 Agent 的完整运行过程"""
@@ -43,13 +51,11 @@ class EventBus:
 
 # ========== 3️⃣ TokenCostAudit 费用审计员：tiktoken 估算 + 账单输出 ==========
 class TokenCostAudit:
-    """💰 费用审计员：用 tiktoken 估算 token，并按定价表换算人民币账单"""
-    # 💡 简易定价表（元 / 每百万 token）—— 教学用假想价格，真实价格以 GLM 官方为准
-    PRICES = {"deepseek-v3": {"input": 2.0, "output": 8.0},   # 输入 2 元 / 输出 8 元（假想）
-              "deepseek-r1": {"input": 4.0, "output": 16.0}}  # 输入 4 元 / 输出 16 元（假想）；均为教学假想价，真实以官方为准
+    """💰 Token 审计员：价格必须由调用方按官方当前价格显式传入。"""
 
-    def __init__(self) -> None:
+    def __init__(self, prices: Optional[Dict[str, Dict[str, float]]] = None) -> None:
         self._records: List[Dict[str, Any]] = []
+        self.prices = prices or {}
         self._enc = None
         if tiktoken is not None:
             try:
@@ -67,8 +73,10 @@ class TokenCostAudit:
     def record_usage(self, model_name: str, input_tokens: int, output_tokens: int,
                      latency_ms: float = 0.0) -> None:
         """记录一次 LLM 调用用量：输入/输出 token 与耗时，并累计成本"""
-        price = self.PRICES.get(model_name, self.PRICES["deepseek-v3"])
-        cost = (input_tokens / 1e6) * price["input"] + (output_tokens / 1e6) * price["output"]
+        price = self.prices.get(model_name)
+        cost = None
+        if price:
+            cost = (input_tokens / 1e6) * price["input"] + (output_tokens / 1e6) * price["output"]
         self._records.append({"model": model_name, "input_tokens": input_tokens, "output_tokens": output_tokens,
                               "cost": cost, "latency_ms": latency_ms})
 
@@ -77,45 +85,57 @@ class TokenCostAudit:
         n = len(self._records)
         recs = self._records
         total_in = sum(r["input_tokens"] for r in recs); total_out = sum(r["output_tokens"] for r in recs)
-        cost = sum(r["cost"] for r in recs); avg = sum(r["latency_ms"] for r in recs) / n if n else 0.0
+        priced = [r["cost"] for r in recs if r["cost"] is not None]
+        cost_text = f"¥ {sum(priced):.4f}" if priced and len(priced) == n else "未配置当前官方价格"
+        avg = sum(r["latency_ms"] for r in recs) / n if n else 0.0
         return (f"📊 ====== Token 费用审计账单 ======\n"
                 f"🔢 调用次数      : {n}\n"
                 f"📥 输入 Tokens   : {total_in:,}\n"
                 f"📤 输出 Tokens   : {total_out:,}\n"
                 f"🧮 总 Tokens     : {total_in + total_out:,}\n"
-                f"💴 预估成本      : ¥ {cost:.4f}\n"
+                f"💴 预估成本      : {cost_text}\n"
                 f"⏱️ 平均时延      : {avg:.1f} ms")
 
 # ========== 4️⃣ EvalSuite 评估套件（参考 hello-agents 第12章） ==========
 class EvalSuite:
     """🎯 评估套件：对一组任务各跑 trials 次，统计成功率 / 平均耗时 / 平均 token"""
-    def __init__(self, client, tasks: List[str], trials: int = 3,
+    def __init__(self, client, tasks: List[Union[str, EvalCase]], trials: int = 3,
                  model_name: str = "deepseek-v3",
-                 success_keywords: Optional[List[str]] = None,
-                 fail_keywords: Optional[List[str]] = None) -> None:
+                 fail_keywords: Optional[List[str]] = None,
+                 prices: Optional[Dict[str, Dict[str, float]]] = None) -> None:
         self.client = client          # 兼容 ZhipuGLMClient（真实评估时使用）
         self.tasks, self.trials = tasks, trials
         self.model_name = model_name
-        self.success_keywords = success_keywords or ["成功", "完成", "✅", "OK"]
         self.fail_keywords = fail_keywords or ["失败", "错误", "异常", "❌"]
-        self.audit = TokenCostAudit()
+        self.prices = prices or {}
+        self.audit = TokenCostAudit(self.prices)
 
     def _on_llm_call(self, event: AgentEvent) -> None:
         """LLM 调用事件监听：把 token 用量与耗时记入费用审计"""
         out_t = self.audit.estimate_tokens(event.content)  # 📤 对回复文本精确估算
         self.audit.record_usage(self.model_name, max(1, event.tokens - out_t), out_t, event.latency_ms)
 
-    def _is_success(self, output: str) -> bool:
-        """用关键词子串匹配判断成功：先看失败词，再看成功词"""
-        return not any(k in output for k in self.fail_keywords) \
-            and any(k in output for k in self.success_keywords)
+    def _is_success(self, output: str, validator: Optional[Callable[[str], bool]] = None) -> Optional[bool]:
+        """有验证器才给成功/失败结论；没有标准就返回 None，避免自报成功。"""
+        if validator is None:
+            return None
+        if any(k in output for k in self.fail_keywords):
+            return False
+        try:
+            return bool(validator(output))
+        except Exception:
+            return False
 
     def run_eval(self, agent_runner_callable: Callable[[EventBus, str], str]) -> Dict[str, Any]:
         """对每个任务跑 trials 次：用 EventBus 收集轨迹，统计成功率/平均耗时/平均 token"""
-        self.audit = TokenCostAudit()
+        self.audit = TokenCostAudit(self.prices)
         report: Dict[str, Any] = {"summary": {}, "tasks": {}}
         all_ok, all_lat, all_tok = [], [], []
-        for task in self.tasks:
+        verified_runs = 0
+        for item in self.tasks:
+            case = item if isinstance(item, EvalCase) else None
+            task = case.prompt if case else str(item)
+            task_name = case.name if case else task
             s_ok, lats, toks, trs = 0, [], [], []
             for _ in range(self.trials):
                 bus = EventBus()
@@ -125,18 +145,24 @@ class EvalSuite:
                 lat = (time.perf_counter() - t0) * 1000           # ⏱️ 统计总耗时
                 lats.append(lat)
                 toks.append(sum(e.tokens for e in bus.history))   # 🧮 累加本次运行的 token
-                ok = self._is_success(out)
-                s_ok += ok
+                ok = self._is_success(out, case.validator if case else None)
+                if ok is not None:
+                    verified_runs += 1
+                    s_ok += int(ok)
                 trs.append({"output": out, "success": ok,
                             "events": [e.to_dict() for e in bus.history]})
 
-            all_ok.append(s_ok); all_lat += lats; all_tok += toks
-            report["tasks"][task] = {"success_rate": round(s_ok / self.trials, 3),
+            if case:
+                all_ok.append(s_ok)
+            all_lat += lats; all_tok += toks
+            report["tasks"][task_name] = {"success_rate": round(s_ok / self.trials, 3) if case else None,
+                                     "verification": "validator" if case else "unverified",
                                      "avg_latency_ms": round(sum(lats) / self.trials, 1),
                                      "avg_tokens": round(sum(toks) / self.trials, 1), "traces": trs}
         runs = len(self.tasks) * self.trials
         report["summary"] = {"total_tasks": len(self.tasks), "total_runs": runs,
-                             "overall_success_rate": round(sum(all_ok) / runs, 3),
+                             "verified_runs": verified_runs,
+                             "overall_success_rate": round(sum(all_ok) / verified_runs, 3) if verified_runs else None,
                              "avg_latency_ms": round(sum(all_lat) / len(all_lat), 1),
                              "avg_tokens": round(sum(all_tok) / len(all_tok), 1),
                              "cost_audit": self.audit.summary()}
@@ -154,11 +180,10 @@ def run_mock_eval(tasks: Optional[List[str]] = None, trials: int = 3) -> Dict[st
             return [self]
 
     class MockLLM:
-        """🤖 假应答函数：输入含"失败/错误/异常"则返回失败标记，否则返回成功"""
+        """🤖 为两条固定演示任务返回可由验证器检查的确定性结果。"""
         def chat(self, messages):
             text = messages[-1]["content"]
-            reply = ("❌ 任务执行失败：遇到了未知异常，无法完成。" if any(w in text for w in ["失败", "错误", "异常"])
-                     else "✅ 任务执行成功，已顺利完成全部步骤！")
+            reply = "计算结果：110" if "计算" in text else "HTTP 404 表示资源不存在，应检查路由与部署路径。"
             return MockResponse(reply)
 
     def agent_runner(bus: EventBus, task: str) -> str:
@@ -177,7 +202,11 @@ def run_mock_eval(tasks: Optional[List[str]] = None, trials: int = 3) -> Dict[st
         bus.emit(AgentEvent("finish", content=reply))
         return reply
 
-    suite = EvalSuite(client=MockLLM(), tasks=tasks or ["写一个计算器程序", "修复 404 页面错误"], trials=trials)
+    cases: List[Union[str, EvalCase]] = tasks or [
+        EvalCase("算术结果", "计算 25 * 4 + 10", lambda out: "110" in out),
+        EvalCase("404 诊断", "解释并修复 404 页面错误", lambda out: "404" in out and "路由" in out),
+    ]
+    suite = EvalSuite(client=MockLLM(), tasks=cases, trials=trials)
     return suite.run_eval(agent_runner)
 
 def run_real_agent_eval(tasks: Optional[List[str]] = None, trials: int = 1,
@@ -206,7 +235,10 @@ def run_real_agent_eval(tasks: Optional[List[str]] = None, trials: int = 1,
         bus.emit(AgentEvent("finish", content=ans))
         return ans
 
-    suite = EvalSuite(client=client, tasks=tasks or ["计算 25 * 4 + 10 等于多少？"], trials=trials)
+    cases: List[Union[str, EvalCase]] = tasks or [
+        EvalCase("计算 25 * 4 + 10", "计算 25 * 4 + 10 等于多少？", lambda out: "110" in out)
+    ]
+    suite = EvalSuite(client=client, tasks=cases, trials=trials)
     return suite.run_eval(real_agent_runner)
 
 if __name__ == "__main__":
@@ -222,21 +254,25 @@ if __name__ == "__main__":
     print("收到事件数:", len(seen), "| 事件历史条数:", len(bus.history))
 
     print("\n--- 2. TokenCostAudit 记账与账单自测 ---")
-    audit = TokenCostAudit()
+    audit = TokenCostAudit({
+        "deepseek-v3": {"input": 2.0, "output": 8.0},
+        "deepseek-r1": {"input": 4.0, "output": 16.0},
+    })
     audit.record_usage("deepseek-v3", input_tokens=1000, output_tokens=500, latency_ms=120.0)
     audit.record_usage("deepseek-r1", input_tokens=2000, output_tokens=1000, latency_ms=300.0)
     print(audit.summary())
 
     print("\n--- 3. EvalSuite 成功率判定自测 ---")
     suite = EvalSuite(client=None, tasks=[], trials=1)
-    print("'✅ 成功完成' 判定:", suite._is_success("✅ 成功完成，一切正常"))
-    print("'❌ 任务失败' 判定:", suite._is_success("❌ 任务失败，遇到异常"))
+    validator = lambda out: "110" in out
+    print("正确答案判定:", suite._is_success("答案是 110", validator))
+    print("自称完成但答案错误:", suite._is_success("✅ 已完成，答案是 109", validator))
 
     print("\n--- 4. 完整 Mock 评估报告 ---")
     report = run_mock_eval()
     print("📋 ====== 评估报告 (JSON) ======\n" + json.dumps(report, ensure_ascii=False, indent=2))
     print("\n📜 ====== 单次运行轨迹回放 (trace) ======")
-    for ev in report["tasks"]["写一个计算器程序"]["traces"][0]["events"]:
+    for ev in report["tasks"]["算术结果"]["traces"][0]["events"]:
         print(f"  [{ev['event_type']:>10}] {ev['content'][:36]}  (tokens={ev['tokens']}, {ev['latency_ms']:.0f}ms)")
 
     print("\n--- 5. 真实引擎联动小案例 (s01 客户端 + s02 ReActAgent + 可观测采集) ---")

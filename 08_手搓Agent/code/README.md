@@ -21,7 +21,7 @@
 | 维度   | 本目录的简化实现                          | 生产级通常怎么做                          |
 | :--- | :-------------------------------- | :-------------------------------- |
 | 并发   | 单线程同步 ReAct 循环                    | asyncio 异步 + 并行工具调用               |
-| 联网搜索 | DuckDuckGo HTML 正则抓取（免 Key 兜底，较脆） | Tavily / Bing / SerpAPI 等稳定搜索 API |
+| 联网搜索 | DuckDuckGo HTML 正则抓取；失败时明确报错，不生成兜底答案 | Tavily / Bing / SerpAPI 等稳定搜索 API |
 | 记忆   | 本地 JSON 文件                        | 向量库 + RAG / 关系型数据库                |
 | 沙箱隔离 | 无（直接跑本地命令）                        | Docker / 容器化隔离执行                  |
 | 生态接入 | 仅原生工具                             | MCP 生态、A2A 协议、后台任务与团队协作           |
@@ -53,6 +53,17 @@
   <img src="../img/06_agent_mini_agent_workbench_ui.png" alt="13-Tab Gradio 教学演示全景工作台 - 8.13 Mini-Agent 综合实战" width="100%" style="border: 1px solid #d9d9d9; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 15px 0 8px 0;">
   <p><em>▲ 模块 8.13 演示：Mini-Agent 综合实战（多轮气泡对话、长期记忆、联网搜索与技能插件）</em></p>
 </div>
+
+### 🧪 Gradio 运行口径速查
+
+| 类型 | 对应小节 | 说明 |
+| :--- | :--- | :--- |
+| 🟢 **调用真实模型** | **8.1 / 8.2 / 8.3 / 8.4 / 8.10 / 8.13** | 需要 `ZHIPU_API_KEY`。8.2 的天气、8.4 的员工档案是内置教学数据，但模型决策和 Function Calling 握手依然是真实请求。8.10 和 8.13 还可能访问真实搜索页面。 |
+| 🟠 **混合模式** | **8.8 / 8.12** | 8.8 的截断按钮是本地逻辑，`/compact` 与全策略对比会调真模型；8.12 同时提供“本地 Mock 评估”和“真实引擎联动评估”两个按钮。 |
+| 🔵 **本地真实逻辑** | **8.5 / 8.9 / 8.11** | 不消耗模型 Token，但会真实执行受控命令、写入记忆/会话文件或导出 Markdown，不是“假按钮”。 |
+| 🟡 **Mock 工具演示** | **8.6 / 8.7** | 不调模型。8.6 真实运行风险判定，但最终执行器是安全 Mock；8.7 用 `mock_tool` 演示真实 Hooks 脱敏与计时。 |
+
+> 完整的逐节说明见 [第八章 README](../README.md#-gradio-各小节到底是-mock-还是真模型)。没有 Key 时，可先体验蓝色、黄色以及 8.12 的本地 Mock 按钮。
 
 ***
 
@@ -121,9 +132,9 @@ uv run python s01_env_setup.py
 | **`s07_hooks_lifecycle.py`**   | 8.7 Hooks生命周期       | AOP 切面拦截、自动敏感信息脱敏（保护 API Key）与耗时统计                                                              |
 | **`s08_context_compact.py`**   | 8.8 上下文工程与压缩     | 双轨机制：0ms 滑动窗口截断、工具输出首尾裁剪与手写 `/compact` 深度历史摘要                                         |
 | **`s09_memory_and_skills.py`** | 8.9 记忆与技能插件         | 本地 JSON 长期记忆库与 `skills/*.md` 动态挂载注入                                                             |
-| **`s10_subagents.py`**         | 8.10 Subagents协作    | 上下文完全隔离的子代理派发，4专家 DeepResearch 流水线                                                              |
+| **`s10_subagents.py`**         | 8.10 Subagents协作    | 上下文隔离的子代理、可插拔搜索提供方、证据台账与研究/审查/写作流水线                                               |
 | **`s11_session.py`**           | 8.11 会话持久化与多分支      | `SessionStore` 存档读档、树状 `fork` 分叉、断点续跑与 Markdown 导出                                              |
-| **`s12_observability.py`**     | 8.12 可观测性与性能评估      | `EventBus` 事件总线、`TokenCostAudit` 账单审计、`EvalSuite` 成功率/时延/Token 评估                               |
+| **`s12_observability.py`**     | 8.12 可观测性与性能评估      | `EventBus`、显式价格配置、`EvalCase` 验证器与成功率/时延/Token 评估                                             |
 | **`s13_mini_agent.py`**        | 8.13 综合实战 MiniAgent | 整合全部机制，打造会联网搜索、会深度思考的个人对话助手（最终回答经 `polish_markdown` 润色适配）                                       |
 | **`app.py`**                   | 综合可视化界面             | 13 个 Tab 聚合的 Master Gradio 交互工作台（8.3/8.10/8.13 的 LLM 输出统一 Markdown 润色后渲染）                       |
 
@@ -145,5 +156,3 @@ uv run python s01_env_setup.py
    - 临时关闭 Dark Reader 等第三方暗黑网页强制反色插件。
 3. **`ModuleNotFoundError` 报错**：
    - 请务必在 `08_手搓Agent/code` 目录下执行 `uv sync`，并使用 `uv run python app.py` 运行。
-
-

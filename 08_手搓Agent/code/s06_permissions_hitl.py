@@ -1,6 +1,7 @@
 """
 s06_permissions_hitl.py - 8.6 权限控制与人类在环 (Permission Gate & Human-in-the-Loop)
 """
+import shlex
 import sys
 from enum import Enum
 from typing import Dict, Any, Tuple, Optional, Callable
@@ -19,36 +20,65 @@ class PermissionGuard:
         # 安全白名单只读工具集合
         self.safe_tools = (
             "view_file", "read_file", "list_dir", "get_user_info", 
-            "query_user_profile", "get_weather", "calculate", "web_search", 
-            "save_preference"
+            "query_user_profile", "get_weather", "calculate", "web_search"
         )
         
-        # 安全白名单命令 (前缀匹配)
-        self.safe_bash_prefixes = ("ls", "cat", "echo", "pwd", "git status", "git log", "git diff", "python --version", "python3 --version")
-        # 永久黑名单
-        self.critical_bash_keywords = ("rm -rf /", "shutdown", "reboot", ":(){ :|:& };:", "dd if=", "mkfs")
+        # 只允许不带 Shell 控制符的精确只读命令。cat/echo 不在其中：前者可能读密钥，后者可配合重定向写文件。
+        self.shell_control_chars = (";", "|", "&", ">", "<", "`", "$", "\n", "\r")
+        self.critical_bash_keywords = (
+            "rm -rf", "shutdown", "reboot", ":(){ :|:& };:", "dd if=", "mkfs",
+            "chmod -r", "chown -r", ">/dev/", "> /dev/",
+        )
+
+    @staticmethod
+    def _is_safe_read_only_argv(argv: Tuple[str, ...]) -> bool:
+        """只放行不会指定外部路径、加载脚本或组合子命令的少量参数。"""
+        if argv in (("pwd",), ("python", "--version"), ("python3", "--version")):
+            return True
+        if argv and argv[0] == "ls":
+            return all(arg.startswith("-") and set(arg[1:]) <= set("alh1") for arg in argv[1:])
+        if argv[:2] == ("git", "status"):
+            return all(arg in {"--short", "--branch", "--porcelain", "--porcelain=v1"} for arg in argv[2:])
+        if argv[:2] == ("git", "log"):
+            allowed = {"--oneline", "--decorate", "--no-decorate", "--graph", "--all"}
+            return all(arg in allowed or (arg.startswith("-n") and arg[2:].isdigit())
+                       or (arg.startswith("--max-count=") and arg.split("=", 1)[1].isdigit())
+                       for arg in argv[2:])
+        if argv[:2] == ("git", "diff"):
+            allowed = {"--stat", "--name-only", "--name-status", "--cached", "--staged", "--check"}
+            return all(arg in allowed for arg in argv[2:])
+        return False
+
+    def _classify_bash(self, command: str) -> Tuple[ActionRiskLevel, str]:
+        """解析命令后分级，避免 `startswith('ls')` 把 `ls; dangerous` 错当成只读。"""
+        command = command.strip()
+        lowered = command.lower()
+        if not command:
+            return ActionRiskLevel.MODERATE, "终端命令为空，无法确认意图"
+        for bad in self.critical_bash_keywords:
+            if bad in lowered:
+                return ActionRiskLevel.CRITICAL, f"检测到高危命令片段: [{bad}]"
+        if any(char in command for char in self.shell_control_chars):
+            return ActionRiskLevel.MODERATE, "命令包含管道、重定向或多命令控制符，必须人工确认"
+        try:
+            argv = tuple(shlex.split(command))
+        except ValueError as exc:
+            return ActionRiskLevel.MODERATE, f"命令语法无法安全解析: {exc}"
+        if self._is_safe_read_only_argv(argv):
+            return ActionRiskLevel.SAFE, f"精确匹配只读白名单命令: [{command}]"
+        return ActionRiskLevel.MODERATE, f"执行非白名单终端命令: [{command}]"
 
     def evaluate_risk(self, tool_name: str, args: Dict[str, Any]) -> Tuple[ActionRiskLevel, str]:
         """🔍 评估即将执行的工具调用的风险等级"""
         if tool_name in self.safe_tools:
-            return ActionRiskLevel.SAFE, f"只读/检索/记忆工具 [{tool_name}]，无系统破坏风险"
+            return ActionRiskLevel.SAFE, f"只读/检索工具 [{tool_name}]，无系统写入动作"
 
         if tool_name in ("str_replace", "edit_file_replace"):
             path = args.get("file_path", "")
             return ActionRiskLevel.MODERATE, f"正在尝试修改本地源码文件: [{path}]"
 
         if tool_name in ("run_bash", "exec_bash"):
-            cmd = args.get("command", "").strip()
-            # 检查极高危
-            for bad in self.critical_bash_keywords:
-                if bad in cmd:
-                    return ActionRiskLevel.CRITICAL, f"检测到恶意破坏性命令关键字: [{bad}]"
-            # 检查安全白名单
-            for safe in self.safe_bash_prefixes:
-                if cmd.startswith(safe):
-                    return ActionRiskLevel.SAFE, f"白名单只读命令: [{cmd}]"
-            # 其余一律视为中风险
-            return ActionRiskLevel.MODERATE, f"执行非白名单终端命令: [{cmd}]"
+            return self._classify_bash(str(args.get("command", "")))
 
         return ActionRiskLevel.MODERATE, f"执行自定义外部工具: [{tool_name}]"
 
@@ -83,17 +113,25 @@ class PermissionGuard:
             }
 
         # 中风险：触发人类在环审批 (Human-in-the-Loop)
+        approval_source = ""
         if self.approval_callback:
-            approved = self.approval_callback(tool_name, args)
+            try:
+                approved = bool(self.approval_callback(tool_name, args))
+                approval_source = "审批回调"
+            except Exception:
+                approved = False
+                approval_source = "审批回调异常，按拒绝处理"
         elif interactive_prompt and sys.stdin.isatty():
             # 仅在真实终端交互环境下提示 stdin
             print(f"\n⚠️  [权限审批请求] 工具: {tool_name} | 参数: {args}")
             print(f"📝 风险原因: {reason}")
             choice = input("👉 是否授权执行该操作？ (y/N): ").strip().lower()
             approved = (choice == "y")
+            approval_source = "终端人工审批"
         else:
-            # Web UI 或非交互模式下默认放行中风险（并在日志/Trace 中显式标记 HITL 审计）
-            approved = True
+            # Fail closed：没有明确的人类批准就不执行，Web UI 必须传 approval_callback。
+            approved = False
+            approval_source = "非交互环境未获得明确批准"
 
         if approved:
             res = execution_fn(**{k: v for k, v in args.items() if not k.startswith("_")})
@@ -101,7 +139,7 @@ class PermissionGuard:
                 "success": True,
                 "approved": True,
                 "risk": risk.value,
-                "message": f"🟡 [人类审批通过已执行] {reason}",
+                "message": f"🟡 [{approval_source}通过，已执行] {reason}",
                 "result": res,
             }
         else:
@@ -109,7 +147,7 @@ class PermissionGuard:
                 "success": False,
                 "approved": False,
                 "risk": risk.value,
-                "message": f"❌ [人类已拒绝执行该操作] {reason}",
+                "message": f"❌ [{approval_source}，未执行] {reason}",
                 "result": "操作被人类管理员取消",
             }
 

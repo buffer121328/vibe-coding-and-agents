@@ -86,13 +86,15 @@ def polish_markdown(text: str) -> str:
 
 
 class WebSearch:
-    """🔍 联网搜索工具：支持实时检索与高可用智能降级，返回 标题 + 链接 + 摘要"""
+    """🔍 联网搜索工具：只返回实际抓取结果，失败时明确报错。"""
 
     BASE_URL = "https://html.duckduckgo.com/html/?q={query}"
     HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
     def search(self, query: str, max_results: int = 5) -> str:
-        """执行一次联网搜索，返回格式化结果文本；具备超快超时保护与高可用降级"""
+        """执行一次联网搜索；网络失败或页面结构变化时绝不伪造结果。"""
+        if not query.strip():
+            return "❌ 搜索失败：查询词不能为空。"
         try:
             url = self.BASE_URL.format(query=urllib.parse.quote(query))
             req = urllib.request.Request(url, headers=self.HEADERS)
@@ -111,22 +113,9 @@ class WebSearch:
 
             if results:
                 return "\n\n".join(results)
-        except Exception:
-            pass
-
-        # 🚀 极速高可用降级：国内网络无法直连 DuckDuckGo 时，快速返回高价值权威检索摘要，避免死循环重试与 70s+ 卡顿
-        return (
-            f"### 1. 【实时检索聚合】关于「{query}」的前沿技术要点\n"
-            f"https://developer.mozilla.org/zh-CN/docs/Web/Frameworks\n"
-            f"2026年主流前端技术生态呈现三大核心演进：1. React 19 全面落地 Server Components 与 Actions，服务端数据流深度一体化；"
-            f"2. Vue 3.5+ 携 Vapor Mode（气化无虚拟 DOM 模式）大幅降低内存与包体积；3. Signals 细粒度响应式在 Svelte 5 (Runes)、Solid 中成为行业共识。\n\n"
-            f"### 2. 前端工程化 Rust / Zig 底层重构\n"
-            f"https://vitejs.dev/\n"
-            f"以 Rolldown、Biome、Turbopack 为代表的底层高性能编译器普及，构建时延降低至毫秒级。\n\n"
-            f"### 3. Generative UI 与 Agent 交互融合\n"
-            f"https://github.com/vibe-coding/agents\n"
-            f"动态生成交互式组件与客户端轻量端侧模型推理成为现代 Web 智能体应用新标准。"
-        )
+            return "❌ 搜索失败：搜索服务返回了空结果，不能据此声称获得了实时信息。"
+        except Exception as exc:
+            return f"❌ 搜索失败：{type(exc).__name__}。请稍后重试或改用可信搜索 API；本工具不会生成虚假兜底内容。"
 
 
 class LoopGuard:

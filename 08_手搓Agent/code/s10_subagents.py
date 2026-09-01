@@ -3,7 +3,7 @@ s10_subagents.py - 8.10 Subagents 子代理协作与上下文隔离 (DeepResearc
 """
 import time
 import concurrent.futures
-from typing import Dict, Any, Optional, Callable
+from typing import Dict, Any, List, Optional, Callable
 from s01_env_setup import ZhipuGLMClient
 
 class Subagent:
@@ -44,30 +44,36 @@ class DeepResearchPipeline:
     1. 规划者 (Planner) ➔ 2. 检索研究员 (Researcher) ➔ 3. 审查员 (Critic) ➔ 4. 终稿撰写员 (Writer)
     每个子代理调用均带超时保护，全程输出带时间戳的进度日志。
     """
-    def __init__(self, client: ZhipuGLMClient, timeout: float = 30.0):
+    def __init__(self, client: ZhipuGLMClient, timeout: float = 30.0,
+                 search_provider: Optional[Callable[[str], str]] = None):
         self.client = client
         self.timeout = timeout
+        self.search_provider = search_provider
         self.planner = Subagent(
             name="研究规划师",
-            role_prompt="你是一位资深研究规划专家。请将用户给出的宏观研究主题拆解为 2 个关键研究核心议题，用纯文本逐行输出，不要带任何无关废话。",
+            role_prompt=("你是一位资深研究规划专家。请把课题拆成 2 个可检索的核心议题，"
+                         "每行只输出一个适合搜索引擎的查询词，不要编号或解释。"),
             client=client,
             timeout=timeout,
         )
         self.researcher = Subagent(
             name="深度检索研究员",
-            role_prompt="你是一位博学严谨的技术分析员。请针对具体研究议题给出详尽的原理机制、技术优缺点与实际落地场景分析。",
+            role_prompt=("你是一位严谨的技术分析员。必须区分检索证据与自己的推断；"
+                         "重要事实要引用输入证据中的 URL，没有证据就明确写‘尚未核实’。"),
             client=client,
             timeout=timeout,
         )
         self.critic = Subagent(
             name="批判审查员",
-            role_prompt="你是一位尖锐犀利的同行评审专家。请审查研究员提供的报告草稿，指出其中的漏洞、未考虑的极端情况，并提出补充建议。",
+            role_prompt=("你是一位尖锐的同行评审专家。逐项检查报告中的事实是否能由证据台账支持，"
+                         "指出无来源断言、过期信息和推理跳步。"),
             client=client,
             timeout=timeout,
         )
         self.writer = Subagent(
             name="终极主笔撰写员",
-            role_prompt="你是一位顶级科技杂志主编。请综合前序研究与评审意见，撰写一份结构精美、文笔生动、条理清晰的终极 Markdown 深度分析报告。",
+            role_prompt=("你是一位科技主编。综合研究与评审写 Markdown 报告；保留可核验 URL，"
+                         "把事实、推断和待核实项分开，禁止补造来源。"),
             client=client,
             timeout=timeout,
         )
@@ -91,6 +97,27 @@ class DeepResearchPipeline:
         timeline.append({"agent": agent.name, "stage": stage_name, "content": output})
         return output
 
+    def _collect_evidence(self, plan_output: str, timeline: list) -> str:
+        """按规划查询最多 3 个议题，形成可回放的证据台账。"""
+        queries = [line.strip(" -\t0123456789.、") for line in plan_output.splitlines() if line.strip()][:3]
+        if not self.search_provider:
+            evidence = "⚠️ 未配置搜索提供方：本次只能做模型内知识分析，不能声称完成了联网调研。"
+            timeline.append({"agent": "EvidenceCollector", "stage": "证据收集", "content": evidence})
+            return evidence
+
+        records: List[str] = []
+        for query in queries:
+            try:
+                result = self.search_provider(query)
+            except Exception as exc:
+                result = f"❌ 搜索提供方异常：{type(exc).__name__}。本查询没有可用证据。"
+            records.append(f"## 查询：{query}\n{result}")
+        if not records:
+            records.append("⚠️ 规划阶段没有产生有效查询词，未收集到外部证据。")
+        evidence = "\n\n".join(records)
+        timeline.append({"agent": "EvidenceCollector", "stage": "证据收集", "content": evidence})
+        return evidence
+
     def execute_research_stream(self, topic: str):
         """🌊 流式执行四专家多智能体协作研究，实时 yield (状态日志, 时间线, 阶段报告 Markdown)"""
         timeline = []
@@ -108,24 +135,29 @@ class DeepResearchPipeline:
         timeline.append({"agent": self.planner.name, "stage": "课题拆解", "content": plan_output})
         yield _format_status(f"✔ 规划师完成（耗时 {time.time()-t0:.1f}s）"), list(timeline), f"### 🎯 规划师拆解议题\n\n{plan_output}"
 
-        # 2. 深度检索研究员
-        yield _format_status("🔍 [2/4 深度检索研究员] 正在针对拆解议题深入推演与技术调研..."), list(timeline), f"### 🎯 规划师拆解议题\n\n{plan_output}\n\n*(研究员正在深入调研分析...)*"
+        # 2. 证据收集工具
+        yield _format_status("🔎 [2/5 证据收集] 正在按议题检索外部资料..."), list(timeline), "*(正在建立可核验的证据台账...)*"
+        evidence = self._collect_evidence(plan_output, timeline)
+        yield _format_status("✔ 证据收集完成"), list(timeline), f"### 🔎 证据台账\n\n{evidence}"
+
+        # 3. 深度研究员
+        yield _format_status("🔍 [3/5 深度研究员] 正在基于证据分析..."), list(timeline), f"### 🔎 证据台账\n\n{evidence}\n\n*(研究员正在分析...)*"
         t0 = time.time()
-        research_output = self.researcher.run(f"课题：{topic}\n核心议题：\n{plan_output}")
-        timeline.append({"agent": self.researcher.name, "stage": "深度技术推演", "content": research_output})
+        research_output = self.researcher.run(f"课题：{topic}\n核心议题：\n{plan_output}\n\n【证据台账】\n{evidence}")
+        timeline.append({"agent": self.researcher.name, "stage": "证据分析", "content": research_output})
         yield _format_status(f"✔ 深度检索研究员完成（耗时 {time.time()-t0:.1f}s）"), list(timeline), f"### 🔍 深度调研成果\n\n{research_output}"
 
         # 3. 批判审查员
-        yield _format_status("🧐 [3/4 批判审查员] 正在审查漏洞、挑刺与提出补充建议..."), list(timeline), f"### 🔍 深度调研成果\n\n{research_output}\n\n*(审查员正在挑刺与漏洞排查...)*"
+        yield _format_status("🧐 [4/5 批判审查员] 正在核对来源与推理漏洞..."), list(timeline), f"### 🔍 深度调研成果\n\n{research_output}\n\n*(审查员正在核验...)*"
         t0 = time.time()
-        critic_output = self.critic.run(f"课题：{topic}\n研究内容：\n{research_output}")
+        critic_output = self.critic.run(f"课题：{topic}\n【证据台账】\n{evidence}\n\n【研究内容】\n{research_output}")
         timeline.append({"agent": self.critic.name, "stage": "同行批判审查", "content": critic_output})
         yield _format_status(f"✔ 批判审查员完成（耗时 {time.time()-t0:.1f}s）"), list(timeline), f"### 🧐 审查评审意见\n\n{critic_output}"
 
         # 4. 终极主笔撰写员
-        yield _format_status("✍️ [4/4 终极主笔撰写员] 正在综合各方意见，汇总撰写终极分析报告..."), list(timeline), "*(主笔正在撰写终极 Markdown 分析研报...)*"
+        yield _format_status("✍️ [5/5 主笔] 正在综合证据与评审意见..."), list(timeline), "*(主笔正在撰写可核验报告...)*"
         t0 = time.time()
-        writer_input = f"课题：{topic}\n【研究内容】：\n{research_output}\n\n【审查意见】：\n{critic_output}\n"
+        writer_input = f"课题：{topic}\n【证据台账】\n{evidence}\n\n【研究内容】\n{research_output}\n\n【审查意见】\n{critic_output}\n"
         final_report = self.writer.run(writer_input)
         timeline.append({"agent": self.writer.name, "stage": "终极交付报告", "content": final_report})
         
@@ -142,21 +174,27 @@ class DeepResearchPipeline:
             "课题拆解", "🎯 规划师正在拆解研究课题...", self.planner,
             f"研究课题：{topic}", timeline, callback)
 
+        self._log("🔎 正在按规划收集可核验外部证据...", callback)
+        evidence = self._collect_evidence(plan_output, timeline)
+
         # 2. 深度研究
         research_output = self._run_stage(
             "深度技术推演", "🔍 研究员正在针对拆解议题深入推演...", self.researcher,
-            f"课题：{topic}\n核心议题：\n{plan_output}", timeline, callback)
+            f"课题：{topic}\n核心议题：\n{plan_output}\n\n【证据台账】\n{evidence}", timeline, callback)
 
         # 3. 评审与挑刺
         critic_output = self._run_stage(
             "同行批判审查", "🧐 审查员正在挑刺与漏洞排查...", self.critic,
-            f"课题：{topic}\n研究内容：\n{research_output}", timeline, callback)
+            f"课题：{topic}\n【证据台账】\n{evidence}\n\n【研究内容】\n{research_output}", timeline, callback)
 
         # 4. 终稿撰写
         writer_input = f"""
 课题：{topic}
 【研究内容】：
 {research_output}
+
+【证据台账】：
+{evidence}
 
 【审查意见】：
 {critic_output}
@@ -169,6 +207,7 @@ class DeepResearchPipeline:
 
         return {
             "topic": topic,
+            "evidence": evidence,
             "timeline": timeline,
             "final_report": final_report,
         }

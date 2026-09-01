@@ -14,6 +14,7 @@ app.py - 第八章《手搓 Agent》统一交互式 Gradio Master 工作台
 ==============================================================================
 """
 
+import json
 import os
 import time
 import gradio as gr
@@ -32,7 +33,7 @@ from s09_memory_and_skills import MemoryStore, SkillLoader
 from s10_subagents import DeepResearchPipeline
 from s11_session import SessionStore, demo_tree_branching
 from s12_observability import run_mock_eval, run_real_agent_eval
-from s13_mini_agent import MiniAgent, polish_markdown
+from s13_mini_agent import MiniAgent, WebSearch, polish_markdown
 
 load_dotenv()
 
@@ -52,7 +53,7 @@ CHAPTERS = [
     (9, "🧠 8.9 记忆系统与技能挂载", "s09_memory_and_skills.py", "MemoryStore / SkillLoader / SKILL.md 动态挂载"),
     (10, "👥 8.10 Subagents 多智能体协作", "s10_subagents.py", "DeepResearchPipeline / 4 专家上下文隔离流水线"),
     (11, "🗂️ 8.11 会话持久化与多分支", "s11_session.py", "SessionStore / 树状分叉 / 平行宇宙存档"),
-    (12, "📡 8.12 可观测性与性能评估", "s12_observability.py", "EventBus / TokenCostAuditor / 批量评测套件"),
+    (12, "📡 8.12 可观测性与性能评估", "s12_observability.py", "EventBus / TokenCostAudit / 验证器评测套件"),
     (13, "🤖 8.13 Mini-Agent 综合实战", "s13_mini_agent.py", "MiniAgent / 深度思考 + 联网搜索 + 个人超级助理"),
 ]
 
@@ -211,16 +212,17 @@ custom_css = pygments_css + "\n" + """
     font-weight: 500 !important;
 }
 
-/* 左侧章节导航容器 */
+/* 左侧章节导航容器：高度跟随自身宽度，避免固定像素卡片 */
 .sidebar-container {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 12px !important;
     padding: 12px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-    height: 740px !important;
-    min-height: 740px !important;
-    max-height: 740px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 2 / 5 !important;
     overflow-y: auto !important;
 }
 
@@ -273,18 +275,20 @@ custom_css = pygments_css + "\n" + """
     color: #ffffff !important;
 }
 
-/* 💻 中间/左侧代码视窗容器 (单层直接展示，与右侧 740px 精准对齐) */
+/* 💻 中间/左侧代码视窗容器：以列宽决定高度，和右侧保持同一比例 */
 .code-viewer-panel {
     background: #282c34 !important;
     border: 1px solid #3e4451 !important;
     border-radius: 12px !important;
     padding: 12px 14px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    height: 740px !important;
-    min-height: 740px !important;
-    max-height: 740px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 5 !important;
     overflow: hidden !important;
-    display: flex !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
     flex-direction: column !important;
     box-sizing: border-box !important;
 }
@@ -315,13 +319,47 @@ custom_css = pygments_css + "\n" + """
 
 /* 源码视窗：单层原生滚动，绝不坍缩，零套娃 */
 .code-scroll-pane {
-    flex: 1 1 auto;
-    height: 660px;
-    max-height: 660px;
-    overflow-y: auto;
+    min-height: 0 !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+    max-height: none;
+    overflow-y: scroll !important;
     overflow-x: auto;
     border-radius: 8px;
     background: #282c34;
+    scrollbar-width: auto;
+    scrollbar-color: #64748b #1f2430;
+}
+
+/* Gradio HTML 组件会默认按内容撑高；把中间包装层也压进网格轨道，滚轮才真正属于源码窗格 */
+.code-viewer-panel > .block,
+.code-viewer-panel .html-container,
+.code-viewer-panel .prose {
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+.code-viewer-panel .html-container,
+.code-viewer-panel .prose {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.code-scroll-pane::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+}
+.code-scroll-pane::-webkit-scrollbar-track {
+    background: #1f2430;
+    border-radius: 8px;
+}
+.code-scroll-pane::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border: 2px solid #1f2430;
+    border-radius: 8px;
+}
+.code-scroll-pane::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 .code-highlighttable {
@@ -357,16 +395,17 @@ custom_css = pygments_css + "\n" + """
     white-space: pre;
 }
 
-/* 🛠️ 右侧沙箱工作台容器 (与左侧代码高度精准对齐 740px) */
+/* 🛠️ 右侧沙箱工作台容器：与代码视窗使用同一宽高比例 */
 .playground-panel {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 12px !important;
     padding: 14px 16px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-    height: 740px !important;
-    min-height: 740px !important;
-    max-height: 740px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 5 !important;
     overflow-y: auto !important;
 }
 
@@ -417,8 +456,9 @@ custom_css = pygments_css + "\n" + """
     border: 1px solid #e2e8f0 !important;
     border-radius: 12px !important;
     padding: 14px 16px !important;
-    min-height: 180px !important;
-    max-height: 380px !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 16 / 9 !important;
     overflow-y: auto !important;
     font-size: 13.5px !important;
     line-height: 1.7 !important;
@@ -471,6 +511,8 @@ custom_css = pygments_css + "\n" + """
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 8px;
+    min-height: 0;
+    aspect-ratio: 1.8 / 1;
     text-align: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
@@ -518,6 +560,147 @@ custom_css = pygments_css + "\n" + """
     border: 1px solid #e2e8f0 !important;
     background: #f8fafc !important;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+    height: clamp(260px, 32vh, 430px) !important;
+    min-height: 0 !important;
+    max-height: 430px !important;
+    aspect-ratio: auto !important;
+}
+
+/* 8.13 对话区：收紧信息层级，避免“巨型空白 + 控件散落” */
+.mini-agent-view {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+.mini-agent-view .chapter-header-card,
+.mini-agent-view .linkage-bar {
+    margin-bottom: 0 !important;
+}
+.mini-agent-view .mini-shortcuts {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+.mini-agent-view .mini-shortcuts > *,
+.mini-agent-view .mini-input-row > *,
+.mini-agent-view .mini-options-row > * {
+    min-width: 0 !important;
+}
+.mini-agent-view .mini-input-row {
+    align-items: stretch !important;
+    gap: 10px !important;
+}
+.mini-agent-view .mini-input-row textarea {
+    min-height: 56px !important;
+}
+.mini-agent-view .mini-input-row button {
+    min-height: 56px !important;
+}
+.mini-agent-view .mini-options-row {
+    align-items: stretch !important;
+    gap: 10px !important;
+}
+.mini-agent-view .mini-options-row > .block {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+}
+.mini-agent-view .mini-memory-row {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 8px 12px !important;
+}
+.mini-agent-view .mini-trace {
+    margin-top: 0 !important;
+    border-top: 1px solid #e2e8f0 !important;
+}
+
+/* 8.11 会话分支：一个按钮 + 一个结果区 */
+.session-demo-shell {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+.session-action-box {
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%) !important;
+    border: 1px solid #c7d2fe !important;
+    border-radius: 16px !important;
+    padding: 14px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+}
+.session-action-box button {
+    width: 100% !important;
+    min-height: 58px !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+}
+.session-result-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 14px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+}
+.session-result-card .session-result-title {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin-bottom: 4px !important;
+}
+.session-result-card .session-result-note {
+    font-size: 12px !important;
+    color: #64748b !important;
+    margin-bottom: 10px !important;
+}
+.session-result-card .block {
+    min-height: 0 !important;
+}
+.session-result-output {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 12px 14px !important;
+}
+.session-result-output h3 {
+    margin-top: 0.35rem !important;
+    font-size: 14px !important;
+}
+
+/* 小屏幕改为自然高度，避免窄屏下比例卡片过矮或内容拥挤 */
+@media (max-width: 900px) {
+    .sidebar-container,
+    .code-viewer-panel,
+    .playground-panel,
+    .typewriter-output-card,
+    .chat-container-box {
+        aspect-ratio: auto !important;
+    }
+
+    .sidebar-container,
+    .code-viewer-panel,
+    .playground-panel {
+        min-height: 360px !important;
+    }
+
+    .code-scroll-pane {
+        min-height: 300px !important;
+        height: 300px !important;
+    }
+
+    .mini-agent-view .mini-shortcuts {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mini-agent-view .mini-options-row {
+        flex-direction: column !important;
+    }
+
+    .session-action-box button {
+        min-height: 52px !important;
+        font-size: 16px !important;
+    }
 }
 
 /* 页脚 */
@@ -1150,7 +1333,7 @@ onUnmounted(() => { clearInterval(timer); });
                     if not topic or not topic.strip():
                         yield "⚠️ 请输入有效的研究课题！", [], ""
                         return
-                    pipeline = DeepResearchPipeline(global_client)
+                    pipeline = DeepResearchPipeline(global_client, search_provider=WebSearch().search)
                     yield from pipeline.execute_research_stream(topic)
                 t10_btn.click(tab10_run, inputs=[t10_topic], outputs=[t10_status, t10_trace, t10_report])
 
@@ -1164,18 +1347,31 @@ onUnmounted(() => { clearInterval(timer); });
                     <p class="chapter-header-desc">基于树状结构管理对话 Session，支持从任意历史节点开辟平行宇宙分支（Branching），并一键导出完整 Markdown 记录。</p>
                 </div>
                 <div class="linkage-bar">
-                    <span>⚡ <b>代码联动：</b>调用 <code>SessionStore.branch()</code> 与 <code>export_markdown()</code> 验证会话分叉</span>
+                    <span>⚡ <b>代码联动：</b>点击按钮后，下面的结果区会同时展示会话树摘要与导出预览</span>
                 </div>
                 """)
-                t11_btn = gr.Button("🌿 运行演示：主会话 ➔ 双分支 ➔ 恢复 ➔ 导出", variant="primary")
-                t11_sessions = gr.JSON(label="会话树摘要结构 (list_sessions)")
-                t11_export = gr.Markdown("### 📄 恢复分支导出的 Markdown 预览\n*(点击左侧按钮进行分支衍生与导出演示)*")
+                with gr.Column(elem_classes=["session-demo-shell"]):
+                    with gr.Column(elem_classes=["session-action-box"]):
+                        gr.HTML('<div class="session-result-title">▶︎ 先点这个按钮</div><div class="session-result-note">它会一次性跑完主会话、双分支、恢复和导出。</div>')
+                        t11_btn = gr.Button("🌿 运行主会话 → 双分支 → 恢复 → 导出", variant="primary")
+                    with gr.Column(elem_classes=["session-result-card"]):
+                        gr.HTML('<div class="session-result-title">结果区</div><div class="session-result-note">下面这块只负责看结果，不负责触发操作。</div>')
+                        t11_result = gr.Markdown(
+                            "点击上方按钮后，这里会一次性显示会话树摘要和 Markdown 导出预览。",
+                            elem_classes=["session-result-output"],
+                        )
 
                 def tab11_run():
                     store = SessionStore("gradio_sessions")
                     result = demo_tree_branching(store)
-                    return store.list_sessions(), f"```markdown\n{result['export_md'][:1500]}\n```"
-                t11_btn.click(tab11_run, outputs=[t11_sessions, t11_export])
+                    sessions_json = json.dumps(store.list_sessions(), ensure_ascii=False, indent=2)
+                    return (
+                        "### 🌳 会话树摘要\n"
+                        f"```json\n{sessions_json}\n```\n\n"
+                        "### 📄 Markdown 导出预览\n"
+                        f"```markdown\n{result['export_md'][:1500]}\n```"
+                    )
+                t11_btn.click(tab11_run, outputs=t11_result)
 
             # ==================================================================
             # 模块 12: 8.12 可观测性与性能评估
@@ -1184,16 +1380,16 @@ onUnmounted(() => { clearInterval(timer); });
                 gr.HTML("""
                 <div class="chapter-header-card">
                     <div class="chapter-header-title">📡 8.12 事件总线 + Token 费用审计 + 评估套件 (本地 Mock 演示)</div>
-                    <p class="chapter-header-desc">可观测性是 Agent 工业级上线的生命线：采集完整 EventBus 轨迹、实时核算 Token 账单与时延，自动化批量运行评估套件。</p>
+                    <p class="chapter-header-desc">采集 EventBus 轨迹与 Token/时延，并用任务验证器判断结果是否真的正确；未配置官方价格时不估算费用。</p>
                 </div>
                 <div class="linkage-bar">
-                    <span>⚡ <b>代码联动：</b>调用 <code>EventBus</code> 收集事件流，配合 <code>TokenCostAuditor</code> 统计 Token 账单</span>
+                    <span>⚡ <b>代码联动：</b><code>EventBus</code> 收集事件，<code>EvalCase.validator</code> 验证答案，<code>TokenCostAudit</code> 统计用量</span>
                 </div>
                 <div class="kpi-grid">
-                    <div class="kpi-card"><div class="kpi-value">100%</div><div class="kpi-label">🎯 任务成功率</div></div>
-                    <div class="kpi-card"><div class="kpi-value">6 次</div><div class="kpi-label">📊 评估总批次</div></div>
-                    <div class="kpi-card"><div class="kpi-value">~120 ms</div><div class="kpi-label">⚡ 平均工具时延</div></div>
-                    <div class="kpi-card"><div class="kpi-value">￥0.00018</div><div class="kpi-label">💰 预估总费用</div></div>
+                    <div class="kpi-card"><div class="kpi-value">Validator</div><div class="kpi-label">🎯 结果判定方式</div></div>
+                    <div class="kpi-card"><div class="kpi-value">2 × 3</div><div class="kpi-label">📊 Mock 任务与轮次</div></div>
+                    <div class="kpi-card"><div class="kpi-value">Trace</div><div class="kpi-label">⚡ 事件轨迹回放</div></div>
+                    <div class="kpi-card"><div class="kpi-value">显式配置</div><div class="kpi-label">💰 官方模型价格</div></div>
                 </div>
                 """)
                 with gr.Row():
@@ -1212,7 +1408,8 @@ onUnmounted(() => { clearInterval(timer); });
                     return "\n".join(trace_lines), report, cost_md
 
                 def tab12_run_mock():
-                    return _tab12_build(run_mock_eval(), "写一个计算器程序")
+                    report = run_mock_eval()
+                    return _tab12_build(report, list(report["tasks"])[0])
 
                 def tab12_run_real():
                     try:
@@ -1227,7 +1424,7 @@ onUnmounted(() => { clearInterval(timer); });
             # ==================================================================
             # 模块 13: 8.13 Mini-Agent 综合实战 (ChatGPT / Codex 风格多轮连续对话)
             # ==================================================================
-            with gr.Column(visible=False) as view_13:
+            with gr.Column(visible=False, elem_classes=["mini-agent-view"]) as view_13:
                 gr.HTML("""
                 <div class="chapter-header-card">
                     <div class="chapter-header-title">🤖 8.13 个人 Mini-Agent：Codex / ChatGPT 风格多轮连续对话</div>
@@ -1244,19 +1441,18 @@ onUnmounted(() => { clearInterval(timer); });
                 # 💬 ChatGPT / Codex 风格对话视窗 (气泡流)
                 t13_chatbot = gr.Chatbot(
                     label="💬 智能体多轮对话流",
-                    height=360,
                     show_label=False,
                     elem_classes=["chat-container-box"],
                 )
                 
                 # 预设快捷提示词
-                with gr.Row():
+                with gr.Row(elem_classes=["mini-shortcuts"]):
                     t13_p1 = gr.Button("🌐 2026 前端框架新趋势", size="sm")
                     t13_p2 = gr.Button("💾 记住我的偏好: Python+FastAPI", size="sm")
                     t13_p3 = gr.Button("❓ 问刚才记住的偏好", size="sm")
 
                 # 输入框与多功能按钮
-                with gr.Row():
+                with gr.Row(elem_classes=["mini-input-row"]):
                     t13_msg_input = gr.Textbox(
                         placeholder="💬 输入消息，按回车或点击发送进行连续多轮对话...",
                         lines=1,
@@ -1269,7 +1465,7 @@ onUnmounted(() => { clearInterval(timer); });
                     t13_clear_btn = gr.Button("🗑️ 清空重置", variant="secondary", scale=1)
 
                 # 增强选项与插件挂载
-                with gr.Row():
+                with gr.Row(elem_classes=["mini-options-row"]):
                     t13_opts = gr.CheckboxGroup(
                         label="🚀 增强模式", 
                         choices=["🧠 深度思考", "🔍 强制联网搜索"], 
@@ -1280,9 +1476,14 @@ onUnmounted(() => { clearInterval(timer); });
                         choices=["git_expert", "python_cleaner"], 
                         value=[]
                     )
+                with gr.Row(elem_classes=["mini-memory-row"]):
+                    t13_allow_memory = gr.Checkbox(
+                    label="💾 允许本轮保存偏好（仅授权 save_preference，不放行终端或代码编辑）",
+                    value=False,
+                    )
                 
                 # 决策与权限审批 Trace
-                with gr.Accordion("🔍 决策流与权限门禁审计 Trace (permission_gate / tool_call / finish)", open=False):
+                with gr.Accordion("🔍 决策流与权限门禁审计 Trace (permission_gate / tool_call / finish)", open=False, elem_classes=["mini-trace"]):
                     t13_trace = gr.JSON(label="决策链路跟踪与权限审计事件")
 
                 # 预设按钮事件
@@ -1291,13 +1492,17 @@ onUnmounted(() => { clearInterval(timer); });
                 t13_p3.click(lambda: "我之前跟你说过的技术栈偏好是什么？请帮我写一个用户注册接口", outputs=[t13_msg_input])
 
                 # 多轮连续对话主函数（支持动态就绪与状态推进）
-                def mini_agent_chat_turn(user_msg, chat_history, agent_inst, opts, skills):
+                def mini_agent_chat_turn(user_msg, chat_history, agent_inst, opts, skills, allow_memory):
                     if not user_msg or not user_msg.strip():
                         yield chat_history, "", agent_inst, []
                         return
                     
                     if agent_inst is None:
                         agent_inst = MiniAgent(global_client)
+                    # 每轮重新绑定最小权限回调，取消勾选后授权立即失效。
+                    agent_inst.guard.approval_callback = (
+                        lambda tool_name, _args: bool(allow_memory) and tool_name == "save_preference"
+                    )
                     
                     chat_history = chat_history or []
                     # 追加用户问题气泡与临时就绪状态（Gradio 6 仅支持 messages 格式）
@@ -1344,12 +1549,12 @@ onUnmounted(() => { clearInterval(timer); });
 
                 t13_send_btn.click(
                     mini_agent_chat_turn,
-                    inputs=[t13_msg_input, t13_chatbot, state_mini_agent, t13_opts, t13_skills],
+                    inputs=[t13_msg_input, t13_chatbot, state_mini_agent, t13_opts, t13_skills, t13_allow_memory],
                     outputs=[t13_chatbot, t13_msg_input, state_mini_agent, t13_trace],
                 )
                 t13_msg_input.submit(
                     mini_agent_chat_turn,
-                    inputs=[t13_msg_input, t13_chatbot, state_mini_agent, t13_opts, t13_skills],
+                    inputs=[t13_msg_input, t13_chatbot, state_mini_agent, t13_opts, t13_skills, t13_allow_memory],
                     outputs=[t13_chatbot, t13_msg_input, state_mini_agent, t13_trace],
                 )
                 t13_clear_btn.click(

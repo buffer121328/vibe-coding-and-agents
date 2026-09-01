@@ -1,4 +1,4 @@
-# 8.10 Subagents 子代理协作：上下文隔离与 DeepResearch 多角色流水线
+# 8.10 Subagents 子代理协作：上下文隔离与证据辅助研究流水线
 
 > **“五星级饭店的主厨绝不会自己又切菜、又洗碗、又去菜市场砍价；他会把采购任务派给专职学徒，学徒在自己的小车间搞定一切，只把洗净称好的顶级食材端回主厨厨房！”**
 
@@ -42,7 +42,7 @@ class Subagent:
         return response.choices[0].message.content.strip()
 ```
 
-### 四专家流水线串联：
+### 四个角色 + 一份证据台账：
 
 ```python
 class DeepResearchPipeline:
@@ -55,8 +55,10 @@ class DeepResearchPipeline:
     def execute_research(self, topic: str):
         # 1. 拆解议题
         plan = self.planner.run(topic)
-        # 2. 深度推导
-        research = self.researcher.run(f"课题: {topic}\n议题: {plan}")
+        # 2. 用可插拔搜索提供方建立证据台账；失败也原样记录，绝不补造来源
+        evidence = self._collect_evidence(plan, timeline)
+        # 3. 基于证据推导
+        research = self.researcher.run(f"课题: {topic}\n议题: {plan}\n证据: {evidence}")
         # 3. 审查挑刺
         critic = self.critic.run(f"研究: {research}")
         # 4. 汇总终稿
@@ -68,11 +70,15 @@ class DeepResearchPipeline:
 
 ## 🕹️ 在 Gradio 中动手体验
 
+> 🧪 **这不是 Mock 研报**：规划师、研究员、审查员和主编会分段调用真实模型，搜索环节也会尝试访问真实 DuckDuckGo 页面。因此需要 `ZHIPU_API_KEY` 和可用网络，一次研究会产生多次模型请求。
+
 在 `code/app.py` 中切换到 **`8.10 Subagents 多智能体协作`** 标签页：
 
 1. 输入研究课题：`2026年 Agentic Coding 与传统 IDE 的架构融合趋势`；
 2. 点击 **🚀 启动 4 专家协同深度研究**；
-3. 观察多智能体协同流水线：规划师拆解 ➔ 研究员深度推演 ➔ 审查员挑刺 ➔ 主编汇总，最终生成一份逻辑严密的万字深度调研报告！
+3. 观察流水线：规划师拆解 ➔ 搜索工具收集证据 ➔ 研究员分析 ➔ 审查员核验 ➔ 主编汇总。报告会保留真实 URL；搜索失败时则明确标注“尚未核实”。
+
+> 这仍是教学型研究管道：搜索结果只有标题、链接和摘要，没有网页全文抓取、来源去重、权威性评分或引用定位，因此不能等同于生产级 Deep Research。
 
 ***
 

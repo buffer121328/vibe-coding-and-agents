@@ -4,14 +4,28 @@ s05_terminal_and_edit.py - 8.5 终端执行与代码编辑 (Bash 执行与 str_r
 import os
 import subprocess
 import difflib
-from typing import Dict, Any, Tuple
+from typing import Optional, Tuple
+
+
+def _resolve_in_workspace(file_path: str, workspace_root: Optional[str] = None) -> Tuple[Optional[str], str]:
+    """解析真实路径，并阻止 `..` 与符号链接逃出工作区。"""
+    root = os.path.realpath(workspace_root or os.getcwd())
+    candidate = os.path.realpath(file_path if os.path.isabs(file_path) else os.path.join(root, file_path))
+    try:
+        inside = os.path.commonpath([root, candidate]) == root
+    except ValueError:
+        inside = False
+    if not inside:
+        return None, f"❌ 安全拦截：路径 [{file_path}] 超出工作区 [{root}]"
+    return candidate, ""
 
 def run_bash(command: str, timeout: int = 15) -> str:
     """⚡ 在当前工作目录执行 Bash/Shell 命令（带超时保护）"""
     # 基础敏感命令拦截
-    dangerous_keywords = ["rm -rf /", "mkfs", ":(){ :|:& };:"]
+    dangerous_keywords = ["rm -rf", "mkfs", ":(){ :|:& };:", "dd if=", "shutdown", "reboot"]
+    lowered = command.lower()
     for kw in dangerous_keywords:
-        if kw in command:
+        if kw in lowered:
             return f"❌ 安全拦截：检测到极度高危命令 [{kw}]，已被拒绝执行。"
 
     try:
@@ -40,12 +54,16 @@ def run_bash(command: str, timeout: int = 15) -> str:
     except Exception as e:
         return f"❌ 终端执行异常: {e}"
 
-def view_file(file_path: str, start_line: int = 1, end_line: int = 100) -> str:
+def view_file(file_path: str, start_line: int = 1, end_line: int = 100,
+              workspace_root: Optional[str] = None) -> str:
     """📖 按行号范围查看指定文件内容（带行号前缀）"""
-    if not os.path.exists(file_path):
+    resolved, error = _resolve_in_workspace(file_path, workspace_root)
+    if error:
+        return error
+    if not resolved or not os.path.isfile(resolved):
         return f"❌ 错误：文件 [{file_path}] 不存在"
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(resolved, "r", encoding="utf-8") as f:
             lines = f.readlines()
         
         total_lines = len(lines)
@@ -60,16 +78,20 @@ def view_file(file_path: str, start_line: int = 1, end_line: int = 100) -> str:
     except Exception as e:
         return f"❌ 读取文件失败: {e}"
 
-def str_replace(file_path: str, old_str: str, new_str: str) -> Tuple[bool, str, str]:
+def str_replace(file_path: str, old_str: str, new_str: str,
+                workspace_root: Optional[str] = None) -> Tuple[bool, str, str]:
     """
     ✂️ Claude Code 核心编辑算法：精准字符串匹配与行替换
     返回: (是否成功, 提示消息, 变更 Diff)
     """
-    if not os.path.exists(file_path):
+    resolved, error = _resolve_in_workspace(file_path, workspace_root)
+    if error:
+        return False, error, ""
+    if not resolved or not os.path.isfile(resolved):
         return False, f"❌ 文件 [{file_path}] 不存在", ""
 
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(resolved, "r", encoding="utf-8") as f:
             original_content = f.read()
 
         # 校验唯一性：old_str 在原文件中必须恰好出现 1 次
@@ -86,14 +108,14 @@ def str_replace(file_path: str, old_str: str, new_str: str) -> Tuple[bool, str, 
         diff_lines = list(difflib.unified_diff(
             original_content.splitlines(keepends=True),
             modified_content.splitlines(keepends=True),
-            fromfile=f"a/{os.path.basename(file_path)}",
-            tofile=f"b/{os.path.basename(file_path)}",
+            fromfile=f"a/{os.path.basename(resolved)}",
+            tofile=f"b/{os.path.basename(resolved)}",
             n=3
         ))
         diff_str = "".join(diff_lines)
 
         # 写回文件
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(resolved, "w", encoding="utf-8") as f:
             f.write(modified_content)
 
         return True, "✅ 文件精准替换成功！", diff_str
