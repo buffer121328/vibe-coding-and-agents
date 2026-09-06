@@ -52,6 +52,20 @@ function categorySidebar(cat: (typeof categories)[number]) {
   }
 }
 
+// 导航下拉菜单里的章节项：取该章 index.md 的一级标题，截取「——」前的短标题
+// （不带 link、只带 items 的导航项会被 VitePress 渲染为 VPFlyout，鼠标移入即展开）
+function chapterNavItem(dir: string) {
+  const indexFile = join(docsRoot, dir, 'index.md')
+  const title = statSync(indexFile).isFile()
+    ? firstHeading(indexFile) || dir.replace(/^\d{2}_/, '')
+    : dir.replace(/^\d{2}_/, '')
+  return { text: title.split('——')[0].trim(), link: `/${dir}/` }
+}
+
+function chapterDirsOf(prefixes: string[]) {
+  return prefixes.flatMap((p) => chapterDirs.filter((d: string) => d.startsWith(p)))
+}
+
 // VitePress 侧边栏支持「按路径前缀的对象」形式：把每个章节路由指向其所属分类，
 // 这样点顶部哪一类，侧边栏就只显示该类的子章节
 const sidebar: Record<string, { text: string; collapsed: boolean; items: unknown[] }[]> = {}
@@ -69,6 +83,38 @@ export default withMermaid(defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: true, // 书稿中存在指向项目子文件/未同步页面的交叉引用，跳过死链检查
+
+  // 站点规范地址：sitemap / canonical / og:url 都基于它生成（GitHub Pages 项目站）
+  sitemap: {
+    hostname: 'https://buffer121328.github.io/vibe-coding-and-agents/',
+    lastUpdated: true,
+  },
+
+  head: [
+    // SEO 兜底：全站默认的 Open Graph / Twitter 卡片（每页 description 由 transformHead 注入）
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'Vibe Coding 与 AI Agent 全景知识库' }],
+    ['meta', { property: 'og:image', content: 'https://buffer121328.github.io/vibe-coding-and-agents/og-image.png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://buffer121328.github.io/vibe-coding-and-agents/og-image.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/vibe-coding-and-agents/favicon.png' }],
+  ],
+
+  // 每页注入独立的 og:title / og:url / canonical，避免搜索引擎把所有页当成同一摘要
+  transformHead({ pageData }) {
+    const head = [...(pageData.frontmatter.head ?? [])]
+    const url = `https://buffer121328.github.io/vibe-coding-and-agents/${pageData.relativePath?.replace(/index\.md$/, '').replace(/\.md$/, '')}`
+    const title = pageData.title || 'Vibe Coding 与 AI Agent 全景知识库'
+    // description 优先取 frontmatter（sync-docs 注入的正文摘要），否则退回站点简介
+    const description = pageData.frontmatter.description || pageData.description || 'AI 辅助编程与 Agent 智能体全景教学知识库'
+    head.push(['link', { rel: 'canonical', href: url }])
+    head.push(['meta', { property: 'og:title', content: title }])
+    head.push(['meta', { property: 'og:description', content: description }])
+    head.push(['meta', { property: 'og:url', content: url }])
+    return head
+  },
 
   markdown: {
     math: true, // 支持 $..$ / $$..$$ 的 LaTeX 数学公式（VitePress 内置 markdown-it-mathjax3）
@@ -89,7 +135,11 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      ...categories.map((c) => ({ text: c.text, link: c.link })),
+      // 带 items 不带 link：渲染为悬停下拉菜单，列出该分类下的各章节
+      ...categories.map((c) => ({
+        text: c.text,
+        items: chapterDirsOf(c.prefixes).map(chapterNavItem),
+      })),
       { text: 'GitHub', link: 'https://github.com/buffer121328/vibe-coding-and-agents' },
     ],
     sidebar: sidebar as any, // 对象形式（按路径前缀映射到分类侧边栏），类型声明未收录故断言

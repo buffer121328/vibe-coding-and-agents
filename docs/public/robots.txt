@@ -1,0 +1,5 @@
+# 允许所有搜索引擎抓取；sitemap 指向全站 URL 清单
+User-agent: *
+Allow: /
+
+Sitemap: https://buffer121328.github.io/vibe-coding-and-agents/sitemap.xml
