@@ -113,9 +113,9 @@ uv run python s01_env_setup.py
 | 8.10 Subagents 协作   | `s10_subagents.py`         | `uv run python s10_subagents.py`         | 「8.10 Subagents 多智能体协作」   |
 | 8.11 会话持久化          | `s11_session.py`           | `uv run python s11_session.py`           | 「8.11 会话持久化与多分支」          |
 | 8.12 可观测性评估         | `s12_observability.py`     | `uv run python s12_observability.py`     | 「8.12 可观测性与性能评估」          |
-| 8.13 综合实战 MiniAgent | `s13_mini_agent.py`        | `uv run python s13_mini_agent.py`        | 「8.13 Mini-Agent 综合实战」    |
+| 8.13 综合实战 MiniAgent | `s13_mini_agent.py`        | `uv run python s13_mini_agent.py --repl` | 「8.13 Mini-Agent 综合实战」    |
 
-> 提示：`uv run python app.py` 是"总开关"，启动后任意标签页都能体验对应小节；单独跑 `sXX.py` 则是"只看该小节"，日志更聚焦、更适合观察底层 JSON 报文与流式输出。
+> 提示：`uv run python app.py` 是"总开关"，启动后任意标签页都能体验对应小节；单独跑 `sXX.py` 则是"只看该小节"，日志更聚焦、更适合观察底层 JSON 报文与流式输出。8.13 的 CLI 加 `--repl` 参数即进入交互式命令行界面：启动时显示大号 ASCII Logo，输入 `/` 弹出命令菜单（支持 `/deep` `/search` `/sessions` `/resume` `/clear` `/help` `/quit`，↑↓ 翻历史），完整命令清单用 `/help` 查看；回答流式打字机输出，对话自动存档至 `sessions/`，可用 `/resume` 跨进程续跑；不加参数则只跑一条内置演示问题。
 
 ***
 
@@ -135,8 +135,9 @@ uv run python s01_env_setup.py
 | **`s10_subagents.py`**         | 8.10 Subagents协作    | 上下文隔离的子代理、可插拔搜索提供方、证据台账与研究/审查/写作流水线                                               |
 | **`s11_session.py`**           | 8.11 会话持久化与多分支      | `SessionStore` 存档读档、树状 `fork` 分叉、断点续跑与 Markdown 导出                                              |
 | **`s12_observability.py`**     | 8.12 可观测性与性能评估      | `EventBus`、显式价格配置、`EvalCase` 验证器与成功率/时延/Token 评估                                             |
-| **`s13_mini_agent.py`**        | 8.13 综合实战 MiniAgent | 整合全部机制，打造会联网搜索、会深度思考的个人对话助手（最终回答经 `polish_markdown` 润色适配）                                       |
+| **`s13_mini_agent.py`**        | 8.13 综合实战 MiniAgent | 整合全部机制，打造会联网搜索、会深度思考的个人对话助手（最终回答经 `polish_markdown` 润色适配）；加 `--repl` 进入带命令菜单的交互式终端界面（/ 唤出菜单、会话存档与 /resume 续跑），实时打印 EventBus 状态流转   |
 | **`app.py`**                   | 综合可视化界面             | 13 个 Tab 聚合的 Master Gradio 交互工作台（8.3/8.10/8.13 的 LLM 输出统一 Markdown 润色后渲染）                       |
+| **`app_s13.py`**               | 8.13 独立工作台          | 单页专注版 Mini-Agent 可视化界面：流式打字机对话 + 实时状态时间线（🧠→⚙️→✍️→🏁）+ 会话切换（自动存档/恢复）+ 决策流 Trace，端口 7861 与 `app.py` 错开             |
 
 ***
 

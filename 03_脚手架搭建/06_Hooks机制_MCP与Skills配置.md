@@ -1,90 +1,116 @@
-# 3.6 Hooks 机制、MCP 万能插件与 Skills 技能
+# 3.6 Hooks、MCP 与 Skills：检查、连接与复用
 
-> Hooks（钩子）就像“进门自动感应换鞋的门禁保安”，在关键操作前后自动拦截把关；MCP 是连接外部世界的“万能 Type-C 拓展坞”；而 Skills 则是给 Agent 一键安装的“专家作业技能包”！
+工作室里有到点响起的提醒、连接设备的接口，也有整理好的操作手册。Hooks、MCP 与 Skills 分别接近这三种用途：在特定事件发生时执行动作，连接外部工具和资料，以及复用一套工作方法。
 
-***
+它们可以配合使用，但并不是安装得越多，智能体就越可靠。先确定当前缺少什么，再配置相应能力。
 
-## 🪝 一、先搞懂什么是 Hooks（钩子机制）？
+| 机制 | 解决的问题 | 示例 |
+| :--- | :--- | :--- |
+| Hooks（钩子） | 某个事件发生时自动做什么 | 文件修改后运行格式检查 |
+| MCP（模型上下文协议） | 应用怎样连接外部工具与资源 | 访问限定目录的文件服务 |
+| Skills（技能） | 某类任务应怎样完成 | 按固定要求审查一份文档 |
 
-很多新手听到“Hooks”觉得很高深，其实用日常生活场景一秒就能理解：
+## Hooks：把重复检查放到事件前后
 
-- **日常生活比喻**：
-  - **汽车安全带蜂鸣器**：当你坐上驾驶位发动引擎的一瞬间（触发事件），系统自动检查你有没有系安全带（Pre-Hook 拦截）。没系好就疯狂报警甚至无法挂挡！
-  - **自动洗手机**：把手伸到水龙头下（事件），自动感应出水并在离开后自动关闭（Post-Hook 收尾）。
+例如提交代码前执行一次格式检查，和餐厅出餐前核对订单类似：到了那个步骤，就执行预先安排的动作。[Git Hooks](https://git-scm.com/docs/githooks)属于版本控制事件，[Claude Code Hooks](https://code.claude.com/docs/en/hooks-guide)则属于智能体的运行事件，配置位置和触发时机不同。
 
 <!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Vercel 黑白 -->
 <p align="center">
   <a href="img/diagrams/06-diagram-01.svg">
-    <img src="img/diagrams/06-diagram-01.svg" alt="🪝 一、先搞懂什么是 Hooks（钩子机制）？" width="860">
+    <img src="img/diagrams/06-diagram-01.svg" alt="本节概念与流程示意图 1" width="860">
   </a>
 </p>
 
-### 编程与 Agent 中最常见的两大 Hooks
+钩子不会自动知道什么是正确代码。它执行什么命令、检查哪些文件、失败后怎样处理，都需要配置。检查成功只能说明这些检查项目通过，不能保证所有问题被发现。
 
-1. **Git Hooks (如** **[Husky](https://typicode.github.io/husky/))**：在执行 `git commit` 时，自动运行 Pre-commit Hook，如果代码有报错红字，直接拒绝提交，保证推送到 GitHub 的永远是健康代码；
-2. **Agent 安全 Hooks**：在 Agent 执行 `rm`、`drop table` 或向外发送网络请求前，自动弹出危险拦截提示，必须人类授权才可放行。
+初次配置可以选择低影响操作，例如记录事件或检查一个测试文件。确认触发时机和输入内容后，再增加修改或拦截行为。
 
-***
+### 如何检查钩子是否生效
 
-## 🔌 二、手把手配置 MCP（Model Context Protocol）万能插头
+先查看当前工具识别到的钩子，再制造一个对应事件。如果设置的是“编辑之后”，仅发一句聊天不会触发；如果指定了工具名匹配规则，名称不对应也可能不执行。
 
-- **官方网站**: <https://modelcontextprotocol.io>
+命令型钩子通常需要正确处理输入和退出状态。输出日志不要混入要求返回的结构化数据。钩子失败时，应能在执行记录中找到原因，而不是让主任务无声停止。
 
-### 在 Cursor / Claude Desktop 中配置 MCP
+## MCP：先连接一个本地文件服务
 
-在你的项目根目录 `.cursor/mcp.json` 或 Claude Desktop 配置文件中加入以下配置：
+先使用不需要外部账户的例子，便于区分安装、启动和权限问题。[MCP 文件系统参考服务](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem)可以在限定目录中提供文件操作能力。
+
+前提是系统已有 [Node.js](https://nodejs.org)，终端能运行 `node` 与 `npx`。创建一个专门的练习目录，放入没有敏感信息的文本文件，记下它的绝对路径。
+
+以下为支持 `mcpServers` 配置格式的客户端示例。配置文件位置由具体客户端决定，例如 Cursor 的项目配置是 `.cursor/mcp.json`；不要把这份 JSON 当作所有工具的通用配置文件。
 
 ```json
 {
   "mcpServers": {
-    "local-filesystem": {
+    "practice-files": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/cheng/Desktop/vibe-coding-and-agents"]
-    },
-    "postgres-database": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:password@localhost:5432/mydb"]
-    },
-    "github-tools": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
-      }
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/absolute/path/to/mcp-practice"
+      ]
     }
   }
 }
 ```
 
-保存后重启编辑器，你的 Agent 瞬间拥有了**直接读写本地指定目录、查询数据库表、以及在 GitHub 上自动提 PR 的物理手脚！**
+把示例路径改为自己的练习目录。Windows JSON 路径可以使用 `C:/Users/你的用户名/mcp-practice`，或者按 JSON 规则转义反斜杠。`npx -y` 会在需要时获取并运行包，因此应先核对包名和来源；正式项目可以记录经过验证的版本。
 
-***
+### 连接之后怎样验收
 
-## 🧰 三、如何下载与挂载 Agent Skills 技能包？
+1. 按客户端说明刷新或重新连接，查看服务是否启动。
+2. 查看工具列表，确认发现了预期的文件工具。
+3. 让 AI 读取练习目录中的指定文件，对照原文核对。
+4. 检查允许访问的目录范围，确认没有把个人主目录误设为工作范围。
 
-**Agent Skill** 是一套封装了专家规程的 `SKILL.md` 标准包。
+“服务已连接”只证明连接建立；“工具已发现”也不等于一次实际操作成功。两步都完成后，再测试读取。需要写入时，用可以删除重建的练习文件单独验证。
+
+### 外部服务不要照搬旧示例
+
+MCP 官方仓库中的部分早期参考服务已经归档，包括 GitHub、PostgreSQL 等。需要这些能力时，查[当前维护列表](https://github.com/modelcontextprotocol/servers)与相应服务提供者的说明。
+
+数据库地址、令牌和权限应按用途配置，避免把真实密码写进可提交的项目配置。MCP 统一的是通信方式，数据访问范围仍由服务和账户控制。
+
+## Skills：把重复方法整理成文件
+
+技能更像操作手册，通常包含适用条件、步骤与配套资料。[Agent Skills 规范](https://agentskills.io/specification)说明了 `SKILL.md` 的元数据和目录结构，加载方式则由宿主工具决定。
 
 <!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Notion 简洁 -->
 <p align="center">
   <a href="img/diagrams/06-diagram-02.svg">
-    <img src="img/diagrams/06-diagram-02.svg" alt="🧰 三、如何下载与挂载 Agent Skills 技能包？" width="760">
+    <img src="img/diagrams/06-diagram-02.svg" alt="本节概念与流程示意图 2" width="760">
   </a>
 </p>
 
-### 实战步骤（以安全审计技能为例）：
+下面是一份可以用于练习的技能内容：
 
-1. **访问技能大市场**：打开 [Agent Skills Hub (GitHub)](https://github.com/legendaryabhi/agent-skills-hub)；
-2. **下载标准技能文件**：找到 `security-audit/SKILL.md`；
-3. **放入项目规范目录**：在项目中创建 `.skills/security-audit/SKILL.md`；
-4. **对 Agent 说一句话触发**：“请调用 security-audit 技能，对当前项目的所有 API 接口进行漏洞排查”。
-   Agent 就会完全按照专家的 SOP 步骤，逐一排查 SQL 注入、跨站脚本和权限漏洞！
+```markdown
+---
+name: document-review
+description: 审查项目 Markdown 文档的术语、链接与操作步骤
+---
 
-***
+# 文档审查
 
-## 🔗 相关开源工具与官方平台
+先读取用户指定的文件，确认章节主题与读者背景。
+检查术语首次出现时是否有解释，操作步骤是否说明前提与成功标志。
+检查相对链接指向的文件是否存在。
 
-- [Model Context Protocol 官方极速入门](https://modelcontextprotocol.io/quickstart)
-- [Awesome MCP Servers 社区精选资源库](https://github.com/punkpeye/awesome-mcp-servers)
-- [Agent Skills Hub 官方开源仓库](https://github.com/legendaryabhi/agent-skills-hub)
-- [Husky 现代 Git Hooks 官方文档](https://typicode.github.io/husky/)
+输出问题位置、具体原因和建议改法。
+没有发现问题时如实说明，不为凑数量重复列问题。
+缺少资料或无法验证外部链接时，注明验证范围。
+```
 
+以 [Claude Code 技能](https://code.claude.com/docs/en/skills)为例，项目技能可放在 `.claude/skills/document-review/SKILL.md`。其他工具可能使用不同目录，应查相应文档，不把 `.skills/` 当作统一标准。
+
+### 怎样验证一个技能
+
+先让工具显示或识别已加载技能，再用一份包含已知错误的测试文档执行。检查是否发现错误、有没有编造不存在的问题，以及输出是否符合要求。
+
+技能文件只提供方法，不会自动安装脚本依赖，也不会扩大工具权限。如果步骤要求运行检查脚本，脚本不存在时应报告缺少资源，而不是假称已经检查。
+
+## 三种机制一起使用时
+
+例如文档整理任务可以用技能规定审查步骤，通过 MCP 读取外部资料，再由钩子在文件修改后运行格式检查。任务方法、数据访问和自动检查各有责任。
+
+出现问题时，先定位属于哪一层：技能未触发、服务没连接，还是钩子命令失败。保留各层的执行结果，通常比把三个机制同时重新安装更有效。

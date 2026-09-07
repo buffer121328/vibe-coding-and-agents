@@ -10,5 +10,6 @@ dependencies = [
     "rich>=13.9.0",
     "tiktoken>=0.8.0",
     "python-dotenv>=1.0.0",
-    "pydantic>=2.10.0"
+    "pydantic>=2.10.0",
+    "prompt-toolkit>=3.0.53",
 ]

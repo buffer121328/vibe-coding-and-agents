@@ -4,7 +4,7 @@
 
 ---
 
-## 🧩 为什么是“蒸馏”，而不是“从零手搓”？
+## 为什么是“蒸馏”，而不是“从零手搓”？
 
 完整版 KnowledgeForge 是一个生产级多 Agent 知识管理平台（FastAPI + LangGraph + Celery + Kafka + pgvector + Neo4j + React），约 9 万行代码。**直接拿它当教程，读者会在配置 Docker 的路上先阵亡**。所以我们做了三刀蒸馏：
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 🗺️ 总装图：一次问答的完整旅程
+## 总装图：一次问答的完整旅程
 
 <!-- 图表源文件：img/diagrams/15-diagram-01.mmd；视觉风格：House 统一风格 -->
 <p align="center">
@@ -29,7 +29,7 @@
 
 ---
 
-## 📁 项目结构：每个文件对应一章课
+## 项目结构：每个文件对应一章课
 
 项目位于本章 `code/KnowledgeForge_lite/`，全部 Python 代码约 900 行：
 
@@ -55,7 +55,7 @@ KnowledgeForge_lite/
 
 ---
 
-## 🚀 十分钟跑通
+## 十分钟跑通
 
 ```bash
 cd code/KnowledgeForge_lite
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 python scripts/01_ingest.py                        # ① 入库（幂等，可反复跑）
 python scripts/02_ask.py "去上海出差住一晚能报多少？"  # ② 带引用作答
 python scripts/02_ask.py "公司年终奖一般发几个月？"    # ③ 拒答：库里没有就老实说
-python scripts/03_evaluate.py                      # ④ 黄金评测集回归门禁（手写裁判，秒级）
+python scripts/03_evaluate.py                      # ④ 基准评测集回归门禁（手写指标，快速运行）
 python scripts/04_ragas_eval.py                    # ⑤ Ragas 全量三元组打分
 docker run -d --name neo4j -p 7474:7474 -p 7687:7687 \
   -e NEO4J_AUTH=neo4j/forge12345 neo4j:5           # ⑥ 起图数据库（完整版同款 Neo4j）
@@ -80,9 +80,9 @@ uvicorn forge_lite.server:app --port 8800          # ⑧ 起服务：浏览器�
 
 ---
 
-## 🐳 顺便补课：Docker 五个核心概念
+## 顺便补课：Docker 五个核心概念
 
-十分钟跑通的第 ⑥ 步突然冒出一行 `docker run`——如果你没接触过 Docker，这一节用五个概念把账补齐。**它解决的是那句经典甩锅："在我机器上是好的啊！"**Docker 的思路像航运业的集装箱：把货（应用）和装卸环境（依赖、配置）整体封进一个标准箱子，吊车、货轮、码头（你的 Mac、同事的 Linux、云服务器）都不用关心箱子里面是什么。
+十分钟跑通的第 ⑥ 步突然冒出一行 `docker run`——如果你没接触过 Docker，这一节用五个概念把账补齐。**它解决的是那句经典甩锅："在我机器上是好的啊。"**Docker 的思路像航运业的集装箱：把货（应用）和装卸环境（依赖、配置）整体封进一个标准箱子，吊车、货轮、码头（你的 Mac、同事的 Linux、云服务器）都不用关心箱子里面是什么。
 
 <!-- 图表源文件：img/diagrams/15-diagram-02.mmd；视觉风格：House 统一风格 -->
 <p align="center">
@@ -125,7 +125,7 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 
 ---
 
-## 🔍 四个最值得细读的接缝
+## 四个最值得细读的接缝
 
 教程各节已经把零件拆开讲过，这里只讲**零件之间的三个接缝**——总装最容易装反的地方：
 
@@ -135,7 +135,7 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 
 ### 接缝二：编号即协议（retrieval.py ↔ citation.py ↔ agent.py）
 
-检索结果按 RRF 名次排好后，`agent.py` 把它们编号成 `[1] [2] …` 喂进 Prompt。这个编号同时扮演三个角色：**模型的组织提示**（照着编号答）、**引用的锚点**（`[n]` 映射回 `文件名#切块号`）、**校验的对象**（`check_citations` 程序性验证编号真实存在）。一条协议贯穿三处，改动任何一环都要跑 `03_evaluate.py`。
+检索结果按 RRF 名次排好后，`agent.py` 将它们编号为 `[1] [2] …` 并放入 Prompt。编号同时承担三个作用：**组织模型回答**、**把 `[n]` 映射回 `文件名#切块号`**、**供 `check_citations` 校验引用是否存在**。这套协议贯穿三处，改动任何一环都要运行 `03_evaluate.py`。
 
 ### 接缝四：图谱是检索的“乘客”，不是“司机”（knowledge_graph.py ↔ agent.py）
 
@@ -158,7 +158,7 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 
 ---
 
-## 🧪 别只看不跑：两个“破坏性实验”
+## 别只看不跑：两个“破坏性实验”
 
 验证这台机器真装对了，最有力的是主动搞破坏：
 
@@ -182,7 +182,7 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 
 ---
 
-## 🚀 从 Lite 到完整版：什么时候需要升级？
+## 从 Lite 到完整版：什么时候需要升级？
 
 | 信号 | 该升级什么 | 对应完整版组件 |
 | :--- | :--- | :--- |
@@ -196,7 +196,17 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 
 ---
 
-## 🔗 权威官方参考
+<!-- CH10-14_EXPANSION -->
+
+## 先跑通，再主动制造两类故障
+
+完成基础运行后，可以删除一份应被引用的文档，确认系统会拒答或提示依据不足；再修改制度版本并重新入库，检查旧片段是否被替换、缓存是否失效、引用是否指向新版。
+
+随后选择一个模块做单变量实验，例如只调整切块大小或 Top-K，并用同一组问题比较。Lite 的价值在于能看到各模块怎样连接；当并发、租户和可靠任务成为明确需求时，再引入更重的基础设施。
+
+---
+
+## 权威官方参考
 
 - [KnowledgeForge 完整版仓库](https://github.com/buffer121328/KnowledgeForge)
 - [LangGraph 官方文档（StateGraph 条件边）](https://langchain-ai.github.io/langgraph/)

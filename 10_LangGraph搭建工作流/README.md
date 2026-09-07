@@ -1,6 +1,6 @@
 # 第 10 章：LangGraph 搭建工作流与 Multi-Agent 架构
 
-在掌握了 LangChain 的基础与 Agent 概念后，我们将踏入当前大模型应用落地的深水区——**复杂工作流的编排**。
+在掌握 LangChain 的基础与 Agent 概念后，接下来要处理更复杂的工程问题：怎样编排一个有分支、循环、并行和人工审批的工作流。
 
 过去的一年里，开发者们普遍发现：单纯依赖大模型自行判断工具的“单体 Agent”在实际企业应用中不可控。它经常陷入死循环，或者在执行危险操作前不受控制。
 
@@ -8,7 +8,7 @@
 
 > **本章核心目标**：从零理解状态图（StateGraph），掌握条件路由、并行分发、图的可视化与流式调试等基础基建，进阶到人工干预（Human-in-the-loop）机制，通过一个**生产架构导向的多智能体旅行助手教学项目**理解 AI 应用如何拆层、审批和测试；再以进阶专题补齐工具调用循环、设计模式、长期记忆、持久执行、子图、Functional API 与部署观测的知识地图。
 
-## 📚 目录结构
+## 目录结构
 
 * [01_初识LangGraph与状态机](01_初识LangGraph与状态机.md) - 解决传统Agent不可控痛点，学习“节点”、“边”与“条件路由”。
 * [02_State图的构建与运行](02_State图的构建与运行.md) - 学习如何定义全局状态交接本，并编写代码让图跑起来。
@@ -27,13 +27,13 @@
 * [12_子图与多智能体全谱](12_子图与多智能体全谱.md) - 真子图嵌套；按当前官方分类理解 Subagents、Handoffs、Skills、Router、Custom workflow，并用三张图跑通重点实现。
 * [13_HITL进阶](13_HITL进阶.md) - 节点内动态中断 interrupt() + Command(resume)，条件拦截与多级审批。
 * [14_FunctionalAPI与两套API选型](14_FunctionalAPI与两套API选型.md) - @entrypoint/@task 给现有 Python 函数加持久化，Graph API vs Functional API 选型对照。
-* [15_部署与可观测性](15_部署与可观测性.md) - LangGraph Server/Studio/Platform 部署，可观测性取舍（暂不引入 LangSmith/Langfuse，用调试三板斧替代）与追踪生态认知。
+* [15_部署与可观测性](15_部署与可观测性.md) - LangGraph Server/Studio/Platform 部署，可观测性取舍（暂不引入 LangSmith/Langfuse，用调试三个方法替代）与追踪生态认知。
 
 **收官实战**：
 
 * [16_综合实战_旅行助手项目](16_综合实战_旅行助手项目.md) - 用生产架构导向的旅行助手教学项目把全章零件装进一台整机，并明确它与真正生产系统之间的边界。
 
-## 🛠️ 环境准备与两套 API 总览
+## 环境准备与两套 API 总览
 
 开始学习前建议先装好环境（Python 3.10+）：
 
@@ -48,10 +48,22 @@ pip install -U langgraph langchain langchain-openai
 
 > 💡 **参考资料**：本章基础小节主要依据 **LangGraph 1.x 官方文档**（图 API 概念、使用图 API、流式输出等），并参考了 PocketFlow、Matt Harrison 等社区教程进行扩展，各小节末尾均附有完整扩展阅读链接。
 
-## 💻 本章示例与实战源码
+## 本章示例与实战源码
 
 - **[code/examples/](code/examples/)**：02~14 每节一个最小可运行示例，**全部无需 API Key**（用 langchain-core 内置假模型模拟大模型环节），装好 `langgraph` 后逐个 `python xxx.py` 即可跑通。
 - **[code/workbench/](code/workbench/README.md)**：🌟 **图工作台**（本章配套可视化演示）——把 14 个关卡（含 10.12b 多智能体重点实现）的真实 LangGraph 图搬上交互台：House 风格 SVG 图结构 + 节点逐步点亮 + Replay 重执行对照 + 正式批准/驳回 + Functional API 真并行，同样零 API Key。
 - **[code/travel_agent_v2/](code/travel_agent_v2/README.md)**：16 节收官实战的生产架构导向 Multi-Agent 教学项目；使用 LangGraph 1.x 动态 `interrupt()` 审批、子图、Store、Send 与测试，但仍采用 SQLite 和进程内存储，生产边界见项目 README。
 
-准备好进入 Agent 工业流水线的时代了吗？让我们开始吧！
+准备好进入 Agent 工业流水线的时代了吗？让我们开始吧。
+
+---
+
+<!-- CH10-14_README_EXPANSION -->
+
+## 阅读与练习建议
+
+本章可以按四段学习：先用 01—05 建立状态、路由、并行和调试基础；再用 06—08 加入记忆、人工介入和工具循环；09—14 讨论结构选择、恢复执行与多智能体；最后用 15—16 检查部署和综合项目。
+
+每完成一节，都用一个最小例子回答四个问题：状态里保存了什么，这次走了哪条路径，失败后从哪里继续，外部操作会不会重复。涉及工具写操作时，优先使用教学数据，并验证驳回、超时和重复恢复。
+
+章节中的代码展示机制，不能直接代表生产环境的身份、权限、事务和审计已经完成。综合项目也应以项目 README 和本次测试结果为准。

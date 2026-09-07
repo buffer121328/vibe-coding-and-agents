@@ -112,24 +112,43 @@ def render_code_viewer_html(chapter_num: int) -> str:
 # ==============================================================================
 custom_css = pygments_css + "\n" + """
 
+:root {
+    --studio-bg: #f5f7fb;
+    --studio-panel: #ffffff;
+    --studio-line: #e2e8f0;
+    --studio-ink: #172033;
+    --studio-muted: #64748b;
+    --studio-brand: #5b5ce2;
+    --studio-brand-soft: #eef2ff;
+}
+
+html, body {
+    background: var(--studio-bg) !important;
+}
+
 /* 全局页面宽度自适应铺满 */
 .gradio-container {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif !important;
-    max-width: 98% !important;
-    width: 98% !important;
+    max-width: 1500px !important;
+    width: calc(100% - 32px) !important;
     margin: 0 auto !important;
-    padding: 8px 16px !important;
+    padding: 18px 0 10px !important;
+    color: var(--studio-ink) !important;
 }
 
 /* 顶部 Hero 区域 - 高对比度明晰设计 */
 .hero-container {
-    background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #0f172a 100%) !important;
-    border-radius: 16px !important;
-    padding: 18px 24px !important;
-    margin-bottom: 12px !important;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 78% -30%, rgba(129, 140, 248, .34), transparent 34%),
+        linear-gradient(135deg, #11152b 0%, #20205b 54%, #131a35 100%) !important;
+    border-radius: 20px !important;
+    padding: 20px 26px !important;
+    margin-bottom: 16px !important;
     color: #ffffff !important;
-    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.4) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 16px 38px -22px rgba(15, 23, 42, .75) !important;
+    border: 1px solid rgba(255, 255, 255, .13) !important;
 }
 
 .hero-top-bar {
@@ -173,7 +192,7 @@ custom_css = pygments_css + "\n" + """
 }
 
 .hero-title {
-    font-size: 23px !important;
+    font-size: clamp(21px, 2vw, 28px) !important;
     font-weight: 800 !important;
     line-height: 1.3 !important;
     margin: 4px 0 6px 0 !important;
@@ -206,24 +225,30 @@ custom_css = pygments_css + "\n" + """
     background: rgba(255, 255, 255, 0.16) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     padding: 3px 10px !important;
-    border-radius: 8px !important;
+    border-radius: 999px !important;
     font-size: 12px !important;
     color: #ffffff !important;
     font-weight: 500 !important;
 }
 
-/* 左侧章节导航容器：高度跟随自身宽度，避免固定像素卡片 */
+/* 三栏工作台：统一高度，滚动只留给栏目内部 */
+#workspace-shell {
+    align-items: stretch !important;
+    gap: 14px !important;
+}
+
+/* 左侧章节导航容器 */
 .sidebar-container {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
     padding: 12px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    aspect-ratio: 2 / 5 !important;
+    height: clamp(500px, calc(100vh - 245px), 760px) !important;
+    min-height: 500px !important;
+    max-height: 760px !important;
     overflow-y: auto !important;
+    flex-wrap: nowrap !important;
 }
 
 .sidebar-title {
@@ -248,9 +273,9 @@ custom_css = pygments_css + "\n" + """
     display: flex !important;
     align-items: center !important;
     padding: 8px 10px !important;
-    border-radius: 8px !important;
-    border: 1px solid #e2e8f0 !important;
-    background: #f8fafc !important;
+    border-radius: 10px !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
     cursor: pointer !important;
     transition: all 0.15s ease !important;
     font-size: 12px !important;
@@ -265,7 +290,7 @@ custom_css = pygments_css + "\n" + """
 }
 
 .chapter-nav-radio label.selected {
-    background: #4f46e5 !important;
+    background: linear-gradient(135deg, #5b5ce2, #4f46e5) !important;
     border-color: #4338ca !important;
     color: #ffffff !important;
     font-weight: 700 !important;
@@ -279,17 +304,17 @@ custom_css = pygments_css + "\n" + """
 .code-viewer-panel {
     background: #282c34 !important;
     border: 1px solid #3e4451 !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
     padding: 12px 14px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    aspect-ratio: 4 / 5 !important;
+    height: clamp(500px, calc(100vh - 245px), 760px) !important;
+    min-height: 500px !important;
+    max-height: 760px !important;
     overflow: hidden !important;
     display: grid !important;
     grid-template-rows: auto minmax(0, 1fr) !important;
     flex-direction: column !important;
+    flex-wrap: nowrap !important;
     box-sizing: border-box !important;
 }
 
@@ -399,14 +424,26 @@ custom_css = pygments_css + "\n" + """
 .playground-panel {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
     padding: 14px 16px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    aspect-ratio: 4 / 5 !important;
+    height: clamp(500px, calc(100vh - 245px), 760px) !important;
+    min-height: 500px !important;
+    max-height: 760px !important;
     overflow-y: auto !important;
+    flex-wrap: nowrap !important;
+}
+
+.playground-panel button {
+    border-radius: 10px !important;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease !important;
+}
+
+.playground-panel button:hover { transform: translateY(-1px); }
+
+.playground-panel textarea,
+.playground-panel input {
+    border-radius: 11px !important;
 }
 
 /* 章节头部说明卡片 */
@@ -554,68 +591,162 @@ custom_css = pygments_css + "\n" + """
     font-weight: bold;
 }
 
-/* 8.13 多轮 Chatbot 对话框美化 */
-.chat-container-box {
-    border-radius: 12px !important;
-    border: 1px solid #e2e8f0 !important;
-    background: #f8fafc !important;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
-    height: clamp(260px, 32vh, 430px) !important;
-    min-height: 0 !important;
-    max-height: 430px !important;
-    aspect-ratio: auto !important;
-}
-
-/* 8.13 对话区：收紧信息层级，避免“巨型空白 + 控件散落” */
+/* 8.13 综合实战：紧凑的网页版 AI 对话体验 */
 .mini-agent-view {
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 10px !important;
 }
-.mini-agent-view .chapter-header-card,
-.mini-agent-view .linkage-bar {
-    margin-bottom: 0 !important;
+
+.mini-chat-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 2px 10px;
+    border-bottom: 1px solid #e2e8f0;
 }
+
+.mini-chat-model { color: #172033; font-size: 14px; font-weight: 800; }
+.mini-chat-desc { margin-top: 2px; color: #64748b; font-size: 11px; line-height: 1.45; }
+
+.mini-chat-ready {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 9px;
+    border: 1px solid #d1fae5;
+    border-radius: 999px;
+    color: #047857;
+    background: #ecfdf5;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mini-chat-ready::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, .12);
+}
+
+.chat-container-box {
+    height: clamp(245px, 35vh, 330px) !important;
+    min-height: 245px !important;
+    max-height: 330px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 0 0 1px #e2e8f0 !important;
+    overflow: hidden !important;
+}
+
+.chat-container-box .wrapper,
+.chat-container-box .bubble-wrap { height: 100% !important; background: #ffffff !important; }
+
+.chat-container-box .bubble-wrap { padding: 18px 14px !important; gap: 16px !important; }
+.chat-container-box .message-row { max-width: 100% !important; }
+.chat-container-box .bot-row { padding-right: 8% !important; }
+.chat-container-box .user-row { padding-left: 14% !important; }
+.chat-container-box .message-row .message {
+    border: 0 !important;
+    box-shadow: none !important;
+    font-size: 12.5px !important;
+    line-height: 1.65 !important;
+}
+.chat-container-box .user-row .message {
+    border-radius: 16px 16px 5px 16px !important;
+    background: #eef2f7 !important;
+    color: #1e293b !important;
+}
+.chat-container-box .bot-row .message { background: transparent !important; color: #172033 !important; }
+.chat-container-box .bot-row .flex-wrap::before {
+    content: "✦";
+    display: grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    flex: 0 0 25px;
+    border-radius: 8px;
+    color: white;
+    background: linear-gradient(145deg, #6366f1, #4338ca);
+    font-size: 12px;
+}
+.chat-container-box .bot-row .flex-wrap { align-items: flex-start !important; }
+.chat-container-box .placeholder-content {
+    height: 100% !important;
+    display: grid !important;
+    place-items: center !important;
+}
+.chat-container-box .placeholder-content::after {
+    content: "✦  有什么想一起完成的？";
+    color: #94a3b8;
+    font-size: 13px;
+}
+
 .mini-agent-view .mini-shortcuts {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 10px !important;
+    gap: 7px !important;
 }
+
 .mini-agent-view .mini-shortcuts > *,
 .mini-agent-view .mini-input-row > *,
-.mini-agent-view .mini-options-row > * {
-    min-width: 0 !important;
+.mini-agent-view .mini-options-row > * { min-width: 0 !important; }
+
+.mini-agent-view .mini-shortcuts button {
+    min-height: 34px !important;
+    padding: 6px 8px !important;
+    overflow: hidden !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+    background: #fff !important;
+    font-size: 10.5px !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
 }
-.mini-agent-view .mini-input-row {
-    align-items: stretch !important;
-    gap: 10px !important;
+.mini-agent-view .mini-shortcuts button:hover {
+    border-color: #c7d2fe !important;
+    color: #4338ca !important;
+    background: #f5f3ff !important;
 }
+
+.mini-agent-view .mini-input-row { align-items: stretch !important; gap: 7px !important; }
+.mini-agent-view .mini-input-row > .form { flex-grow: 8 !important; }
 .mini-agent-view .mini-input-row textarea {
-    min-height: 56px !important;
+    min-height: 52px !important;
+    padding: 14px 13px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 15px !important;
+    font-size: 12.5px !important;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, .06) !important;
 }
-.mini-agent-view .mini-input-row button {
-    min-height: 56px !important;
+.mini-agent-view .mini-input-row button { min-height: 52px !important; border-radius: 14px !important; }
+.mini-agent-view .mini-input-row button.primary {
+    background: #172033 !important;
+    border-color: #172033 !important;
 }
-.mini-agent-view .mini-options-row {
-    align-items: stretch !important;
-    gap: 10px !important;
-}
-.mini-agent-view .mini-options-row > .block {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
-    padding: 10px !important;
-}
-.mini-agent-view .mini-memory-row {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
-    padding: 8px 12px !important;
-}
-.mini-agent-view .mini-trace {
+
+.mini-settings,
+.mini-trace {
     margin-top: 0 !important;
-    border-top: 1px solid #e2e8f0 !important;
+    overflow: hidden !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #f8fafc !important;
 }
+.mini-agent-view .mini-options-row { align-items: stretch !important; gap: 8px !important; }
+.mini-agent-view .mini-options-row > .block {
+    padding: 8px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+}
+.mini-agent-view .mini-memory-row { padding: 8px 3px 2px !important; }
 
 /* 8.11 会话分支：一个按钮 + 一个结果区 */
 .session-demo-shell {
@@ -764,7 +895,7 @@ with gr.Blocks(
     # ==========================================================================
     # 🌟 核心布局：【最左侧导航】 + 【中间代码视窗】 + 【右侧交互沙箱】 (高度精准对齐 740px)
     # ==========================================================================
-    with gr.Row():
+    with gr.Row(elem_id="workspace-shell"):
 
         # ----------------------------------------------------------------------
         # 1. 最左侧：垂直章节导航栏 (Scale 2, 紧凑整洁)
@@ -1426,12 +1557,12 @@ onUnmounted(() => { clearInterval(timer); });
             # ==================================================================
             with gr.Column(visible=False, elem_classes=["mini-agent-view"]) as view_13:
                 gr.HTML("""
-                <div class="chapter-header-card">
-                    <div class="chapter-header-title">🤖 8.13 个人 Mini-Agent：Codex / ChatGPT 风格多轮连续对话</div>
-                    <p class="chapter-header-desc">支持连续多轮上下文记忆、深度思考推演、实时联网搜索、技能插件挂载与权限门禁实时审计。</p>
-                </div>
-                <div class="linkage-bar">
-                    <span>⚡ <b>代码联动：</b>持续调用 <code>MiniAgent.chat()</code>，自动继承多轮对话上下文并写入 <code>SessionStore</code> 存档</span>
+                <div class="mini-chat-topbar">
+                    <div>
+                        <div class="mini-chat-model">Mini-Agent <span style="color:#94a3b8">⌤</span></div>
+                        <div class="mini-chat-desc">8.13 综合实战 · 多轮记忆 · 工具调用 · 权限门禁</div>
+                    </div>
+                    <div class="mini-chat-ready">已就绪</div>
                 </div>
                 """)
                 
@@ -1442,74 +1573,77 @@ onUnmounted(() => { clearInterval(timer); });
                 t13_chatbot = gr.Chatbot(
                     label="💬 智能体多轮对话流",
                     show_label=False,
+                    height="clamp(245px, 35vh, 330px)",
                     elem_classes=["chat-container-box"],
                 )
                 
                 # 预设快捷提示词
                 with gr.Row(elem_classes=["mini-shortcuts"]):
-                    t13_p1 = gr.Button("🌐 2026 前端框架新趋势", size="sm")
-                    t13_p2 = gr.Button("💾 记住我的偏好: Python+FastAPI", size="sm")
-                    t13_p3 = gr.Button("❓ 问刚才记住的偏好", size="sm")
+                    t13_p1 = gr.Button("🌐 搜索前端新趋势", size="sm")
+                    t13_p2 = gr.Button("💾 记住我的技术偏好", size="sm")
+                    t13_p3 = gr.Button("✨ 根据偏好写接口", size="sm")
 
                 # 输入框与多功能按钮
                 with gr.Row(elem_classes=["mini-input-row"]):
                     t13_msg_input = gr.Textbox(
-                        placeholder="💬 输入消息，按回车或点击发送进行连续多轮对话...",
+                        placeholder="给 Mini-Agent 发消息…",
                         lines=1,
                         max_lines=3,
                         scale=7,
                         show_label=False,
                         container=False,
                     )
-                    t13_send_btn = gr.Button("🚀 发送", variant="primary", scale=1)
-                    t13_clear_btn = gr.Button("🗑️ 清空重置", variant="secondary", scale=1)
+                    t13_send_btn = gr.Button("↑ 发送", variant="primary", scale=1)
+                    t13_clear_btn = gr.Button("↻ 新对话", variant="secondary", scale=1)
 
                 # 增强选项与插件挂载
-                with gr.Row(elem_classes=["mini-options-row"]):
-                    t13_opts = gr.CheckboxGroup(
-                        label="🚀 增强模式", 
-                        choices=["🧠 深度思考", "🔍 强制联网搜索"], 
-                        value=["🧠 深度思考"]
-                    )
-                    t13_skills = gr.CheckboxGroup(
-                        label="🧩 挂载技能插件", 
-                        choices=["git_expert", "python_cleaner"], 
-                        value=[]
-                    )
-                with gr.Row(elem_classes=["mini-memory-row"]):
-                    t13_allow_memory = gr.Checkbox(
-                    label="💾 允许本轮保存偏好（仅授权 save_preference，不放行终端或代码编辑）",
-                    value=False,
-                    )
+                with gr.Accordion("⚙️ 对话设置", open=False, elem_classes=["mini-settings"]):
+                    with gr.Row(elem_classes=["mini-options-row"]):
+                        t13_opts = gr.CheckboxGroup(
+                            label="增强模式", 
+                            choices=["🧠 深度思考", "🔍 强制联网搜索"], 
+                            value=["🧠 深度思考"]
+                        )
+                        t13_skills = gr.CheckboxGroup(
+                            label="技能挂载", 
+                            choices=["git_expert", "python_cleaner"], 
+                            value=[]
+                        )
+                    with gr.Row(elem_classes=["mini-memory-row"]):
+                        t13_allow_memory = gr.Checkbox(
+                            label="允许本轮保存个人偏好",
+                            info="仅授权 save_preference，不放行终端或代码编辑",
+                            value=False,
+                        )
                 
                 # 决策与权限审批 Trace
-                with gr.Accordion("🔍 决策流与权限门禁审计 Trace (permission_gate / tool_call / finish)", open=False, elem_classes=["mini-trace"]):
-                    t13_trace = gr.JSON(label="决策链路跟踪与权限审计事件")
+                with gr.Accordion("🔍 决策流与权限审计 Trace", open=False, elem_classes=["mini-trace"]):
+                    t13_trace = gr.JSON(label="决策链路跟踪与权限审计事件", show_label=False)
 
                 # 预设按钮事件
                 t13_p1.click(lambda: "2026年最新的主流前端框架有哪些新趋势？请联网核实", outputs=[t13_msg_input])
                 t13_p2.click(lambda: "请记住我的偏好：我的全栈技术栈首选是 Python + FastAPI + TailwindCSS", outputs=[t13_msg_input])
                 t13_p3.click(lambda: "我之前跟你说过的技术栈偏好是什么？请帮我写一个用户注册接口", outputs=[t13_msg_input])
 
-                # 多轮连续对话主函数（支持动态就绪与状态推进）
+                # 多轮连续对话主函数（流式输出：气泡逐字增长 + 时间线实时滚动）
                 def mini_agent_chat_turn(user_msg, chat_history, agent_inst, opts, skills, allow_memory):
                     if not user_msg or not user_msg.strip():
                         yield chat_history, "", agent_inst, []
                         return
-                    
+
                     if agent_inst is None:
                         agent_inst = MiniAgent(global_client)
                     # 每轮重新绑定最小权限回调，取消勾选后授权立即失效。
                     agent_inst.guard.approval_callback = (
                         lambda tool_name, _args: bool(allow_memory) and tool_name == "save_preference"
                     )
-                    
+
                     chat_history = chat_history or []
                     # 追加用户问题气泡与临时就绪状态（Gradio 6 仅支持 messages 格式）
                     chat_history.append({"role": "user", "content": user_msg})
                     chat_history.append({"role": "assistant", "content": "⏳ *(Agent 正在分析意图与调度推演...)*"})
                     yield chat_history, "", agent_inst, []
-                    
+
                     deep = "🧠 深度思考" in opts
                     if deep:
                         chat_history[-1]["content"] = "🧠 *(正在进行深度思考与前置规划推演...)*"
@@ -1521,11 +1655,54 @@ onUnmounted(() => { clearInterval(timer); });
                                 "role": "system",
                                 "content": "用户要求你优先调用 web_search 联网检索后再回答。请在获取到搜索结果后直接总结输出最终答案，不要重复搜索。"
                             })
-                    
-                    # 执行 Agent 多轮对话（内部自动维护上下文与持久化）
-                    res = agent_inst.chat(user_msg, deep_think=deep, active_skills=skills)
-                    ans = polish_markdown(res["final_answer"])
-                    usage_badge = res.get("usage_badge", "")
+
+                    # 后台线程执行流式对话，队列搬运正文增量（delta）
+                    import queue as _queue
+                    import threading as _threading
+
+                    event_q = _queue.Queue()
+
+                    def _worker():
+                        try:
+                            gen = agent_inst.chat_stream(user_msg, deep_think=deep, active_skills=skills)
+                            while True:
+                                try:
+                                    delta = next(gen)
+                                    if isinstance(delta, str):
+                                        event_q.put({"delta": delta})
+                                except StopIteration as e:
+                                    event_q.put({"done": e.value})
+                                    return
+                        except Exception as exc:
+                            event_q.put({"error": f"{type(exc).__name__}: {exc}"})
+
+                    _threading.Thread(target=_worker, daemon=True).start()
+
+                    streamed = []
+                    result, error = None, None
+                    while result is None and error is None:
+                        try:
+                            item = event_q.get(timeout=0.2)
+                        except _queue.Empty:
+                            yield chat_history, "", agent_inst, []
+                            continue
+                        if "delta" in item:
+                            streamed.append(item["delta"])
+                            chat_history[-1]["content"] = "".join(streamed)
+                            yield chat_history, "", agent_inst, []
+                        elif "done" in item:
+                            result = item["done"]
+                        elif "error" in item:
+                            error = item["error"]
+
+                    if error:
+                        chat_history[-1]["content"] = f"❌ *({error})*"
+                        yield chat_history, "", agent_inst, []
+                        return
+
+                    # 用润色后的完整答案替换流式拼接结果，并附 usage 徽章
+                    ans = polish_markdown(result["final_answer"])
+                    usage_badge = result.get("usage_badge", "")
 
                     if usage_badge:
                         # 📊 作为消息气泡的下方附属
@@ -1540,7 +1717,7 @@ onUnmounted(() => { clearInterval(timer); });
 
                     # 更新助手回复气泡
                     chat_history[-1]["content"] = ans_with_badge
-                    yield chat_history, "", agent_inst, res["trace"]
+                    yield chat_history, "", agent_inst, result["trace"]
 
                 # 清空上下文重置
                 def mini_agent_reset():

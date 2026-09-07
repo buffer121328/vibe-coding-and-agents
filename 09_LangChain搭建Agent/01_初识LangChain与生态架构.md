@@ -83,7 +83,7 @@ llm = get_chat_model()
 response = llm.invoke("请用一句话解释什么是 LangChain？")
 print(response.content)
 
-# 姿势 2：实时流式输出 stream() —— 适合交互式 Chatbot（丝滑打字机体验）
+# 方式 2：实时流式输出 stream() —— 适合交互式 Chatbot（连续输出体验）
 for chunk in llm.stream("写一首赞美程序员的打油诗。"):
     print(chunk.content, end="", flush=True)
 
@@ -164,6 +164,12 @@ def route_by_complexity(request: ModelRequest, handler) -> ModelResponse:
 - 🔗 **参考学习项目 (BrandPeng)**：[Langchain1.0-Langgraph1.0-Learning](https://github.com/BrandPeng/Langchain1.0-Langgraph1.0-Learning)
 
 ---
+
+## 先分清框架边界
+
+LangChain 提供模型、提示词、工具和 Runnable 等通用接口；LangGraph 更偏向有状态、可暂停和可恢复的流程；各类 `langchain-*` 集成包负责连接具体供应商。它们的版本不一定同步，安装前应核对核心包、集成包与示例代码所针对的版本。
+
+项目开始时可以先写一份很小的依赖说明：使用哪个 Python 版本、哪些包是直接依赖、模型从哪里接入、哪些能力需要额外服务。升级时先运行代表性用例，再更新文档，避免教程代码与实际环境逐渐错开。
 
 ## 🎯 本节小结与思考
 

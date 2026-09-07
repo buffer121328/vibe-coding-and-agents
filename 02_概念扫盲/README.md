@@ -2,9 +2,9 @@
 
 欢迎来到 **《Vibe Coding 极速通关》第二章：概念扫盲**！
 
-如果说第一章《发展之路》帮你建立了宏观的时代视野，那么本章将为你彻底扫清所有**技术专有名词与底层原理**的认知障碍。
+如果说第一章《发展之路》建立了整体视角，本章会进一步说明软件与 Agent 中常见的技术概念，以及这些概念之间如何衔接。
 
-不管是前端、后端、数据库、Git，还是大模型底层、Transformer、Agent 闭环、上下文工程、MCP 协议、RAG 向量库、Multi-Agent 多智能体五大范式、微调量化、Harness/Loop 工程、主流开发框架，乃至**AI 时代最值得读的神级论文、前沿神级项目（DeerFlow/DeepAgents）、Skills 市场与 MCP 教程**，我们**一律用大白话和生活化比喻拆解**，即使你是零基础小白，也能轻松通读无压力！
+不管是前端、后端、数据库、Git，还是大模型底层、Transformer、Agent 闭环、上下文工程、MCP 协议、RAG 向量库、Multi-Agent 多智能体五大范式、微调量化、Harness/Loop 工程、主流开发框架，乃至**AI 时代最值得读的代表论文、前沿代表项目（DeerFlow/DeepAgents）、Skills 市场与 MCP 教程**，我们**一律结合具体场景说明**，即使你是零基础小白，也能轻松通读无压力！
 
 ---
 
@@ -41,7 +41,7 @@
 6. **[2.6 记忆管理与 Agent Skills：短期遗忘、长期记忆与技能包扩展](./06_记忆管理与AgentSkills.md)**
    - 人类三大记忆映射、滑动窗口截断、向量记忆库持久化；可复用技能安装包体系。
 
-7. **[2.7 工具调用、MCP 协议与 A2A 协作：打通软硬件万能插头](./07_工具调用_MCP与A2A协议.md)**
+7. **[2.7 工具调用、MCP 协议与 A2A 协作：打通软硬件通用连接](./07_工具调用_MCP与A2A协议.md)**
    - Function Calling 递小票原理；Anthropic MCP 万能协议；A2A 三大协作拓扑。
 
 8. **[2.8 RAG 知识库与向量存储：给 AI 备一本开卷考试参考书](./08_RAG知识库与向量存储.md)**
@@ -51,7 +51,7 @@
    - 告别单兵作战瓶颈；深入监工调度、线性流水线、树状层级、法庭辩论对抗与自组织蜂群五大范式！
 
 10. **[2.10 模型微调与量化技术：专科深造与轻量化瘦身秘籍](./10_模型微调与量化技术.md)**
-    - SFT/LoRA 专科深造 vs RAG 选型黄金口诀，GGUF/AWQ 4-bit 极限瘦身。
+    - SFT/LoRA 专科深造 vs RAG 选型判断方法，GGUF/AWQ 4-bit 极限瘦身。
 
 11. **[2.11 Harness 工程与 Loop 工程：从单次问答到自主工业级闭环](./11_Harness工程与Loop工程.md)**
     - 运行与评测支架（Agent/Eval Harness 与 SWE-bench）；自主循环控制与死循环熔断。
@@ -59,5 +59,13 @@
 12. **[2.12 主流开发框架全景：LangChain、LangGraph、AutoGen 与 CrewAI](./12_主流开发框架全景.md)**
     - 工业级落地框架盘点！三大单 Agent 与三大多 Agent 主流框架横向对比与官方选型指南。
 
-13. **[2.13 AI 时代最值得读的论文、神级项目、Skills 市场与 MCP 教程](./13_AI时代最值得读的论文和项目.md)**
-    - 8 篇里程碑论文（Transformer、ReAct、Reflexion、SWE-bench 等）+ 前沿必学神级项目（Hello-Agents、Learn-Claude-Code、DeerFlow、DeepAgents）+ Agent Skills 大市场 + MCP 极速实战教程！
+13. **[2.13 AI 时代最值得读的论文、代表项目、Skills 市场与 MCP 教程](./13_AI时代最值得读的论文和项目.md)**
+    - 8 篇里程碑论文（Transformer、ReAct、Reflexion、SWE-bench 等）+ 前沿必学代表项目（Hello-Agents、Learn-Claude-Code、DeerFlow、DeepAgents）+ Agent Skills 大市场 + MCP 极速实战教程！
+
+---
+
+## 建议的阅读顺序
+
+如果缺少软件基础，建议从 2.1 和 2.2 开始，再进入模型、Agent 与上下文。已经熟悉开发流程的读者，可以先读 2.3—2.7，建立“模型如何生成、Agent 如何行动、工具如何接入”的主链路，再按需要补充 RAG、多智能体、微调和框架选型。
+
+每学到一个概念，可以同时记下三个问题：它解决什么问题，它不负责什么，它在一次真实任务中怎样被验证。这个方法能减少概念之间的混用，也方便后续阅读框架源码。

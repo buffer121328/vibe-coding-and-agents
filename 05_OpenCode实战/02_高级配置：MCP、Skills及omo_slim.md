@@ -1,46 +1,45 @@
-# 5.2 高级配置：opencode.jsonc 核心拆解、MCP、Skills 与 omo-slim 进阶
+# 5.2 模型配置、MCP、Skills 与 omo-slim
 
-> **本节导读**：如果说图形化设置界面是“在车机屏幕上调空调”，那么本节要讲的高级配置文件就是“打开汽车引擎盖，调校发动机 ECU 喷油电脑，加装全地形雷达，并组建六大特种兵智囊团协同作战”！
-> 本节我们将手把手带你读懂 OpenCode 的核心配置文件 `opencode.jsonc`，玩转 MCP 万能外挂与 Skills 技能加载，并深度揭秘为什么在实战中我们要弃用臃肿的原版 OMO，全面拥抱轻量高能的 **`oh-my-opencode-slim`**！
+基础对话能正常工作后，再逐项增加配置会更容易排错。本节介绍模型配置、MCP 工具、技能说明和多角色插件的分工，帮助你判断哪些是当前任务需要的，哪些可以以后再加。
 
-***
+---
 
-## 💡 一、生活化大比喻：OpenCode 的高级生态体系
+## OpenCode 的高级生态体系
 
 我一般将opencode视作轻量级开发的主力，所以安装的配件和mcp不多，但都是真正好用的，同学们可以先看一下。\
-要真正发挥 OpenCode 的 100% 战斗力，需要先理解以下四个核心组件的分工与协作：
+配置扩展之前，需要先理解以下四个核心组件的分工与协作：
 
 <!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
 <p align="center">
   <a href="img/diagrams/02-diagram-01.svg">
-    <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、生活化大比喻：OpenCode 的高级生态体系" width="860">
+    <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、OpenCode 的高级生态体系" width="860">
   </a>
 </p>
 
 - 🖥️ **`opencode.jsonc`** **—— 赛车主板电脑**：决定了接入什么发动机（模型供应商）、加多少号汽油（API Key）、油门与刹车响应阈值（超时参数）；
 - 🔌 **MCP（Model Context Protocol）—— 车顶万能扩展坞**：即插即用，给 AI 挂载代码图谱分析、实时联网搜索、数据库查询等外部超能力；
-- 📜 **Skills —— 特战技能证书**：教 AI 如何按照特定标准执行复杂专业动作（如代码简化重构、浏览器端到端测试）；
-- 👥 **`oh-my-opencode-slim`（简称 omo-slim）—— 六人特种作战指挥部**：将任务分发给不同的专家角色（指挥官、架构师、检索员、探路者、设计师、修复师），各司其职，战力拉满！
+- 📜 **Skills —— 特战技能证书**：教 AI 如何按照特定标准执行复杂专业动作（如代码简化重构、浏览器完整流程测试）；
+- 👥 **`oh-my-opencode-slim`（简称 omo-slim）—— 六个分工角色**：将任务分给统筹、架构、检索、探索、设计和修复等角色，适合边界清楚、可以独立交付的子任务。
 
 ***
 
-## 📂 二、配置文件全景认知与存储路径
+## 配置文件的作用与存储路径
 
 OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与专家预设。
 
-### 📍 配置文件存储路径：
+### 配置文件存储路径：
 
 - **macOS / Linux**：`~/.config/opencode/opencode.jsonc`（或 `~/.config/opencode/opencode.json`）
 - **Windows**：`%USERPROFILE%\.config\opencode\opencode.jsonc`
 
 > 💡 **为什么推荐使用** **`.jsonc`** **而非** **`.json`？**
-> 标准 `.json` 格式是严禁写注释的，只要多写一个 `//` 就会导致解析崩溃。而 `.jsonc`（JSON with Comments）原生支持双斜杠 `//` 注释！你可以随手记录某个模型参数的调整原因、超时配置的考量，极其适合长期维护与团队协作！
+> 标准 `.json` 格式是严禁写注释的，只要多写一个 `//` 就会导致解析崩溃。而 `.jsonc`（JSON with Comments）原生支持双斜杠 `//` 注释。你可以随手记录某个模型参数的调整原因、超时配置的考量，适合长期维护与团队协作。
 
 ***
 
-## 🛠️ 三、`opencode.jsonc` 核心字段全方位拆解
+## `opencode.jsonc` 核心字段拆解
 
-下面是一个已经**彻底脱敏、结构规范的配置模板**。你可以直接参考此结构进行修改和配置：
+下面是一份已移除密钥和个人信息的配置模板，可以参考其结构进行修改：
 
 ```jsonc
 {
@@ -123,18 +122,18 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 ***
 
-### 🔍 核心配置字段深度剖析：
+### 核心配置字段解析：
 
 #### 1. `provider` 与底层驱动 (`npm`)
 
-- **`npm: "@ai-sdk/openai-compatible"`**：OpenCode 采用 Vercel AI SDK 作为标准化驱动层。绝大多数主流大模型服务商（包括 DeepSeek、Moonshot、Qwen、硅基流动、OneAPI/NewAPI 等中转网关）均兼容 OpenAI 接口规范，声明该驱动即可实现 100% 协议无缝对接。
+- **`npm: "@ai-sdk/openai-compatible"`**：OpenCode 采用 Vercel AI SDK 作为标准化驱动层。绝大多数主流大模型服务商（包括 DeepSeek、Moonshot、Qwen、硅基流动、OneAPI/NewAPI 等中转网关）均兼容 OpenAI 接口规范，可通过该驱动接入兼容服务；工具调用、结构化输出等参数仍需单独验证。
 
 #### 2. 超时参数调优（高频避坑核心 ⚠️）
 
-在连接思考型模型或经由国内反向代理/中转网关时，很多同学常遇到 `503 Service Unavailable` 或 `FetchError: Header Timeout` 报错。这是因为**模型在深度思考时，可能长达 30\~60 秒不吐出第一个 Token**！
+在连接思考型模型或经由国内反向代理/中转网关时，很多同学常遇到 `503 Service Unavailable` 或 `FetchError: Header Timeout` 报错。这是因为**模型在深度思考时，可能长达 30\~60 秒不吐出第一个 Token**。
 
 - **`timeout`**（默认总超时）：建议设置为 `300000`（5 分钟），保证大任务长代码生成不被强制中断；
-- **`headerTimeout`**（响应头等待超时）：内置默认值往往只有 10\~30 秒，极易误判为连接超时！强烈建议调大至 `180000`（3 分钟）；
+- **`headerTimeout`**（响应头等待超时）：内置默认值往往只有 10\~30 秒，极易误判为连接超时。强烈建议调大至 `180000`（3 分钟）；
 - **`chunkTimeout`**（流式分块间隔超时）：建议设为 `120000`（2 分钟）。
 
 #### 3. `models` 与 `limit`（窗口与输出上限）
@@ -145,11 +144,11 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 #### 4. `lsp: true`（代码语言服务）
 
-开启 LSP 后，OpenCode 会在后台自动调用项目语言的原生 Language Server（如 TypeScript LSP、Pyright、gopls 等），使 AI 在写完代码后能像人类 IDE 一样自动捕获语法错误和类型不匹配，极大提高生成代码的编译通过率！
+开启 LSP 后，OpenCode 会在后台自动调用项目语言的原生 Language Server（如 TypeScript LSP、Pyright、gopls 等），使 AI 在写完代码后能像人类 IDE 一样自动捕获语法错误和类型不匹配，极大提高生成代码的编译通过率。
 
-#### 5. 环境变量与密钥安全（防泄露铁律）
+#### 5. 环境变量与密钥安全要求
 
-**切勿把真实 API Key 明文写进 `opencode.jsonc`！** 配置文件一旦分享或提交到代码仓，密钥即告泄露。OpenCode 支持在配置中通过 **`${环境变量名}`** 引用环境变量：
+**切勿把真实 API Key 明文写进 `opencode.jsonc`。** 配置文件一旦分享或提交到代码仓，密钥即告泄露。OpenCode 支持在配置中通过 **`${环境变量名}`** 引用环境变量：
 
 ```jsonc
 "options": {
@@ -164,7 +163,7 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 ***
 
-## 🔌 四、MCP（Model Context Protocol）工具扩展实战
+## MCP（Model Context Protocol）工具扩展实战
 
 **MCP** 是 Anthropic 发起、如今已成为行业通用标准的外部工具协议。它就像是给 AI 插上的 **USB-C 拓展坞**。
 
@@ -182,7 +181,7 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 }
 ```
 
-> 💡 **CodeGraph 自动同步（Auto-Sync）**：挂载 MCP 前，请先在项目根目录执行一次 `codegraph init` 完成索引初始化（详见 [5.5 节](./05_极简全栈_FastAPI与SQLite个人博客实战(上).md)）。初始化完成后，CodeGraph 会在后台启动守护进程（Daemon）并开启文件监听（File Watcher），每次代码保存都会**毫秒级增量同步**到 `.codegraph/codegraph.db`，全程无需手动重建索引。
+> 💡 **CodeGraph 自动同步（Auto-Sync）**：挂载 MCP 前，请先在项目根目录执行一次 `codegraph init` 完成索引初始化（详见 [5.5 节](./05_极简全栈_FastAPI与SQLite个人博客实战%28上%29.md)）。初始化完成后，CodeGraph 会在后台启动守护进程（Daemon）并开启文件监听（File Watcher），每次代码保存都会**毫秒级增量同步**到 `.codegraph/codegraph.db`，全程无需手动重建索引。
 
 ### 2. 远程 MCP 挂载（Remote SSE / HTTP）
 
@@ -200,41 +199,31 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 ***
 
-## 📜 五、Agent Skills 技能包加载指南
+## Agent Skills 技能包加载指南
 
 **Agent Skills** 是遵循标准化规范的“即插即用战术手册”。它以纯文本或脚本的形式告诉 AI 在面对特定场景时该遵循怎样的标准作业流程（SOP）。
 
 ### 1. 技能包存放路径：
 
 - **全局生效**：`~/.config/opencode/skills/<skill-name>/`
-- **项目级生效**：`./.opencode/skills/<skill-name>/`
+- **生效**：`./.opencode/skills/<skill-name>/`
 
 ### 2. 经典技能包举例：
 
 - **`simplify`**：代码精简与坏味道消除技能，专为重构和去冗余设计；
-- **`agent-browser`**：为 AI 配备无头浏览器（Headless Browser），让 AI 能够自主打开网页、点击按钮、抓取截图并完成端到端测试。
+- **`agent-browser`**：为 AI 配备无头浏览器（Headless Browser），让 AI 能够自主打开网页、点击按钮、抓取截图并完成完整流程测试。
 
 ***
 
-## 👥 六、进阶神器：深入理解 `oh-my-opencode-slim`（omo-slim）
+## 扩展配置：深入理解 `oh-my-opencode-slim`（omo-slim）
 
-### 1. 为什么我们坚决不用原版 `omo`，而强烈推荐 `omo-slim`？
+### 1. 本例为什么使用 `omo-slim`
 
-在 OpenCode 社区中，`oh-my-opencode`（简称 OMO）是一个非常著名的多智能体协作插件。然而在实际工程落地中，**原版 OMO 往往存在严重的“水土不服”与臃肿问题**：
+本节使用 [`oh-my-opencode-slim`](https://github.com/code-any-way/oh-my-opencode-slim)演示角色分工。它是可选的第三方插件，并非完成后续项目的前提。选择插件前，应检查维护状态、安装说明、权限要求和自己所用模型的兼容情况。
 
-| 评估维度          | 原版 OMO (`oh-my-opencode`)      | 精简版 `omo-slim` (`oh-my-opencode-slim`) |
-| :------------ | :----------------------------- | :------------------------------------- |
-| **设计哲学**      | 大而全、重型预设、全局黑盒注入                | **轻量纯粹、模块化解耦、极简主义**                    |
-| **上下文占用**     | 注入海量全局 Prompt，容易造成**上下文膨胀与污染** | **极致精炼**，仅注入对应专家角色的核心职责定义              |
-| **Token 与成本** | 每次对话消耗大量隐式 Token，小模型极易注意力混乱    | **极度节省 Token**，大幅降低 API 账单开销           |
-| **模型调度灵活性**   | 深度绑定特定商业模型，跨中转或国产模型容易报错        | **100% 自由配置**，支持为每个专家角色独立指定任意模型        |
-| **加载速度与稳定性**  | 插件体积大、依赖多、启动和热重载偶现卡顿           | **秒级加载**，配置结构透明，排错一目了然                 |
+没有统一测试条件，不能仅凭“轻量”名称就断言它比其他插件更快或更稳定。先用一个小任务验证角色是否实际参与、结果是否能合并，再决定是否用于较大的项目。
 
-**结论**：`omo-slim` 去除了原版中各种华而不实的累赘机制，保留了**最精髓的多专家协同路由与角色分工机制**，是生产环境下的终极选择！
-
-***
-
-### 2. `oh-my-opencode-slim.jsonc` 字段深度拆解
+### 2. `oh-my-opencode-slim.jsonc` 字段说明
 
 在 `~/.config/opencode/oh-my-opencode-slim.jsonc` 中，你可以为不同的使用场景定义多个模型预设（Preset），并为六大专家角色逐一指定模型、技能（Skills）与 MCP 权限。
 
@@ -263,7 +252,7 @@ opencode models --refresh
   "preset": "openai",
   "presets": {
     "openai": {
-      // 1. 总指挥官：负责拆解全局需求、统筹调度
+      // 1. 统筹角色：负责拆解整体需求、安排任务
       "orchestrator": {
         "model": "deepseek/deepseek-v4-flash",
         "skills": ["*"],                    // 允许使用所有已挂载技能
@@ -309,24 +298,24 @@ opencode models --refresh
 
 ***
 
-### 3. 六大专家角色协作矩阵与赋权心法：
+### 3. 六大专家角色协作矩阵与权限分配：
 
 <!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：Pastel 多巴胺 -->
 <p align="center">
   <a href="img/diagrams/02-diagram-02.svg">
-    <img src="img/diagrams/02-diagram-02.svg" alt="3. 六大专家角色协作矩阵与赋权心法：" width="760">
+    <img src="img/diagrams/02-diagram-02.svg" alt="3. 六大专家角色协作矩阵与权限分配：" width="760">
   </a>
 </p>
 
-#### 🛡️ 技能与 MCP 白黑名单权限控制：
+#### 技能与 MCP 白黑名单权限控制：
 
 - **`"skills": ["*"]`**：全量授权，智能体可调用已加载的所有 Skills；
 - **`"skills": ["simplify"]`**：白名单机制，仅允许使用指定的 `simplify` 技能；
-- **`"mcps": ["*", "!context7"]`**：通配符与 `!` 排除语法结合，允许调用除 `context7` 外的所有 MCP，避免特定工具在大上下文中产生冲突或高额计费！
+- **`"mcps": ["*", "!context7"]`**：通配符与 `!` 排除语法结合，允许调用除 `context7` 外的所有 MCP，避免特定工具在大上下文中产生冲突或高额计费。
 
 ***
 
-## 🚨 七、生产级配置排错与避坑指南
+## 配置排错与常见问题
 
 1. **修改配置文件后未生效？**
    - 检查 JSONC 语法是否有语法错误（如缺少闭合大括号 `}` 或漏掉逗号 `,`）；
@@ -339,7 +328,34 @@ opencode models --refresh
 
 ***
 
-## 🔗 八、官方权威与拓展学习链接
+## 配置不生效时，沿着来源查
+
+同一道菜用了两份配方，最后的味道取决于哪些步骤被覆盖。配置文件也可能同时来自全局设置、项目目录和环境变量；看到一个文件写对了，不等于它就是最终生效的值。
+
+[OpenCode 的配置文档](https://opencode.ai/docs/config/)说明，各处配置会合并，冲突字段按优先顺序处理。因此，模型不符合预期时，应记录工作目录、配置来源和运行时选中的模型，再检查同名字段。
+
+建议按“模型可用 → 一个工具可用 → 一份技能可读取 → 插件角色可调用”的顺序增加配置。每一步都单独验证，不要一次加入多个插件后才开始排查。
+
+| 现象 | 首先确认 |
+| --- | --- |
+| 修改模型后没有变化 | 是否有更高优先级配置或会话选择 |
+| MCP 已连接，但调用失败 | 工具参数、运行目录和服务端日志 |
+| 技能存在却未使用 | 描述是否匹配任务、路径是否被发现 |
+| 角色出现但没有工作 | 是否实际产生子任务和工具调用记录 |
+
+技能说明提供做事方法，MCP 服务提供可调用能力，插件安排额外行为。三者都不能替代验收。多角色任务还会增加调用和沟通成本，只有能清楚分工的任务才值得拆开。
+
+## 按配置来源逐层排查
+
+配置问题可以按“全局配置—项目配置—环境变量—插件或扩展”逐层缩小范围。先在一个最小项目中验证全局模型，再进入目标项目观察是否被覆盖；随后只启用一个 MCP 或一份 Skill，确认调用记录符合预期后再增加下一项。
+
+密钥也要区分保存位置和生效范围。配置文件里引用环境变量，只表示运行时会去读取，并不说明变量已经存在。排查时确认进程能否读取变量即可，不要把密钥值复制到截图、日志或对话中。项目需要共享配置时，只提交变量名和填写说明。
+
+判断能力是否真正生效，要看证据：MCP 应出现具体工具调用及返回值，Skill 应让结果遵守其中的步骤或格式，多角色插件应产生清楚的分工和交付物。仅在列表中显示“已连接”或“已发现”，还不能说明目标任务已经用到了它。
+
+---
+
+## 参考资料
 
 - **OpenCode 学习指南（推荐必读）**：<https://learnopencode.com/>
 - **OpenCode 中文网配置文档**：<https://www.opencodecn.com/docs/config>
@@ -347,4 +363,3 @@ opencode models --refresh
 - **Oh My OpenCode Slim 代码仓**：<https://github.com/code-any-way/oh-my-opencode-slim>
 - **Model Context Protocol (MCP) 官方规范**：<https://modelcontextprotocol.io/>
 - **Agent Skills 官方主页**：<https://agentskills.io>
-

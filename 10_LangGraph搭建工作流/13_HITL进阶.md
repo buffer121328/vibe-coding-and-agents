@@ -6,7 +6,7 @@ LangGraph 1.x 官方现在更推荐**节点内动态中断** `interrupt()`。06 
 
 ## 1. interrupt()：想踩就踩的动态刹车
 
-**生活化比喻：** `interrupt_before` 像地铁线路上固定的安检口——进站必检，不管你今天带没带行李。`interrupt()` 则像快递柜：快递员（节点）跑到一半，发现“这个包裹超过 5000 元需要实名签收”，就地打住，把**包裹清单**放进快递柜，给你发个取件码。你验完货，用取件码回一句话（同意 / 拒绝 / 改地址），快递员**从原地继续跑**。
+`interrupt_before` 像地铁线路上固定的安检口——进站必检，不管你今天带没带行李。`interrupt()` 则像快递柜：快递员（节点）跑到一半，发现“这个包裹超过 5000 元需要实名签收”，就地打住，把**包裹清单**放进快递柜，给你发个取件码。你验完货，用取件码回一句话（同意 / 拒绝 / 改地址），快递员**从原地继续跑**。
 
 ```python
 from langgraph.types import interrupt, Command
@@ -37,7 +37,7 @@ result = graph.invoke({"messages": [...]}, config)
 graph.invoke(Command(resume={"approved": True}), config)
 ```
 
-注意 `interrupt()` 的三条铁律（官方文档原话级别的重点）：
+使用 `interrupt()` 时要遵守三个约束：
 
 1. **必须挂 Checkpointer**——中断的本质是存档 + 退出；
 2. **恢复时节点从头重跑**：`interrupt()` 之前的代码会再执行一遍，所以它前面的副作用要幂等，且 `interrupt()` 别包在裸 `try/except` 里（它靠抛特殊异常实现暂停，被吞了就永远停不下来）；
@@ -54,7 +54,7 @@ graph.invoke(Command(resume={"approved": True}), config)
 
 官方文档把静态断点归到“Debugging with interrupts（调试用）”，而把审批类需求统统指向 `interrupt()`。一个实用判断：**刹车条件依赖运行时数据**（比如“只有金额超过 5000 才拦”）时，只能用 `interrupt()`——静态刹车不认金额。
 
-## 3. 进阶姿势三连
+## 3. 三种进阶用法
 
 ### 3.1 条件拦截：该拦才拦
 
@@ -82,9 +82,21 @@ def transfer_money(state: State):
 
 恢复时逐级给 `Command(resume=...)`，每恢复一次走完一层审批再停下一次——中断会像快递柜一样**排队**，官方支持一次并行挂起多个 interrupt，恢复时按 interrupt ID 对号入座。
 
-### 3.3 与流式配合：审批 UI 的正确姿势
+### 3.3 与流式输出配合：审批 UI 的处理方式
 
 前端做审批界面时，用 `stream` 模式持续收事件；收到 `__interrupt__` 事件就弹出审批卡片，用户点击后发送 `Command(resume=...)` 继续流式接收。`interrupt()` 抛出的数据包就是审批卡片的数据源，不再需要前端去猜“现在卡在哪一步”。
+
+<!-- CH10-14_EXPANSION -->
+
+## 审批数据要能被人真正判断
+
+审批卡片应把动作翻译成具体影响，例如“把订单 123 的金额从 300 元改为 280 元”，而不是只显示函数名 `update_order`。必要时展示原值、新值、调用原因和有效期限。
+
+恢复执行后，节点可能从中断点所在函数重新开始，因此中断前的代码不应包含只能执行一次的副作用。官方文档也建议把副作用放在中断之后，或封装成幂等任务。参见 [LangGraph Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)。
+
+多人审批还要记录谁在何时批准了什么。审批内容发生变化时，旧批准应失效；高风险操作可以要求两人确认或设置金额阈值。
+
+---
 
 ## 4. 扩展阅读
 

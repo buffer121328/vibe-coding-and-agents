@@ -118,7 +118,7 @@ while True:
         messages.append({"role": "tool", "tool_call_id": tc.id, "content": result})
 ```
 
-ReAct、Plan & Execute、乃至后面的 Subagent，都只是这个主循环的**不同"思考策略"**——换一层皮，内核永远是"模型决策 ➔ 工具执行 ➔ 结果回填 ➔ 再决策"。把这句话刻在脑子里，之后读任何框架源码都会势如破竹。
+ReAct、Plan & Execute 和后面的 Subagent，都是在同一个主循环上采用不同的任务策略。它们共有的过程是“模型决策 ➔ 工具执行 ➔ 结果回填 ➔ 再决策”。理解这条链路之后，再读框架源码时就能找到各个组件的位置。
 
 ## 🪞 进阶深化二：Reflection 反思范式（参考 hello-agents 第四章）
 
@@ -141,6 +141,12 @@ def reflection_loop(self, prompt: str, max_rounds: int = 2) -> str:
 > 💡 小贴士：ReAct 管"能不能做对"，Plan & Execute 管"方向别跑偏"，Reflection 管"质量够不够硬"——三者合体才是完整的大模型思考工具箱。
 
 ***
+
+## Observation 必须保留事实
+
+ReAct 能否纠错，很大程度取决于 Observation 是否可靠。工具报错时，不要只返回“执行失败”，应保留错误类型、关键提示和可重试条件；结果过长时可以裁剪，但要留下原始结果的位置。模型看到的是事实，下一轮才有可能换对方法。
+
+循环还需要停止条件。达到最大轮数、连续得到相同错误、任务已经满足验收标准，或继续执行需要新的授权时，都应退出循环并说明原因。否则“会重试”很容易变成“不断重复”。
 
 ## 📝 本节小结
 

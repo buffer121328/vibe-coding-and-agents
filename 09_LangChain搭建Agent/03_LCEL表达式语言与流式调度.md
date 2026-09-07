@@ -1,7 +1,6 @@
 # ⚡ 9.3 LCEL 表达式语言与流式调度
 
-> **“LCEL (LangChain Expression Language) 是 LangChain 从玩具走向工业级生产的最强进化。”**  
-> 告别繁琐的嵌套调用，用 Unix 经典的管道符 `|`，像搭装配流水线一样将 Prompt、LLM、解析器、工具和容灾备份完美串联。
+> LCEL（LangChain Expression Language）用统一的 Runnable 接口组织 Prompt、模型、解析器和并行分支。本节关注它如何表达数据流，以及流式输出、重试和降级分别应在哪一层处理。
 
 ---
 
@@ -156,6 +155,12 @@ async for event in chain.astream_events({"concept": "递归"}, version="v2"):
 - 🔗 **Fallbacks 容灾降级实践**：[How to add fallbacks to a runnable](https://docs.langchain.com/oss/python/langchain/lcel#fallbacks)
 
 ---
+
+## 流式输出不等于任务已经完成
+
+前端收到第一个文本块，只能说明响应已经开始。程序仍需处理结束事件、工具调用片段、网络中断和用户取消。多个分块可能共同组成一个参数对象，不能逐块当作完整 JSON 解析；若中途失败，也要清楚标记当前输出是不完整结果。
+
+重试应考虑幂等性。纯模型请求通常可以重试，已经触发付款、发送或写入操作的链路则不能简单重放。并行分支也需要分别设置超时，并决定部分失败时是返回已有结果，还是让整个链路失败。
 
 ## 🎯 本节小结与思考
 

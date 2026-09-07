@@ -239,11 +239,13 @@ class ZhipuGLMClient:
         messages: List[Dict[str, Any]],
         model_endpoint: Optional[str] = None,
         temperature: float = 0.6,
+        tools: Optional[List[Dict[str, Any]]] = None,
+        tool_choice: Optional[str] = "auto",
         thinking: Optional[Dict[str, Any]] = None,
         reasoning_effort: Optional[str] = None,
         include_usage: bool = True,
     ) -> Generator[str, None, None]:
-        """🔤 流式打字机输出（逐字吐出正文，末尾自动打印 Token/缓存统计）"""
+        """🔤 流式打字机输出（逐字吐出正文，末尾自动打印 Token/缓存统计；支持工具 Schema 透传）"""
         target_model = model_endpoint or self.default_model
 
         if not self.client:
@@ -251,7 +253,7 @@ class ZhipuGLMClient:
 
         try:
             kwargs = self._build_chat_kwargs(
-                target_model, messages, temperature, None, None,
+                target_model, messages, temperature, tools, tool_choice,
                 thinking=thinking, reasoning_effort=reasoning_effort,
                 stream=True, include_usage=include_usage,
             )

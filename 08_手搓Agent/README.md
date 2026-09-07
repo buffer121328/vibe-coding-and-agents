@@ -13,13 +13,13 @@
 - *“动辄几万 Token 的长会话，Agent 是如何压缩记忆而不遗忘关键指令的？”*
 - *“像 Claude Code 这样的顶尖工具，它的底层调度引擎究竟长什么样？”*
 
-本章将带你彻底打破黑盒，**不依赖任何重型框架（如 LangChain / CrewAI）**，仅依靠 Python 原生机制与官方标准 SDK，参考业界顶尖项目 **[learn-claude-code](https://github.com/shareAI-lab/learn-claude-code)** 与 **[hello-agents](https://github.com/datawhalechina/hello-agents)** 的核心思路，使用智谱 BigModel 的 GLM 系列模型，一步一个台阶，亲手打造一台**用于看懂 Agent 内核的教学型 Mini-Coding-Agent**。
+本章将带你看清运行过程，**不依赖任何重型框架（如 LangChain / CrewAI）**，仅依靠 Python 原生机制与官方标准 SDK，参考业界顶尖项目 **[learn-claude-code](https://github.com/shareAI-lab/learn-claude-code)** 与 **[hello-agents](https://github.com/datawhalechina/hello-agents)** 的核心思路，使用智谱 BigModel 的 GLM 系列模型，一步一个台阶，亲手打造一台**用于看懂 Agent 内核的教学型 Mini-Coding-Agent**。
 
 ***
 
 ## 🖥️ 教学演示可视化交互工作台 (Interactive Workbench)
 
-为了彻底打破黑盒、降低纯命令行调试的学习门槛，本章特别配套了一个 **现代 IDE 风格的「左侧源码联动 + 右侧交互沙箱」Gradio 可视化全景工作台**。
+为了看清运行过程、降低纯命令行调试的学习门槛，本章特别配套了一个 **现代 IDE 风格的「左侧源码联动 + 右侧交互沙箱」Gradio 可视化全景工作台**。
 
 > 💡 **核心定位说明**：  
 > 该可视化前端（`app.py`）**纯粹是为了教学演练与直观调试服务，并非本章的核心业务逻辑**。  
@@ -137,11 +137,14 @@ uv sync
 
 # 4. 一键启动 13-Tab Gradio 交互工作台
 uv run python app.py
-# 或运行单个章节脚本，例如：
+# 或启动 8.13 Mini-Agent 独立可视化工作台（实时状态时间线，端口 7861）
+uv run python app_s13.py
+# 或运行单个章节脚本，例如（--repl 进入 8.13 交互式命令行对话）：
 uv run python s01_env_setup.py
+uv run python s13_mini_agent.py --repl
 ```
 
-浏览器打开 `http://127.0.0.1:7860` 即可在可视化界面中体验 8.1~8.13 全部核心特性。
+浏览器打开 `http://127.0.0.1:7860` 即可在可视化界面中体验 8.1~8.13 全部核心特性；打开 `http://127.0.0.1:7861` 则是专注 8.13 的独立 Mini-Agent 工作台（带实时状态时间线）。
 
 > 💡 **IDE 提示**：在 VS Code / Trae 中打开 `08_手搓Agent/code` 后，请在右下角状态栏（或 `Cmd+Shift+P` → **Python: Select Interpreter**）选择解释器 `08_手搓Agent/code/.venv/bin/python`，即可消除“无法解析导入”标红并支持直接点 ▶ 运行。
 
@@ -169,4 +172,10 @@ uv run python s01_env_setup.py
 
 ---
 
-让我们从第一步开始，正式开启这场“手搓智能体”的热血之旅！👉 **[8.1 环境基建与模型接入](01_环境基建与模型接入.md)**
+## 如何验收本章练习
+
+建议把每一节都放进同一组固定任务中验证：一次普通问答、一次工具参数错误、一次权限拒绝、一次长上下文压缩、一次会话恢复和一次外部服务超时。除了最终答案，还要检查事件记录、状态变化和失败后的恢复位置。
+
+完成第 8.13 节后，再回到这些任务做一次回归。若新增记忆、子代理或 Hook 后旧任务开始失败，就能较快定位是哪一层改变了行为。
+
+从 **[8.1 环境基建与模型接入](01_环境基建与模型接入.md)** 开始搭建第一个模块。

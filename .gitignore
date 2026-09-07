@@ -33,3 +33,7 @@ docs/[0-9][0-9]_*/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 
+
+# 8.13 Mini-Agent CLI 运行时产物：会话存档与输入历史（不入库）
+08_手搓Agent/code/sessions/
+08_手搓Agent/code/.s13_repl_history

@@ -1,94 +1,111 @@
-# 3.7 中转上游与代理配置：以 Codex / CC-Switch 为例
+# 3.7 模型服务、网关与网络代理：以 Codex 配置为例
 
-> 中转上游就像一个“超高速跨国中转快递站”，国内直接连海外大模型容易网络卡顿或超时，通过中转网关转发，不仅速度飞快，还能用 **CC-Switch** 这样的神器一键在几十个不同的大模型之间随心切换！
+寄快递时，收件地址、转运仓和运输路线是不同的概念。模型调用也要区分：模型服务提供响应，API 网关接收并转发请求，网络代理处理连接路径。它们可能一起出现，但配置方式不能混用。
 
-***
+## 先分清三个地址
 
-## 🌐 为什么需要中转上游与代理？（国际中转仓比喻）
-
-在实际使用 OpenAI Codex、Claude Code 或本地 Agent 时，许多开发者会遇到 `Connection Timeout (连接超时)` 或 `SSL Error` 报错。或者有的同学不会挂梯子，没有visa实体卡无法购买订阅。
+| 地址类型 | 做什么 | 示例含义 |
+| :--- | :--- | :--- |
+| 模型 API 地址 | 接收符合接口格式的模型请求 | 服务商提供的 API 入口 |
+| 本地网关地址 | 在本机接收请求并转发到上游 | 管理工具实际监听的地址 |
+| 网络代理地址 | 转发网络连接 | 所在网络提供的代理端口 |
 
 <!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Notion 简洁 -->
 <p align="center">
   <a href="img/diagrams/07-diagram-01.svg">
-    <img src="img/diagrams/07-diagram-01.svg" alt="🌐 为什么需要中转上游与代理？（国际中转仓比喻）" width="960">
+    <img src="img/diagrams/07-diagram-01.svg" alt="本节概念与流程示意图 1" width="960">
   </a>
 </p>
 
-***
+不能因为三个地址都写成 `http://...`，就把它们互相替换。网络代理端口通常不接受模型请求结构；一个兼容聊天接口的网关，也未必支持编码工具需要的全部功能。
 
-## 🎛️ 终极利器：CC-swtich统一中转与多模型管理神器
+## 什么情况下需要调整配置
 
-**CC-Switch** 是一款专为 AI 命令行与 Agent 开发者打造的跨平台桌面工具，彻底终结了“每次换模型都要手动改一大堆代码和配置文件”的折磨！这个后面也会带大家进行使用！
+已经能使用官方入口完成任务，就可以先保持现有配置。需要连接自托管服务、组织内部网关或多个授权提供方时，再设置自定义服务。
+
+连接超时并不一定需要换服务商。先检查地址、网络、服务状态与请求长度；认证失败则优先检查密钥和账户权限。问题层次不同，处理方法也不同。
+
+## CC-Switch 的作用
+
+[CC-Switch 官方仓库](https://github.com/farion1231/cc-switch)提供多个编码工具的配置管理功能。它可以帮助管理提供方与相关设置，但不是模型服务本身，也不会自动提供 API 余额或账户权限。
 
 <!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：Notion 简洁 -->
 <p align="center">
   <a href="img/diagrams/07-diagram-02.svg">
-    <img src="img/diagrams/07-diagram-02.svg" alt="🎛️ 终极利器：CC-swtich统一中转与多模型管理神器" width="760">
+    <img src="img/diagrams/07-diagram-02.svg" alt="本节概念与流程示意图 2" width="760">
   </a>
 </p>
 
-### CC-Switch 的三大杀手锏
+使用前记录原来的配置。添加提供方时，按上游文档填写地址、密钥和模型标识；切换后确认目标工具实际读取的是哪份配置。若启用了本地代理模式，监听端口应以当前设置为准，不能照抄某个固定数字。
 
-1. **一键切换 50+ 供应商**：在图形界面上点一下，即可在 DeepSeek、OpenAI、Claude、SiliconFlow、OpenRouter 之间秒级切换；
-2. **本地集中代理端口（`http://127.0.0.1:15721`）**：你的所有 Agent 工具只需将 `base_url` 指向这个本地端口，底层到底走哪个模型、用哪个 Key，全部在 CC-Switch 里鼠标点击搞定；
-3. **MCP 统一管理中心**：无需在每个工具的 json 文件里重复复制粘贴 MCP 配置，在一个地方集中启用与停用。
+配置管理工具与手工编辑同时使用时，要留意谁会覆盖谁。建议先选一种方式完成连接，再检查最终生成的配置，避免两边来回修改造成混乱。
 
-***
+## Codex 的自定义提供方示例
 
-## 📝 配置文件实战：以 Codex（.codex 配置）为例
+下面以 Codex CLI 的用户级 `~/.codex/config.toml` 为例。`.codex` 是目录，不是把全部设置写进去的单个文件。项目级配置、用户级配置及托管设置可能同时存在，具体优先级查[官方配置说明](https://developers.openai.com/codex/config-basic)。
 
-如果你使用的是 OpenAI Codex、OpenCode 或兼容 OpenAI 接口的命令行 Agent，可以通过修改配置文件或设置环境变量来接入中转网关。下面是两个简单的式例，不等于最终的配置。
-
-### 方式 A：通过本地配置文件 `.codex` 或 `config.toml`
-
-在项目根目录或用户主目录下创建 `.codex` 配置文件：
+先核对上游是否支持 Codex 当前使用的接口。本例选择 Responses 接口；只有 Chat Completions 兼容说明，不足以证明可以直接按本例连接。
 
 ```toml
-# .codex 配置文件示例
+# 以下地址和模型名称均为占位内容，使用前替换
+model = "provider-model-id"
+model_provider = "practice_gateway"
 
-[model]
-# 指定使用的模型名称
-name = "gpt-5.6"
-# 也可以配置为 deepseek-reasoner 或 claude-3-7-sonnet
-
-[api]
-# 配置中转上游接口地址 (以中转服务商或本地 CC-Switch 为例)
-base_url = "http://127.0.0.1:15721/v1"
-# 或者填写服务商提供的中转地址：base_url = "https://api.your-relay-service.com/v1"
-
-# 填入对应的 API Key
-api_key = "sk-your-relay-api-key-here"
-
-[options]
-temperature = 0.2
-timeout = 60
+[model_providers.practice_gateway]
+name = "练习网关"
+base_url = "https://gateway.example.com/v1"
+env_key = "PRACTICE_MODEL_API_KEY"
+wire_api = "responses"
 ```
 
-***
+`model_provider` 对应下面提供方表的名称；`env_key` 填环境变量名，不填密钥本身。字段定义与兼容说明参见 [Codex 高级配置](https://developers.openai.com/codex/config-advanced)和[配置参考](https://developers.openai.com/codex/config-reference)。
 
-### 方式 B：通过终端全局环境变量一键生效
+这份示例没有承诺任何未指定上游可用。真正能否连接，还取决于模型标识、认证方式、流式响应及工具调用兼容性。
 
-在终端命令行中直接设置环境变量（可以写入你的 `~/.zshrc` 或 `~/.bashrc` 文件永久生效）：
+## 让启动进程能够读取密钥
+
+在启动 CLI 的终端中设置对应变量，再启动工具。以下仍是占位值，不能直接用于调用：
+
+macOS / Linux：
 
 ```bash
-# 1. 设置中转上游的基础 URL 地址
-export OPENAI_BASE_URL="http://127.0.0.1:15721/v1"
-
-# 2. 设置对应的 API Key
-export OPENAI_API_KEY="sk-your-relay-api-key-here"
-
-# 3. 运行你的 Agent 工具（如 codex 或 opencode），所有请求将自动秒级走中转网关！
+export PRACTICE_MODEL_API_KEY="replace-with-your-key"
 codex
 ```
 
-***
+Windows PowerShell：
 
-## 🔧 常见网络排错排查指南
+```powershell
+$env:PRACTICE_MODEL_API_KEY = "replace-with-your-key"
+codex
+```
 
-| 报错现象                                | 根本原因                   | 快速化解方案                                              |
-| :---------------------------------- | :--------------------- | :-------------------------------------------------- |
-| **`Connection Refused`**            | 本地代理软件或 CC-Switch 没有启动 | 检查 CC-Switch 是否正在运行，确认本地端口号是否为 `15721`              |
-| **`401 Unauthorized`**              | API Key 填错、已过期或账户余额不足  | 登录供应商控制台核对 Key 是否完整复制，检查账户是否有可用余额                   |
-| **`SSL Certificate Verify Failed`** | 本地开启了全局抓包软件导致证书拦截      | 在工具配置中暂时开启 `insecure_skip_verify = true` 或关闭多余的抓包软件 |
+变量只影响能够继承它的进程。已经运行的桌面应用通常不会自动获得后来在另一个终端设置的变量。配置未生效时，先确认应用的启动方式和实际配置来源。
 
+真实密钥应使用工具或系统支持的凭据管理方式保存。若临时在终端输入，注意命令历史与屏幕共享；不要把真实值写进项目说明或提交到仓库。
+
+也不要假定 `OPENAI_BASE_URL` 对所有编码工具自动有效。不同客户端识别的变量不同，本节使用自定义提供方字段明确表达配置。
+
+## 按层次验证连接
+
+1. **读取配置**：启动时没有格式解析错误，选择的是预期提供方与模型。
+2. **完成短请求**：收到真实响应，确认基本认证与协议可用。
+3. **验证工具调用**：在练习目录读取一个文件，确认调用和结果能往返。
+4. **检查失败处理**：遇到服务错误时能保留错误信息，而不是把空响应当作成功。
+5. **检查用量来源**：确认费用记在预期账户上，避免误用另一把密钥。
+
+只完成第二步，不足以证明复杂编码任务可用；第三步失败时，应优先查协议和工具格式，而不是增加提示词长度。
+
+## 常见错误怎样排查
+
+| 错误 | 可能原因 | 处理方向 |
+| :--- | :--- | :--- |
+| Connection refused | 服务未监听、地址或端口错误 | 查看本地网关运行状态与实际端口 |
+| Timeout | 网络、服务繁忙或响应超时 | 用短请求区分连接与生成耗时 |
+| 401 | 密钥无效或认证方式不匹配 | 核对当前提供方、变量名与密钥状态 |
+| 403 | 服务或模型权限不足 | 查看账户授权与上游返回说明 |
+| 404 | 路径或模型标识错误 | 核对基础地址、接口与模型列表 |
+| 429 | 速率或用量限制 | 查看是否可重试及等待时间 |
+| Certificate verify failed | 系统时间、证书链或代理证书问题 | 修复时间与证书信任，按组织网络要求配置 |
+
+证书问题应从证书链和网络配置排查，不把关闭证书校验作为常规解决办法。连接恢复后，保留一份不含密钥的配置说明，记录上游、接口类型与验证过的功能。

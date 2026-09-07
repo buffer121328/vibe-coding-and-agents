@@ -8,7 +8,6 @@
 
 为了确保大家看到的信息是一致的，我们需要定义一个 `State`（状态）。这通常是一个 `TypedDict`。
 
-**生活化比喻：**
 这就像一个“项目交接本”。当上一个班次的员工（节点）下班时，他在本子上写下新的进展；下一个班次的员工接手时，先看一遍交接本，再接着干活。
 
 ```python
@@ -22,9 +21,9 @@ class State(TypedDict):
     destination: str
 ```
 
-> 这里的 `add_messages` 是 LangGraph 提供的一个魔法函数。如果不加它，新的消息会直接**覆盖**掉旧消息；加上它，新的消息就会乖乖排在旧消息后面，形成完整的对话历史。
+> 这里的 `add_messages` 是 LangGraph 提供的一个辅助函数。如果不加它，新的消息会直接**覆盖**掉旧消息；加上它，新的消息就会乖乖排在旧消息后面，形成完整的对话历史。
 
-## 2. 定义节点 (Nodes) - 具体的打工人
+## 2. 定义节点 (Nodes) - 具体的处理步骤
 
 节点就是 Python 函数。它的输入是当前的交接本（`State`），输出是**需要更新到交接本上的内容**。
 
@@ -42,7 +41,7 @@ def agent_node(state: State):
 
 ## 3. 把节点连起来 (Edges) - 画路线图
 
-有了交接本和打工人，我们就可以把他们用线连起来，构成 `StateGraph`。
+有了交接本和处理节点，我们就可以把他们用线连起来，构成 `StateGraph`。
 
 ```python
 from langgraph.graph import StateGraph, START, END
@@ -50,11 +49,11 @@ from langgraph.graph import StateGraph, START, END
 # 1. 拿出空棋盘，告诉它我们的交接本格式是 State
 builder = StateGraph(State)
 
-# 2. 把打工人安置到棋盘的格子里
+# 2. 把处理节点放到图中
 builder.add_node("assistant", agent_node)
 
 # 3. 画线：规定走法
-builder.add_edge(START, "assistant") # 从开始点，无脑走向 assistant
+builder.add_edge(START, "assistant") # 从开始点，不加区分地走向 assistant
 builder.add_edge("assistant", END)   # assistant 思考完毕后，直接结束
 
 # 4. 编译成图（相当于把草稿变成可执行的程序）
@@ -107,3 +106,14 @@ builder.add_conditional_edges(
 ---
 
 **下一节：** 想让工作流在“十字路口”自动选择走哪条路？我们将深入条件路由，学会让大模型当“路由裁判”，并构建意图分流与决策树。
+<!-- CH10-14_EXPANSION -->
+
+## 状态字段要写清更新方式
+
+状态不是一个大家随意修改的全局变量。节点返回的是“这一步希望更新的字段”，LangGraph 再按字段的 reducer 规则合并。普通字段通常以后值覆盖前值；带 `add_messages` 的消息字段则按消息规则追加或更新。
+
+设计状态时，可以为每个字段补三项说明：谁负责写入、哪些节点读取、冲突时怎样合并。并行节点如果同时写同一个普通字段，往往会出现更新冲突；若确实需要收集多路结果，应使用列表 reducer，或让各分支写入不同字段后在汇总节点统一处理。
+
+还要避免把临时对象全部塞进状态。数据库连接、客户端实例和不能序列化的对象会妨碍检查点保存。状态更适合保存能够重建流程的业务数据和标识符。
+
+---

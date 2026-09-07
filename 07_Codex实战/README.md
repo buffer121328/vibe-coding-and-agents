@@ -1,31 +1,43 @@
-# 🤖 第七章：Codex 实战 —— OpenAI 原厂智能体工作台
+# 第七章：Codex 实战
 
-欢迎来到 **《Vibe Coding 极速通关》第七章：Codex 实战**！
-
-本章围绕 **OpenAI Codex**（2026 年起已并入 ChatGPT 桌面端）展开，带你从“原厂软硬一体”的底层认知出发，逐步掌握这一全能型 AI 智能体工作台：核心模型选型（GPT-5.6 Sol/Terra/Luna 等）、官方订阅实操、网络风控防封，以及 CC-Switch 接入国产模型的进阶中转方案。
-
-> 💡 **一句话认知**：选择 Agent 工具，本质就是选择它背后原厂深度调优的基座大模型！
+本章介绍 OpenAI Codex 的工作方式与使用边界。重点不在记住某个版本的按钮和型号，而在理解一项编程任务如何从“收到目标”推进到“可以验收”：模型负责分析和生成，工具负责读取与执行，运行环境控制权限，项目规则提供约束，测试与人工检查共同确认结果。
 
 ***
 
-## 📑 章节目录导航
+## 章节目录
 
-1. **[7.1 初识 OpenAI Codex：模型与智能体的“原厂软硬一体”新范式](./01_初识OpenAI_Codex_模型与智能体原厂软硬一体新范式.md)**
-   - 原厂底模与原厂 Agent 的“软硬深度对齐”逻辑；
-   - 2026 现代 Agent 桌面端功能大趋同全景横评（Codex / Trae / Cursor / Claude Code）；
-   - 选型第一性原理：选 Agent 就是选底模（GPT-5.6 Sol / Terra / Luna、Claude Opus 5 / Fable 5、Grok 4.x、DeepSeek V4）；
-   - ChatGPT / Codex 官方订阅（Go $8 / Plus $20 / Pro $100 起）与网络风控防封指南；
-   - CC-Switch / ccswitch-bridge 接入国产模型的进阶中转方案。
+1. **[7.1 初识 OpenAI Codex：模型、工具与运行环境如何协同](./01_初识OpenAI_Codex_模型与智能体原厂软硬一体新范式.md)**
+   - 从代码问答到完整任务执行；
+   - 模型、上下文、工具、循环和权限的关系；
+   - 桌面应用、IDE、CLI 与云端任务的适用场景；
+   - 按任务选择模型与推理强度；
+   - 账号、套餐、网络和第三方网关的核查方法；
+   - `config.toml` 的自定义供应方配置；
+   - 第一次任务的描述方式与验收清单。
 
-> 📌 后续小节（Codex 桌面端工作台、多 Agent 线程、Skills 技能包与 MCP 实战等）将陆续补充更新。
+后续小节将继续补充项目规则、权限控制、Skills、MCP、任务协作和代码审查等内容。
 
 ***
 
-## 🔗 推荐学习网站与官方资源
+## 建议的学习方法
 
-- **OpenAI Codex 官方网站（Codex 官网）**：<https://openai.com/codex/> —— 官方产品主页，“The same powerful coding agent—now in ChatGPT”
-- **OpenAI Codex 开发者文档（官方权威）**：<https://developers.openai.com/codex/> —— Changelog、Pricing、CLI / IDE / API 全量开发文档
-- **CodexGuide（推荐）**：<https://codexguide.ai/> —— 一站式中文教程，覆盖快速上手、进阶教程（AGENTS.md / Skills / 沙盒审批 / 线程管理）与实战案例，适合把 Codex 真正融入日常工作流
-- **CodexSkills（推荐）**：<https://codexskills.org/> —— 专注 Codex 的中文教程平台，深入核心功能（Computer Use / Skills / MCP 插件）、主流 Agent 对比与实战技巧
+阅读本章时，可以准备一个规模较小、带有测试或可直接运行的项目。每学完一个概念，就用同一个项目验证一次：
 
-> 🚀 **学习路径建议**：先读本章 [7.1](./01_初识OpenAI_Codex_模型与智能体原厂软硬一体新范式.md) 建立选型与订阅认知 → 再前往 CodexGuide 快速上手完成第一个任务 → 用 CodexSkills 沉淀常用 Skills 技能包。
+1. 让 Codex 先阅读项目规则并复述约束；
+2. 交给它一个范围明确的小任务；
+3. 查看它读取了哪些文件、调用了哪些工具；
+4. 检查修改差异和验证结果；
+5. 记录哪些信息需要在下次任务中提前说明。
+
+这样得到的不只是一次成功的演示，还会逐步形成适合自己项目的任务模板和验收习惯。
+
+***
+
+## 官方资料
+
+- [Codex 官方文档](https://learn.chatgpt.com/docs)
+- [Codex 配置说明](https://learn.chatgpt.com/docs/config-file/config-basics)
+- [Codex AGENTS.md 说明](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+- [Codex 权限与沙盒](https://learn.chatgpt.com/docs/permissions/sandboxing)
+
+产品入口、可用模型、套餐和额度可能调整，使用时以官方页面和账号内显示为准。
