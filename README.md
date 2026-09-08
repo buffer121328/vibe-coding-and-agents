@@ -14,6 +14,10 @@
 </p>
 
 <p align="center">
+  <b>📖 在线文档站（全书 14 章 · 140+ 篇）：</b><a href="https://buffer121328.github.io/vibe-coding-and-agents/">https://buffer121328.github.io/vibe-coding-and-agents</a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/github/stars/buffer121328/vibe-coding-and-agents?style=social" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
