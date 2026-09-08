@@ -4,17 +4,15 @@
   <em>用清楚自然的中文讲透原理 · 从 0 到 1 搭建 Agent · 串联 Dify / OpenCode / LangChain / LangGraph / RAG 工程实践</em>
 </p>
 
-<!-- 📖 在线阅读：圆角图标 + 👈 阅读入口同一行 -->
+<!-- 📖 在线阅读：圆角图标 + 👈 阅读入口 + 明文站址（同一段落，<br> 分隔留白） -->
 <p align="center">
   <a href="https://buffer121328.github.io/vibe-coding-and-agents/">
     <img src="img/image.svg" alt="在线阅读" width="75" height="75" align="middle" />
   </a>
   &nbsp;&nbsp;
   <b><a href="https://buffer121328.github.io/vibe-coding-and-agents/">👈 点这里开始阅读</a></b>
-</p>
-
-<p align="center">
-  <b>📖 在线文档站（全书 14 章 · 140+ 篇）：</b><a href="https://buffer121328.github.io/vibe-coding-and-agents/">https://buffer121328.github.io/vibe-coding-and-agents</a>
+  <br><br>
+  <sub><b>📖 在线文档站（全书 14 章 · 140+ 篇）：</b><a href="https://buffer121328.github.io/vibe-coding-and-agents/">https://buffer121328.github.io/vibe-coding-and-agents</a></sub>
 </p>
 
 <p align="center">
