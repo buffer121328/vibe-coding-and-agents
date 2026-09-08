@@ -647,10 +647,36 @@ html, body {
 .chat-container-box .wrapper,
 .chat-container-box .bubble-wrap { height: 100% !important; background: #ffffff !important; }
 
+/* 收紧答案末尾分割线与 Token 徽章的间距（Gradio 默认 hr 上下边距过大） */
+.chat-container-box .message hr {
+    margin: 12px 0 8px 0 !important;
+}
+
 .chat-container-box .bubble-wrap { padding: 18px 14px !important; gap: 16px !important; }
-.chat-container-box .message-row { max-width: 100% !important; }
-.chat-container-box .bot-row { padding-right: 8% !important; }
-.chat-container-box .user-row { padding-left: 14% !important; }
+.chat-container-box .message-row {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+.chat-container-box .bot-row {
+    justify-content: flex-start !important;
+    padding-right: 10% !important;
+}
+.chat-container-box .user-row {
+    justify-content: flex-end !important;
+    padding-left: 18% !important;
+}
+.chat-container-box .bot-row .flex-wrap {
+    width: 100% !important;
+    max-width: 90% !important;
+    margin-right: auto !important;
+}
+.chat-container-box .user-row .flex-wrap {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    max-width: 82% !important;
+    margin-left: auto !important;
+}
 .chat-container-box .message-row .message {
     border: 0 !important;
     box-shadow: none !important;
@@ -658,6 +684,8 @@ html, body {
     line-height: 1.65 !important;
 }
 .chat-container-box .user-row .message {
+    width: auto !important;
+    max-width: 100% !important;
     border-radius: 16px 16px 5px 16px !important;
     background: #eef2f7 !important;
     color: #1e293b !important;

@@ -259,6 +259,13 @@ class MiniAgent:
 
         # 2. 深度思考前置规划
         if deep_think:
+            # 🧹 先移除上一轮残留的规划消息：规划只代表"当时对本轮问题的作战推演"，
+            # 会话延续时旧规划会误导后续轮次（模型可能仍按几轮前的检索计划行动），
+            # 因此保证消息列表中最多只有一条【最新规划】。
+            self.messages = [
+                m for m in self.messages
+                if not (m.get("role") == "system" and str(m.get("content", "")).startswith("【🧠 深度思考前置规划】"))
+            ]
             think = self.deep_think(user_input)
             self.bus.emit(AgentEvent("deep_think", content=think))
             self.messages.append({"role": "system", "content": f"【🧠 深度思考前置规划】\n{think}"})
@@ -431,6 +438,11 @@ class MiniAgent:
 
         # 2. 深度思考前置规划（deepagents 规划思想 + 8.3 Plan），注入上下文
         if deep_think:
+            # 🧹 与 chat_stream 相同：先移除上一轮残留规划，保证列表中最多一条【最新规划】
+            self.messages = [
+                m for m in self.messages
+                if not (m.get("role") == "system" and str(m.get("content", "")).startswith("【🧠 深度思考前置规划】"))
+            ]
             think = self.deep_think(user_input)
             self.bus.emit(AgentEvent("deep_think", content=think))
             self.messages.append({"role": "system", "content": f"【🧠 深度思考前置规划】\n{think}"})

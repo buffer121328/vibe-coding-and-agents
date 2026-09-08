@@ -7,7 +7,7 @@ import queue
 import threading
 import time
 from types import SimpleNamespace
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Tuple
 
 import gradio as gr
 from dotenv import load_dotenv
@@ -67,6 +67,8 @@ footer { display: none !important; }
     min-height: 100vh !important;
     padding: 16px 14px !important;
     gap: 14px !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
     background: #f0f0f2 !important;
     border-right: 1px solid var(--line) !important;
 }
@@ -120,16 +122,66 @@ footer { display: none !important; }
     text-transform: uppercase;
 }
 
-#session-picker, #session-picker > .block {
+#session-sidebar > .form {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+#session-list {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 0 !important;
     border: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
+    overflow-y: auto !important;
 }
 
-#session-picker .wrap {
-    border-color: var(--line) !important;
-    border-radius: 12px !important;
+#session-list > .wrap:not([data-testid="status-tracker"]) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    padding: 0 !important;
+}
+
+#session-list label {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    align-items: center !important;
+    padding: 9px 11px !important;
+    overflow: hidden !important;
+    border: 1px solid transparent !important;
+    border-radius: 11px !important;
+    color: #3f3f46 !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    transition: background .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#session-list label:hover {
+    border-color: #e4e4e7 !important;
     background: rgba(255, 255, 255, .72) !important;
+}
+
+#session-list label.selected {
+    border-color: #ddd6fe !important;
+    color: #5b21b6 !important;
+    background: #f5f3ff !important;
+    font-weight: 650 !important;
+}
+
+#session-list label input { display: none !important; }
+
+#session-list label span {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
 }
 
 #refresh-sessions-btn {
@@ -255,9 +307,35 @@ footer { display: none !important; }
     line-height: 1.7;
 }
 
-#chat-window .message-row { max-width: 820px !important; margin-inline: auto !important; }
-#chat-window .bot-row { padding-right: 11% !important; }
-#chat-window .user-row { padding-left: 16% !important; }
+#chat-window .message-row {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 920px !important;
+    margin-inline: auto !important;
+}
+
+#chat-window .bot-row {
+    justify-content: flex-start !important;
+    padding-right: 14% !important;
+}
+
+#chat-window .user-row {
+    justify-content: flex-end !important;
+    padding-left: 22% !important;
+}
+
+#chat-window .bot-row .flex-wrap {
+    width: 100% !important;
+    max-width: 86% !important;
+    margin-right: auto !important;
+}
+
+#chat-window .user-row .flex-wrap {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    max-width: 78% !important;
+    margin-left: auto !important;
+}
 
 #chat-window .message-row .message {
     border: 0 !important;
@@ -267,12 +345,19 @@ footer { display: none !important; }
 }
 
 #chat-window .user-row .message {
+    width: auto !important;
+    max-width: 100% !important;
     border-radius: 18px 18px 5px 18px !important;
     background: #f0f0f2 !important;
     color: #27272a !important;
 }
 
 #chat-window .bot-row .message { background: transparent !important; color: var(--ink) !important; }
+
+/* 收紧答案末尾分割线与 Token 徽章的间距（Gradio 默认 hr 上下边距过大） */
+#chat-window .message hr {
+    margin: 12px 0 8px 0 !important;
+}
 
 #chat-window .bot-row .flex-wrap::before {
     content: "✦";
@@ -331,7 +416,14 @@ footer { display: none !important; }
     border-radius: 18px !important;
     background: white !important;
     box-shadow: 0 8px 26px rgba(24, 24, 27, .08), 0 1px 3px rgba(24, 24, 27, .05) !important;
+    overflow: visible !important;
+}
+
+#message-composer .input-container {
+    align-items: center !important;
+    padding-right: 8px !important;
     overflow: hidden !important;
+    border-radius: 17px !important;
 }
 
 #message-composer textarea {
@@ -343,10 +435,18 @@ footer { display: none !important; }
     background: white !important;
 }
 
-#message-composer button {
+#message-composer [data-testid="submit-button"] {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
     border-radius: 11px !important;
     background: var(--ink) !important;
     color: white !important;
+    z-index: 2 !important;
 }
 
 .composer-footnote {
@@ -422,16 +522,103 @@ footer { display: none !important; }
 #timeline-card th { color: var(--muted) !important; font-size: 10px !important; text-transform: uppercase; }
 #timeline-card code { white-space: normal !important; word-break: break-word !important; }
 
-#settings-accordion, #trace-accordion {
+#settings-open-btn, #trace-open-btn {
     border: 1px solid var(--line) !important;
     border-radius: 14px !important;
     background: white !important;
     overflow: hidden !important;
 }
 
-#settings-accordion .label-wrap, #trace-accordion .label-wrap { font-size: 12px !important; }
+#settings-open-btn, #trace-open-btn {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    color: #3f3f46 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+}
+
+#trace-open-btn:hover, #settings-open-btn:hover {
+    border-color: #d7ccff !important;
+    background: #faf8ff !important;
+}
+
+#settings-modal, #trace-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    border: 0 !important;
+    background: rgba(24, 24, 27, .42) !important;
+    backdrop-filter: blur(5px) !important;
+    z-index: 9999 !important;
+}
+
+#settings-dialog, #trace-dialog {
+    flex: 0 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    padding: 18px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255, 255, 255, .8) !important;
+    border-radius: 20px !important;
+    background: #ffffff !important;
+    box-shadow: 0 24px 70px rgba(24, 24, 27, .24) !important;
+}
+
+#settings-dialog {
+    width: min(540px, calc(100vw - 32px)) !important;
+    max-width: 540px !important;
+    max-height: min(680px, calc(100vh - 40px)) !important;
+    overflow-y: auto !important;
+}
+
+#trace-dialog {
+    width: min(920px, calc(100vw - 32px)) !important;
+    max-width: 920px !important;
+    min-height: min(320px, calc(100vh - 40px)) !important;
+    max-height: min(720px, calc(100vh - 40px)) !important;
+}
+
+.modal-dialog-title { color: var(--ink); font-size: 16px; font-weight: 760; }
+.modal-dialog-copy { margin-top: 3px; color: var(--muted); font-size: 11.5px; }
+
+#settings-close-btn, #trace-close-btn {
+    flex: 0 0 36px !important;
+    min-width: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 10px !important;
+    color: #52525b !important;
+    background: #fafafa !important;
+}
+
+#trace-dialog-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 2px 4px 2px 0 !important;
+    border-top: 1px solid #f0f0f2 !important;
+}
+
+#trace-json {
+    min-height: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
 .option-grid { gap: 8px !important; }
-.option-grid > .block { padding: 8px !important; border: 0 !important; background: #fafafa !important; }
+.option-grid > .block {
+    padding: 10px !important;
+    border: 1px solid #eeeeef !important;
+    border-radius: 12px !important;
+    background: #fafafa !important;
+}
 #memory-permission { padding: 8px 2px 2px !important; }
 
 @media (max-width: 1120px) {
@@ -450,16 +637,22 @@ footer { display: none !important; }
         border: 0 !important;
     }
     #session-sidebar {
-        flex-direction: row !important;
+        max-height: 260px !important;
+        flex-direction: column !important;
         flex-wrap: nowrap !important;
-        align-items: center !important;
+        align-items: stretch !important;
         padding: 10px 12px !important;
         border-bottom: 1px solid var(--line) !important;
     }
     .brand-lockup, .sidebar-label, .sidebar-tip { display: none !important; }
-    #new-session-btn { flex: 0 0 150px !important; }
-    #session-sidebar > .form { flex: 1 1 0 !important; min-width: 0 !important; }
-    #session-picker { flex: 1 1 auto !important; min-width: 0 !important; }
+    #new-session-btn { flex: 0 0 auto !important; width: 100% !important; }
+    #session-sidebar > .form { flex: 0 0 auto !important; width: 100% !important; }
+    #session-list { max-height: 104px !important; overflow-x: auto !important; }
+    #session-list > .wrap:not([data-testid="status-tracker"]) {
+        flex-direction: row !important;
+        overflow-x: auto !important;
+    }
+    #session-list label { flex: 0 0 220px !important; }
     #refresh-sessions-btn { display: none !important; }
     #conversation-main { min-height: 660px !important; }
     #chat-window { height: 470px !important; }
@@ -468,8 +661,6 @@ footer { display: none !important; }
 }
 
 @media (max-width: 620px) {
-    #session-sidebar { justify-content: center !important; }
-    #session-sidebar > .form { display: none !important; }
     .conversation-topbar { padding-inline: 15px; }
     .model-meta { display: none; }
     #chat-window { min-height: 360px !important; height: 56vh !important; }
@@ -478,6 +669,14 @@ footer { display: none !important; }
     #prompt-dock { width: calc(100% - 20px) !important; }
     #suggestion-row { display: flex !important; overflow-x: auto !important; }
     #suggestion-row button { min-width: 210px !important; }
+    #settings-modal, #trace-modal { padding: 10px !important; }
+    #settings-dialog, #trace-dialog {
+        width: calc(100vw - 20px) !important;
+        max-width: none !important;
+        max-height: calc(100vh - 20px) !important;
+        border-radius: 16px !important;
+    }
+    #trace-dialog { min-height: min(320px, calc(100vh - 20px)) !important; }
 }
 """
 
@@ -555,24 +754,13 @@ def _normalize_timeline(timeline) -> List[str]:
     return []
 
 
-def _session_choices() -> List[str]:
-    """生成会话下拉选项：最新在前，带标题与消息数"""
-    labels = []
+def _session_choices() -> List[Tuple[str, str]]:
+    """生成可点击的历史会话：界面显示标题，内部直接传递完整 session_id"""
+    choices = []
     for s in session_store.list_sessions():
-        labels.append(f"{s['title'][:24]}（{s['message_count']}条 · {s['session_id'][:8]}）")
-    return labels
-
-
-def _session_id_from_label(label: str) -> Optional[str]:
-    """从下拉选项文本中解析 session_id 前 8 位，再映射回完整 ID"""
-    import os
-    if not label:
-        return None
-    prefix = label.split("·")[-1].rstrip("）)").strip()
-    for fname in os.listdir("sessions"):
-        if fname.endswith(".json") and fname.startswith(prefix):
-            return fname[:-5]
-    return None
+        label = f"💬 {s['title'][:25]}  ·  {s['message_count']} 条"
+        choices.append((label, s["session_id"]))
+    return choices
 
 
 # ========== 🔄 后台线程 + 队列：流式 delta 与事件实时搬运用 ==========
@@ -699,15 +887,18 @@ def chat_turn(user_msg, chat_history, agent_inst, opts, skills, allow_memory, ti
 
 def new_session():
     """🆕 新建会话：全新 Agent 实例（旧会话已自动存档），时间线清空"""
-    return [], "", MiniAgent(global_client, session_store=session_store), _status_html("新会话已就绪"), _TIMELINE_PLACEHOLDER, []
+    return (
+        [], "", MiniAgent(global_client, session_store=session_store),
+        _status_html("新会话已就绪"), _TIMELINE_PLACEHOLDER, [],
+        gr.update(value=None),
+    )
 
 
-def load_session(label, allow_memory):
+def load_session(session_id, allow_memory):
     """📂 切换/加载历史会话：从 SessionStore 恢复消息为对话气泡"""
-    sid = _session_id_from_label(label)
-    if not sid:
+    if not session_id:
         return [], "", None, _status_html("未找到这个会话", "error"), _TIMELINE_PLACEHOLDER, []
-    node = session_store.load(sid)
+    node = session_store.load(session_id)
     if node is None:
         return [], "", None, _status_html("会话存档读取失败", "error"), _TIMELINE_PLACEHOLDER, []
 
@@ -727,7 +918,7 @@ def load_session(label, allow_memory):
 
 
 def refresh_sessions():
-    """🔄 刷新会话下拉列表"""
+    """🔄 刷新左侧历史会话列表"""
     return gr.update(choices=_session_choices())
 
 
@@ -755,22 +946,15 @@ with gr.Blocks(
             """)
             new_btn = gr.Button("＋  新建对话", elem_id="new-session-btn")
             gr.HTML('<div class="sidebar-label">历史对话</div>')
-            session_dd = gr.Dropdown(
-                label="选择一条存档",
+            session_list = gr.Radio(
                 choices=_session_choices(),
                 value=None,
                 interactive=True,
                 show_label=False,
                 container=False,
-                elem_id="session-picker",
+                elem_id="session-list",
             )
             refresh_btn = gr.Button("↻  刷新会话列表", size="sm", elem_id="refresh-sessions-btn")
-            gr.HTML("""
-            <div class="sidebar-tip">
-                <strong>💡 对话会自动存档</strong>
-                可以随时切换历史会话；Agent 会带着对话上下文继续工作。
-            </div>
-            """)
 
         # ── 中：网页版对话主区 ──
         with gr.Column(scale=1, elem_id="conversation-main"):
@@ -816,26 +1000,55 @@ with gr.Blocks(
             """)
             status_badge = gr.HTML(_status_html("待命中"))
             timeline_md = gr.Markdown(value=_TIMELINE_PLACEHOLDER, elem_id="timeline-card")
-            with gr.Accordion("⚙️ 对话设置", open=False, elem_id="settings-accordion"):
-                with gr.Row(elem_classes=["option-grid"]):
-                    opts = gr.CheckboxGroup(
-                        label="增强模式",
-                        choices=["🧠 深度思考", "🔍 强制联网搜索"],
-                        value=["🧠 深度思考"],
-                    )
-                    skills = gr.CheckboxGroup(
-                        label="技能挂载",
-                        choices=["git_expert", "python_cleaner"],
-                        value=[],
-                    )
-                allow_memory = gr.Checkbox(
-                    label="允许本轮保存个人偏好",
-                    info="仅放行 save_preference，不授权终端或代码编辑",
-                    value=False,
-                    elem_id="memory-permission",
+            settings_btn = gr.Button("⚙️  对话设置", elem_id="settings-open-btn")
+            trace_btn = gr.Button("🔍  原始 Trace 审计记录", elem_id="trace-open-btn")
+
+    # 设置使用真正的覆盖式弹窗，不再向下撑开右侧面板。
+    with gr.Group(visible=False, elem_id="settings-modal") as settings_modal:
+        with gr.Column(elem_id="settings-dialog"):
+            with gr.Row(equal_height=True):
+                gr.HTML("""
+                <div>
+                    <div class="modal-dialog-title">对话设置</div>
+                    <div class="modal-dialog-copy">调整本轮的思考方式、技能和记忆权限。</div>
+                </div>
+                """)
+                close_settings_btn = gr.Button("✕", elem_id="settings-close-btn")
+            with gr.Row(elem_classes=["option-grid"]):
+                opts = gr.CheckboxGroup(
+                    label="增强模式",
+                    choices=["🧠 深度思考", "🔍 强制联网搜索"],
+                    value=["🧠 深度思考"],
                 )
-            with gr.Accordion("🔍 原始 Trace 审计记录", open=False, elem_id="trace-accordion"):
-                trace_json = gr.JSON(label="决策链路与权限事件", show_label=False)
+                skills = gr.CheckboxGroup(
+                    label="技能挂载",
+                    choices=["git_expert", "python_cleaner"],
+                    value=[],
+                )
+            allow_memory = gr.Checkbox(
+                label="允许本轮保存个人偏好",
+                info="仅放行 save_preference，不授权终端或代码编辑",
+                value=False,
+                elem_id="memory-permission",
+            )
+
+    # Trace 信息量更大，使用单独的宽弹窗；内容过长时只滚动弹窗正文。
+    with gr.Group(visible=False, elem_id="trace-modal") as trace_modal:
+        with gr.Column(elem_id="trace-dialog"):
+            with gr.Row(equal_height=True):
+                gr.HTML("""
+                <div>
+                    <div class="modal-dialog-title">原始 Trace 审计记录</div>
+                    <div class="modal-dialog-copy">查看 Agent 的决策链路、工具调用和权限事件。</div>
+                </div>
+                """)
+                close_trace_btn = gr.Button("✕", elem_id="trace-close-btn")
+            with gr.Column(elem_id="trace-dialog-body"):
+                trace_json = gr.JSON(
+                    label="决策链路与权限事件",
+                    show_label=False,
+                    elem_id="trace-json",
+                )
 
     # 预设快捷提示词（填入输入框，用户确认后发送）
     p1.click(lambda: "2026年最新的主流前端框架有哪些新趋势？请联网核实", outputs=[msg_input])
@@ -849,14 +1062,18 @@ with gr.Blocks(
     )
     new_btn.click(
         new_session,
-        outputs=[chatbot, msg_input, state_agent, status_badge, timeline_md, trace_json],
+        outputs=[chatbot, msg_input, state_agent, status_badge, timeline_md, trace_json, session_list],
     )
-    session_dd.select(
+    session_list.input(
         load_session,
-        inputs=[session_dd, allow_memory],
+        inputs=[session_list, allow_memory],
         outputs=[chatbot, msg_input, state_agent, status_badge, timeline_md, trace_json],
     )
-    refresh_btn.click(refresh_sessions, outputs=[session_dd])
+    refresh_btn.click(refresh_sessions, outputs=[session_list])
+    settings_btn.click(lambda: gr.update(visible=True), outputs=[settings_modal])
+    close_settings_btn.click(lambda: gr.update(visible=False), outputs=[settings_modal])
+    trace_btn.click(lambda: gr.update(visible=True), outputs=[trace_modal])
+    close_trace_btn.click(lambda: gr.update(visible=False), outputs=[trace_modal])
 
 
 if __name__ == "__main__":
