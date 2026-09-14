@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 235.48793640136716" width="1366" height="235.48793640136716" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Risk" data-label="🧊 高替代区：'YES &amp; CONTINUE' 工程师">
+  <rect x="20" y="97.68793640136718" width="652" height="113.79999999999998" rx="0" ry="0" fill="#ffecee" stroke="#d20f39" stroke-width="1" />
+  <rect x="20" y="97.68793640136718" width="652" height="28" rx="0" ry="0" fill="#ffd4d8" stroke="#d20f39" stroke-width="1" />
+  <text x="32" y="111.68793640136718" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🧊 高替代区：'YES &amp; CONTINUE' 工程师</text>
+</g>
+<g class="subgraph" data-id="Value" data-label="🔥 高价值区：掌控 AI 的人">
+  <rect x="732" y="56.20997772216796" width="610" height="113.79999999999998" rx="0" ry="0" fill="#e7f7e7" stroke="#40a02b" stroke-width="1" />
+  <rect x="732" y="56.20997772216796" width="610" height="28" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="1" />
+  <text x="744" y="70.20997772216796" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🔥 高价值区：掌控 AI 的人</text>
+</g>
+<polyline class="edge" data-from="R1" data-to="R2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="197,168.5879364013672 245,168.5879364013672" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R2" data-to="R3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="409,168.5879364013672 457,168.5879364013672" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="V1" data-to="V2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="906,127.10997772216797 954,127.10997772216797" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="V2" data-to="V3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="1138,127.10997772216797 1186,127.10997772216797" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="R3" data-to="V1" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="656,168.5879364013672 702,168.5879364013672 702,186.00997772216795 827,186.00997772216795 827,154.00997772216795" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="R3" data-to="V1" data-label="补上内功，才有下一步">
+  <rect x="702.5" y="175.00997772216795" width="124" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="764.5" y="186.00997772216795" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">补上内功，才有下一步</text>
+</g>
+<g class="node" data-id="R1" data-label="只会 CRUD 与套模板\n需求不消化就丢给 AI" data-shape="rectangle">
+  <rect x="36" y="141.68793640136718" width="161" height="53.8" rx="0" ry="0" fill="#ffd4d8" stroke="#d20f39" stroke-width="0.75" />
+  <text x="116.5" y="168.5879364013672" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="116.5" dy="-3.8999999999999995">只会 CRUD 与套模板</tspan><tspan x="116.5" dy="16.9">需求不消化就丢给 AI</tspan></text>
+</g>
+<g class="node" data-id="R2" data-label="测试 / Review / 上线\n一律'是是是 + 继续'" data-shape="rectangle">
+  <rect x="245" y="141.68793640136718" width="164" height="53.8" rx="0" ry="0" fill="#ffd4d8" stroke="#d20f39" stroke-width="0.75" />
+  <text x="327" y="168.5879364013672" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="327" dy="-3.8999999999999995">测试 / Review / 上线</tspan><tspan x="327" dy="16.9">一律'是是是 + 继续'</tspan></text>
+</g>
+<g class="node" data-id="R3" data-label="技能只有速成深度\nAI 与转行者几个月就能追平" data-shape="rectangle">
+  <rect x="457" y="141.68793640136718" width="199" height="53.8" rx="0" ry="0" fill="#ffd4d8" stroke="#d20f39" stroke-width="0.75" />
+  <text x="556.5" y="168.5879364013672" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="556.5" dy="-3.8999999999999995">技能只有速成深度</tspan><tspan x="556.5" dy="16.9">AI 与转行者几个月就能追平</tspan></text>
+</g>
+<g class="node" data-id="V1" data-label="定义问题与验收标准\nAI 是放大器不是替身" data-shape="rectangle">
+  <rect x="748" y="100.20997772216796" width="158" height="53.8" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="0.75" />
+  <text x="827" y="127.10997772216797" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="827" dy="-3.8999999999999995">定义问题与验收标准</tspan><tspan x="827" dy="16.9">AI 是放大器不是替身</tspan></text>
+</g>
+<g class="node" data-id="V2" data-label="架构选型与容量评估\n服务器压力 / 数据库压力" data-shape="rectangle">
+  <rect x="954" y="100.20997772216796" width="184" height="53.8" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="0.75" />
+  <text x="1046" y="127.10997772216797" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1046" dy="-3.8999999999999995">架构选型与容量评估</tspan><tspan x="1046" dy="16.9">服务器压力 / 数据库压力</tspan></text>
+</g>
+<g class="node" data-id="V3" data-label="长期维护复杂系统\n对线上结果负责" data-shape="rectangle">
+  <rect x="1186" y="100.20997772216796" width="140" height="53.8" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="0.75" />
+  <text x="1256" y="127.10997772216797" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1256" dy="-3.8999999999999995">长期维护复杂系统</tspan><tspan x="1256" dy="16.9">对线上结果负责</tspan></text>
+</g>
+</svg>

@@ -1,0 +1,18 @@
+%% colors: node W1=#ffe2c8/#fe640b, node W2=#ffe2c8/#fe640b, node W3=#ffe2c8/#fe640b, node W4=#ffe2c8/#fe640b
+%% colors: cluster Wind=#fff1e3/#ffe2c8/#fe640b
+%% colors: node C1=#cfdcff/#1e66f5, node C2=#cfdcff/#1e66f5, node C3=#cfdcff/#1e66f5, node C4=#cfdcff/#1e66f5
+%% colors: cluster Core=#e8efff/#cfdcff/#1e66f5
+graph TD
+    subgraph Wind ["🌪️ 抓风口派：涨得快，散得也快"]
+        W1["风口出现\n三个月速成冲进新赛道"] --> W2["吃到第一波红利\n薪资与热度一起飙升"]
+        W2 --> W3["潮水退去\n技能随平台一同贬值"]
+        W3 --> W4["重新归零\n再去追下一个风口"]
+        W4 -.-> W1
+    end
+
+    subgraph Core ["🪨 修内功派：慢，但一直在涨"]
+        C1["吃透一门基本功\nWeb 全栈 / 数据库 / 网络"] --> C2["用 AI 提效\n决策与验收握在自己手里"]
+        C2 --> C3["维护复杂系统\n沉淀架构与故障经验"]
+        C3 --> C4["新框架来了\n也只是换一层皮"]
+        C4 -.-> C1
+    end

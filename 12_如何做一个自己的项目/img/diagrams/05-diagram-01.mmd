@@ -1,0 +1,15 @@
+%% colors: node R1=#ffd4d8/#d20f39, node R2=#ffd4d8/#d20f39, node R3=#ffd4d8/#d20f39
+%% colors: cluster Risk=#ffecee/#ffd4d8/#d20f39
+%% colors: node V1=#c9eecb/#40a02b, node V2=#c9eecb/#40a02b, node V3=#c9eecb/#40a02b
+%% colors: cluster Value=#e7f7e7/#c9eecb/#40a02b
+graph LR
+    subgraph Risk ["🧊 高替代区：'YES & CONTINUE' 工程师"]
+        R1["只会 CRUD 与套模板\n需求不消化就丢给 AI"] --> R2["测试 / Review / 上线\n一律'是是是 + 继续'"]
+        R2 --> R3["技能只有速成深度\nAI 与转行者几个月就能追平"]
+    end
+
+    subgraph Value ["🔥 高价值区：掌控 AI 的人"]
+        V1["定义问题与验收标准\nAI 是放大器不是替身"] --> V2["架构选型与容量评估\n服务器压力 / 数据库压力"]
+        V2 --> V3["长期维护复杂系统\n对线上结果负责"]
+    end
+    R3 -.->|补上内功，才有下一步| V1

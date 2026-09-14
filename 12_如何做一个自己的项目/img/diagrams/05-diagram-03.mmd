@@ -1,0 +1,14 @@
+%% colors: node L1=#c3ebef/#179299, node L2=#c3ebef/#179299, node L3=#c3ebef/#179299
+%% colors: cluster AICan=#e3f5f7/#c3ebef/#179299
+%% colors: node H1=#e6d7fd/#8839ef, node H2=#e6d7fd/#8839ef, node H3=#e6d7fd/#8839ef
+%% colors: cluster Human=#f1eaff/#e6d7fd/#8839ef
+graph TD
+    subgraph AICan ["🤖 AI 擅长：可描述、可验证的执行层"]
+        L1["增删一个模块\n修一个明确的 Bug"] --> L2["加一个功能\n页面 + 接口 + 脚本"] --> L3["写一个 MVP\n搭脚手架做演示"]
+    end
+
+    subgraph Human ["🧠 人必须扛：难以言传的判断层"]
+        H1["判断需求本质\n为什么做、做到什么程度算好"] --> H2["维护 100 万行的项目\n技术债 / 架构演进 / 线上事故"]
+        H2 --> H3["从 0 定义新原型\n做出市面上没有的东西"]
+    end
+    L3 ==>|越过这条线：判断与责任| H1

@@ -42,6 +42,8 @@ function parseMMD(text) {
   const clusters = new Map() // id -> {id, label, members: []}
   const edges = []           // {from, to, style, label, bidir}
   const stack = []
+  // 彩色支持：源文件内用 "%% colors: node ID=填充/描边, cluster ID=底色/头条/描边" 声明色值
+  const colors = { nodes: {}, clusters: {} }
   const memberOf = (id) => stack.length ? stack[stack.length - 1] : null
   function addNode(id, label, shape) {
     if (!nodes.has(id)) {
@@ -68,7 +70,19 @@ function parseMMD(text) {
   }
   for (const raw of text.split('\n')) {
     const line = raw.trim()
-    if (!line || line.startsWith('%%') || /^(graph|flowchart)\b/.test(line)) continue
+    if (!line || /^(graph|flowchart)\b/.test(line)) continue
+    if (line.startsWith('%%')) {
+      const cm = /^%%\s*colors:\s*(.+)$/.exec(line)
+      if (cm) {
+        for (const entry of cm[1].split(',')) {
+          const nm = /^node\s+([\w-]+)\s*=\s*(#\w+)\s*\/\s*(#\w+)$/.exec(entry.trim())
+          const cm2 = /^cluster\s+([\w-]+)\s*=\s*(#\w+)\s*\/\s*(#\w+)\s*\/\s*(#\w+)$/.exec(entry.trim())
+          if (nm) colors.nodes[nm[1]] = { fill: nm[2], stroke: nm[3] }
+          else if (cm2) colors.clusters[cm2[1]] = { fill: cm2[2], header: cm2[3], stroke: cm2[4] }
+        }
+      }
+      continue
+    }
     const sg = /^subgraph\s+([\w-]+)(?:\s*\["([^"]*)"\])?/.exec(line)
     if (sg) { clusters.set(sg[1], { id: sg[1], label: sg[2] || sg[1], members: [] }); stack.push(sg[1]); continue }
     if (line === 'end') { stack.pop(); continue }
@@ -96,7 +110,7 @@ function parseMMD(text) {
       if (d) addNode(d[1], d[2], line.includes('{') ? 'diamond' : 'rectangle')
     }
   }
-  return { dir, nodes: [...nodes.values()], clusters: [...clusters.values()], edges }
+  return { dir, nodes: [...nodes.values()], clusters: [...clusters.values()], edges, colors }
 }
 
 // ---------- 布局 ----------
@@ -341,9 +355,13 @@ async function render(inPath, outPath) {
   const out = []
   for (const c of graph.clusters) {
     const b = box.get(c.id)
+    const cc = graph.colors?.clusters?.[c.id]
+    const gFill = cc?.fill || 'var(--_group-fill)'
+    const hFill = cc?.header || 'var(--_group-hdr)'
+    const gStroke = cc?.stroke || 'var(--_node-stroke)'
     out.push(`<g class="subgraph" data-id="${c.id}" data-label="${esc(c.label)}">`)
-    out.push(`  <rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />`)
-    out.push(`  <rect x="${b.x}" y="${b.y}" width="${b.w}" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />`)
+    out.push(`  <rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="0" ry="0" fill="${gFill}" stroke="${gStroke}" stroke-width="1" />`)
+    out.push(`  <rect x="${b.x}" y="${b.y}" width="${b.w}" height="28" rx="0" ry="0" fill="${hFill}" stroke="${gStroke}" stroke-width="1" />`)
     out.push(`  <text x="${b.x + 12}" y="${b.y + 14}" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">${esc(c.label)}</text>`)
     out.push(`</g>`)
   }
@@ -365,12 +383,15 @@ async function render(inPath, outPath) {
   }
   for (const n of graph.nodes) {
     const p = pos.get(n.id)
+    const nc = graph.colors?.nodes?.[n.id]
+    const nFill = nc?.fill || 'var(--_node-fill)'
+    const nStroke = nc?.stroke || 'var(--_node-stroke)'
     out.push(`<g class="node" data-id="${n.id}" data-label="${esc(n.label)}" data-shape="${n.shape}">`)
     if (n.shape === 'diamond') {
       const cx = p.x + p.w / 2, cy = p.y + p.h / 2
-      out.push(`  <polygon points="${cx},${p.y - 12} ${p.x + p.w / 2 + 36},${cy} ${cx},${p.y + p.h + 12} ${p.x + p.w / 2 - 36},${cy}" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />`)
+      out.push(`  <polygon points="${cx},${p.y - 12} ${p.x + p.w / 2 + 36},${cy} ${cx},${p.y + p.h + 12} ${p.x + p.w / 2 - 36},${cy}" fill="${nFill}" stroke="${nStroke}" stroke-width="0.75" />`)
     } else {
-      out.push(`  <rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />`)
+      out.push(`  <rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="0" ry="0" fill="${nFill}" stroke="${nStroke}" stroke-width="0.75" />`)
     }
     const lines = n.lines, cy = p.y + p.h / 2
     const firstDy = 4.55 - (lines.length - 1) * 8.45

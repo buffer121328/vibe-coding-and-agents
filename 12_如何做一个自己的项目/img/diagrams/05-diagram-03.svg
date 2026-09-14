@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 373.5 682.8" width="373.5" height="682.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="AICan" data-label="🤖 AI 擅长：可描述、可验证的执行层">
+  <rect x="65.11198425292969" y="-8" width="238.22396850585938" height="317.40000000000003" rx="0" ry="0" fill="#e3f5f7" stroke="#179299" stroke-width="1" />
+  <rect x="65.11198425292969" y="-8" width="238.22396850585938" height="28" rx="0" ry="0" fill="#c3ebef" stroke="#179299" stroke-width="1" />
+  <text x="77.11198425292969" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🤖 AI 擅长：可描述、可验证的执行层</text>
+</g>
+<g class="subgraph" data-id="Human" data-label="🧠 人必须扛：难以言传的判断层">
+  <rect x="20" y="341.40000000000003" width="246" height="317.3999999999999" rx="0" ry="0" fill="#f1eaff" stroke="#8839ef" stroke-width="1" />
+  <rect x="20" y="341.40000000000003" width="246" height="28" rx="0" ry="0" fill="#e6d7fd" stroke="#8839ef" stroke-width="1" />
+  <text x="32" y="355.40000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🧠 人必须扛：难以言传的判断层</text>
+</g>
+<polyline class="edge" data-from="L1" data-to="L2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="155.1119842529297,89.8 155.1119842529297,137.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="L2" data-to="L3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="155.1119842529297,191.60000000000002 155.1119842529297,239.60000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H1" data-to="H2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="143,439.20000000000005 143,487.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H2" data-to="H3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="143,541 143,589" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="L3" data-to="H1" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="155.1119842529297,293.40000000000003 155.1119842529297,339.40000000000003 282,339.40000000000003 282,412.3 247.5,412.3" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="L3" data-to="H1" data-label="越过这条线：判断与责任">
+  <rect x="214.5" y="364.85" width="135" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="282" y="375.85" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">越过这条线：判断与责任</text>
+</g>
+<g class="node" data-id="L1" data-label="增删一个模块\n修一个明确的 Bug" data-shape="rectangle">
+  <rect x="83.61198425292969" y="36" width="143" height="53.8" rx="0" ry="0" fill="#c3ebef" stroke="#179299" stroke-width="0.75" />
+  <text x="155.1119842529297" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="155.1119842529297" dy="-3.8999999999999995">增删一个模块</tspan><tspan x="155.1119842529297" dy="16.9">修一个明确的 Bug</tspan></text>
+</g>
+<g class="node" data-id="L2" data-label="加一个功能\n页面 + 接口 + 脚本" data-shape="rectangle">
+  <rect x="81.11198425292969" y="137.8" width="148" height="53.8" rx="0" ry="0" fill="#c3ebef" stroke="#179299" stroke-width="0.75" />
+  <text x="155.1119842529297" y="164.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="155.1119842529297" dy="-3.8999999999999995">加一个功能</tspan><tspan x="155.1119842529297" dy="16.9">页面 + 接口 + 脚本</tspan></text>
+</g>
+<g class="node" data-id="L3" data-label="写一个 MVP\n搭脚手架做演示" data-shape="rectangle">
+  <rect x="92.11198425292969" y="239.60000000000002" width="126" height="53.8" rx="0" ry="0" fill="#c3ebef" stroke="#179299" stroke-width="0.75" />
+  <text x="155.1119842529297" y="266.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="155.1119842529297" dy="-3.8999999999999995">写一个 MVP</tspan><tspan x="155.1119842529297" dy="16.9">搭脚手架做演示</tspan></text>
+</g>
+<g class="node" data-id="H1" data-label="判断需求本质\n为什么做、做到什么程度算好" data-shape="rectangle">
+  <rect x="38.5" y="385.40000000000003" width="209" height="53.8" rx="0" ry="0" fill="#e6d7fd" stroke="#8839ef" stroke-width="0.75" />
+  <text x="143" y="412.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143" dy="-3.8999999999999995">判断需求本质</tspan><tspan x="143" dy="16.9">为什么做、做到什么程度算好</tspan></text>
+</g>
+<g class="node" data-id="H2" data-label="维护 100 万行的项目\n技术债 / 架构演进 / 线上事故" data-shape="rectangle">
+  <rect x="36" y="487.20000000000005" width="214" height="53.8" rx="0" ry="0" fill="#e6d7fd" stroke="#8839ef" stroke-width="0.75" />
+  <text x="143" y="514.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143" dy="-3.8999999999999995">维护 100 万行的项目</tspan><tspan x="143" dy="16.9">技术债 / 架构演进 / 线上事故</tspan></text>
+</g>
+<g class="node" data-id="H3" data-label="从 0 定义新原型\n做出市面上没有的东西" data-shape="rectangle">
+  <rect x="59" y="589" width="168" height="53.8" rx="0" ry="0" fill="#e6d7fd" stroke="#8839ef" stroke-width="0.75" />
+  <text x="143" y="615.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143" dy="-3.8999999999999995">从 0 定义新原型</tspan><tspan x="143" dy="16.9">做出市面上没有的东西</tspan></text>
+</g>
+</svg>

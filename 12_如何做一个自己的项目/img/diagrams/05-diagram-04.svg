@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 416.8476257324219 987.7" width="416.8476257324219" height="987.7" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Step1" data-label="① 捡起 Web 基本功（Java Web / Python Web）">
+  <rect x="68.61587524414062" y="266.70000000000005" width="308.23175048828125" height="113.80000000000001" rx="0" ry="0" fill="#ebeeff" stroke="#7287fd" stroke-width="1" />
+  <rect x="68.61587524414062" y="266.70000000000005" width="308.23175048828125" height="28" rx="0" ry="0" fill="#d7defd" stroke="#7287fd" stroke-width="1" />
+  <text x="80.61587524414062" y="280.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">① 捡起 Web 基本功（Java Web / Python Web）</text>
+</g>
+<g class="subgraph" data-id="Step2" data-label="② 补上架构与容量思维">
+  <rect x="20" y="558.3000000000001" width="277" height="113.79999999999995" rx="0" ry="0" fill="#fff5de" stroke="#df8e1d" stroke-width="1" />
+  <rect x="20" y="558.3000000000001" width="277" height="28" rx="0" ry="0" fill="#ffecc4" stroke="#df8e1d" stroke-width="1" />
+  <text x="32" y="572.3000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">② 补上架构与容量思维</text>
+</g>
+<g class="subgraph" data-id="Step3" data-label="③ 让 AI 与业务对齐">
+  <rect x="20" y="849.9000000000001" width="222" height="113.79999999999995" rx="0" ry="0" fill="#e7f7e7" stroke="#40a02b" stroke-width="1" />
+  <rect x="20" y="849.9000000000001" width="222" height="28" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="1" />
+  <text x="32" y="863.9000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">③ 让 AI 与业务对齐</text>
+</g>
+<polyline class="edge" data-from="G" data-to="F1" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="169.5,72.9 169.5,118.9 132.5,118.9 132.5,164.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F1" data-to="F2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="132.5,218.7 132.5,264.70000000000005 392.8476257324219,264.70000000000005 392.8476257324219,337.6 295.6158752441406,337.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F2" data-to="F3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="190.11587524414062,364.50000000000006 190.11587524414062,410.50000000000006 122,410.50000000000006 122,456.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F3" data-to="F4" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="122,510.30000000000007 122,556.3000000000001 313,556.3000000000001 313,629.2 281,629.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F4" data-to="F5" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="158.5,656.1 158.5,702.1000000000001 113,702.1000000000001 113,748.1000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F5" data-to="F6" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="113,801.9000000000001 113,847.9000000000001 258,847.9000000000001 258,920.8000000000001 226,920.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="G" data-label="🎯 目标：从'会用 AI'进阶到'能掌控 AI'" data-shape="rectangle">
+  <rect x="36" y="36" width="267" height="36.9" rx="0" ry="0" fill="#e6d7fd" stroke="#8839ef" stroke-width="0.75" />
+  <text x="169.5" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="169.5" dy="4.55">🎯 目标：从'会用 AI'进阶到'能掌控 AI'</tspan></text>
+</g>
+<g class="node" data-id="F1" data-label="手写一遍核心链路\n路由 / ORM / 事务 / 鉴权" data-shape="rectangle">
+  <rect x="36" y="164.9" width="193" height="53.8" rx="0" ry="0" fill="#d7defd" stroke="#7287fd" stroke-width="0.75" />
+  <text x="132.5" y="191.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="132.5" dy="-3.8999999999999995">手写一遍核心链路</tspan><tspan x="132.5" dy="16.9">路由 / ORM / 事务 / 鉴权</tspan></text>
+</g>
+<g class="node" data-id="F2" data-label="理解请求的一生\nHTTP / 并发 / 缓存 / 连接池" data-shape="rectangle">
+  <rect x="84.61587524414062" y="310.70000000000005" width="211" height="53.8" rx="0" ry="0" fill="#d7defd" stroke="#7287fd" stroke-width="0.75" />
+  <text x="190.11587524414062" y="337.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.11587524414062" dy="-3.8999999999999995">理解请求的一生</tspan><tspan x="190.11587524414062" dy="16.9">HTTP / 并发 / 缓存 / 连接池</tspan></text>
+</g>
+<g class="node" data-id="F3" data-label="架构选型讲得清取舍\n单体 / 模块化 / 微服务" data-shape="rectangle">
+  <rect x="36" y="456.50000000000006" width="172" height="53.8" rx="0" ry="0" fill="#ffecc4" stroke="#df8e1d" stroke-width="0.75" />
+  <text x="122" y="483.40000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="122" dy="-3.8999999999999995">架构选型讲得清取舍</tspan><tspan x="122" dy="16.9">单体 / 模块化 / 微服务</tspan></text>
+</g>
+<g class="node" data-id="F4" data-label="容量评估拿得出数字\nQPS / 索引 / 慢查询 / 服务器压力" data-shape="rectangle">
+  <rect x="36" y="602.3000000000001" width="245" height="53.8" rx="0" ry="0" fill="#ffecc4" stroke="#df8e1d" stroke-width="0.75" />
+  <text x="158.5" y="629.2" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="158.5" dy="-3.8999999999999995">容量评估拿得出数字</tspan><tspan x="158.5" dy="16.9">QPS / 索引 / 慢查询 / 服务器压力</tspan></text>
+</g>
+<g class="node" data-id="F5" data-label="指挥 AI 跨语言复刻\n开源项目的核心模块" data-shape="rectangle">
+  <rect x="36" y="748.1000000000001" width="154" height="53.8" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="0.75" />
+  <text x="113" y="775.0000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="113" dy="-3.8999999999999995">指挥 AI 跨语言复刻</tspan><tspan x="113" dy="16.9">开源项目的核心模块</tspan></text>
+</g>
+<g class="node" data-id="F6" data-label="Agent 服务真实业务\n对照 12.0 ~ 12.4 逐条落地" data-shape="rectangle">
+  <rect x="36" y="893.9000000000001" width="190" height="53.8" rx="0" ry="0" fill="#c9eecb" stroke="#40a02b" stroke-width="0.75" />
+  <text x="131" y="920.8000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="131" dy="-3.8999999999999995">Agent 服务真实业务</tspan><tspan x="131" dy="16.9">对照 12.0 ~ 12.4 逐条落地</tspan></text>
+</g>
+</svg>

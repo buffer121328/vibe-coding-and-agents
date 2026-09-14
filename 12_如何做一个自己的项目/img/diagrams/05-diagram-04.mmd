@@ -1,0 +1,20 @@
+%% colors: node G=#e6d7fd/#8839ef
+%% colors: node F1=#d7defd/#7287fd, node F2=#d7defd/#7287fd
+%% colors: cluster Step1=#ebeeff/#d7defd/#7287fd
+%% colors: node F3=#ffecc4/#df8e1d, node F4=#ffecc4/#df8e1d
+%% colors: cluster Step2=#fff5de/#ffecc4/#df8e1d
+%% colors: node F5=#c9eecb/#40a02b, node F6=#c9eecb/#40a02b
+%% colors: cluster Step3=#e7f7e7/#c9eecb/#40a02b
+graph TD
+    G["🎯 目标：从'会用 AI'进阶到'能掌控 AI'"] --> F1
+    subgraph Step1 ["① 捡起 Web 基本功（Java Web / Python Web）"]
+        F1["手写一遍核心链路\n路由 / ORM / 事务 / 鉴权"] --> F2["理解请求的一生\nHTTP / 并发 / 缓存 / 连接池"]
+    end
+    F2 --> F3
+    subgraph Step2 ["② 补上架构与容量思维"]
+        F3["架构选型讲得清取舍\n单体 / 模块化 / 微服务"] --> F4["容量评估拿得出数字\nQPS / 索引 / 慢查询 / 服务器压力"]
+    end
+    F4 --> F5
+    subgraph Step3 ["③ 让 AI 与业务对齐"]
+        F5["指挥 AI 跨语言复刻\n开源项目的核心模块"] --> F6["Agent 服务真实业务\n对照 12.0 ~ 12.4 逐条落地"]
+    end
