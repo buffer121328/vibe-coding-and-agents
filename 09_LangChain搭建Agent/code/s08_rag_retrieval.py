@@ -150,5 +150,5 @@ def demo_rag_chain():
         console.print(f"[red]RAG 演示报错（如未配置有效 Embeddings API）：{e}[/red]")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x RAG 核心链路与向量检索增强演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 RAG 核心链路与向量检索增强演示[/bold magenta]\n")
     demo_rag_chain()

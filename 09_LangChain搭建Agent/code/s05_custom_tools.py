@@ -135,7 +135,7 @@ def demo_tool_extras():
     console.print(f"[dim]工具仍按标准 Schema 绑定给模型：[/dim]{list(get_weather.args.keys())}")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 自定义工具生态与参数校验演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 自定义工具生态与参数校验演示[/bold magenta]\n")
     demo_inspect_tools()
     console.print("-" * 50)
     demo_model_tool_binding()

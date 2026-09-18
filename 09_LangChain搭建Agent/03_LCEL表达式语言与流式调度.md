@@ -120,9 +120,9 @@ safe_chain = ChatPromptTemplate.from_template("解释高可用架构：{topic}")
 print(safe_chain.invoke({"topic": "金融支付网关"}))
 ```
 
-### 4. LCEL 进阶补充：分支路由、自动重试与事件流（1.x 依旧核心）
+### 4. LCEL 进阶补充：分支路由、自动重试与事件流（1.4 依旧核心）
 
-LCEL 在 1.x 中依然是编排的灵魂（`create_agent` 底层同样是 LangGraph 状态机，但链式场景仍首选 LCEL）。以下三个高频武器建议一并掌握：
+LCEL 在 1.4 中依然是编排的灵魂（`create_agent` 底层同样是 LangGraph 状态机，但链式场景仍首选 LCEL）。以下三个高频武器建议一并掌握：
 
 ```python
 from langchain_core.runnables import RunnableBranch, RunnableLambda

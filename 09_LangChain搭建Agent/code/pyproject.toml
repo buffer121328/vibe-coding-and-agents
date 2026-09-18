@@ -1,11 +1,11 @@
 [project]
 name = "langchain-agent-tutorials"
 version = "1.0.0"
-description = "Vibe Coding 第九章：LangChain 1.0 搭建 Agent 从入门到实战全套代码库"
+description = "Vibe Coding 第九章：LangChain 1.4 搭建 Agent 从入门到实战全套代码库"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-    "langchain>=1.0.0",
+    "langchain[mcp]>=1.4.0",
     "langchain-core>=1.0.0",
     "langchain-openai>=0.3.0",
     "langgraph>=1.0.0",
@@ -14,8 +14,15 @@ dependencies = [
     "langchain-text-splitters>=0.3.0",
     "pydantic>=2.7.0",
     "tiktoken>=0.7.0",
-    "duckduckgo-search>=6.0.0",
     "gradio>=4.30.0",
     "python-dotenv>=1.0.1",
     "rich>=13.7.0",
+    "deepagents>=0.4.3",
+    "langgraph-checkpoint-sqlite>=3.1.1",
+    "ddgs>=9.16.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]

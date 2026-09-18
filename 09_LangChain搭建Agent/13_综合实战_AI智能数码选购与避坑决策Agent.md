@@ -2,6 +2,8 @@
 
 > **“学了十二节零件课，今天整机下线——真正的工程能力，不是认得每个零件，而是把它们装配成一台能跑、能扛、能卖的机器。”**  
 > 本节是第九章的收官之战：我们把 9.1~9.12 装进工具箱的全部零件——统一模型 I/O、LCEL 管道、结构化输出、自定义工具、记忆管理、Callbacks 审计、RAG 检索、`create_agent` 架构、上下文工程、自定义中间件、生产级护栏——**一次性总装**成一个完整的生产级项目：**SmartBuyer（AI 智能数码选购与避坑决策参谋）**。
+>
+> 🚀 **项目已独立"长大"**：SmartBuyer 现在拥有自己的项目目录 [`code/smart_buyer/`](code/smart_buyer/README.md)（核心 Agent、独立 Gradio 工作台、测试与演进路线）。本节保留**教学 walkthrough**（讲清"每个零件装在哪、为什么"），完整代码、运行方式与后续演进计划（deepagents 深度版 / MCP 工具生态 / 多用户生产化）请进项目主页查看。
 
 ---
 
@@ -18,7 +20,7 @@
 | 电脑硬件 | 对应章节 | 在 SmartBuyer 里是什么 |
 | :--- | :--- | :--- |
 | 🧠 CPU（大脑） | 9.1 统一模型 I/O | `get_chat_model_primary()` 一行换模型，业务代码零改动 |
-| 🔌 主板（总装骨架） | 9.9 `create_agent` | 所有零件插在它上面，1.x 标准架构 |
+| 🔌 主板（总装骨架） | 9.9 `create_agent` | 所有零件插在它上面，1.4 标准架构 |
 | ⚙️ 散热与供电（稳压器） | 9.11 自定义中间件 | 日志、调用限流、自动重试三件套 |
 | 🛡️ 机箱侧板（防尘防静电） | 9.12 生产级护栏 | 黑名单拦截 + PII 脱敏，纵深防御 |
 | 🗂️ 内存与硬盘（记忆） | 9.6 记忆管理 | Checkpointer 线程记忆 + Store 长期顾客画像 |
@@ -62,12 +64,12 @@
 
 ## 💻 核心实操：整机总装四步曲
 
-完整可运行脚本见 [`code/s13_smart_buyer.py`](code/s13_smart_buyer.py)，全部零件均可单独溯源到对应章节。
+完整可运行脚本见 [`code/smart_buyer/main.py`](code/smart_buyer/main.py)，全部零件均可单独溯源到对应章节。
 
 ### 第 1 步：备料——模型、工具与知识库（9.1 + 9.5 + 9.8）
 
 ```python
-# code/s13_smart_buyer.py —— 备料三件套
+# smart_buyer/main.py —— 备料三件套
 from s01_model_io import get_chat_model_primary          # 【9.1】统一模型工厂
 from s07_callbacks_and_tracing import PerformanceAndCostCallback  # 【9.7】Token 审计
 
@@ -92,7 +94,7 @@ def query_hardware_traps(category_or_term: str) -> str:
 这是本次总装的**灵魂升级**：老版实战写死 System Prompt，新版让系统提示**活起来**——每次模型调用前，从三数据源现场拼装：
 
 ```python
-# code/s13_smart_buyer.py —— @dynamic_prompt 三数据源动态注入
+# smart_buyer/main.py —— @dynamic_prompt 三数据源动态注入
 @dynamic_prompt
 def smart_buyer_dynamic_prompt(request: ModelRequest) -> str:
     # 1) Runtime Context：本次请求的固定配置（不传时优雅降级为游客画像）
@@ -117,7 +119,7 @@ def smart_buyer_dynamic_prompt(request: ModelRequest) -> str:
 ### 第 3 步：插上"神经、韧带与安检门"——中间件与护栏（9.11 + 9.12）
 
 ```python
-# code/s13_smart_buyer.py —— 整机总装：create_agent + 三层中间件纵深栈
+# smart_buyer/main.py —— 整机总装：create_agent + 三层中间件纵深栈
 self.agent = create_agent(
     model=self.llm,                                       # 【9.1】CPU
     tools=self.tools,                                     # 【9.5】外设
@@ -142,7 +144,7 @@ self.agent = create_agent(
 ### 第 4 步：点火试车——多轮问诊与结构化报表（9.6 + 9.7 + 9.3 + 9.4）
 
 ```python
-# code/s13_smart_buyer.py —— 双模输出：交互问诊 + 一键报表
+# smart_buyer/main.py —— 双模输出：交互问诊 + 一键报表
 def chat_recommend(self, user_query, session_id="default_shopper", user_id=None):
     callback = PerformanceAndCostCallback()                      # 【9.7】黑匣子账单
     invoke_kwargs = {"config": {"configurable": {"thread_id": session_id},   # 【9.6】会话记忆
@@ -165,27 +167,51 @@ def generate_structured_report(self, user_demand):
 整机不是装完就走，出厂前要过质检（呼应 9.12 的测试纪律）：
 
 1. **护栏断言（零 API 依赖，可进 CI）**：复用 9.12 的 `content_filter_check` / `pii_redact` 纯函数断言——黑名单命中即收尾、邮箱自动脱敏；
-2. **端到端冒烟测试**：`uv run python s13_smart_buyer.py` 跑一次完整问诊 + 报表生成，核对 Token 账单与工具调用链是否完整；
+2. **端到端冒烟测试**：`uv run python -m smart_buyer.main` 跑一次完整问诊 + 报表生成，核对 Token 账单与工具调用链是否完整；
 3. **回归基线**：把"预算 5000 买轻薄本"等固定用例做成评估集，每次改 Prompt 都跑一遍回归；云端 Trace 与评估平台（LangSmith / Langfuse）暂不接入，如有需求后续单独成节介绍。
 
 ---
 
 ## 🖥️ 运行方式
 
+> 🚀 完整运行方式、目录结构与已完成的演进路线见项目主页：[`code/smart_buyer/`](code/smart_buyer/README.md)。快速体验：
+
 ```bash
 cd 09_LangChain搭建Agent/code
 uv sync                                          # 首次安装依赖
-uv run python s13_smart_buyer.py                 # 终端体验：整机点火试车
-uv run python app.py                             # 或打开 Gradio 工作台 → 侧边栏切到「🌟 9.13 SmartBuyer 实战」
+uv run python -m smart_buyer.main               # 课程版：整机点火试车（在 code/ 目录下运行）
+uv run python -m smart_buyer.web_app            # 独立 Web 工作台：问诊 + 工具链 + 结构化报告（7861）
+uv run python -m smart_buyer.deep_agent         # 深度版：三子代理协作（Phase 2，真实 API）
+uv run pytest smart_buyer/tests/ -v             # 质量测试：19 项护栏/回归/持久化断言（零 API）
 ```
 
-Gradio 工作台的 9.13 页面是与其他 12 关完全不同的**专属「整机点验台」版式**（琥珀金暖色系，装机文化隐喻贯穿全页）：
+### Web 工作台怎么读
 
-- **点火 Hero · 数据屏**：横幅内嵌五格数据屏（12 零件总装 / 3 专业工具 / 2 记忆层级 / 3 纵深防御 / 100% 真实调用）+ 装配管线芯片；
-- **三栏主舞台**：左栏三张「顾客身份卡」（老司机 / 新手小白 / 游客新客，点「以此身份咨询」即切换 Store 画像并联动刷新画像面板、装填同一对比问题）；中栏「侧透机箱」——Mac 窗式机箱头（红绿灯 + AGENT ONLINE 指示灯）包裹 Codex 式气泡会话；右栏「机箱侧透 · 装配流水线」——琥珀暗底终端实时滚动工具调用与画像注入明细 + Token 账单；
-- **结构化决策报表台**：Pydantic 强类型 JSON 交付（零件 9.4）。
+`web_app.py` 把同一套 Agent 搬进一个更适合演示和调试的页面：左侧是可延续上下文的问诊
+对话，右侧的“过程透视”会把实际触发的工具、参数和返回摘要列出来；下方“决策报告”把
+`ShoppingDecisionReport` 渲染成推荐卡片、避坑清单和最终结论，同时保留 Pydantic 校验后的
+JSON。它不另写一套业务逻辑，所以前端看到的护栏、RAG、MCP 和成本统计与 CLI 一致。
 
-工具命中与差评检索实时推送、最终答复打字机输出、切换「会话 ID」即开启互不干扰的新咨询。
+页面启动阶段不会创建模型，首次咨询时才读取 `.env` 并初始化 Agent。没有配置 API Key 时
+仍可打开页面检查布局；真正调用失败会在对话和过程透视中提示需要补充的配置。完整的环境变量、
+端口和验收清单见 [`code/smart_buyer/README.md`](code/smart_buyer/README.md)。
+
+## 🚀 项目独立后的"长大"成果（Phase 1~4 全部落地）
+
+SmartBuyer 独立成项目后按四阶段演进（详见[项目 README](code/smart_buyer/README.md)），**已全部完成**：
+
+| Phase | 成果 | 用到的课程零件 |
+| :--- | :--- | :--- |
+| **1 质量加固** | 19 项测试全绿：黑名单护栏断言（含大小写绕过、`eval` 代码注入拦截）、固定用例回归、`SqliteSaver` 会话记忆落盘（跨进程重启记忆仍在） | 9.12 测试纪律 / 9.6 Checkpointer |
+| **2 deepagents 深度版** | 三个专项子代理（差评侦察/参数测算/避坑审核）经 `task()` 派单协作，真实 API 试跑产出四份报告（`/reports/final_report.md` 等）写入虚拟文件系统 | 9.9 deepagents 五件套 |
+| **3 MCP 工具生态** | 1.4 `MCPAdapter` 一键接入 MCP 服务器（三档缓存），`ProviderToolSearch` 延迟挂载 + `LLMToolSelector` 分诊（工具多时自动启用） | 9.1 MCP / 9.7 中间件 |
+| **4 多用户生产化** | `/memories/<user_id>/` 按 StoreBackend namespace 隔离沉淀顾客档案；`FilesystemPermission` 最小权限网；`TracePolicy` 链路打码 + LangSmith 零代码观测 | 9.6 Store / 9.11 TracePolicy |
+
+> 💡 **教学价值**：这个"从课堂 demo 到独立项目"的演进过程本身就是一个完整的学习样本——每个 Phase 都只用了课程里教过的零件，没有引入任何新框架。
+>
+> 🔁 **业务闭环**（Phase 3 深化）：项目现已内置一个 MCP 演示服务器（[`mcp_server.py`](code/smart_buyer/mcp_server.py)：历史价格/官方参数/以旧换新/物流时效/售后政策 5 把工具），
+> 与本地三大 `@tool` 合并装配进同一个 Agent（8 把工具同层调度），真实咨询中模型会自主组合调用——
+> 例如"以旧换新"场景：查历史价格 → 估价旧机 → 核对官方参数 → RAG 避坑 → 测算器算出真实入手成本。
 
 ---
 

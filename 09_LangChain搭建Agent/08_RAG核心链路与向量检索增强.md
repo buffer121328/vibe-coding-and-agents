@@ -88,7 +88,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 > 保证教学链路永远能跑通（检索退化为非语义匹配，会在终端打印黄色提示）。
 ```
 
-> 🆕 **1.x 补充：`init_embeddings` 统一嵌入工厂**。与 `init_chat_model` 同理，LangChain 1.x 提供 `langchain.embeddings.init_embeddings` 一行初始化任意厂商嵌入模型：
+> 🆕 **1.4 补充：`init_embeddings` 统一嵌入工厂**。与 `init_chat_model` 同理，LangChain 1.4 提供 `langchain.embeddings.init_embeddings` 一行初始化任意厂商嵌入模型：
 > ```python
 > from langchain.embeddings import init_embeddings
 > embeddings = init_embeddings("openai:text-embedding-3-small")   # 或 "deepseek:..." 等

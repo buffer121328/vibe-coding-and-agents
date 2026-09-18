@@ -1,7 +1,7 @@
 # 🤖 9.9 Agent 现代架构与 create_agent
 
 > **“Chain 是按固定路线行驶的火车，而 Agent 是拥有 GPS、方向盘和随时变道能力的自动驾驶汽车。”**  
-> 在 LangChain 1.x 中，Agent 的构建方式迎来了彻底的现代化变革：基于底座模型的 Tool Calling 协议与 LangGraph 运行时，实现高可靠的自主推理与工具调用闭环。
+> 在 LangChain 1.4 中，Agent 的构建方式迎来了彻底的现代化变革：基于底座模型的 Tool Calling 协议与 LangGraph 运行时，实现高可靠的自主推理与工具调用闭环。
 
 ---
 
@@ -12,7 +12,7 @@
 - **Agent（自主决策体）**：大模型根据用户的具体目标，自主规划“第一步调用什么工具、看结果再决定第二步调用什么工具、何时得出结论并向人类汇报”。
 
 ### 2. 生活比喻：高级私人秘书与他的工作草稿本
-- **`create_agent`（秘书总监）**：1.x 的标准入口，一条命令就把“大脑（模型）+ 双手（工具）+ 记忆（checkpointer）+ 规则（system_prompt）”装配成一位能自主办事的秘书；
+- **`create_agent`（秘书总监）**：1.4 的标准入口，一条命令就把“大脑（模型）+ 双手（工具）+ 记忆（checkpointer）+ 规则（system_prompt）”装配成一位能自主办事的秘书；
 - **LangGraph 状态机（秘书的办公流程）**：秘书的每一步（思考 → 动手 → 看结果 → 再思考）都由底层状态图自动循环驱动，无需手工写 while 循环；
 - **`messages` 消息流水线（秘书的工作日志）**：每次调用的结果是一条完整消息流水线 —— `HumanMessage`（老板吩咐）→ `AIMessage.tool_calls`（秘书决定叫哪个部门）→ `ToolMessage`（部门回执）→ `AIMessage`（最终汇报）。审计只需逐条阅读这条流水线；
 - **ReAct 推理循环**：
@@ -29,17 +29,17 @@
 
 ---
 
-## 🏛️ LangChain 1.x Agent API 演进
+## 🏛️ LangChain 1.4 Agent API 演进
 
 LangChain 官方对 Agent API 进行了大规模规范化：
 
 | API 版本 | 使用方式 | 状态与评价 |
 | :--- | :--- | :--- |
 | **远古时代 (<= 0.1.x)** | `initialize_agent(agent_type="zero-shot-react-description")` | ❌ **已废弃**。基于脆弱的纯文本正则匹配，极易解析崩溃。 |
-| **0.3 过渡期** | `create_tool_calling_agent(llm, tools, prompt)` + `AgentExecutor` | ⚠️ **已迁至 `langchain-classic`**。基于模型原生 Function Calling 协议，但执行器已随 1.x 移除。 |
-| **1.x 现代化新接口** | `from langchain.agents import create_agent` | 🌟 **当前唯一官方标准**。底层直接基于 LangGraph 状态机运行时构建，内置 Tool Calling 循环、错误自愈、Checkpointer 记忆与中间件。 |
+| **0.3 过渡期** | `create_tool_calling_agent(llm, tools, prompt)` + `AgentExecutor` | ⚠️ **已迁至 `langchain-classic`**。基于模型原生 Function Calling 协议，但执行器已随 1.4 移除。 |
+| **1.4 现代化新接口** | `from langchain.agents import create_agent` | 🌟 **当前唯一官方标准**。底层直接基于 LangGraph 状态机运行时构建，内置 Tool Calling 循环、错误自愈、Checkpointer 记忆与中间件。 |
 
-> 🔑 **一句话记忆**：`AgentExecutor` 是 0.3 时代负责“循环执行”的引擎；1.x 把它彻底内化进 `create_agent`（LangGraph 状态机）。新版**不再需要** `AgentExecutor`、`agent_scratchpad` 占位符，`return_intermediate_steps` 也不再是必要参数。
+> 🔑 **一句话记忆**：`AgentExecutor` 是 0.3 时代负责“循环执行”的引擎；1.4 把它彻底内化进 `create_agent`（LangGraph 状态机）。新版**不再需要** `AgentExecutor`、`agent_scratchpad` 占位符，`return_intermediate_steps` 也不再是必要参数。
 
 ---
 
@@ -78,7 +78,7 @@ def currency_converter(amount: float, from_curr: str, to_curr: str) -> str:
     return f"{amount} {from_curr} = {target:.2f} {to_curr}"
 ```
 
-### 2. 一行创建 1.x 标准 Agent（create_agent）
+### 2. 一行创建 1.4 标准 Agent（create_agent）
 
 ```python
 from langchain.agents import create_agent
@@ -86,7 +86,7 @@ from langchain.agents import create_agent
 tools = [calculate_expression, query_weather, currency_converter]
 llm = get_chat_model(temperature=0.1)
 
-# 1.x 标准姿势：无需 AgentExecutor / agent_scratchpad
+# 1.4 标准姿势：无需 AgentExecutor / agent_scratchpad
 agent = create_agent(
     model=llm,
     tools=tools,
@@ -267,8 +267,144 @@ result = agent.invoke(
 
 > 💡 **三句话记忆**：`interrupt_on` 是"审批白名单"；`checkpointer + thread_id` 是"中断后的存档点"；`Command(resume=...)` 是"签字后的放行条"。
 
-> 💡 **旧代码迁移对照（0.3 → 1.x）**：
-> | 0.3 写法 | 1.x 写法 |
+### 12. 🤿 deepagents：站在 create_agent 肩膀上的"深度智能体"整机
+
+如果说 `create_agent` 给你的是一台**裸机发动机**（模型 + 工具 + 循环），那官方另一开源库 **deepagents**（`pip install deepagents`，本书实测 `0.7.14`）就是**整车厂**：它把第九章散装的中件间预装成一套"深度工作体"，专治"规划不清、上下文爆炸、单兵作战"三大癌症。它的定位类似 Claude Code 这类编码 Agent 的通用版——**虚拟文件系统 + 任务规划 + 子智能体委派 + 长期记忆 + 技能库**五件套开箱即用。
+
+一个生活比喻：`create_agent` 是**一个能干的店员**；deepagents 是**一家带后厨、储藏室和分店调度台的总店**——店员（主 Agent）可以把大活写进**工单**（`write_todos`）、去**储藏室**（虚拟文件系统）翻资料存档、把专项任务**外包**给分店（`task` 子智能体），还能把老顾客的偏好记在**门店记忆本**（`AGENTS.md` 式 Memory）里。
+
+| 五大能力 | 底层实现（全是 9.7/9.11 学过的中间件！） | 提供的工具 |
+| :--- | :--- | :--- |
+| **虚拟文件系统** | `FilesystemMiddleware` + 可插拔 `Backend` | `ls` / `read_file` / `write_file` / `edit_file` / `glob` / `grep` / `delete`（0.7+）/ `execute`（沙箱后端） |
+| **任务规划** | `TodoListMiddleware`（0.7 起默认关闭，按需开启） | `write_todos` |
+| **子智能体委派** | `SubAgentMiddleware`（内置 `general-purpose` 通用子代理） | `task`（子代理新上下文、无状态、只交回一份最终报告） |
+| **长期记忆** | `MemoryMiddleware`（`memory=["..."]` 指定记忆文件） | 复用 `read_file`/`edit_file` 读写 `AGENTS.md` 式记忆 |
+| **技能库** | `SkillsMiddleware`（渐进式披露：先看简介，用到再读全文） | `SKILL.md` 标准技能目录 |
+
+最速上手（与 `create_agent` 参数几乎同构，零迁移成本）：
+
+```python
+# pip install deepagents   （要求 Python >=3.11，本书实测 0.7.14）
+from deepagents import create_deep_agent
+
+agent = create_deep_agent(
+    model="openai:gpt-5.5",                 # 或传入 BaseChatModel 实例
+    tools=[my_search_tool],                 # 你的领域工具
+    system_prompt="你是一名深度研究员……",
+    # subagents=[{"name": "researcher", "description": "…", "system_prompt": "…"}],  # 自定义子代理
+    # memory=["/memories/AGENTS.md"],       # 跨会话长期记忆
+    # checkpointer=..., interrupt_on=...,   # 与 create_agent 完全同款：存档 & 高危审批
+)
+
+result = agent.invoke({"messages": [("user", "调研 X 并写成报告")]})
+```
+
+**后端（Backend）是 0.7 版的重头戏**——文件系统往哪存，全靠注入：
+
+| Backend | 文件存哪 | 适合场景 |
+| :--- | :--- | :--- |
+| `StateBackend`（默认） | LangGraph **状态**里，会话结束即散 | 无状态演示 / 隔离测试 |
+| `FilesystemBackend` | 真实**本地磁盘**目录 | 本机文件整理、代码任务 |
+| `StoreBackend` | LangGraph **Store**（9.6 讲过） | 跨会话持久化、多用户隔离 |
+| `CompositeBackend` | **路由组合**：如 `/memories/` 走 Store、其余走磁盘 | 生产标配：记忆长期留存 + 工作区落盘 |
+| `LangSmithSandbox` 等 | 沙箱执行环境 | 需要跑 `execute` shell 命令时 |
+
+**1. 生产组合模式：一个 `CompositeBackend` 把文件"分家安放"**
+
+`CompositeBackend(default, routes)` 按**路径前缀**把不同文件路由到不同存储——就像公司前台分诊：员工的临时草稿放工位抽屉（`StateBackend`，随会话消亡），正式档案放档案室（`StoreBackend`，跨会话永久留存），项目代码放机柜（`FilesystemBackend`，落盘）：
+
+```python
+from deepagents import create_deep_agent
+from deepagents.backends import CompositeBackend, StateBackend, StoreBackend, FilesystemBackend
+from langgraph.store.memory import InMemoryStore
+
+agent = create_deep_agent(
+    model=llm,
+    backend=CompositeBackend(
+        default=StateBackend(),                                     # 其余路径：会话草稿（临时）
+        routes={
+            "/memories/": StoreBackend(                              # 记忆：跨会话持久
+                namespace=lambda rt: (rt.server_info.user.identity,) # 按用户隔离，Alice/Bob 各看各的
+            ),
+            "/workspace/": FilesystemBackend(                        # 工作区：真实磁盘
+                root_dir="/path/to/project", virtual_mode=True       # virtual_mode=True 才有路径越界防护！
+            ),
+        },
+    ),
+    store=InMemoryStore(),   # 注意：Store 传给 create_deep_agent，不是传给 backend
+)
+```
+
+> ⚠️ **安全提示**（官方文档原话警告）：`FilesystemBackend` 默认 `virtual_mode=False` **没有任何路径防护**，即使设了 `root_dir` 也能被路径穿越写出目录——生产务必 `virtual_mode=True`。
+
+**2. 权限系统：`FilesystemPermission` 三模式**
+
+每条规则声明"对哪些路径的读/写操作，采取哪种处置"，在调用后端**之前**拦截。三种模式对应三种管理风格：
+
+| `mode` | 行为 | 生活比喻 |
+| :--- | :--- | :--- |
+| `allow` | 放行 | 工牌刷开门禁 |
+| `deny` | 直接拒绝（结构化错误，不抛异常） | 红线区域，刷卡也不开 |
+| `interrupt` | 暂停等人批准（衔接 9.9 的 HITL 流程） | 要动档案室？先找领导签字 |
+
+```python
+from deepagents import FilesystemPermission
+
+agent = create_deep_agent(
+    ...,
+    permissions=[
+        FilesystemPermission(operations=["write"], paths=["/policies/**"], mode="deny"),
+        FilesystemPermission(operations=["write"], paths=["/memories/AGENTS.md"], mode="interrupt"),
+    ],
+)
+```
+
+**3. 子代理（SubAgent）：`task` 工具的"外包单"怎么写**
+
+主 Agent 通过 `task(subagent_type, description)` 把活外包，中间过程发生在子代理的新上下文里，**只有最终报告回到主 Agent**——这就是官方说的"上下文隔离（context quarantine）"：脏活累活的几千条中间消息，不会污染主管的视野。`SubAgent` 字典的 11 个字段里，工程上最关键的是这几个（0.7.14 本地实测）：
+
+```python
+researcher = {
+    "name": "research-agent",            # 必填：task(subagent_type=...) 按名派单
+    "description": "用于深度调研问题",    # 必填：主 Agent 靠它决定"何时外包"
+    "system_prompt": "你是资深研究员……",  # isolated 模式必填（绝不继承父提示）
+    "tools": [internet_search],          # 不填=继承父工具；填了=完全替换
+    "model": "openai:gpt-5.5",           # 不填=继承父模型；可给子代理单独配模型
+    "response_format": Findings,         # 可选：Pydantic 结构化返回（对接 9.4）
+    "mode": "isolated",                  # 默认 isolated；或 "fork"（0.7.13+ beta）
+}
+
+agent = create_deep_agent(model=llm, subagents=[researcher])
+```
+
+两种模式的取舍是面试高频题：
+
+| 模式 | 子代理看到什么 | 适合 |
+| :--- | :--- | :--- |
+| `isolated`（默认） | **只看到任务描述**，全新开局 | 独立专项：调研、翻译、批量处理 |
+| `fork`（beta） | **继承父对话全部历史**与系统提示，"接着说" | 续写父任务：父刚扫完全库，fork 接着写评审意见 |
+
+> 💡 还有一个**永不下岗的 `general-purpose` 通用子代理**（自带文件系统工具）——不派单也能用；要封装现成的 LangGraph 图当子代理，用 `CompiledSubAgent(name=..., description=..., runnable=graph.compile())`。别找"删除内置子代理"的参数：官方明确 `excluded_middleware` 里列 `SubAgentMiddleware` 会直接抛 `ValueError`。
+
+**4. 长期记忆：`memory=["..."]` + AGENTS.md 文件**
+
+deepagents 的记忆是**文件化**的——记忆就是一个 Markdown 文件，启动时经 `MemoryMiddleware` 注入系统提示，Agent 学到新东西就自己调 `edit_file` 更新它（类 Claude Code 的 CLAUDE.md 机制）：
+
+```python
+agent = create_deep_agent(
+    model=llm,
+    memory=["/memories/AGENTS.md"],   # 声明记忆文件路径
+    backend=CompositeBackend(default=StateBackend(),
+                             routes={"/memories/": StoreBackend(namespace=...)}),
+)
+```
+
+三种作用域通过 Store 的 namespace 设计实现（对接 9.6 的"记忆三数据源"）：`namespace=(assistant_id,)` **Agent 级**（一个共享人格）、`namespace=(user_identity,)` **用户级**（Alice/Bob 记忆互不可见）、组织级建议设为**只读**（防共享记忆被注入恶意指令——官方的安全建议，与 9.12 的 Prompt 注入防线呼应）。
+
+> 🔑 **学习路径闭环**：deepagents 没有任何"新魔法"——文件系统是 `FilesystemMiddleware`、摘要瘦身是 `SummarizationMiddleware`、子代理是 `SubAgentMiddleware`、记忆注入是 `MemoryMiddleware`，全部构建在第九章的 `AgentMiddleware` 体系之上。**看懂 9.7~9.11，你就具备了给 deepagents 这类"整机"拆机改造的能力**（源码仓库：[github.com/langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)）。
+
+> 💡 **旧代码迁移对照（0.3 → 1.4）**：
+> | 0.3 写法 | 1.4 写法 |
 > | :--- | :--- |
 > | `from langchain.agents import create_tool_calling_agent, AgentExecutor` | `from langchain.agents import create_agent` |
 > | `agent = create_tool_calling_agent(llm, tools, prompt)` | `agent = create_agent(model=llm, tools=tools, system_prompt=...)` |
@@ -284,10 +420,15 @@ result = agent.invoke(
 
 - 🔗 **LangChain Agent 架构官方概念**：[LangChain Agents Overview](https://docs.langchain.com/oss/python/langchain/agents)
 - 🔗 **create_agent 官方指南**：[Build an Agent with create_agent](https://docs.langchain.com/oss/python/langchain/agents)
-- 🔗 **LangChain 1.x Agent 迁移指南**：[Migrate to create_agent](https://docs.langchain.com/oss/python/migrate/langchain-v1#migrate-to-create_agent)
+- 🔗 **LangChain 1.4 Agent 迁移指南**：[Migrate to create_agent](https://docs.langchain.com/oss/python/migrate/langchain-v1#migrate-to-create_agent)
 - 🔗 **Agent 中间件（含官方预置）**：[LangChain Agent Middleware](https://docs.langchain.com/oss/python/langchain/agents#middleware)
 - 🔗 **人类在环（HITL）官方指南**：[Human-in-the-loop](https://docs.langchain.com/oss/python/langchain/human-in-the-loop)
 - 🔗 **LangGraph 智能体运行时**：[LangGraph Overview](https://docs.langchain.com/oss/python/langgraph/overview)
+- 🔗 **deepagents 官方文档（本节新增）**：[Deep Agents Overview](https://docs.langchain.com/oss/python/deepagents/overview)
+- 🔗 **deepagents 子代理官方指南**：[Deep Agents Subagents](https://docs.langchain.com/oss/python/deepagents/subagents)
+- 🔗 **deepagents 记忆官方指南**：[Deep Agents Memory](https://docs.langchain.com/oss/python/deepagents/memory)
+- 🔗 **deepagents 文件系统与 Backend**：[Deep Agents Backends](https://docs.langchain.com/oss/python/deepagents/backends)
+- 🔗 **deepagents 源码仓库**：[github.com/langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)
 
 ---
 
@@ -299,5 +440,5 @@ result = agent.invoke(
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：掌握了 LangChain 1.x 标准 Agent 入口 `create_agent`（`model` + `tools` + `system_prompt` + 可选 `checkpointer` / `middleware` / `response_format` / `state_schema`），学会了通过 `messages` 消息流水线进行工具调用链推理审计，掌握了 `AgentState` 自定义状态与 HITL 人类在环的完整审批流程，以及 0.3 → 1.x 的完整迁移对照。
-2. **下一步探索**：现在我们已经掌握了 LangChain 1.x 的全部核心零件！下一节我们将继续深入**上下文工程与动态上下文注入**——如何给 Agent 在正确时机递上正确的上下文。
+1. **核心收获**：掌握了 LangChain 1.4 标准 Agent 入口 `create_agent`（`model` + `tools` + `system_prompt` + 可选 `checkpointer` / `middleware` / `response_format` / `state_schema`），学会了通过 `messages` 消息流水线进行工具调用链推理审计，掌握了 `AgentState` 自定义状态与 HITL 人类在环的完整审批流程，认识了基于同一中间件体系的"深度智能体整机" deepagents（虚拟文件系统 / 任务规划 / 子代理 / 记忆 / 技能五件套），以及 0.3 → 1.4 的完整迁移对照。
+2. **下一步探索**：现在我们已经掌握了 LangChain 1.4 的全部核心零件！下一节我们将继续深入**上下文工程与动态上下文注入**——如何给 Agent 在正确时机递上正确的上下文。

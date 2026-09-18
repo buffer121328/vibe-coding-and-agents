@@ -1,7 +1,7 @@
 # 🎭 9.2 Prompt 模板与上下文消息流
 
 > **“提示词不仅是一段字符串，更是带有结构、角色与上下文生命周期的动态场记本。”**  
-> 在现代大模型应用中，简单粗暴的字符串拼接极易引发格式错乱与注入风险。本节我们将学习 LangChain 1.x 的 Prompt 模板系统与消息流模型。
+> 在现代大模型应用中，简单粗暴的字符串拼接极易引发格式错乱与注入风险。本节我们将学习 LangChain 1.4 的 Prompt 模板系统与消息流模型。
 
 ---
 
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏛️ LangChain 1.x 四大核心消息模型
+## 🏛️ LangChain 1.4 四大核心消息模型
 
 在 `langchain_core.messages` 中，所有交互均统一封装为强类型的消息对象：
 
@@ -40,9 +40,9 @@
 | **`AIMessage`** | `assistant` | 模型生成的回复。若模型触发了工具调用，其 `tool_calls` 属性会包含工具调用元数据。 |
 | **`ToolMessage`** | `tool` | 承载外部工具函数执行后的返回数据，必须附带对应 `tool_call_id`。 |
 
-> 🆕 **1.x 补充**：
-> - **模块化导入**：1.x 中 `langchain` 主包会重新导出常用消息类（如 `from langchain.messages import SystemMessage`），与 `langchain_core.messages` 等价，按需使用；
-> - **AIMessage 内容块**：1.x 的 `AIMessage.content_blocks` 提供类型化的 `TextBlock` / `ReasoningBlock` / `CitationBlock`，可把“推理过程”与“最终答案”拆开处理；
+> 🆕 **1.4 补充**：
+> - **模块化导入**：1.4 中 `langchain` 主包会重新导出常用消息类（如 `from langchain.messages import SystemMessage`），与 `langchain_core.messages` 等价，按需使用；
+> - **AIMessage 内容块**：1.4 的 `AIMessage.content_blocks` 提供类型化的 `TextBlock` / `ReasoningBlock` / `CitationBlock`，可把“推理过程”与“最终答案”拆开处理；
 > - **工具调用闭环四件套**：`AIMessage.tool_calls`（模型想调什么）→ `ToolMessage(tool_call_id=...)`（工具返回结果）→ 拼回消息列表 → 模型继续推理。这条链路正是 9.9 `create_agent` 的底层循环，LCEL 手写亦可复现。
 
 ---

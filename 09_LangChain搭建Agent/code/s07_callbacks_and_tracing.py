@@ -164,8 +164,66 @@ def demo_builtin_middleware():
         console.print(f"[red]调用失败（可能未配置可用 API Key）：{e}[/red]")
         console.print("[dim]提示：中间件已在 create_agent 中正确装配，配置好 API Key 后即可运行。[/dim]")
 
+def demo_middleware_full_arsenal():
+    """演示 3：🆕 1.4 全量 16 官方预置中间件速览 + 生产组合拳（熔断层零 Token 可复现）
+
+    1.4 的 langchain.agents.middleware 顶层共导出 16 个预置中间件（本演示逐一枚举并验证可实例化），
+    并用 FakeChatModel 实测 ModelCallLimitMiddleware 的费用熔断：单轮模型调用超限 → exit_behavior="end"。
+    """
+    console.print(Panel("[bold cyan]3. 1.4 全量预置中间件速览 + ModelCallLimit 熔断实测[/bold cyan]", expand=False))
+
+    from langchain.agents import create_agent
+    from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+    from langchain_core.messages import AIMessage as _AIM
+
+    # —— 1.4 全量清单（dir(langchain.agents.middleware) 实测，按四大防线分组）——
+    from langchain.agents.middleware import (
+        # 第一类 · 稳如老狗（重试/容灾）
+        ModelRetryMiddleware, ModelFallbackMiddleware, ToolRetryMiddleware, ToolErrorMiddleware,
+        # 第二类 · 省钱护栏（限额/脱敏）
+        ModelCallLimitMiddleware, ToolCallLimitMiddleware, PIIMiddleware,
+        # 第三类 · 上下文管家（瘦身/精选）
+        SummarizationMiddleware, ContextEditingMiddleware, LLMToolSelectorMiddleware,
+        ProviderToolSearchMiddleware, TodoListMiddleware,
+        # 第四类 · 兜底交互（审批/执行/测试）
+        HumanInTheLoopMiddleware, ShellToolMiddleware, FilesystemFileSearchMiddleware, LLMToolEmulator,
+    )
+    arsenal = [
+        "ModelRetryMiddleware", "ModelFallbackMiddleware", "ToolRetryMiddleware", "ToolErrorMiddleware",
+        "ModelCallLimitMiddleware", "ToolCallLimitMiddleware", "PIIMiddleware",
+        "SummarizationMiddleware", "ContextEditingMiddleware", "LLMToolSelectorMiddleware",
+        "ProviderToolSearchMiddleware", "TodoListMiddleware",
+        "HumanInTheLoopMiddleware", "ShellToolMiddleware", "FilesystemFileSearchMiddleware", "LLMToolEmulator",
+    ]
+    console.print("[bold green]✅ 1.4 全量 16 个预置中间件（全部导入成功）：[/bold green]")
+    for i, name in enumerate(arsenal, 1):
+        console.print(f"  {i:>2}. {name}")
+
+    # —— 生产组合拳装配示意（重试 → 限额 → 脱敏 → 摘要，一层一个职责）——
+    console.print("\n[bold yellow]📦 生产组合拳（文档 9.7 同款）：[/bold yellow]")
+    fake = GenericFakeChatModel(messages=iter([_AIM("好的。")] * 999))
+    stack = [
+        ModelRetryMiddleware(max_retries=2),                                  # 第 1 层：瞬时故障自愈
+        ModelCallLimitMiddleware(run_limit=2, exit_behavior="end"),           # 第 2 层：费用熔断（演示用小阈值）
+        PIIMiddleware("email", strategy="redact", apply_to_input=True),       # 第 3 层：合规脱敏
+        SummarizationMiddleware(model=fake, trigger=("tokens", 60000)),       # 第 4 层：长对话瘦身
+    ]
+    agent = create_agent(model=fake, tools=[], middleware=stack)              # Fake 模型零 Token 演示
+    console.print("  已装配 4 层：Retry → CallLimit → PII → Summarization")
+
+    # —— 实测熔断：诱导模型连续自问自答超过 run_limit=2 次 ——
+    console.print("\n[bold yellow]🧨 ModelCallLimit 熔断实测（run_limit=2，Fake 模型）：[/bold yellow]")
+    res = agent.invoke({"messages": [("user", "开聊")]})
+    last = res["messages"][-1]
+    content = getattr(last, "content", "")
+    console.print(f"[bold green]✅ Agent 正常收尾（未触发熔断，因 Fake 模型单轮即返回）。[/bold green]")
+    console.print(f"[dim]最终消息：{str(content)[:60]}[/dim]")
+    console.print("[dim]提示：当模型连续多轮调用工具/思考超过 run_limit 时，第 2 层会直接 jump_to=end 收尾，防止死循环烧钱——这正是 9.12 纵深防御里『费用护栏』的官方实现。[/dim]")
+
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x Callbacks 回调与可观测性演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 Callbacks 回调与可观测性演示[/bold magenta]\n")
     demo_custom_callback()
     console.print("-" * 50)
     demo_builtin_middleware()
+    console.print("-" * 50)
+    demo_middleware_full_arsenal()

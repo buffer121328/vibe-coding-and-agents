@@ -126,7 +126,7 @@ def demo_few_shot_prompt():
     console.print(f"[bold green]Few-Shot 渲染结果：[/bold green]\n{rendered.to_string()}")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x Prompt 模板与上下文消息流演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 Prompt 模板与上下文消息流演示[/bold magenta]\n")
     demo_message_types()
     console.print("-" * 50)
     demo_chat_prompt_template()

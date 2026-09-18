@@ -107,7 +107,7 @@ def demo_json_output_parser():
         console.print(f"[red]JSON 解析失败：{e}[/red]")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 结构化输出与容错解析演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 结构化输出与容错解析演示[/bold magenta]\n")
     demo_with_structured_output()
     console.print("-" * 50)
     demo_json_output_parser()

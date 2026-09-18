@@ -148,7 +148,7 @@ def demo_fallbacks():
         console.print(f"[red]全部模型调用失败：{e}[/red]")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x LCEL 链式编排与流式调度演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 LCEL 链式编排与流式调度演示[/bold magenta]\n")
     demo_basic_lcel_chain()
     console.print("-" * 50)
     demo_parallel_chains()

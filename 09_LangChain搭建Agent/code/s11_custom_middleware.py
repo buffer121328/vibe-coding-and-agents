@@ -169,10 +169,62 @@ def demo_class_middleware():
     console.print("[dim]state_schema 让中间件拥有跨轮「记忆」：计数超限（>10）后 before_model 直接 jump_to='end' 熔断。[/dim]")
 
 
+def demo_trace_policy():
+    """演示 4：TracePolicy —— 给中间件链路追踪"打码"（1.3 后期已可用，1.4 环境实测在列）
+
+    中间件钩子的执行也会被追踪（LangSmith 等平台能看到每次钩子的输入/输出）。
+    每个中间件可声明 trace_policy 属性，控制【自己这一跳】记录什么：
+    - process_inputs=...   变换本节点入参的追踪记录
+    - process_outputs=...  变换本节点返回值的追踪记录
+    - omit_payload         官方助手：整段丢弃（面单只写"日用品"，不写具体型号）
+    注意：它只改【追踪记录】，不是脱敏正道——全链路（含子运行）脱敏请用
+    LangSmith 客户端的 hide_inputs / anonymizer。本演示离线验证策略对象可构造、
+    可挂载到中间件，无需真实 LangSmith 环境。
+    """
+    console.print(Panel("[bold cyan]4. TracePolicy：中间件链路追踪脱敏（离线可验证）[/bold cyan]", expand=False))
+
+    from langchain.agents import create_agent
+    from langchain.agents.middleware import AgentMiddleware, AgentState
+    from langgraph.types import TracePolicy, omit_payload
+    from langgraph.runtime import Runtime
+    from typing import Any
+
+    class SensitiveAuditMiddleware(AgentMiddleware):
+        """审计中间件：钩子输入照记（要看消息数），输出不记（审查结论不进日志）"""
+        trace_policy = TracePolicy(process_outputs=omit_payload)
+
+        def after_model(self, state: AgentState, runtime: Runtime) -> dict[str, Any] | None:
+            console.print(f"  [dim]（钩子真实执行：after_model 观察到 {len(state['messages'])} 条消息）[/dim]")
+            return None
+
+    mw = SensitiveAuditMiddleware()
+    console.print(f"[bold green]✅ TracePolicy 构造成功并挂载：[/bold green]{mw.trace_policy}")
+    console.print("[dim]process_outputs=omit_payload → after_model 这一跳的输出字段在追踪里为空，[/dim]")
+    console.print("[dim]钩子本身照常执行、状态更新不受影响——『打码』只作用于可观测层面。[/dim]")
+
+    # 另有进程级默认策略：configure_trace_policy(...)，单个中间件的 trace_policy 属性优先级更高
+    from langchain.agents.middleware import configure_trace_policy
+    configure_trace_policy(TracePolicy(process_outputs=omit_payload))
+    console.print("[bold green]✅ 进程级默认策略已设置：[/bold green]configure_trace_policy(TracePolicy(process_outputs=omit_payload))")
+
+    # 真实跑一轮（Fake 模型，零 Token），证明挂了 TracePolicy 的中间件工作如常
+    from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+    from langchain_core.messages import AIMessage as _AIM
+    fake = GenericFakeChatModel(messages=iter([_AIM("收到。")] * 99))
+    agent = create_agent(model=fake, tools=[], middleware=[mw])
+    res = agent.invoke({"messages": [HumanMessage(content="任意消息")]})
+    console.print(f"[green]挂载 TracePolicy 后 Agent 工作如常 → {res['messages'][-1].content}[/green]")
+
+    configure_trace_policy(None)   # 演示完清理进程级默认，避免影响其他演示
+    console.print("[dim]已清理进程级默认策略（configure_trace_policy(None)）。[/dim]")
+
+
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 自定义中间件与生命周期钩子演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 自定义中间件与生命周期钩子演示[/bold magenta]\n")
     demo_node_style()
     console.print("-" * 50)
     demo_wrap_style()
     console.print("-" * 50)
     demo_class_middleware()
+    console.print("-" * 50)
+    demo_trace_policy()

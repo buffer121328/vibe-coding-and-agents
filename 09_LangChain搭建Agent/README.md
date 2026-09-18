@@ -1,6 +1,6 @@
 # 🦜 第九章：LangChain 搭建 Agent —— 从 LCEL 管道到完整智能体
 
-> 第八章已经拆解了 Agent 的基本循环。本章转向 LangChain 1.x，观察框架如何统一模型、提示词、工具、状态与中间件，并把这些组件组织成可测试、可追踪的应用。
+> 第八章已经拆解了 Agent 的基本循环。本章转向 LangChain 1.4，观察框架如何统一模型、提示词、工具、状态与中间件，并把这些组件组织成可测试、可追踪的应用。
 
 ***
 
@@ -8,7 +8,7 @@
 
 在第八章中，我们用 Python 实现了 Agent 的运行循环、工具分发与记忆管理。真实项目还要处理多模型适配、并发、流程编排和私有知识库，这些重复工作可以交给一套职责清楚的框架承担。
 
-本章结合 LangChain 1.x 的官方标准规范，从最基础的模型 I/O 出发，循序渐进地带你通关：
+本章结合 LangChain 1.4 的官方标准规范，从最基础的模型 I/O 出发，循序渐进地带你通关：
 - **核心基石**：统一模型 I/O（`init_chat_model`）、Prompt 模板与四大消息模型；
 - **编排艺术**：LCEL 管道符 `|`、多分支并行调度与高可用容灾 Fallbacks；
 - **精准控制**：Pydantic 强类型结构化输出、`@tool` 装饰器与参数边界防御；
@@ -16,8 +16,8 @@
 - **知识增强与闭环**：`langchain-chroma` 向量检索 RAG 与现代 `create_agent` 智能体；
 - **上下文工程与中间件**：Runtime Context / State / Store 三数据源动态注入，自定义中间件生命周期钩子；
 - **生产级防护**：Guardrails 护栏、Prompt 注入防护、PII 脱敏与测试评估；
-- **综合收官实战**：打造 **`SmartBuyer`（AI 智能数码选购与避坑决策参谋）** 与 13 关卡教学工作台（侧边栏导航 · 过程透视终端 · Codex 式会话 · 实时流式 · 按钮悬浮输入框内的现代交互 · 9.13 专属「整机点验台」版式（数据屏 Hero · 侧透机箱 · 身份卡切换 Store 画像） · 9.10~9.13 演示全部真实调用）！
-- **版本前沿**：全章基于 **LangChain 1.3** 编写，1.1~1.3 新特性已按主题**融入各章节**（模型能力档案 `.profile` → 9.1、工具 `extras` 与厂商内建工具 → 9.5、官方预置中间件 → 9.7、`response_format` / 动态工具注册 / v3 流式 → 9.9），边学边用，无需另开速览章节。
+- **综合收官实战**：打造 **`SmartBuyer`（AI 智能数码选购与避坑决策参谋）**——课程版收进 [`code/smart_buyer/`](code/smart_buyer/README.md) 独立项目并完成四阶段演进（测试加固 / deepagents 深度版 / MCP 工具生态 / 多用户生产化）；除了终端入口，还提供独立 Web 工作台（问诊对话 · 工具调用透视 · 结构化决策报告）！
+- **版本前沿**：全章基于 **LangChain 1.4**（2026-09-03 发布，1.4.0 已本地实测校验），1.1~1.4 新特性按主题**融入各章节**（模型能力档案 `.profile` → 9.1、1.4 `langchain.mcp` 命名空间与 `MCPAdapter` → 9.1、工具 `extras` 与厂商内建工具 → 9.5、`SummarizationMiddleware` 1.4 参数精读 → 9.6、**官方预置中间件 1.4 全量 16 个**（`ModelCallLimit` / `ModelFallback` / `TodoList` / `LLMToolSelector` / `LLMToolEmulator` / `ToolCallLimit` / `ToolError` / `ContextEditing` / `ShellTool` / `ProviderToolSearch` 等）→ 9.7、`response_format` / 动态工具注册 / v3 流式 / **deepagents 深度智能体** → 9.9、`@dynamic_prompt` / `TracePolicy` 快捷姿势 → 9.11），边学边用，无需另开速览章节。
 
 ***
 
@@ -44,13 +44,13 @@
 | **9.6** | [记忆管理与会话状态持久化](06_记忆管理与会话状态持久化.md) | 办公桌抽屉与智能历史剪报员 | 掌握 `create_agent` + LangGraph `Checkpointer` 线程级记忆与 `trim_messages` 窗口裁剪 |
 | **9.7** | [Callbacks回调与可观测性中间件](07_Callbacks回调与可观测性中间件.md) | 航班黑匣子与安检 X 光机 | 掌握 `BaseCallbackHandler` 切面、Token 账单自动审计与隐私正则脱敏 |
 | **9.8** | [RAG核心链路与向量检索增强](08_RAG核心链路与向量检索增强.md) | 智能图书索引员与开卷参考书 | 掌握 TextSplitter 切块、`langchain-chroma` 向量入库与标准 LCEL RAG 检索问答管道 |
-| **9.9** | [Agent现代架构与create_agent](09_Agent现代架构与create_agent.md) | 高级私人秘书与他的工作草稿本 | 掌握 1.x 标准 `create_agent` 智能体、Tool Calling 与消息流水线推理审计 |
+| **9.9** | [Agent现代架构与create_agent](09_Agent现代架构与create_agent.md) | 高级私人秘书与他的工作草稿本 | 掌握 1.4 标准 `create_agent` 智能体、Tool Calling 与消息流水线推理审计 + deepagents 深度智能体整机 |
 | **9.10** | [上下文工程与动态上下文注入](10_上下文工程与动态上下文注入.md) | 导演的剧本、道具与幕间调度 | 掌握 Model/Tool/Life-cycle 三类上下文与 Runtime Context/State/Store 三数据源动态注入 |
-| **9.11** | [自定义中间件与生命周期钩子](11_自定义中间件与生命周期钩子.md) | 流水线质检员与包裹代收点 | 掌握 Node-style 4 钩子 + Wrap-style 2 钩子、state_schema 自定义状态与状态更新机制 |
+| **9.11** | [自定义中间件与生命周期钩子](11_自定义中间件与生命周期钩子.md) | 流水线质检员与包裹代收点 | 掌握 Node-style 4 钩子 + Wrap-style 2 钩子、state_schema 自定义状态、`@dynamic_prompt` 与 `TracePolicy`（1.4） |
 | **9.12** | [生产级防护：护栏安全与测试评估](12_生产级防护_护栏安全与测试评估.md) | 安检门与安检员 | 掌握确定性/模型性护栏、PII 脱敏、Prompt 注入防护与测试评估 |
 | **9.13** | [综合实战：AI智能数码选购与避坑决策Agent](13_综合实战_AI智能数码选购与避坑决策Agent.md) | 装机佬的整机总装（SmartBuyer 参谋） | 9.1~9.12 全零件融会贯通：避坑 RAG + 差评搜索 + 画像动态注入 + 中间件栈 + 护栏 + Pydantic 选购报告 |
 
-> 💡 **版本说明**：全章基于 **LangChain 1.3**，1.1~1.3 新特性（模型能力档案、工具 `extras`、官方中间件、`response_format`、v3 流式等）已分散融入 9.1 / 9.5 / 9.6 / 9.7 / 9.9 各节，跟随章节顺序即可完整掌握，无需单独的速览章节。
+> 💡 **版本说明**：全章基于 **LangChain 1.4**（本地实测 `langchain==1.4.0` + `deepagents==0.7.14`），1.1~1.4 新特性（模型能力档案、`MCPAdapter`、工具 `extras`、官方 16 个预置中间件、`SummarizationMiddleware` 精读、`response_format`、v3 流式、deepagents 等）已分散融入 9.1 / 9.5 / 9.6 / 9.7 / 9.9 / 9.11 各节，跟随章节顺序即可完整掌握，无需单独的速览章节。
 
 ***
 
@@ -68,14 +68,17 @@ cp .env.example .env
 # 3. 首次：创建虚拟环境 .venv 并安装全部依赖（后续无需重复）
 uv sync
 
-# 4. 一键启动 13 关卡教学工作台（每页含「过程透视」终端，拒绝黑盒）
+# 4. 一键启动 12 关卡教学工作台（每页含「过程透视」终端，拒绝黑盒）
 uv run python app.py
 # 或运行单个章节脚本，例如：
 uv run python s01_model_io.py
-uv run python s13_smart_buyer.py
+# 9.13 收官实战已独立成项目（含演进路线）：
+uv run python -m smart_buyer.main
+# 独立 SmartBuyer Web 工作台（默认 http://127.0.0.1:7861）
+uv run python -m smart_buyer.web_app
 ```
 
-浏览器访问 `http://127.0.0.1:7860` 即可实时调试与体验全套 13 个模块！
+浏览器访问 `http://127.0.0.1:7860` 即可实时调试与体验全套 12 个模块！
 
 > 💡 **IDE 提示**：在 VS Code / Trae 中打开 `09_LangChain搭建Agent/code` 后，请在右下角状态栏（或 `Cmd+Shift+P` → **Python: Select Interpreter**）选择解释器 `09_LangChain搭建Agent/code/.venv/bin/python`，即可消除“无法解析导入”标红并支持直接点 ▶ 运行。
 

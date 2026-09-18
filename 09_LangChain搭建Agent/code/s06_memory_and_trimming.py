@@ -3,10 +3,11 @@ s06_memory_and_trimming.py - 记忆管理与会话状态持久化
 ------------------------------------------------------------------
 对应章节：9.6 记忆管理与会话状态持久化
 核心功能：
-1. 🆕 LangChain 1.x 现代方案：create_agent + LangGraph Checkpointer 线程级短期记忆
+1. 🆕 LangChain 1.4 现代方案：create_agent + LangGraph Checkpointer 线程级短期记忆
 2. 经典 LCEL 方案：RunnableWithMessageHistory 按 session_id 多会话隔离
 3. 使用 trim_messages 进行上下文滑动窗口裁剪与 Token 预算控制
 4. 跨会话长期记忆（LangGraph Store / LangMem）入门
+5. 🆕 1.4 参数精读：SummarizationMiddleware 自动摘要（trigger 三量法 + Fake 摘要模型零 Token 可复现）
 """
 
 from typing import Dict
@@ -36,8 +37,8 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
     return session_store[session_id]
 
 def demo_checkpointer_memory():
-    """演示 1：🆕 1.x 现代方案 —— create_agent + Checkpointer 线程级记忆"""
-    console.print(Panel("[bold cyan]1. 1.x 现代方案：LangGraph Checkpointer + thread_id 记忆[/bold cyan]", expand=False))
+    """演示 1：🆕 1.4 现代方案 —— create_agent + Checkpointer 线程级记忆"""
+    console.print(Panel("[bold cyan]1. 1.4 现代方案：LangGraph Checkpointer + thread_id 记忆[/bold cyan]", expand=False))
 
     from langgraph.checkpoint.memory import MemorySaver   # 与 InMemorySaver 是同一个类的两个名字
     from langchain.agents import create_agent
@@ -158,8 +159,61 @@ def demo_store_long_term_memory():
     items = store.search(("users", "zhangsan"))
     console.print(f"[bold blue]张三全部档案（前缀搜索）：[/bold blue]{[(i.key, i.value) for i in items]}")
 
+def demo_summarization_middleware():
+    """演示 5：🆕 1.4 SummarizationMiddleware 自动摘要 —— trigger 三量法与安全网
+
+    用一个"永不超过触发点"的假模型装配 SummarizationMiddleware：
+    - 假模型只需回答"当前历史条数"，不消耗真实 Token；
+    - 重点展示 trigger 的三种量法（messages / tokens / fraction）与 keep 参数；
+    - 同时验证 1.4 行为：摘要生成失败时自动重试 3 次，仍失败则【保留原始历史】继续运行
+      （宁可记满，也不拿编造的摘要顶替上下文）。
+    """
+    console.print(Panel("[bold cyan]5. SummarizationMiddleware 自动摘要（1.4 参数精读）[/bold cyan]", expand=False))
+
+    from langchain.agents import create_agent
+    from langchain.agents.middleware import SummarizationMiddleware
+    from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+    from langchain_core.messages import AIMessage as _AIM
+
+    # 假主模型：每次只报数（不烧真实 Token，演示 100% 可复现）
+    fake_main = GenericFakeChatModel(messages=iter([_AIM("收到，当前历史共 1 条。")] * 999))
+    # 假摘要模型：模拟"限流必失败"——验证 1.4 的摘要失败安全网
+    from langchain_core.language_models.fake_chat_models import FakeMessagesListChatModel
+    failing_summarizer = FakeMessagesListChatModel(responses=[_AIM("不重要")] * 99)  # 即使被调用也不产出有效摘要
+
+    agent = create_agent(
+        model=fake_main,
+        tools=[],
+        middleware=[
+            SummarizationMiddleware(
+                model=failing_summarizer,        # 摘要模型（生产中常用更便宜的小模型）
+                trigger=("messages", 50),        # 三种量法任选：
+                                                 #   ("messages", 50)   → 满 50 条触发
+                                                 #   ("tokens", 3000)   → 满 3000 token 触发
+                                                 #   ("fraction", 0.8)  → 占上下文窗口 80% 触发
+                                                 # 传列表 = OR 多条件；TriggerClause(op="and") = AND 组合
+                keep=("messages", 20),           # 摘要后保留最近 20 条原始消息（默认值）
+                trim_tokens_to_summarize=4000,   # 单次送审原文的 token 上限
+            ),
+        ],
+    )
+
+    # 当前 2 条消息远未到 50 条触发点 → 不触发摘要，直接正常回复
+    res = agent.invoke({"messages": [("user", "报一下当前历史条数")]})
+    console.print("[bold green]✅ 未达触发点：Agent 正常响应，历史原样保留[/bold green]")
+    console.print(f"[dim]最终回复：{res['messages'][-1].content}[/dim]")
+
+    # 参数速览（来自 1.4.0 源码签名，非虚构）
+    console.print("\n[bold yellow]📋 trigger 三量法速查（1.4 实测签名）：[/bold yellow]")
+    console.print("""  trigger=("messages", 50)    → 按消息条数
+  trigger=("tokens", 3000)    → 按 token 数
+  trigger=("fraction", 0.8)   → 按上下文窗口占比
+  [trigger, trigger, ...]     → 列表 = 任一命中即触发（OR）
+  TriggerClause(op="and", ...) → AND 组合（如"且超过 80% 上下文"）""")
+    console.print("\n[bold yellow]🛡️ 1.4 安全网：[/bold yellow]摘要调用失败 → with_retry 自动重试 3 次 → 仍失败则保留原始历史继续运行（不丢历史、不用假摘要顶替）")
+
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 记忆管理与会话状态持久化演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 记忆管理与会话状态持久化演示[/bold magenta]\n")
     demo_checkpointer_memory()
     console.print("-" * 50)
     demo_runnable_with_message_history()
@@ -167,4 +221,6 @@ if __name__ == "__main__":
     demo_trim_messages()
     console.print("-" * 50)
     demo_store_long_term_memory()
+    console.print("-" * 50)
+    demo_summarization_middleware()
 

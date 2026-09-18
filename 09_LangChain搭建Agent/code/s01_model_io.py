@@ -1,5 +1,5 @@
 """
-s01_model_io.py - LangChain 1.x 统一模型 I/O 与流式调用
+s01_model_io.py - LangChain 1.4 统一模型 I/O 与流式调用
 ------------------------------------------------------------------
 对应章节：9.1 初识 LangChain 与生态架构
 核心功能：
@@ -75,7 +75,7 @@ def get_chat_model(temperature: float = 0.7):
 
 def get_chat_model_unified(temperature: float = 0.7):
     """
-    LangChain 1.x 官方推荐的统一模型工厂：
+    LangChain 1.4 官方推荐的统一模型工厂：
     init_chat_model("厂商:模型") 一行初始化，自动路由到对应伙伴包。
     需先安装对应伙伴包（如 langchain-openai / langchain-deepseek）。
     """
@@ -190,7 +190,7 @@ def demo_model_profiles():
         console.print(f"[red]读取能力档案出错：{e}[/red]")
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 模型 I/O 与流式调用演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 模型 I/O 与流式调用演示[/bold magenta]\n")
     demo_sync_invoke()
     console.print("-" * 50)
     demo_streaming_invoke()

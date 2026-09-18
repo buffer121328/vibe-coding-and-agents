@@ -1,7 +1,7 @@
-# 🧩 9.1 初识 LangChain 1.x 与生态架构
+# 🧩 9.1 初识 LangChain 1.4 与生态架构
 
 > **“标准化与乐高积木化，是软件工程从手工作坊走向工业化大生产的必由之路。”**  
-> 在手写了原生 Agent 之后，本节我们将推开现代化 LLM 框架的大门，探索 LangChain 1.x 是如何通过标准协议与模块化拆分，让 AI 应用开发像搭积木一样高效稳健。
+> 在手写了原生 Agent 之后，本节我们将推开现代化 LLM 框架的大门，探索 LangChain 1.4 是如何通过标准协议与模块化拆分，让 AI 应用开发像搭积木一样高效稳健。
 
 ---
 
@@ -26,7 +26,7 @@
 
 ---
 
-## 🏛️ LangChain 1.x 的架构演进与包拆分
+## 🏛️ LangChain 1.4 的架构演进与包拆分
 
 在早期（0.0.x ~ 0.1.x 版本），LangChain 常被社区诟病“过于臃肿、黑盒过深、API 变动频繁”。  
 自 **LangChain 0.3** 起官方进行了彻底的解耦重构，**2025 年 10 月正式发布 1.0**（要求 **Python 3.10+**），确立了“小而精的核心 + 独立伙伴包”的清晰架构：
@@ -34,8 +34,8 @@
 | 核心组件库 | 官方定位与职责 | 核心作用与包含内容 |
 | :--- | :--- | :--- |
 | **`langchain-core`** | **最轻量基石层**（零外部重依赖） | 定义核心抽象接口：`Runnable` 协议、`BaseMessage` 消息模型、`ChatPromptTemplate` 模板、`@tool` 装饰器、输出解析器。保证核心 API 语义化版本极其稳定。 |
-| **`langchain`** | **1.x 主框架层**（精简命名空间） | 只保留构建 Agent 的“标准接口”：`create_agent`、`init_chat_model` / `init_embeddings`、Agent 中间件（Middleware）、`langchain.tools` 等。 |
-| **`langchain-classic`** | **1.x 向后兼容包** | 收纳旧版遗留代码：`LLMChain`、`ConversationChain`、`AgentExecutor`、`initialize_agent` 等（旧代码不升级时可安装此包过渡）。 |
+| **`langchain`** | **1.4 主框架层**（精简命名空间） | 只保留构建 Agent 的“标准接口”：`create_agent`、`init_chat_model` / `init_embeddings`、Agent 中间件（Middleware）、`langchain.tools` 等。 |
+| **`langchain-classic`** | **1.4 向后兼容包** | 收纳旧版遗留代码：`LLMChain`、`ConversationChain`、`AgentExecutor`、`initialize_agent` 等（旧代码不升级时可安装此包过渡）。 |
 | **`langchain-openai` / `langchain-chroma` / `langchain-tavily` …** | **厂商 / 生态独立伙伴包** | **`langchain-community` 已于 2026 年 6 月正式 Sunset（仓库归档）**，主流集成全部迁移到“一厂商一包”的独立伙伴包：OpenAI、Anthropic、Chroma 向量库、Tavily 搜索等，按需轻量安装。 |
 | **`langchain-community`** | **（已 Sunset，仅遗留兼容）** | 曾承载第三方向量库、文档加载器、DuckDuckGo 等工具。**新项目请勿再依赖**，改用独立伙伴包或直接封装底层 API。 |
 | **`langgraph`** | **复杂状态图与多智能体运行时** | LangChain 官方推荐的底层多轮状态循环、`checkpointer` 记忆与多 Agent 编排引擎（第十章重点）。 |
@@ -47,17 +47,17 @@
 
 ## 💻 快速实操：统一模型接入与三种调用姿势
 
-无论使用的是 OpenAI 原生接口，还是国内托管平台（如字节跳动·火山方舟 DeepSeek、硅基流动、月之暗面），在 LangChain 1.x 中均可通过统一客户端快速接入。
+无论使用的是 OpenAI 原生接口，还是国内托管平台（如字节跳动·火山方舟 DeepSeek、硅基流动、月之暗面），在 LangChain 1.4 中均可通过统一客户端快速接入。
 
 ### 1. 统一客户端工厂配置（推荐：init_chat_model）
 
-LangChain 1.x 提供了官方统一的模型初始化入口 **`init_chat_model`**（位于 `langchain.chat_models`）。它支持 `"厂商:模型名"` 的写法，一行代码自动路由到对应伙伴包，无需关心类名与导入路径：
+LangChain 1.4 提供了官方统一的模型初始化入口 **`init_chat_model`**（位于 `langchain.chat_models`）。它支持 `"厂商:模型名"` 的写法，一行代码自动路由到对应伙伴包，无需关心类名与导入路径：
 
 ```python
-# code/s01_model_io.py —— 1.x 官方推荐的统一工厂
+# code/s01_model_io.py —— 1.4 官方推荐的统一工厂
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model  # 1.x 统一模型工厂
+from langchain.chat_models import init_chat_model  # 1.4 统一模型工厂
 
 load_dotenv()
 
@@ -71,8 +71,8 @@ def get_chat_model_unified(temperature: float = 0.7):
 ```
 
 > 📌 **两种姿势对比**：
-> - **`init_chat_model("deepseek:deepseek-chat")`** —— 1.x 官方推荐，自动识别 `deepseek` 厂商并加载 `langchain-deepseek` 伙伴包；
-> - **`ChatOpenAI(base_url="https://api.deepseek.com/v1")`** —— 经典写法，适用于任意 **OpenAI 兼容端点**（火山方舟、硅基流动、DeepSeek、通义等），灵活设置 `base_url`。本教程 `s01_model_io.py` 的默认 `get_chat_model()` 沿用此工厂以兼容国内各家中转服务，并额外提供 `get_chat_model_unified()` 供你体验 1.x 统一写法，二者本质等价。
+> - **`init_chat_model("deepseek:deepseek-chat")`** —— 1.4 官方推荐，自动识别 `deepseek` 厂商并加载 `langchain-deepseek` 伙伴包；
+> - **`ChatOpenAI(base_url="https://api.deepseek.com/v1")`** —— 经典写法，适用于任意 **OpenAI 兼容端点**（火山方舟、硅基流动、DeepSeek、通义等），灵活设置 `base_url`。本教程 `s01_model_io.py` 的默认 `get_chat_model()` 沿用此工厂以兼容国内各家中转服务，并额外提供 `get_chat_model_unified()` 供你体验 1.4 统一写法，二者本质等价。
 
 ### 2. 三种核心调用模式对比
 
@@ -93,15 +93,15 @@ for r in responses:
     print(r.content.strip())
 ```
 
-### 3. 1.x 新特性速览：标准内容块（Standard Content Blocks）
+### 3. 1.4 新特性速览：标准内容块（Standard Content Blocks）
 
-1.x 为所有模型厂商统一了多模态/推理/引用等复杂输出的消息格式，新增 `AIMessage.content_blocks` 属性，可拿到**完全类型化**的 `text`、`reasoning`、`citations`、`tool_call` 等块，跨厂商零适配：
+1.4 为所有模型厂商统一了多模态/推理/引用等复杂输出的消息格式，新增 `AIMessage.content_blocks` 属性，可拿到**完全类型化**的 `text`、`reasoning`、`citations`、`tool_call` 等块，跨厂商零适配：
 
 ```python
 resp = llm.invoke("9.4 与 9.9 谁大？请给出推理过程")
 # 传统文本（跨版本兼容）
 print(resp.content)
-# 1.x 标准内容块（可分离“思考过程”与“最终答案”）
+# 1.4 标准内容块（可分离“思考过程”与“最终答案”）
 for block in resp.content_blocks:
     print(block.type, block)   # 如 TextBlock / ReasoningBlock ...
 ```
@@ -125,7 +125,7 @@ print(profile["max_input_tokens"])    # 128000 —— 上下文窗口
 
 1.3 起 `create_agent` / `init_chat_model` 统一了**跨厂商异常分类**（Standard Model Exceptions），异常处理不再需要 catch 各种厂商私有错误。`langchain-openai` 还支持**显式 Prompt Caching**（提示词缓存，配合 9.7 成本审计更省钱）。
 
-### 6. 动态模型选择与路由：同一套代码，按需切换大脑（1.x 进阶）
+### 6. 动态模型选择与路由：同一套代码，按需切换大脑（1.4 进阶）
 
 `create_agent(model=...)` 的 `model` 参数非常灵活——既可以传字符串标识符（`"openai:gpt-4o-mini"`），也可以传已初始化好的模型实例。更进一步，结合 **9.11 自定义中间件**，我们还能在**运行中按任务难度、成本预算或用户等级动态切换模型**——"简单问题用便宜小模型，复杂问题才出动旗舰模型"：
 
@@ -152,14 +152,30 @@ def route_by_complexity(request: ModelRequest, handler) -> ModelResponse:
 > | **`ModelFallbackMiddleware`**（9.7） | 主模型**调用失败后** | 中间件版的备胎兜底 |
 > | **动态模型选择**（本节） | **每次调用前**按策略主动挑选 | 按需点将，未雨绸缪 |
 
+### 7. 🆕 1.4 新特性：`langchain.mcp` 命名空间与 MCPAdapter——一键接入 MCP 工具生态（2026-09-03 发布）
+
+**MCP（Model Context Protocol）**是 Anthropic 发起的模型上下文协议（类比"AI 界的 USB-C 接口"），让任何大模型应用都能用同一套标准连接外部工具与数据源。1.4 起官方把 MCP 支持收编进**一等公民命名空间 `langchain.mcp`**：新增 `MCPAdapter` 适配器，一个入口搞定多服务器连接、鉴权与工具发现——以前要自己装 `langchain-mcp-adapters` 第三方包拼胶水代码，现在框架原生吃下：
+
+```python
+# 示意：pip install "langchain[mcp]"   （MCP 支持需装 extra，底层基于 fastmcp>=4.0）
+from langchain.mcp import MCPAdapter
+
+adapter = MCPAdapter(...)                 # 推断传输方式（stdio / HTTP）+ 多服务器配置
+tools = adapter.list_tools(cache_mode="use")   # 工具清单带缓存：use / refresh / bypass
+agent = create_agent(model=llm, tools=tools)   # MCP 工具当普通工具用，零改造
+```
+
+1.4 的 MCP 适配器还有三个工程亮点：**工具名按服务器名做命名空间隔离**（两台服务器同名工具不打架）；**Elicitation（服务器向用户要补充信息）以 LangGraph 中断形式呈现**（自然衔接 9.9 的 HITL）；MCP 工具的元数据统一挂在 `metadata["mcp"]["server"]` 下可溯源。MCP 深度实战放在第十四章 Agent 工具生态，这里先混个脸熟。
+
 ---
 
 ## 📚 权威官方资料直达
 
-- 🔗 **LangChain 官方首页（1.x 文档中心）**：[https://docs.langchain.com/](https://docs.langchain.com/)
-- 🔗 **LangChain 1.x 发布说明**：[What's new in LangChain v1](https://docs.langchain.com/oss/python/releases/langchain-v1)
-- 🔗 **LangChain 1.x 迁移指南**：[Migrate to LangChain v1](https://docs.langchain.com/oss/python/migrate/langchain-v1)
+- 🔗 **LangChain 官方首页（1.4 文档中心）**：[https://docs.langchain.com/](https://docs.langchain.com/)
+- 🔗 **LangChain 1.4 发布说明**：[What's new in LangChain v1](https://docs.langchain.com/oss/python/releases/langchain-v1)
+- 🔗 **LangChain 1.4 迁移指南**：[Migrate to LangChain v1](https://docs.langchain.com/oss/python/migrate/langchain-v1)
 - 🔗 **模型能力档案（Model Profiles）**：[LangChain Models](https://docs.langchain.com/oss/python/langchain/models)
+- 🔗 **LangChain 1.4 发布页（MCP 命名空间等）**：[Releases · langchain-ai/langchain](https://github.com/langchain-ai/langchain/releases)
 - 🔗 **LangChain 官方 GitHub 仓库**：[https://github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain)
 - 🔗 **参考学习项目 (BrandPeng)**：[Langchain1.0-Langgraph1.0-Learning](https://github.com/BrandPeng/Langchain1.0-Langgraph1.0-Learning)
 
@@ -173,5 +189,5 @@ LangChain 提供模型、提示词、工具和 Runnable 等通用接口；LangGr
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：掌握了 LangChain 1.x 的解耦架构哲学，学会了使用统一标准接口调用大模型并提取元数据，以及按需动态切换模型的"路由"思路。
+1. **核心收获**：掌握了 LangChain 1.4 的解耦架构哲学，学会了使用统一标准接口调用大模型并提取元数据，掌握了按需动态切换模型的"路由"思路，并认识了 1.4 新增的 `langchain.mcp` 命名空间与 `MCPAdapter`（MCP 工具生态一键接入）。
 2. **下一步探索**：模型已经跑通，如何优雅地组织 System 角色、用户输入与多轮对话历史？下一节我们深入学习 **9.2 Prompt 模板与上下文消息流**。

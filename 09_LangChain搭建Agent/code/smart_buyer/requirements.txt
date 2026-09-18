@@ -1,0 +1,12 @@
+# SmartBuyer 独立项目依赖（复用第九章 code/ 的 uv 环境即可运行，本文件用于未来脱离章节独立部署）
+# 用法：cd smart_buyer && uv venv && uv pip install -r requirements.txt
+langchain>=1.4.0
+langchain-openai>=1.6.0
+langchain-chroma>=1.1.0
+langchain-text-splitters>=1.0.0
+langgraph>=1.0.0
+pydantic>=2.7.0
+ddgs>=9.0.0
+python-dotenv>=1.0.1
+rich>=13.7.0
+gradio>=6.0.0

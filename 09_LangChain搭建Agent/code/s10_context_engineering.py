@@ -175,7 +175,7 @@ def demo_store_injection():
 
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 上下文工程与动态上下文注入演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 上下文工程与动态上下文注入演示[/bold magenta]\n")
     demo_dynamic_prompt()
     console.print("-" * 50)
     demo_dynamic_tools()

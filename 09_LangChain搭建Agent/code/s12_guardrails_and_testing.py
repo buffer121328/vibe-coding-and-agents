@@ -177,7 +177,7 @@ def demo_custom_guardrails():
 
 
 if __name__ == "__main__":
-    console.print("[bold magenta]🚀 LangChain 1.x 生产级防护：护栏安全与测试评估演示[/bold magenta]\n")
+    console.print("[bold magenta]🚀 LangChain 1.4 生产级防护：护栏安全与测试评估演示[/bold magenta]\n")
     demo_pii_middleware()
     console.print("-" * 50)
     demo_custom_guardrails()

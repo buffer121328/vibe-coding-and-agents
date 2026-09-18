@@ -1,6 +1,8 @@
 # 🛠️ 第九章：LangChain 搭建 Agent 配套代码库 (Code Base)
 
-本目录包含了第九章从 9.1 到 9.13 的全部 LangChain 1.x 实现与一个 **侧边栏导航、全链路实时流式的现代化 Gradio 可视化交互工作台**。
+本目录包含了第九章从 9.1 到 9.13 的全部 LangChain 1.4 实现与一个 **侧边栏导航、全链路实时流式的现代化 Gradio 可视化交互工作台**。
+
+> 🧪 **环境版本（2026-09 校准）**：`langchain>=1.4.0`（1.4.0 实测通过）+ `deepagents>=0.4.3`（0.7.14 实测，要求 Python ≥3.11）。9.9 的 deepagents 演示位在未安装 deepagents 时会自动跳过，不影响其余关卡。
 
 ***
 
@@ -21,9 +23,11 @@ uv sync
 
 # 4. 运行单个功能演示脚本（例如 9.1 模型 I/O 或 9.13 综合实战参谋）
 uv run python s01_model_io.py
-uv run python s13_smart_buyer.py
+uv run python -m smart_buyer.main
+# 独立 SmartBuyer Web 工作台（默认 http://127.0.0.1:7861）
+uv run python -m smart_buyer.web_app
 
-# 5. 一键启动 13 关卡教学工作台（每页含「过程透视」终端 + Codex 式会话）
+# 5. 一键启动 12 关卡教学工作台（每页含「过程透视」终端 + Codex 式会话）
 uv run python app.py
 ```
 
@@ -40,12 +44,12 @@ uv run python app.py
 | **`s03_lcel_chains.py`** | 9.3 LCEL 链式编排与调度 | Unix 管道符 `\|`、RunnableParallel 多分支并行与 with_fallbacks 高可用容灾 |
 | **`s04_structured_output.py`** | 9.4 结构化输出与容错解析 | Pydantic 强类型约束、with_structured_output 提取与 JsonOutputParser 容错解析 |
 | **`s05_custom_tools.py`** | 9.5 自定义工具生态与校验 | `@tool` 装饰器、Pydantic args_schema 参数校验、Docstring 意图契约、底层 bind_tools 与 **工具 `extras`** |
-| **`s06_memory_and_trimming.py`** | 9.6 记忆管理与状态持久化 | create_agent + LangGraph Checkpointer 线程级记忆、RunnableWithMessageHistory 经典方案、trim_messages 滑动窗口裁剪与预算控制 |
-| **`s07_callbacks_and_tracing.py`** | 9.7 Callbacks 与可观测性中间件 | BaseCallbackHandler 探针、Token 账单自动审计、耗时统计、敏感隐私数据拦截脱敏与 **官方预置中间件 (ModelRetry / PII)** |
+| **`s06_memory_and_trimming.py`** | 9.6 记忆管理与状态持久化 | create_agent + LangGraph Checkpointer 线程级记忆、RunnableWithMessageHistory 经典方案、trim_messages 滑动窗口裁剪与预算控制、**SummarizationMiddleware 自动摘要（1.4 trigger 三量法 + 摘要失败安全网，Fake 模型零 Token）** |
+| **`s07_callbacks_and_tracing.py`** | 9.7 Callbacks 与可观测性中间件 | BaseCallbackHandler 探针、Token 账单自动审计、耗时统计、敏感隐私数据拦截脱敏、官方预置中间件 (ModelRetry / PII) 与 **1.4 全量 16 中间件速览 + 四层生产组合拳（Retry→CallLimit→PII→Summarization，Fake 模型零 Token）** |
 | **`s08_rag_retrieval.py`** | 9.8 RAG 核心链路与向量检索 | 文本切块 (TextSplitter)、langchain-chroma 向量入库、LCEL 标准 RAG 检索问答管道；国产端点 Embedding 兼容（`tiktoken_enabled=False` 直发原文）+ 不可用时本地确定性向量降级 |
-| **`s09_modern_agent.py`** | 9.9 Modern Agent 智能体闭环 | 1.x 标准 `create_agent`（SystemMessage 系统提示 + **ModelRetry 中间件**）、多模工具调用、messages 流水线审计、**response_format 结构化答复**与 **v3 流式协议** |
+| **`s09_modern_agent.py`** | 9.9 Modern Agent 智能体闭环 | 1.4 标准 `create_agent`（SystemMessage 系统提示 + **ModelRetry 中间件**）、多模工具调用、messages 流水线审计、**response_format 结构化答复**与 **v3 流式协议**；另附 **deepagents `create_deep_agent` 演示位**（9.9 新增：虚拟文件系统 / 子代理 / 记忆五件套） |
 | **`s10_context_engineering.py`** | 9.10 上下文工程 | 动态 System Prompt（`@dynamic_prompt`）、动态工具选择（`wrap_model_call` + `request.override`）、Store + Runtime Context 画像注入；三个演示均为**真实调用**的双场景对比（短 vs 长对话 / 未认证裁工具 / 新老用户画像） |
-| **`s11_custom_middleware.py`** | 9.11 自定义中间件 | Node-style 钩子（`before_model`/`after_model`）+ Wrap-style 钩子（`wrap_model_call`）、类式中间件、`state_schema` 调用次数限流；三个演示真实执行（50 条消息零 Token 熔断 / FakeChatModel 模拟抖动验证重试 / 计数累计） |
+| **`s11_custom_middleware.py`** | 9.11 自定义中间件 | Node-style 钩子（`before_model`/`after_model`）+ Wrap-style 钩子（`wrap_model_call`）、类式中间件、`state_schema` 调用次数限流；四个演示真实执行（50 条消息零 Token 熔断 / FakeChatModel 模拟抖动验证重试 / 计数累计 / **TracePolicy 链路追踪脱敏离线验证**） |
 | **`s12_guardrails_and_testing.py`** | 9.12 生产级防护 | 内置 `PIIMiddleware` 脱敏、`before_agent` 黑名单拦截、`after_agent` 安全复核（复核模型复用项目统一端点，硬编码 gpt-4o-mini 会 404）、确定性护栏轻量自测（可进 CI）；演示为真实调用（模型亲口承认只见占位符 / 黑名单零 Token 拦截） |
-| **`s13_smart_buyer.py`** | 9.13 综合实战 SmartBuyer | 🌟 **终极实战（融会贯通版）**：9.1~9.12 全零件整机总装——护栏纵深防御 + 中间件治理栈 + 顾客画像动态注入 + 数码避坑 RAG + 差评搜索 + 参数测算 + Pydantic 选购报告 |
-| **`app.py`** | 综合可视化界面 | 13 关卡侧边栏教学工作台：每页「过程透视」暗色终端透明展示中间产物；输入区「外壳即输入框」——按钮悬浮在框内右下角；9.9/9.13 大输入框内嵌发送按钮；9.5/9.10/9.11 等分动作行；9.13 为专属「整机点验台」琥珀金版式：点火 Hero 数据屏 + 侧透机箱会话区 + 三张顾客身份卡（点选即切换 Store 画像联动），会话/顾客 ID 下拉可切换且联动 Store 画像面板 |
+| **`smart_buyer/`** | 9.13 综合实战 SmartBuyer | 🌟 **独立实战项目**（课程收官案例"长大"版）：9.1~9.12 全零件整机总装——护栏纵深防御 + 中间件治理栈 + 顾客画像动态注入 + 数码避坑 RAG + 差评搜索 + 参数测算 + Pydantic 选购报告；`main.py` 终端入口 + `web_app.py` 独立 Gradio 工作台（问诊 / 过程透视 / 结构化报告），演进路线（deepagents 深度版 / MCP 工具生态 / 多用户生产化）见其 [README](smart_buyer/README.md) |
+| **`app.py`** | 综合可视化界面 | 12 关卡侧边栏教学工作台：每页「过程透视」暗色终端透明展示中间产物；输入区「外壳即输入框」——按钮悬浮在框内右下角；9.9 大输入框内嵌发送按钮；9.5/9.10/9.11 等分动作行（SmartBuyer 实战已独立为 smart_buyer/ 项目，工作台不再含 9.13 关） |
