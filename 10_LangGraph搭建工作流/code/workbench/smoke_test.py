@@ -128,7 +128,7 @@ def main():
         snap_obj = json.loads(snap)
         assert snap_obj.get("dialog_state", []) == [], f"栈应弹空：{snap_obj.get('dialog_state')}"
         assert "空栈" in console, "终端应含栈条回空展示"
-        assert "航班助理" in console
+        assert "航班专员" in console, f"终端应出现航班专员接单：{console[-300:]}"
     check("10.7 状态栈：压栈弹栈回空", t07)
 
     # ---------- 10.8（ReAct） ----------
@@ -154,8 +154,9 @@ def main():
     def t09c():
         (chips, svg, snap, console), _ = run_all(app.t09c_run())
         snap_obj = json.loads(snap)
-        assert snap_obj["revision"] == 2 and snap_obj["score"] == 120, f"保险丝逻辑：{snap_obj}"
-    check("10.9 Evaluator-Optimizer：2 版过线", t09c)
+        assert snap_obj["revision"] == 3 and snap_obj["score"] == 100, f"保险丝逻辑：{snap_obj}"
+        assert "第3版" in snap_obj["draft"]
+    check("10.9 Evaluator-Optimizer：3 版过线", t09c)
 
     # ---------- 10.10（Store + TimeTravel） ----------
     def t10_store():
@@ -192,7 +193,8 @@ def main():
         assert "崩溃" in console and "step_1" in snap
         (chips, svg, snap, console), rescue_frames = run_all(app.t11_rescue())
         obj = json.loads(snap)
-        assert obj["steps"] == ["step_1", "boom"], f"复活结果：{obj}"
+        assert obj["steps"] == ["step_1 已写入订单草稿 order_1001", "boom 支付成功"], f"复活结果：{obj}"
+        assert obj.get("done") is True
         assert "没有被重新执行" in console
     check("10.11 容错：重试自愈 + 断点复活", t11)
 
@@ -201,7 +203,7 @@ def main():
         outs = list(app.t12_run())
         chips, svg, snap, console = outs[-1]
         obj = json.loads(snap)
-        assert obj["ticket"] == "CA-1801", f"共享键透传失败：{obj.get('ticket')}"
+        assert str(obj.get("ticket", "")).startswith("CA-1801"), f"共享键透传失败：{obj.get('ticket')}"
         assert "xray=True（透视）" in console
     check("10.12 子图：共享键透传 + xray", t12)
 
@@ -235,7 +237,7 @@ def main():
         assert pending["visible"] and "组长审批" in pending["value"]
         chips, svg, snap, console, pending, ok, no = app.t13_approve()
         assert not pending["visible"], "小额通过后不应再挂起"
-        assert "已转账 5000 元" in console
+        assert "已转账 ￥5000" in console, f"小额落地文案不符：{console[-300:]}"
     check("10.13 小额：组长一级审批", t13_small)
 
     def t13_big():

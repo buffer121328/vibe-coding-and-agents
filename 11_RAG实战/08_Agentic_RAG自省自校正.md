@@ -4,7 +4,7 @@
 > ① **假召回**：检索回 3 篇文档但通篇跑题，系统也硬着头皮编答案；
 > ② **知识缺失**：库里根本没收录，系统只能回一句冷冰冰的“不知道”；
 > ③ **幻觉**：生成完后没人核对，答案里“赔偿 1000 元”而原文明明是“100 元”。
-> **Agentic RAG 就是给这条流水线装上“质检员 + 机动队 + 复核员”**：菜叶烂了退回重买（重检索）、店里没有就去隔壁超市（联网兜底）、出锅前亲自尝一口（幻觉检测）。
+> **Agentic RAG 就是给这条流水线装上“分诊台 + 化验室 + 药师”**：标本溶血了退回重抽（重检索）、本院查不到就按规定转外院（联网兜底）、发药前药师再核一次剂量（幻觉检测）。
 
 ---
 
@@ -29,152 +29,73 @@
 
 ---
 
-## 代码实现：基于 LangGraph 的「自适应 + 校正 + 幻觉自检」完整闭环
+## 代码实现：基于 LangGraph 的「检索 + 分级 + 幻觉自检」闭环
 
-> 这是一个比“玩具 Demo”完整得多的图：**难度路由 → 真实检索 → 文档分级 → 联网兜底 → 生成 → 幻觉复检**，每一环都做了结构化评判。
+> 三种范式里，本节动手做的是 **CRAG 那一刀：检索完先分级，再决定生成、兜底还是闭嘴**。Self-RAG 的反思 Token、Adaptive RAG 的“先判断难不难”，思想都对，但教学脚本没有单独做一个“难度路由器”——简单题省一次检索，靠的是预算和拒答，不是再套一层分类模型。
+
+完整脚本见 [`code/s08_agentic_rag.py`](./code/s08_agentic_rag.py)，检索的是 `testdata/` 里的真实制度页。这里只把**最容易装反的两段路**拎出来：分级之后往哪走，复检失败之后往哪走。
+
+把一次问答想成医院开处方：抽血化验（检索）→ 化验单质检（分级）→ 医生开方（生成）→ 药师审方（复检）。化验单写着“标本溶血”，你不会按这份单子开药；药师说“剂量对不上病历原文”，你最多让医生改一次处方，不会让他改到天亮。代码里的条件边就是这两条院规。
 
 ```python
-from typing import List, Literal, TypedDict
+from typing import List, TypedDict
 
-from langchain_chroma import Chroma
-from langchain_core.documents import Document
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langgraph.graph import END, START, StateGraph
-from pydantic import BaseModel, Field
+from rag_quality import RunBudget
 
-# ---------- 1. 基础设施 ----------
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-
-# 小型私有知识库（模拟）
-vectorstore = Chroma.from_documents(
-    [
-        Document(page_content="Vibe Coding 是 Andrej Karpathy 提出的 AI 原生辅助编程范式。"),
-        Document(page_content="公司年度体检在每年 6 月由行政部统一组织。"),
-    ],
-    OpenAIEmbeddings(model="text-embedding-3-small"),
-)
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-
-# ---------- 2. 结构化评判模型 ----------
-class GradeDocs(BaseModel):
-    """判断每篇文档是否与问题相关（用于 CRAG 分级）"""
-    binary_score: Literal["yes", "no"] = Field(description="文档是否相关")
-
-class CheckHallucination(BaseModel):
-    """判断答案是否忠实于参考资料（用于幻觉复检）"""
-    faithful: Literal["yes", "no"] = Field(description="答案是否完全有依据")
-
-class CheckAnswer(BaseModel):
-    """判断答案是否真正回答了问题"""
-    answered: Literal["yes", "no"] = Field(description="答案是否回答了问题")
-
-grader = llm.with_structured_output(GradeDocs)
-hallucination_checker = llm.with_structured_output(CheckHallucination)
-answer_checker = llm.with_structured_output(CheckAnswer)
-
-# ---------- 3. 全局状态 ----------
 class GraphState(TypedDict):
     question: str
     documents: List[str]
     generation: str
     needs_web_search: bool
+    status: str            # ok / regen / refuse；缺这个键，LangGraph 不会替你填默认值
+    budget: RunBudget
 
-# ---------- 4. 节点 ----------
-def retrieve(state: GraphState) -> GraphState:
-    print("→ [检索] 查询私有知识库")
-    docs = retriever.invoke(state["question"])
-    return {"documents": [d.page_content for d in docs]}
-
-def grade_documents(state: GraphState) -> GraphState:
-    """CRAG 核心：逐篇分级，过滤无关噪声"""
-    print("→ [分级] 裁判评估每篇文档")
-    filtered, need_web = [], False
-    for doc in state["documents"]:
-        prompt = ChatPromptTemplate.from_template(
-            "问题：{question}\n文档：{doc}\n该文档是否包含回答问题所需信息？"
-        )
-        verdict = grader.invoke(prompt.format(question=state["question"], doc=doc))
-        if verdict.binary_score == "yes":
-            filtered.append(doc)
-            print("   ✅ 采纳相关文档")
-        else:
-            print("   ❌ 剔除无关文档")
-    if not filtered:
-        need_web = True
-        print("   ⚠️ 无相关文档 → 需要联网兜底")
-    return {"documents": filtered, "needs_web_search": need_web}
-
-def web_search(state: GraphState) -> GraphState:
-    """联网兜底：生产环境可接入 Tavily/DuckDuckGo 真实搜索"""
-    print("→ [联网] 私有库不足，发起实时搜索")
-    web_doc = "【实时联网结果】2026 年最新 AI 编程范式综述..."
-    return {"documents": state["documents"] + [web_doc]}
-
-def generate(state: GraphState) -> GraphState:
-    print("→ [生成] 基于合格文档组织答案")
-    prompt = ChatPromptTemplate.from_template(
-        "严格基于以下资料回答问题，不得编造：\n{context}\n\n问题：{question}\n答案："
-    )
-    res = (prompt | llm | StrOutputParser()).invoke(
-        {"context": "\n".join(state["documents"]), "question": state["question"]}
-    )
-    return {"generation": res}
-
-def check_hallucination(state: GraphState) -> GraphState:
-    """幻觉复检 + 答案完整度复检"""
-    print("→ [复检] 核对答案是否忠实且有依据")
-    context = "\n".join(state["documents"])
-    faithful = hallucination_checker.invoke(
-        f"参考：{context}\n答案：{state['generation']}\n答案是否完全有依据？"
-    )
-    answered = answer_checker.invoke(
-        f"问题：{state['question']}\n答案：{state['generation']}\n答案是否回答了问题？"
-    )
-    if faithful.faithful == "yes" and answered.answered == "yes":
-        print("   ✅ 忠实且答非所问不成立 → 交付")
-        return {"generation": state["generation"]}
-    print("   ❌ 存在幻觉/未作答 → 触发重新检索（重试一轮）")
-    # 生产环境可在这里做有限次数重试（如最多 2 次），避免死循环
-    return {"generation": state["generation"], "needs_web_search": True}
-
-# ---------- 5. 构图 ----------
-workflow = StateGraph(GraphState)
-workflow.add_node("retrieve", retrieve)
-workflow.add_node("grade_documents", grade_documents)
-workflow.add_node("web_search", web_search)
-workflow.add_node("generate", generate)
-workflow.add_node("check_hallucination", check_hallucination)
-
-workflow.add_edge(START, "retrieve")
-workflow.add_edge("retrieve", "grade_documents")
+def decide_after_verification(faithful: bool, answered: bool, budget: RunBudget) -> str:
+    """药师复核通过就发药；没过只许改一次处方，再不行就停方转专科。"""
+    if faithful and answered:
+        return "deliver"
+    if budget.consume("rewrite"):
+        return "retry"
+    return "refuse"
 
 def after_grade(state: GraphState) -> str:
-    return "web_search" if state["needs_web_search"] else "generate"
+    if state.get("status") == "refuse":
+        return "end"          # 预算没了或库里没有，别再走进生成
+    return "web_search" if state.get("needs_web_search") else "generate"
 
-workflow.add_conditional_edges("grade_documents", after_grade, {"web_search": "web_search", "generate": "generate"})
-workflow.add_edge("web_search", "generate")
-workflow.add_edge("generate", "check_hallucination")
-workflow.add_edge("check_hallucination", END)  # 完整版可加条件边做有限重试
+def after_verify(state: GraphState) -> str:
+    return "generate" if state.get("status") == "regen" else "end"
 
-app = workflow.compile()
-
-# ---------- 6. 运行两个场景 ----------
-print("===== 场景 1：私有库命中 =====")
-r1 = app.invoke({"question": "什么是 Vibe Coding？"})
-print(f"💡 {r1['generation']}\n")
-
-print("===== 场景 2：私有库缺失 → 联网兜底 =====")
-r2 = app.invoke({"question": "2026 年最新开源大模型发布情况？"})
-print(f"💡 {r2['generation']}")
+workflow = StateGraph(GraphState)
+# retrieve → grade_documents → (web_search | generate | end)
+# generate → check_hallucination → (generate | end)
+workflow.add_conditional_edges(
+    "grade_documents", after_grade,
+    {"web_search": "web_search", "generate": "generate", "end": END},
+)
+workflow.add_conditional_edges(
+    "check_hallucination", after_verify,
+    {"generate": "generate", "end": END},
+)
 ```
 
+跑两个场景就够体会闭环：
+
+| 用户怎么问 | 诊室里实际发生什么 |
+| :--- | :--- |
+| “RX-9000 报 ERR-404-X9 怎么办？” | 制度库里有故障页，分级会放行，生成后再复检是否胡编步骤 |
+| “公司年终奖发几个月？” | 库里没有。教学版不会真去搜公网编一个数，只会附一条“外部占位、不可当内部制度”的纸条；预算用尽就拒答、转人工 |
+
+教学版的 `web_search` **不发起真实联网**。外院能查到公开的临床指南，查不到你们公司年终奖标准——私有问题靠公网补，补来的多半是幻觉。
+
 **这段代码比“玩具版”强在哪？**
-1. **真实检索**（接入了 Chroma），不是写死的假文档；
-2. **CRAG 分级**独立成节点，带 `needs_web_search` 标志，实现“分级 → 决策”；
-3. **幻觉复检**用两个结构化评判器（忠实度 + 完整度）双保险；
-4. 注释里提示了“有限次数重试”的工程边界，避免循环失控。
+1. **真实检索**，命中哪一页能用页 ID 对上 testdata，不是内存里两句假文档；
+2. **分级是独立节点**：相关就生成，全跑题才走兜底，库里没有就停；
+3. **复检有刹车**：`RunBudget` 把“最多再写一次”写成可测试的数字，而不是注释里的“注意别死循环”；
+4. **拒答是一等公民**：复检失败、预算耗尽，答案必须换成转人工，不能把半成品端上桌。
+
+总装项目 Lite 还多了一刀确定性资格（`EvidenceQualifier`）：资料已经够答时，**不再让分级模型一票否决**。课堂黄金集里「打印机 E3」曾经同一题两次跑、一次过一次挂，就是模型分级把已经放行的证据又否了。CRAG 的模型分级只在资格没结论时当兜底。完整闭环见 [`code/KnowledgeForge_lite/forge_lite/answer/agent.py`](code/KnowledgeForge_lite/forge_lite/answer/agent.py)。
 
 ---
 
@@ -214,7 +135,7 @@ print(f"💡 {r2['generation']}")
 预算耗尽 / 裁判低置信      → 拒答或转人工
 ```
 
-配套 `RunBudget` 把这条纪律写成了可测试代码，而不是留在注释里。
+配套 `RunBudget` 把这条纪律写成了可测试代码。脚本演示里 `max_rewrites=1`：第一次复检不过，允许再生成一轮；第二轮还不过，直接拒答。你可以把它想成门诊的“免费复诊一次”——剂量对不上可以改一次方，不会让医生通宵试药。
 
 ## 联网兜底不是默认答案
 
@@ -242,9 +163,83 @@ print(f"💡 {r2['generation']}")
 
 ---
 
+## 进阶：长期记忆式 RAG —— 把“记忆”也当成一个知识库
+
+> 💡 **比喻**：本节前面的自省闭环，像一位尽职但“没记性”的办事员——每次你来办事，他都要重新翻一遍档案柜；而记忆式 RAG 像一位老同事，记得你上次聊到哪、习惯看表格还是看条款，开口就能接上。
+
+### 做法：给系统开一本“独立小账本”
+
+把跨会话的稳定信息——用户偏好（“喜欢看我给表格”）、已确认结论（“已经排除了 MySQL 方案”）、任务进展（“报告写到第三章”）——写进一个**独立的记忆库**。问答时，记忆库与知识库**一起召回**，拼进同一个上下文。记忆库用向量库也能跑，但如果记忆之间有明显的时间与因果关系（“先确认了 A，才决定做 B”），用图数据库存更合适：因为你要查的往往是“这条记忆是从哪条推出来的”。
+
+| 维度 | 知识库 | 记忆库 |
+| :--- | :--- | :--- |
+| **内容** | 客观资料、文档、制度 | 用户偏好、已确认结论、任务进展 |
+| **更新频率** | 低（按版本批量更新） | 高（每轮对话都可能写入） |
+| **召回方式** | 语义 / 关键词检索 | 按用户 + 时效检索，常配时间衰减 |
+| **失效策略** | 版本替换、过期标记 | 时间戳 + 来源，可单条撤销或删除 |
+
+### 三条工程红线
+
+1. **写入门槛**——只写稳定的偏好与结论，不要把每轮噪声都当记忆写进去。否则记忆库很快变成垃圾场，召回来的全是“用户说了句你好”这类废话；
+2. **时间与来源**——每条记忆必须带时间戳与出处，过期要能失效（呼应 11.7 的图谱保鲜、11.12 的引用溯源）；
+3. **删除权**——用户要求删除时**必须能真删**，不是标记一下还留着（隐私合规，呼应 11.13 的数据治理）。
+
+> 📄 参考实现：[MemoRAG（记忆增强检索）思路的 notebook 演示](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/memorag.ipynb)、[mem0](https://github.com/mem0ai/mem0)、[Graphiti（时序知识图谱记忆）](https://github.com/getzep/graphiti)、[Agent Memory Techniques](https://github.com/NirDiamant/Agent_Memory_Techniques)。
+
+> 🧩 **配套脚本**：`code/s08_agentic_rag.py` 的 `MemoryStore` 实现了写入门槛 / TTL / 真删除。
+
+---
+
+## 拓展：Deep Research —— Agentic RAG 的“超集”
+
+一句话定位：**把本节的自省闭环，从“答一个问题”放大到“产出一份带引用的研究报告”**。
+
+| 角色 | 干什么 | 对应本节的哪个环节 |
+| :--- | :--- | :--- |
+| **规划者** | 把大问题拆成若干可检索的子问题 | 先判断值不值得兴师动众（教学脚本用预算卡住轮数，不另做分类器） |
+| **搜索者** | 多轮外部检索，每轮根据上一轮结论换关键词 | 检索 → 分级 |
+| **写作者** | 阶段性成文，并显式标注“哪一段还没有证据” | 生成 |
+| **审校者** | 回头补检没答上的部分，决定是否再来一轮 | 幻觉复检 + 有限重试 |
+
+和本节的关系：内核是**同一套“检索—评估—再检索”思想**，差别只在三处——循环次数更多（从一两轮变成几轮到几十轮）、检索源从本地库扩到全网、输出从一段短答变成一篇长文。
+
+代价与红线：
+
+- **Token 与延迟是普通问答的几十倍**，所以**必须设总预算与最大轮数**（呼应上文“每个循环都必须有‘刹车’和预算”），否则一次研究就能烧掉一整天的额度；
+- 外部网页是**不可信输入**，同样要过 11.13 的注入防护与引用校验，不能因为它“看着权威”就直接当事实。
+
+> 💡 **极简流程**（伪代码，只讲骨架）：
+
+```text
+budget = {"max_rounds": 5, "max_tokens": ..., "max_seconds": ...}  # 先上刹车
+outline = plan(question)             # 规划者：拆子问题
+notes, todo = {}, outline            # 每个子问题 → 已找到的证据
+
+while todo and 预算未耗尽:
+    q = 挑一个未答子问题
+    docs = search(q)                 # 搜索者：外部多轮检索
+    if 证据不足:
+        重写查询并把 q 标为“缺口”; continue   # 不硬编，缺就承认缺
+    notes[q] = docs
+    draft = write(outline, notes)    # 写作者：阶段性成文
+    todo = review(draft, outline)    # 审校者：指出还缺哪一段
+
+输出 draft（每个结论后带引用来源；缺口处明确标注“未找到依据”）
+```
+
+> 📄 参考实现：[assafelovic/gpt-researcher](https://github.com/assafelovic/gpt-researcher)、[langchain-ai/open_deep_research](https://github.com/langchain-ai/open_deep_research)。
+
+---
+
 ## 权威官方参考
 
 - [Self-RAG 论文（Asai et al., 2023, arXiv:2310.11511）](https://arxiv.org/abs/2310.11511)
 - [CRAG 论文（Yan et al., 2024, arXiv:2401.15884）](https://arxiv.org/abs/2401.15884)
 - [LangChain Adaptive RAG 官方教程](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_adaptive_rag.ipynb)
 - [LangGraph CRAG 官方实战](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_crag.ipynb)
+- [MemoRAG（记忆增强检索）notebook（NirDiamant/RAG_Techniques）](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/memorag.ipynb)
+- [mem0 官方仓库（mem0ai/mem0）](https://github.com/mem0ai/mem0)
+- [Graphiti 时序知识图谱记忆仓库（getzep/graphiti）](https://github.com/getzep/graphiti)
+- [Agent Memory Techniques（NirDiamant/Agent_Memory_Techniques）](https://github.com/NirDiamant/Agent_Memory_Techniques)
+- [GPT Researcher 官方仓库（assafelovic/gpt-researcher）](https://github.com/assafelovic/gpt-researcher)
+- [Open Deep Research 官方仓库（langchain-ai/open_deep_research）](https://github.com/langchain-ai/open_deep_research)

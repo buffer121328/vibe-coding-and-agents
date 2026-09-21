@@ -24,10 +24,12 @@ def make_assistant_graph(store: InMemoryStore | None = None):
     store = store or InMemoryStore()
 
     def assistant(state: State, *, store: BaseStore):
-        """节点多收一个 store 参数即可访问长期记忆（编译时传入 store）"""
+        """节点多收一个 store 参数即可访问长期记忆（编译时传入 store）。"""
         profile = store.search((state["user_id"],))
-        prefs = "；".join(f"{i.key}={i.value}" for i in profile)
-        return {"reply": f"我记得你的偏好：{prefs or '（暂无档案）'}"}
+        if not profile:
+            return {"reply": "档案是空的。你可以先记下过敏原或座位偏好。"}
+        prefs = "；".join(f"{item.key}={item.value}" for item in profile)
+        return {"reply": f"跨会话读到的会员档案：{prefs}"}
 
     builder = StateGraph(State)
     builder.add_node("assistant", assistant)
@@ -42,9 +44,10 @@ def build_assistant_graph():
 
 
 def seed_store(store: InMemoryStore):
-    """预填演示档案：namespace 相当于抽屉，key 是卡片编号（真实项目由模型决定写入）"""
-    store.put(("user_123",), "allergy", {"food": "花生"})
-    store.put(("user_123",), "preference", {"seat": "靠窗"})
+    """预填演示档案：namespace 是抽屉，key 是卡片编号。"""
+    store.put(("user_123",), "allergy", {"food": "花生", "note": "过敏性休克风险，餐食必须标明"})
+    store.put(("user_123",), "preference", {"seat": "靠窗", "meal": "素食"})
+    store.put(("user_123",), "recent_trip", {"city": "大阪", "date": "2026-08-12"})
 
 
 # ============ 演示二：Time Travel 回放与改道 ============
@@ -87,47 +90,43 @@ def build_tt_graph():
 
 
 def main():
-    # ============ 演示一：Store 长期记忆（跨线程的“会员档案”） ============
+    print("== Store 长期记忆（换 thread_id 也能翻到同一份档案）==")
     store = InMemoryStore()
     seed_store(store)
 
-    # 取 / 搜：换个会话（新 thread_id）也能翻到这份档案
     card = store.get(("user_123",), "allergy")
     all_cards = store.search(("user_123",))
-    print("== Store 长期记忆 ==")
-    print("精确取卡片：", card.value)
-    print("翻整个抽屉：", [(i.key, i.value) for i in all_cards])
+    print("精确取 allergy：", card.value)
+    print("翻整个抽屉：", [(item.key, item.value) for item in all_cards])
 
     graph, _ = make_assistant_graph(store)
+    print(
+        graph.invoke(
+            {"user_id": "user_123", "reply": ""},
+            config={"configurable": {"thread_id": "brand_new_session"}},
+        )["reply"]
+    )
 
-    print("\n换一个全新会话（新 thread_id），档案依然在：")
-    print(graph.invoke({"user_id": "user_123", "reply": ""},
-                       config={"configurable": {"thread_id": "brand_new_session"}})["reply"])
-
-    # ============ 演示二：Time Travel 回放与改道 ============
+    print("\n== Time Travel：回放会让下游节点真的再跑一次 ==")
     reset_step_b_counter()
     tt_graph = build_tt_graph()
     config = {"configurable": {"thread_id": "tt-1"}}
     tt_graph.invoke({"text": "起点"}, config)
 
-    print("\n== Time Travel ==")
     history = list(tt_graph.get_state_history(config))
     print("历史快照数（含起点）：", len(history))
 
-    # 回放（Replay）：回到 step_a 之后，让 step_b 再执行一次。
-    # text 仍是“起点 -> A -> B”，但 step_b_runs 从 1 变成 2，证明下游节点真的重跑了。
     replay_config = next(s.config for s in history if s.values.get("text", "").endswith("-> A"))
     replayed = tt_graph.invoke(None, replay_config)
-    print("回放后 step_b 的执行次数：", replayed["step_b_runs"])
+    print("回放后 step_b 的执行次数：", replayed["step_b_runs"], "（第一次是 1，回放后应变成 2）")
 
-    # 改道（Fork）：回到 step_a 之后那一刻，替换 text，长出一条新历史
     fork_config = next(s.config for s in history if s.values.get("text", "").endswith("-> A"))
     new_config = tt_graph.update_state(
         fork_config,
         {"text": "起点 -> A（被人类改写）"},
         as_node="step_a",
     )
-    new_result = tt_graph.invoke(None, new_config)   # 从改写后的快照继续
+    new_result = tt_graph.invoke(None, new_config)
     print("改道后的新历史：", new_result["text"])
 
 

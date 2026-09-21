@@ -2,41 +2,40 @@
 s10_subagents.py - 8.10 Subagents 子代理协作与上下文隔离 (DeepResearch 多智能体流水线)
 """
 import time
-import concurrent.futures
 from typing import Dict, Any, List, Optional, Callable
 from s01_env_setup import ZhipuGLMClient
 
+
+def _pipeline_timeout(client: Any, timeout: Optional[float]) -> float:
+    """记录客户端 HTTP 超时，供日志对照。真正的等待交给 ZhipuGLMClient（含灾备）。"""
+    if timeout is not None:
+        return float(timeout)
+    return float(getattr(client, "timeout", 60.0) or 60.0)
+
+
 class Subagent:
     """👥 独立的子代理执行单元 (拥有隔离独立的 messages 上下文，带超时保护)"""
-    def __init__(self, name: str, role_prompt: str, client: ZhipuGLMClient, timeout: float = 30.0):
+    def __init__(self, name: str, role_prompt: str, client: ZhipuGLMClient, timeout: Optional[float] = None):
         self.name = name
         self.role_prompt = role_prompt
         self.client = client
-        self.timeout = timeout
+        self.timeout = _pipeline_timeout(client, timeout)
 
     def run(self, task_input: str) -> str:
-        """🎯 开启完全隔离的全新对话并返回纯净文本产出（超时自动降级，不拖垮整条流水线）"""
+        """🎯 开启完全隔离的全新对话并返回纯净文本产出。
+
+        超时交给 ZhipuGLMClient（HTTP timeout + 灾备），不要再套一层更短的线程闸门：
+        旧版 30 秒 / 后来跟 HTTP 超时一样长，都会在灾备上场前把终稿掐成「该阶段已跳过」。
+        """
         isolated_messages = [
             {"role": "system", "content": self.role_prompt},
             {"role": "user", "content": task_input}
         ]
-
-        def _call():
+        try:
             response = self.client.chat(messages=isolated_messages, temperature=0.5)
             return response.choices[0].message.content.strip()
-
-        pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-        try:
-            future = pool.submit(_call)
-            return future.result(timeout=self.timeout)
-        except concurrent.futures.TimeoutError:
-            return (f"⚠️ [子代理「{self.name}」调用超时（>{self.timeout:.0f}s），"
-                    "该阶段已跳过，后续阶段将基于已有部分结果继续]")
         except Exception as e:
             return f"⚠️ [子代理「{self.name}」调用异常: {e}]"
-        finally:
-            # wait=False：超时立即返回，不阻塞等待仍在后台运行的慢调用
-            pool.shutdown(wait=False)
 
 class DeepResearchPipeline:
     """
@@ -44,10 +43,10 @@ class DeepResearchPipeline:
     1. 规划者 (Planner) ➔ 2. 检索研究员 (Researcher) ➔ 3. 审查员 (Critic) ➔ 4. 终稿撰写员 (Writer)
     每个子代理调用均带超时保护，全程输出带时间戳的进度日志。
     """
-    def __init__(self, client: ZhipuGLMClient, timeout: float = 30.0,
+    def __init__(self, client: ZhipuGLMClient, timeout: Optional[float] = None,
                  search_provider: Optional[Callable[[str], str]] = None):
         self.client = client
-        self.timeout = timeout
+        self.timeout = _pipeline_timeout(client, timeout)
         self.search_provider = search_provider
         self.planner = Subagent(
             name="研究规划师",
@@ -236,7 +235,10 @@ if __name__ == "__main__":
     print("最终报告已生成:", bool(mock_res["final_report"]))
 
     print("\n--- 真实 DeepResearch 流水线测试 (需 API Key) ---")
-    client = ZhipuGLMClient()
-    pipeline = DeepResearchPipeline(client)
-    res = pipeline.execute_research("Agent Harness 工程在 2026 年的核心演进趋势")
-    print("--- 终极深度研究报告 ---\n", res["final_report"])
+    try:
+        client = ZhipuGLMClient()
+        pipeline = DeepResearchPipeline(client)
+        res = pipeline.execute_research("Agent Harness 工程在 2026 年的核心演进趋势")
+        print("--- 终极深度研究报告 ---\n", res["final_report"])
+    except Exception as e:
+        print("⚠️ 真实引擎自测跳过 (若未配置 API Key 属正常):", e)

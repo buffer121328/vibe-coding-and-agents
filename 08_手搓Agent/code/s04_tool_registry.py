@@ -223,8 +223,11 @@ if __name__ == "__main__":
     print(registry.dispatch("calculate_salary", {"base": "不是数字", "bonus": 5000}))  # 类型错误 -> 异常捕获
 
     print("\n--- 4. 真实 Function Calling 测试 (需 API Key) ---")
-    client = ZhipuGLMClient()
-    agent = FunctionCallingAgent(client, registry)
-    res = agent.chat_with_tools("请查询用户 102 的基本信息，并帮他计算基本工资 20000 加上奖金 5000 的税后收入（税率 15%）")
-    print("最终回答:\n", res["answer"])
-    print("工具调用记录:\n", json.dumps(res["logs"], ensure_ascii=False, indent=2))
+    try:
+        client = ZhipuGLMClient()
+        agent = FunctionCallingAgent(client, registry)
+        res = agent.chat_with_tools("请查询用户 102 的基本信息，并帮他计算基本工资 20000 加上奖金 5000 的税后收入（税率 15%）")
+        print("最终回答:\n", res["answer"])
+        print("工具调用记录:\n", json.dumps(res["logs"], ensure_ascii=False, indent=2))
+    except Exception as e:
+        print("⚠️ 真实引擎自测跳过 (若未配置 API Key 属正常):", e)

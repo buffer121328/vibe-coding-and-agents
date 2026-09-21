@@ -1,0 +1,8 @@
+[
+  {"head": "一线城市住宿标准", "relation": "上限为", "tail": "每人每天500元", "source": "员工差旅管理制度.md"},
+  {"head": "差旅报销单", "relation": "提交时限为", "tail": "返回工作地后5个工作日", "source": "员工差旅管理制度.md"},
+  {"head": "打印机E3", "relation": "处理方法是", "tail": "关闭电源取出卡纸并复位传感器", "source": "运维故障案例.md"},
+  {"head": "Forge免费版", "relation": "每月额度是", "tail": "100次问答", "source": "产品FAQ.md"},
+  {"head": "办公电脑锁屏", "relation": "时限为", "tail": "5分钟自动锁屏", "source": "信息安全红线.md"},
+  {"head": "P6薪酬带宽", "relation": "年薪为", "tail": "35万至45万元", "source": "财务薪酬密级.md"}
+]

@@ -111,11 +111,95 @@ def demo_community_global() -> None:
         print(f"{choose_graph_search(question):>6} ← {question}")
 
 
+def personalized_pagerank_hits(
+    graph: nx.Graph,
+    seed_nodes: list[str],
+    top_k: int = 5,
+    alpha: float = 0.85,
+) -> list[tuple[str, float]]:
+    """HippoRAG 式多跳扩散检索：从入口实体出发用个性化 PageRank 激活全图。
+
+    种子节点即“入口实体”，概率会顺着边一圈圈扩散，越靠前的节点表示
+    多跳可达性越高。种子为空或都不在图里时返回空列表（不抛异常）。
+    """
+    seeds = [node for node in seed_nodes if node in graph]
+    if not seeds:
+        return []
+    scores = nx.pagerank(graph, alpha=alpha, personalization={node: 1.0 for node in seeds})
+    ranked = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+    return ranked[:top_k]
+
+
+def _char_ngram_overlap(query: str, keyword: str, n: int = 2) -> float:
+    """按字符 n-gram 计算查询对关键词的覆盖度，可复现、无需模型。
+
+    返回命中的 n-gram 占关键词 n-gram 的比例；关键词短于 n 时退化为单字集合。
+    """
+    def ngrams(text: str) -> set[str]:
+        if len(text) < n:
+            return set(text)
+        return {text[i:i + n] for i in range(len(text) - n + 1)}
+
+    kw_grams = ngrams(keyword)
+    if not kw_grams:
+        return 0.0
+    return len(ngrams(query) & kw_grams) / len(kw_grams)
+
+
+def dual_keyword_search(
+    query: str,
+    entity_keywords: dict[str, list[str]],
+    topic_keywords: dict[str, list[str]],
+    top_k: int = 3,
+) -> list[tuple[str, float]]:
+    """LightRAG 双层关键词检索简化版：实体层（0.6）+ 主题层（0.4）合并去重。
+
+    entity_keywords / topic_keywords 形如 {关键词: [命中的节点ID, ...]}，
+    用字符 n-gram 重合度给每个关键词打分，再按层权重把节点分数加权求和。
+    """
+    layer_weights = (("entity", entity_keywords, 0.6), ("topic", topic_keywords, 0.4))
+    merged: dict[str, float] = {}
+    for _, keywords, weight in layer_weights:
+        for keyword, node_ids in keywords.items():
+            score = _char_ngram_overlap(query, keyword) * weight
+            if score <= 0:
+                continue
+            for node_id in node_ids:
+                merged[node_id] = merged.get(node_id, 0.0) + score
+    return sorted(merged.items(), key=lambda item: item[1], reverse=True)[:top_k]
+
+
+def demo_ppr_and_dual_keyword() -> None:
+    """演示多跳扩散检索（PPR）与双层关键词检索（LightRAG 简化版）。"""
+    G = nx.Graph()
+    G.add_edges_from([
+        ("出差申请", "差旅标准"), ("差旅标准", "住宿标准"), ("住宿标准", "一线城市"),
+        ("住宿标准", "二线城市"), ("差旅标准", "交通标准"), ("交通标准", "高铁"),
+    ])
+    print("\n=== 个性化 PageRank 多跳扩散（入口：出差申请）===")
+    for node, score in personalized_pagerank_hits(G, ["出差申请"], top_k=5):
+        print(f"  {score:.4f}  {node}")
+
+    entity_keywords = {
+        "住宿": ["TRAVEL-2026-07#p1"],
+        "高铁": ["TRAVEL-2026-07#p2"],
+        "差旅标准": ["TRAVEL-2026-07#p1"],
+    }
+    topic_keywords = {
+        "报销": ["TRAVEL-2026-07#p1"],
+        "审批": ["TRAVEL-2026-07#p3"],
+        "出行": ["TRAVEL-2026-07#p2"],
+    }
+    print("\n=== 双层关键词检索（查询：住宿标准是多少）===")
+    for node, score in dual_keyword_search("住宿标准是多少", entity_keywords, topic_keywords):
+        print(f"  {score:.4f}  {node}")
+
+
 def demo_neo4j() -> None:
     """入库 Neo4j 并用 Cypher 查询。需要先启动 Neo4j 容器，否则仅打印示例。"""
     from langchain_community.graphs import Neo4jGraph
 
-    graph = Neo4jGraph(url="bolt://localhost:7687", username="neo4j", password="password")
+    graph = Neo4jGraph(url="bolt://localhost:7687", username="neo4j", password="forge12345")
     # graph.add_graph_documents(graph_docs)  # 把抽取的图文档写入
     cypher = """
 MATCH (target {id: 'Agent'})-[:负责]->(duty)
@@ -126,6 +210,7 @@ RETURN duty.id AS agent_duty
 
 
 if __name__ == "__main__":
+    demo_ppr_and_dual_keyword()   # 离线可跑：PPR 多跳扩散 + 双层关键词，不需要 API Key
     demo_extract_graph()
     demo_community_global()
     # demo_neo4j()  # 可选：先启动 Neo4j 再放开

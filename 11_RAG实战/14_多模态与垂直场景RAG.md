@@ -130,7 +130,70 @@ def transcribe_with_timestamps(audio_path: str, window_sec: int = 45) -> list[di
 # 前端：拿到命中 chunk 的 start/end，播放器直接 seek 过去——这就是“搜到哪句跳到哪句”
 ```
 
-视频再加一路：**用关键帧抽帧 + 实现代一的图片描述，让“画面里的事”也可检索**（比如“哪一页 PPT 讲了预算”）。ASR 引擎选型：本地/离线用 [faster-whisper](https://github.com/SYSTRAN/faster-whisper)（Whisper 蒸馏加速版），云上可用各家语音转写 API，OpenAI Whisper 官方仓库见 [github.com/openai/whisper](https://github.com/openai/whisper)。
+视频再加一路：**用关键帧抽帧 + 上一节的图片描述，让“画面里的事”也可检索**（比如“哪一页 PPT 讲了预算”）。ASR 引擎选型：本地/离线用 [faster-whisper](https://github.com/SYSTRAN/faster-whisper)（Whisper 蒸馏加速版），云上可用各家语音转写 API，OpenAI Whisper 官方仓库见 [github.com/openai/whisper](https://github.com/openai/whisper)。
+
+配套脚本 `s14_multimodal_rag.py` 默认去读本地的 `q3_review.mp3`。仓库里没有塞录音——版权和体积都不划算——你自己放一段季度复盘、客服通话进去就能看到时间窗切块。文件不在时脚本会打印跳过，不会把整章演示卡死。
+
+---
+
+## 代码实现四：结构化数据 RAG —— 表格、CSV 与 JSON
+
+> **痛点场景**：同一批数据，放进 Word 里叫“文档”，放进 Excel 里叫“表”。散文句子讲的就是意思，塞进语义检索很合适；但把整张表切成 chunk 扔进向量库，等于**让模型在一堆数字里做阅读理解**——它检索到的是一堆碰巧相邻的单元格，既慢又容易把“3 月”和“毛利率”配错对。
+
+一句话比喻：**非结构化文档像散文，结构化数据像 Excel 表格**。散文可以按段落切、按语义搜；表格是“行=一条记录、列=一个字段”的坐标网格，切碎了坐标就丢了。
+
+### 三条路线：看你要“找一行”还是“算一个数”
+
+| 路线 | 怎么做 | 适合 | 代价 |
+| :--- | :--- | :--- | :--- |
+| **① 把行变成句子** | 每行拼成“字段名: 值；字段名: 值”的一句话再入库，检索命中后连同原始行一起给模型 | 单点查找、字段问答 | 行数巨大时索引膨胀（上百万行要另想办法） |
+| **② schema 检索 + Text-to-SQL** | 表名、列名、字段说明也入库；先检索“哪张表、哪些列和问题相关”，再让模型写 SQL 交给数据库执行 | 聚合、比较、join | 依赖 SQL 生成质量，必须有安全笼子（见下文 `## Text-to-SQL 必须运行在笼子里`） |
+| **③ 混合** | 先用 ① 定位到相关行/表，再用 ② 在限定范围内生成受限 SQL 做聚合 | 既要找得到、又要算得对 | 链路最长，调试成本最高 |
+
+> 💡 **经验法则**：**“找一行”用路线 ①，“算一个数”用路线 ②**。凡是问题里出现“一共/平均/最多/环比”这类词，答案必须由代码（SQL/pandas）算出来，LLM 只负责读懂意图和解读结果——理由与上文 `## Text-to-SQL 必须运行在笼子里` 完全一致。
+
+### JSON：先展平，再把路径当元数据
+
+嵌套 JSON（比如订单里套着商品数组）**不要整块塞成一个 chunk**。正确做法是**展平**：把 `order.items[2].price` 这样的字段路径拎出来，当成一条独立记录入库，同时**把路径本身写进元数据**。这样模型引用“第 2 个商品的价格”时，你能顺着路径回到原始 JSON 的那个字段去核对，而不是只给出一团 JSON 文本。
+
+### 元数据必带：表名、主键、单位、口径、更新时间
+
+这五项里，**单位与口径缺失是表格问答最常见的翻车原因**。金额是“元”还是“万元”、含不含税、是不是季度累计口径——不写清楚，模型算得再对也是错的。主键则是命根子：检索到一行后要能按主键回表，拿到这一行的最新值。
+
+```python
+# 11.14 结构化数据 RAG：CSV 行 → 一句话 → 带表名/主键元数据入库
+import csv
+from langchain_core.documents import Document
+
+def csv_to_docs(path: str, table: str, pk: str, unit_note: str = "") -> list[Document]:
+    """把 CSV 每一行拼成“列名: 值”的一句话，元数据带上表名、主键与口径。"""
+    docs = []
+    with open(path, encoding="utf-8") as f:
+        for row in csv.DictReader(f):                    # 每行是一条记录
+            sentence = "；".join(f"{col}: {val}" for col, val in row.items() if val)
+            docs.append(Document(                         # 行变句子，供语义检索命中
+                page_content=f"[表 {table}] {sentence}",
+                metadata={                               # 元数据是回表的坐标 + 口径说明
+                    "table": table,                      # 哪个表
+                    "primary_key": row[pk],              # 主键 → 按它回表拿最新值
+                    "unit_note": unit_note,              # 金额单位：元，含税
+                    "updated_at": "2026-09-01",          # 口径与时效
+                    "columns": ",".join(row.keys()),      # 列名，供列级过滤
+                },
+            ))
+    return docs
+
+# 入库后：检索到句子 → 用 primary_key 回表 → 把整行原文交给模型；要聚合就转成 SQL
+```
+
+> 💡 **什么时候升级到路线 ②？** 当问题开始出现“哪个月环比增长最快”“各部门平均报销多少”——句子检索给不出聚合结果，这时候就该把表名、列名和字段说明单独入库，走 schema 检索 + Text-to-SQL，并套上 `## Text-to-SQL 必须运行在笼子里` 的六条护栏。
+
+> 配套脚本：`code/s14_multimodal_rag.py` 的 `rows_to_documents()`（行 → 带表名/主键/单位元数据的句子文档）与 `flatten_json()`（嵌套 JSON 展平成字段路径 → 值）。
+
+两份可直接跑的参考实现（同一作者的结构化 RAG 系列 notebook）：
+
+- [CSV RAG：把表格行转成可检索文本](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/simple_csv_rag.ipynb)
+- [JSON RAG：嵌套结构展平后入库](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/json_rag.ipynb)
 
 ---
 
@@ -223,3 +286,5 @@ def transcribe_with_timestamps(audio_path: str, window_sec: int = 45) -> list[di
 - [Ollama：本地大模型一键运行](https://ollama.com/)
 - [AnythingLLM：全栈本地 AI 知识库](https://github.com/Mintplex-Labs/anything-llm)
 - [OpenCLIP：开源图文对齐模型实现](https://github.com/mlfoundations/open_clip)
+- [RAG_Techniques：CSV 表格 RAG 实战 notebook](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/simple_csv_rag.ipynb)
+- [RAG_Techniques：JSON 展平 RAG 实战 notebook](https://github.com/NirDiamant/RAG_Techniques/blob/main/all_rag_techniques/json_rag.ipynb)

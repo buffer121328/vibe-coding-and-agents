@@ -1,114 +1,132 @@
-# 10 长期记忆（Store）与 Time Travel 时间穿梭
+# 10.10 长期记忆（Store）与 Time Travel
 
-06 节我们学了 Checkpointer——但它只负责“一局游戏内”的存档：换个 `thread_id`（新会话），Agent 就得了失忆症。用户昨天说过“我对花生过敏”，今天再来订餐，Agent 毫无印象。这一节补齐记忆的另一半：**跨线程的长期记忆**，以及一个彩蛋能力——**Time Travel（时间穿梭）**。
+06 节的 Checkpointer 只负责**一局游戏内**的存档：换一个 `thread_id`，Agent 就失忆。用户昨天说过“我对花生过敏”，今天再来订餐，它毫无印象。这一节补齐记忆的另一半：**跨线程的长期记忆**，以及一个经常被误解的能力——**Time Travel**。
 
-## 1. 两层记忆：存档柜 vs 会员档案
+---
 
-- **Checkpointer（短期记忆）**像网吧的**存档柜**：你今天的游戏进度（对话状态）存在柜子里，凭票根（`thread_id`）随时取。但换个网吧（新会话），柜子就跟你没关系了。
-- **Store（长期记忆）**像理发店的**会员档案**：你的偏好、禁忌、历史消费记在店里，不管你哪天来、找哪位理发师，翻档案就知道“3 号椅，张先生，两侧剪短，不打薄”。
+## 1. 两层记忆：这局进度 vs 会员档案
 
-| 维度 | Checkpointer（短期） | Store（长期） |
+- **Checkpointer（短期）**像网吧的存档柜：今天这局游戏的进度凭票根（`thread_id`）取。换一台机器、换一个会话，柜子就跟你无关。
+- **Store（长期）**像健身房的会员卡：偏好、禁忌、历史记录记在店里。哪天来、找哪位教练，翻档案就知道“3 号器械，张先生，膝盖旧伤，深蹲不要上大重量”。
+
+| 维度 | Checkpointer | Store |
 | :--- | :--- | :--- |
-| 作用域 | 单个线程（一次会话） | 跨线程（所有会话共享） |
-| 存什么 | 完整状态快照（消息、变量） | 精挑细选的事实/偏好/画像 |
-| 类比 | 游戏存档 | 会员档案卡 |
-| 实现 | `MemorySaver` / SQLite / Postgres | `InMemoryStore` / Postgres 等 |
+| 作用域 | 单个线程（一次会话） | 跨线程（按你定的命名空间共享） |
+| 存什么 | 完整状态快照（消息、变量） | 精挑过的事实 / 偏好 / 画像 |
+| 类比 | 这局游戏存档 | 会员档案 |
+| 常见实现 | `MemorySaver` / `SqliteSaver` / `PostgresSaver` | `InMemoryStore` / Postgres 等 |
+
+大多数应用两套一起用：Checkpointer 管“这次聊到哪了”，Store 管“这个人是谁”。Agent Server / LangGraph Platform 可以代管存储，本地开发则自己传入。
+
+长对话还要把短期历史裁剪或摘要，否则上下文窗口会被撑满。第九章的 `trim_messages`、Summarization 中间件，和这里的 Checkpointer 是同一层问题的不同工具。
+
+---
 
 ## 2. Store 三个方法：put / get / search
 
-Store 里的每条记忆放在一个**命名空间（namespace）**下，就像档案柜按“客户姓名”分抽屉，抽屉里再按“条目 ID”放卡片：
+每条记忆放在一个 **namespace（命名空间）** 下。可以把它想成档案柜的抽屉标签，常用 `(user_id,)` 或 `(tenant_id, user_id)`，再在抽屉里用 `key` 放卡片：
 
 ```python
 from langgraph.store.memory import InMemoryStore
 
 store = InMemoryStore()
 
-# 存：namespace 相当于 (用户ID,) 两级抽屉，key 是卡片编号
-store.put(("user_123",), "allergy", {"food": "花生"})
-store.put(("user_123",), "preference", {"seat": "靠窗"})
+store.put(("user_123",), "allergy", {"food": "花生", "severity": "过敏性休克风险"})
+store.put(("user_123",), "preference", {"seat": "靠窗", "meal": "素食"})
+store.put(("user_123",), "recent_trip", {"city": "大阪", "date": "2026-08-12"})
 
-# 取：按 key 精确取一张卡片
 item = store.get(("user_123",), "allergy")
-
-# 搜：按前缀搜整个抽屉，翻出所有卡片
 items = store.search(("user_123",))
 ```
 
-把它接进图里只需两步——编译时传入 `store`，节点函数里多收一个 `store` 参数：
+接进图里两步：编译时传入 `store`，节点函数多收一个 `store` 参数（1.x 也可以从 `runtime.store` 取）：
 
 ```python
-builder = StateGraph(State)
-# ... 添加节点 ...
-graph = builder.compile(store=store)
+from langgraph.store.base import BaseStore
+
+graph = builder.compile(store=store, checkpointer=memory)
 
 def assistant(state: State, *, store: BaseStore):
-    profile = store.search(("user_123",))       # 开工前先翻档案
+    profile = store.search((state["user_id"],))
     context = "；".join(f"{i.key}={i.value}" for i in profile)
-    # ... 把 context 拼进 Prompt ...
+    # 把 context 拼进系统提示，再调用模型
+    return {"reply": f"已读取档案：{context or '（暂无）'}"}
 ```
 
-> 💡 **进阶：语义检索**。`InMemoryStore` 支持 `index` 配置接入 Embedding 模型，之后 `store.search(("user_123",), query="用户不能吃什么")` 就能在指定 namespace 中按**语义相似度**翻档案，而不是只列出整个抽屉——档案多到翻不动时特别有用。生产环境可换 `PostgresStore` 等持久化实现。
+多租户一定要把租户 ID 放进 namespace，防止 A 公司的偏好被 B 公司的会话搜到。
 
-**该记什么、谁来记？** 两个常见做法：一是把“记忆写入”做成一个工具，让模型在对话中自己决定“这条值得记下来”（可参考官方 langmem 库）；二是在对话结束后用一个小模型批量总结“本次会话值得沉淀的事实”。别什么都记——档案塞满垃圾，翻起来比没档案还慢。
+### 语义检索：档案多到翻不动时
 
-## 3. Time Travel：给图装一个“时间机器”
-
-有了 Checkpointer，图在**每一步**都留有快照。Time Travel 就是利用这些历史快照，做两件事：**回放（Replay）**与**改道（Fork）**。
-
-围棋复盘。棋下完了（甚至输了），你可以回到第 37 手，看看当时如果换一种下法会怎样——历史棋谱（快照）都还在，随时翻回去重演。
+`InMemoryStore` 可以配 Embedding 索引。之后 `search` 不再只是“列出整个抽屉”，而是按**语义相似度**取卡片：
 
 ```python
-# 1. 列出全部历史快照（像翻棋谱）
-for i, snap in enumerate(graph.get_state_history(config)):
-    print(i, snap.values["messages"][-1].content[:30])
-    print("   由节点", snap.next, "继续可走到下一步")
-
-# 2. 回放：拿历史某一刻的 config 继续；该快照之后的节点会重新执行
-old_config = next(s.config for s in graph.get_state_history(config))
-replayed = graph.invoke(None, old_config)
-# 如果后面有 LLM、外部 API 或 interrupt，它们都会重新触发，结果可能与第一次不同
-
-# 3. 改道（Fork）：回到过去某一步，改掉当时的状态，然后分岔出新历史
-fork_config = graph.update_state(
-    old_config,
-    {"messages": [HumanMessage("改成去大阪，预算砍半")]},
-    as_node="planner",
+store = InMemoryStore(
+    index={"dims": 1536, "embed": your_embeddings}  # 真实项目接入 Embedding 模型
 )
-graph.invoke(None, fork_config)   # 从新检查点继续 → 长出一条新分支
+hits = store.search(("user_123",), query="用户不能吃什么")
 ```
 
-**Replay 不是播放录像。** 棋谱里已经完成的旧步骤会被跳过，但选中检查点之后的节点会真实重跑：模型可能换一种回答，接口可能返回新价格，副作用也可能再次发生。因此回放之前仍要检查幂等性；不要把“参数一样”误认为“结果必然一样”。
+生产换 Postgres 等持久化 Store，并加上 `filter` 做结构化过滤（例如只要 `type=preference`）。官方记忆工程库 [langmem](https://github.com/langchain-ai/langmem) 还提供提取、更新、遗忘策略，不必从零设计“什么该记、什么该删”。
 
-`update_state` 还有个重要参数 `as_node`：它声明“这次修改**相当于**哪个节点写的”，从而决定下一步沿哪条边继续。06 节跳过敏感工具的正式驳回就是这个用法。应接住 `update_state` 返回的新 config，再从这个新检查点继续，代码意图更清楚。
+### 该记什么、谁来记？
 
-Time Travel 最实用的三个场景：
+两种常见写法：
 
-1. **调试**：某个节点行为不对？回到它前一步，改个输入重跑，不用从头执行整个流程；
-2. **HITL 拒绝**：06 节的“老板不同意，改需求重来”本质就是一次 Fork；
-3. **分支对比**：同一个起点跑出 A/B 两条历史，对比哪种路由策略效果更好。
+1. **热路径**：把“写入记忆”做成工具，模型在对话中自己决定“这条值得记下”。立刻能用，但增加延迟和复杂度；
+2. **后台**：对话结束后用小模型批量总结“本次值得沉淀的事实”。不挡用户，但要想好触发频率。
 
-<!-- CH10-14_EXPANSION -->
-
-## 长期记忆需要写入、读取和删除规则
-
-长期记忆不应把每句话都永久保存。可以只记录稳定偏好和经过用户确认的事实，并保存来源、更新时间和适用范围。临时行程、一次性验证码和敏感信息不适合作为普通偏好存储。
-
-读取记忆时，应让用户知道哪些信息影响了当前回答，并允许更正或删除。多人或多租户系统还要在命名空间中加入用户与租户边界，防止偏好串到别人的会话。
-
-Time Travel 用于查看或从历史状态分叉调试，不等同于让现实世界回到过去。若历史节点已经调用外部写操作，重新执行前仍需幂等校验。测试时可先使用只读工具，确认分叉状态正确后再处理写操作。
+别什么都记。一次性验证码、临时行程、身份证号，不该当作普通偏好。稳定偏好和用户确认过的事实，才配长期存放，并写上来源、更新时间、适用范围。读取时应让用户知道哪些信息影响了当前回答，并允许更正或删除。
 
 ---
 
-## 4. 扩展阅读
+## 3. Time Travel：回放不是放录像
 
-**官方文档**
-- Memory 概览（短期 / 长期记忆并列讲解）：[docs.langchain.com/oss/python/langgraph/memory](https://docs.langchain.com/oss/python/langgraph/memory)
-- Stores（Store API 与语义检索细节）：[docs.langchain.com/oss/python/langgraph/stores](https://docs.langchain.com/oss/python/langgraph/stores)
-- Use time-travel（回放 / 改道 / update_state 完整教程）：[docs.langchain.com/oss/python/langgraph/use-time-travel](https://docs.langchain.com/oss/python/langgraph/use-time-travel)
-- Persistence（Checkpointer 与 Store 的总览）：[docs.langchain.com/oss/python/langgraph/persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
-- langmem（官方记忆工程库：记忆提取、更新、遗忘策略）：[github.com/langchain-ai/langmem](https://github.com/langchain-ai/langmem)
+有了 Checkpointer，图在每一步都留有快照。Time Travel 做两件事：**回放（Replay）**和**改道（Fork）**。
 
-> 📁 **本节示例代码**：[code/examples/10_memory_timetravel_demo.py](code/examples/10_memory_timetravel_demo.py) —— 无需 API Key 即可运行，可与本文对照着跑。
+像围棋复盘：棋谱还在，你可以回到第 37 手，换一种下法。但复盘时如果那一步要重新落子，棋盘上就会真的再下一子——不是看录像。
+
+```python
+# 1. 列出历史快照
+for i, snap in enumerate(graph.get_state_history(config)):
+    print(i, snap.values["messages"][-1].content[:40])
+    print("   next =", snap.next)
+
+# 2. 回放：拿历史某一刻的 config 继续
+#    该快照之前的步骤会跳过，之后的节点会重新执行
+old_config = next(s.config for s in graph.get_state_history(config))
+replayed = graph.invoke(None, old_config)
+
+# 3. 改道：改掉当时的状态，分岔出新历史
+fork_config = graph.update_state(
+    old_config,
+    {"messages": [("user", "改成去大阪，预算砍半")]},
+    as_node="planner",
+)
+graph.invoke(None, fork_config)
+```
+
+要点：
+
+- **Replay 会重跑下游节点。** 模型可能换一种回答，接口可能返回新价格，副作用也可能再次发生。回放前仍要检查幂等，不要把“参数一样”当成“结果必然一样”。
+- **`as_node` 声明这次修改相当于哪个节点写的**，从而决定沿哪条边继续。06 节跳过敏感工具的正式驳回，就是这个用法。
+- 应接住 `update_state` 返回的新 config，再从这个新检查点继续。
+
+三个最实用的场景：调试时回到出错节点的前一步改输入；HITL 拒绝后 Fork 出新方案；同一起点跑 A/B 两条历史做对比。
+
+Time Travel 不能让现实世界回到过去。历史节点如果已经调过外部写操作，重新执行前仍需幂等校验。测试时可先只用只读工具，确认分叉状态正确后再碰写操作。
+
+> 📁 **本节示例代码**：[code/examples/10_memory_timetravel_demo.py](code/examples/10_memory_timetravel_demo.py)
 
 ---
-**下一节：** 跑到一半程序崩了、接口超时了，能不能像单机游戏一样“从断点复活”？下一节讲 Durable Execution 持久执行与容错三件套（重试、超时、缓存）。
+
+## 扩展阅读
+
+- Memory 概览：[memory](https://docs.langchain.com/oss/python/langgraph/memory)
+- Stores 与语义检索：[stores](https://docs.langchain.com/oss/python/langgraph/stores)
+- Use time-travel：[use-time-travel](https://docs.langchain.com/oss/python/langgraph/use-time-travel)
+- Persistence 总览：[persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
+- langmem：[github.com/langchain-ai/langmem](https://github.com/langchain-ai/langmem)
+
+---
+
+**下一节：** 跑到一半程序崩了、接口超时了，能不能从断点复活？Durable Execution 与重试、超时、缓存三件套。

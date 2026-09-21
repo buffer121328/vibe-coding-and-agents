@@ -74,6 +74,61 @@ def pack_contexts(texts: List[str], max_chars: int = 1200) -> List[str]:
     return packed
 
 
+def order_contexts(scored: list[tuple[str, float]]) -> list[str]:
+    """上下文编排：把最相关的放首尾，对抗 lost-in-the-middle 的位置偏置。
+
+    规则：先按分数降序排出名次 → 第 1 名放开头，第 2 名放结尾，
+    其余按分数升序（越不相关越靠中间）填进中间。纯函数，不依赖任何模型。
+
+    参见正文 `## 进阶：上下文编排 —— 顺序、位置偏置与 Token 预算`。
+    """
+    if not scored:
+        return []
+    ranked = sorted(scored, key=lambda item: item[1], reverse=True)
+    if len(ranked) <= 1:
+        return [doc_id for doc_id, _ in ranked]
+    if len(ranked) == 2:
+        return [doc_id for doc_id, _ in ranked]
+    head = ranked[0][0]
+    tail = ranked[1][0]
+    middle = [doc_id for doc_id, _ in sorted(ranked[2:], key=lambda item: item[1])]
+    return [head, *middle, tail]
+
+
+def build_hard_negatives(query: str, ranked_ids: list[str], gold_ids, top_n: int = 3) -> list[str]:
+    """重排微调的难负例构造：从粗排榜单里挑“排得靠前但不含答案”的文档 ID。
+
+    难负例比随机负例更值钱，因为线上真正会误判的就是这种“看起来很像但不含答案”的块。
+
+    按传入顺序保留 `ranked_ids` 的相对顺序，最多返回 `top_n` 个；输入缺失时返回 `[]`。
+    这里只做**数据准备**这一半，训练入口与脚本见正文
+    `## 进阶：Cross-Encoder 怎么选、怎么调、怎么微调`。
+    """
+    if not ranked_ids or top_n <= 0:
+        return []
+    gold = set(gold_ids or [])
+    return [doc_id for doc_id in ranked_ids if doc_id not in gold][:top_n]
+
+
+def explain_retrieval(hits: list[dict]) -> list[dict]:
+    """可解释检索：给每条命中补上“为什么是它”，并提醒分数不可直接比大小。
+
+    不修改入参，返回新的 dict 列表；缺字段时用 `"-"`/0 兜底，不抛异常。
+    """
+    explained: list[dict] = []
+    for hit in hits or []:
+        route = hit.get("route", "-") or "-"
+        rank = hit.get("rank", 0) or 0
+        fused_rank = hit.get("fused_rank")
+        fused_text = fused_rank if fused_rank is not None else "-"
+        record = dict(hit)
+        record["why"] = f"被 {route} 召回（该路第 {rank} 名），融合后第 {fused_text} 名"
+        # 检索分数不是概率，BM25/向量/图谱各路不可直接比大小（同 11.11 的 MaxSim 提醒）
+        record["is_confidence_comparable"] = False
+        explained.append(record)
+    return explained
+
+
 def demo_rrf() -> None:
     """拿真实页级 chunk 当牌桌：手工排dense/bm25两个榜单，看 RRF 怎么合议。"""
     dense_rank = ["TRAVEL-2026-07#p2", "REAL-RAG-TRAVEL-2026#p1", "OPS-HELP-2026#p1", "REAL-RAG-HR-2026#p1"]
@@ -100,7 +155,7 @@ def demo_hybrid_rerank() -> None:
     sparse = BM25Retriever.from_documents(docs)
     sparse.k = 4
 
-    # 官方 RRF 封装（内部就是上面手写的算法）
+    # 官方封装是带权重的 RRF，和上面手写的纯名次公式不是同一把尺
     ensemble = EnsembleRetriever(retrievers=[dense, sparse], weights=[0.5, 0.5])
 
     candidates = ensemble.invoke(query)
@@ -137,7 +192,35 @@ def demo_mmr_on_real_corpus() -> None:
         print(f"[{pages[i].chunk_id}]《{pages[i].title}》")
 
 
+def demo_ordering_and_negatives() -> None:
+    """手工小数据演示：上下文编排顺序、难负例构造、可解释检索（可用真实页 ID 替换）。"""
+    scored = [
+        ("RX-9000设备手册#p12", 0.91),   # 最相关：直接给处理步骤
+        ("安全规范#p3", 0.86),           # 次相关：必须遵守的条款
+        ("散热结构设计说明#p4", 0.44),   # 次要背景
+        ("历史维修记录#p1", 0.21),       # 最不相关
+    ]
+    print("\n=== 上下文编排：最相关放首尾（对抗 lost-in-the-middle）===")
+    print("融合名次(降序):", [doc_id for doc_id, _ in sorted(scored, key=lambda x: x[1], reverse=True)])
+    print("编排后顺序  :", order_contexts(scored))
+
+    ranked_ids = ["RX-9000设备手册#p12", "散热结构设计说明#p4", "安全规范#p3", "历史维修记录#p1"]
+    gold_ids = {"RX-9000设备手册#p12"}
+    print("\n=== 难负例构造：粗排靠前但不含答案的块 ===")
+    print("难负例:", build_hard_negatives("RX-9000 报 ERR-404-X9 怎么处理？", ranked_ids, gold_ids, top_n=2))
+
+    hits = [
+        {"id": "RX-9000设备手册#p12", "route": "bm25", "score": 12.4, "rank": 2, "fused_rank": 1},
+        {"id": "安全规范#p3", "route": "dense", "score": 0.83, "rank": 1, "fused_rank": 2},
+        {"id": "散热结构设计说明#p4", "route": "graph", "score": 0.57, "rank": 3, "fused_rank": 3},
+    ]
+    print("\n=== 可解释检索：告诉用户“为什么是它” ===")
+    for record in explain_retrieval(hits):
+        print(f"[{record['id']}] {record['why']}；分数可跨路比大小？{record['is_confidence_comparable']}")
+
+
 if __name__ == "__main__":
     demo_rrf()
     demo_hybrid_rerank()
     demo_mmr_on_real_corpus()
+    demo_ordering_and_negatives()

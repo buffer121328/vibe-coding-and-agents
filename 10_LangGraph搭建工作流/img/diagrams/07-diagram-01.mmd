@@ -1,8 +1,8 @@
 graph TD
-    User((用户)) <-->|对话| Primary["主助理 (大堂经理)"]
-    Primary -->|工具调用：转交给机票部| Flight["航班子助理"]
-    Primary -->|工具调用：转交给租车部| Car["租车子助理"]
-    Primary -->|工具调用：转交给酒店部| Hotel["酒店子助理"]
+    User((用户)) <-->|对话| Primary["主助理 (前台接待)"]
+    Primary -->|转交工具：机票业务| Flight["航班专员"]
+    Primary -->|转交工具：租车业务| Car["租车专员"]
+    Primary -->|转交工具：酒店业务| Hotel["酒店专员"]
     
     Flight -.->|任务完成或升级| Primary
     Car -.->|任务完成或升级| Primary

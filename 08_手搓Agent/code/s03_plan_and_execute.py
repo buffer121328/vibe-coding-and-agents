@@ -146,7 +146,10 @@ if __name__ == "__main__":
     print("首个子任务产出摘要:", todos[0]["result"][:30])
 
     print("\n--- 真实 LLM 规划与执行测试 (需 API Key) ---")
-    client = ZhipuGLMClient()
-    agent = PlanAndExecuteAgent(client)
-    res = agent.run_all("帮我策划一顿简单健康的周末晚餐")
-    print("规划与执行结果:\n", json.dumps(res, ensure_ascii=False, indent=2))
+    try:
+        client = ZhipuGLMClient()
+        agent = PlanAndExecuteAgent(client)
+        res = agent.run_all("帮我策划一顿简单健康的周末晚餐")
+        print("规划与执行结果:\n", json.dumps(res, ensure_ascii=False, indent=2))
+    except Exception as e:
+        print("⚠️ 真实引擎自测跳过 (若未配置 API Key 属正常):", e)

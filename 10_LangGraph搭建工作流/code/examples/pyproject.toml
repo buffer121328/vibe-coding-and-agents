@@ -1,0 +1,9 @@
+[project]
+name = "langgraph-chapter-examples"
+version = "0.1.0"
+description = "第十章 10.2～10.14 分节示例：零 API Key，假模型按剧本说话"
+requires-python = ">=3.10"
+dependencies = [
+    "langgraph>=1.2,<2.0",
+    "langchain-core>=1.6,<2.0",
+]

@@ -1,69 +1,112 @@
-# 第 10 章：LangGraph 搭建工作流与 Multi-Agent 架构
+# 第十章：LangGraph 搭建工作流 —— 把 Agent 画成一张能暂停、能回放的图
 
-在掌握 LangChain 的基础与 Agent 概念后，接下来要处理更复杂的工程问题：怎样编排一个有分支、循环、并行和人工审批的工作流。
+> 第九章把 LangChain 1.4 的零件装齐了：模型、提示词、工具、中间件、`create_agent`。  
+> 本章换一个问题：当流程里出现**分支、循环、并行、人工审批、崩溃续跑**时，单靠“模型自己看着办”已经不够。我们需要一张能画出来、能打断、能存档的运行时。
 
-过去的一年里，开发者们普遍发现：单纯依赖大模型自行判断工具的“单体 Agent”在实际企业应用中不可控。它经常陷入死循环，或者在执行危险操作前不受控制。
+***
 
-为了解决这个问题，[LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) 应运而生。它引入了图论（图、节点、边）和状态机概念，让开发者可以画出严谨的“轨道”，而让大模型仅仅负责在十字路口做路由决策。
+## 📖 本章导读
 
-> **本章核心目标**：从零理解状态图（StateGraph），掌握条件路由、并行分发、图的可视化与流式调试等基础基建，进阶到人工干预（Human-in-the-loop）机制，通过一个**生产架构导向的多智能体旅行助手教学项目**理解 AI 应用如何拆层、审批和测试；再以进阶专题补齐工具调用循环、设计模式、长期记忆、持久执行、子图、Functional API 与部署观测的知识地图。
+把一个 Agent 交给真实业务，最先崩的往往不是模型本身，而是**过程失控**：
 
-## 目录结构
+- 它在工具之间来回打转，Token 烧完了你才知道；
+- 订票、退款、改库存这种动作，它说干就干，没有人签字；
+- 跑到一半进程挂了，前面几步全部作废，只能从头来；
+- 昨天用户说过“我对花生过敏”，今天换一条会话，它完全不记得。
 
-* [01_初识LangGraph与状态机](01_初识LangGraph与状态机.md) - 解决传统Agent不可控痛点，学习“节点”、“边”与“条件路由”。
-* [02_State图的构建与运行](02_State图的构建与运行.md) - 学习如何定义全局状态交接本，并编写代码让图跑起来。
-* [03_条件路由与动态决策](03_条件路由与动态决策.md) - 学会让大模型在“十字路口”当路由裁判，构建意图分流与决策树。
-* [04_并行执行与Send动态分发](04_并行执行与Send动态分发.md) - 多个节点同时开工（Fan-out/Fan-in），用 Send 做数量不定的动态批量并行。
-* [05_图的可视化与流式调试](05_图的可视化与流式调试.md) - 把图画出来（Mermaid/PNG），用 stream 逐节点观察状态流转。
-* [06_Memory与Human-in-the-loop](06_Memory与Human-in-the-loop.md) - 存档机制，以及如何在执行危险动作前暂停让“人类签字同意”。
-* [07_MultiAgent分层架构](07_MultiAgent分层架构.md) - 用“大堂经理”与“专职助理”理解 Handoffs、状态栈交接和上下文传递。
+[LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) 不是又一个“把 Prompt 包一层”的框架。官方给它的定位很干脆：**低层编排框架 + 有状态运行时**。你把流程画成图：节点负责干活，边负责决定下一步去哪，整张图共享一份可存档的状态。大模型只在真正需要理解自然语言的路口上场，其余轨道由代码钉死。
 
-**进阶专题**（对照 LangGraph 1.x 官方文档主线补全）：
+可以把它想成一张**带存档点的游戏地图**：格子是节点，连线是边，玩家背包是 State，土地庙是 Checkpointer。模型负责在岔路口选路，你负责规定哪些路能走、哪些门必须等人开门。
 
-* [08_工具调用循环与预构建组件](08_工具调用循环与预构建组件.md) - 补上 Agent 的心脏：bind_tools/ToolNode/tools_condition 循环闭环，及 create_agent + middleware 高层快车道。
-* [09_工作流设计模式](09_工作流设计模式.md) - 官方五大模式速查（路由/编排者-工人/评估者-优化者等），建立“先选型再动手”的条件反射。
-* [10_长期记忆与TimeTravel](10_长期记忆与TimeTravel.md) - Store 跨线程会员档案、语义检索，以及 get_state_history/update_state 回放与改道。
-* [11_持久执行与容错](11_持久执行与容错.md) - 断点续跑、RetryPolicy 自动重试、超时与缓存，跑到一半崩了能复活。
-* [12_子图与多智能体全谱](12_子图与多智能体全谱.md) - 真子图嵌套；按当前官方分类理解 Subagents、Handoffs、Skills、Router、Custom workflow，并用三张图跑通重点实现。
-* [13_HITL进阶](13_HITL进阶.md) - 节点内动态中断 interrupt() + Command(resume)，条件拦截与多级审批。
-* [14_FunctionalAPI与两套API选型](14_FunctionalAPI与两套API选型.md) - @entrypoint/@task 给现有 Python 函数加持久化，Graph API vs Functional API 选型对照。
-* [15_部署与可观测性](15_部署与可观测性.md) - LangGraph Server/Studio/Platform 部署，可观测性取舍（暂不引入 LangSmith/Langfuse，用调试三个方法替代）与追踪生态认知。
+和第九章的关系也很清楚：
 
-**收官实战**：
+| 你已经会的（第九章） | 本章要补上的 |
+| :--- | :--- |
+| `create_agent` 自动搭好“想一步、做一步”的小循环 | 把循环嵌进更大的图：分流、并行、子图、审批 |
+| Checkpointer / Store 作为 Agent 的记忆接口 | 同一套机制如何驱动 HITL、Time Travel、断点续跑 |
+| 中间件在模型调用前后插一脚 | 节点、边、`Command`、`interrupt()` 把控制权写进拓扑 |
 
-* [16_综合实战_旅行助手项目](16_综合实战_旅行助手项目.md) - 用生产架构导向的旅行助手教学项目把全章零件装进一台整机，并明确它与真正生产系统之间的边界。
+全章基于 **LangGraph 1.x**（工作台实测基线 `langgraph>=1.2`）。老教程里的 `langgraph.prebuilt.create_react_agent` 已经弃用，高层 Agent 统一走 LangChain 的 `create_agent`。LangGraph 自己提供两套并列 API：
 
-## 环境准备与两套 API 总览
+1. **Graph API**（`StateGraph`）：画轨道图，适合新建的复杂编排与多智能体，是 01～13 节的主线；
+2. **Functional API**（`@entrypoint` / `@task`）：给现成 Python 函数加持久化与 HITL，14 节专门对照。
 
-开始学习前建议先装好环境（Python 3.10+）：
+> 💡 官方选型说明：[Choosing between Graph and Functional APIs](https://docs.langchain.com/oss/python/langgraph/choosing-apis)。
+
+***
+
+## 🗺️ 16 节路线图
+
+建议按四段读，不要一上来就啃旅行助手源码：
+
+1. **01～05 把图画活**：状态、节点、边、条件路由、并行 `Send`、可视化与流式调试；
+2. **06～08 加上记忆、刹车和心脏**：Checkpointer、静态断点、Handoffs 入门、工具调用循环；
+3. **09～14 补齐工业零件**：设计模式、长期记忆、容错、子图与五种多智能体模式、动态 `interrupt()`、两套 API；
+4. **15～16 看上线和整机**：部署选项、观测取舍，以及国内旅行助手如何把零件装到一起。
+
+每学完一节，用一个最小例子回答四个问题：**状态里存了什么、这次走了哪条路、失败后从哪里继续、外部写操作会不会重复执行。**
+
+***
+
+## 📑 章节目录
+
+| 章节 | 文档 | 这一节到底在解决什么 |
+| :--- | :--- | :--- |
+| **10.1** | [初识 LangGraph 与状态机](01_初识LangGraph与状态机.md) | 为什么单体 Agent 会脱缰，图、节点、边各自管什么 |
+| **10.2** | [State 图的构建与运行](02_State图的构建与运行.md) | 交接本怎么定义，reducer / Runtime / 输入输出 Schema 怎么用 |
+| **10.3** | [条件路由与动态决策](03_条件路由与动态决策.md) | 十字路口：路由函数、路径表、决策与路由分离、`Command` |
+| **10.4** | [并行执行与 Send 动态分发](04_并行执行与Send动态分发.md) | Fan-out / Fan-in、reducer 合并、数量不定的 Map-Reduce |
+| **10.5** | [图的可视化与流式调试](05_图的可视化与流式调试.md) | Mermaid、`stream_mode`、v2 统一事件、子图透视 |
+| **10.6** | [Memory 与 Human-in-the-loop](06_Memory与Human-in-the-loop.md) | `thread_id` 存档，静态断点如何停住、如何正式驳回 |
+| **10.7** | [Multi-Agent 分层架构](07_MultiAgent分层架构.md) | 主助理转交、状态栈、Handoffs 入门 |
+| **10.8** | [工具调用循环与预构建组件](08_工具调用循环与预构建组件.md) | `bind_tools` / `ToolNode` / `tools_condition`，以及 `create_agent` |
+| **10.9** | [工作流设计模式](09_工作流设计模式.md) | 官方五大模式 + Agent：先选型再画图 |
+| **10.10** | [长期记忆与 Time Travel](10_长期记忆与TimeTravel.md) | Store 跨会话档案，回放不是放录像 |
+| **10.11** | [持久执行与容错](11_持久执行与容错.md) | 断点续跑、RetryPolicy、超时、缓存、幂等 |
+| **10.12** | [子图与多智能体全谱](12_子图与多智能体全谱.md) | 真子图；Subagents / Handoffs / Skills / Router / Custom workflow |
+| **10.13** | [HITL 进阶](13_HITL进阶.md) | `interrupt()` + `Command(resume)`，条件拦截与多级审批 |
+| **10.14** | [Functional API 与两套 API 选型](14_FunctionalAPI与两套API选型.md) | `@entrypoint` / `@task`，给旧代码加超能力 |
+| **10.15** | [部署与可观测性](15_部署与可观测性.md) | 本地 Server / Studio / Platform，观测先练基本功 |
+| **10.16** | [综合实战：旅行管家](16_综合实战_旅行助手项目.md) | 把全章零件装进国内旅行助手：登录认证、审批闸门、会话/订单/审计三本账 |
+
+***
+
+## 🚀 环境与示例
+
+Python 3.10+。教学示例全部**零 API Key**，需要“模型出场”的地方用 `langchain-core` 的假模型按剧本说话，图的机制和真模型一致。
 
 ```bash
-pip install -U langgraph langchain langchain-openai
+# 分节示例（02～14）：本目录自带 pyproject.toml，零 API Key
+cd 10_LangGraph搭建工作流/code/examples
+uv sync
+uv run python 02_state_graph_demo.py
+
+# 图工作台：把同一份示例点亮（默认 http://127.0.0.1:7860）
+cd ../workbench
+uv venv && uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python app.py
+.venv/bin/python smoke_test.py   # 14 关零 Key 冒烟
+
+# 16 节旅行管家（需 .env 真实模型；默认 http://127.0.0.1:7860）
+# 依赖走 uv 原生清单（pyproject.toml + uv.lock），一条 uv sync 建环境装依赖
+cd ../travel_agent_v2
+uv sync
+uv run uvicorn web.app:app --host 127.0.0.1 --port 7860
 ```
+
+| 目录 | 做什么 |
+| :--- | :--- |
+| [code/examples/](code/examples/) | 02～14 每节一个最小可运行例子，工作台直接 import 同一份 `build_graph()` |
+| [code/workbench/](code/workbench/README.md) | 14 关可视化：SVG 图结构、节点点亮、Replay、审批弹窗 |
+| [code/travel_agent_v2/](code/travel_agent_v2/README.md) | 16 节收官整机：国内旅行助手，真实模型 + 假模型三层测试 + 一条分层守卫 |
 
 两个版本注意点：
 
-1. **LangGraph 1.x 已弃用 `create_react_agent`**，高层 Agent API 统一迁移到 LangChain 的 `create_agent` + middleware（见 08 节）；老教程里 `langgraph.prebuilt.create_react_agent` 的写法会遇到弃用警告。
-2. **LangGraph 有两套并列 API**：Graph API（StateGraph 画轨道图，本第 01~07、08~12 节主线）与 Functional API（@entrypoint/@task 给现有 Python 代码加持久化，见 14 节）。前者适合新建的复杂编排与多智能体，后者适合给已有流程最小改动加记忆/HITL，详细选型见 [官方对比](https://docs.langchain.com/oss/python/langgraph/choosing-apis)。
+1. **不要再写 `create_react_agent`**。高层 Agent 用 [LangChain `create_agent`](https://docs.langchain.com/oss/python/langchain/agents)；
+2. **生产存档不要用内存 Checkpointer**。`MemorySaver` / `InMemorySaver` 随进程消失，抗重启请换 `SqliteSaver` 或 `PostgresSaver`。
 
-> 💡 **参考资料**：本章基础小节主要依据 **LangGraph 1.x 官方文档**（图 API 概念、使用图 API、流式输出等），并参考了 PocketFlow、Matt Harrison 等社区教程进行扩展，各小节末尾均附有完整扩展阅读链接。
+***
 
-## 本章示例与实战源码
+## 学习与验证建议
 
-- **[code/examples/](code/examples/)**：02~14 每节一个最小可运行示例，**全部无需 API Key**（用 langchain-core 内置假模型模拟大模型环节），装好 `langgraph` 后逐个 `python xxx.py` 即可跑通。
-- **[code/workbench/](code/workbench/README.md)**：🌟 **图工作台**（本章配套可视化演示）——把 14 个关卡（含 10.12b 多智能体重点实现）的真实 LangGraph 图搬上交互台：House 风格 SVG 图结构 + 节点逐步点亮 + Replay 重执行对照 + 正式批准/驳回 + Functional API 真并行，同样零 API Key。
-- **[code/travel_agent_v2/](code/travel_agent_v2/README.md)**：16 节收官实战的生产架构导向 Multi-Agent 教学项目；使用 LangGraph 1.x 动态 `interrupt()` 审批、子图、Store、Send 与测试，但仍采用 SQLite 和进程内存储，生产边界见项目 README。
-
-准备好进入 Agent 工业流水线的时代了吗？让我们开始吧。
-
----
-
-<!-- CH10-14_README_EXPANSION -->
-
-## 阅读与练习建议
-
-本章可以按四段学习：先用 01—05 建立状态、路由、并行和调试基础；再用 06—08 加入记忆、人工介入和工具循环；09—14 讨论结构选择、恢复执行与多智能体；最后用 15—16 检查部署和综合项目。
-
-每完成一节，都用一个最小例子回答四个问题：状态里保存了什么，这次走了哪条路径，失败后从哪里继续，外部操作会不会重复。涉及工具写操作时，优先使用教学数据，并验证驳回、超时和重复恢复。
-
-章节中的代码展示机制，不能直接代表生产环境的身份、权限、事务和审计已经完成。综合项目也应以项目 README 和本次测试结果为准。
+示例跑通不等于流程可靠。涉及写操作时，优先用教学数据，并专门验证：**驳回、超时、重复恢复、未知分类、部分并行失败**。章节代码展示机制，不代表身份、权限、事务和审计已经完成。16 节项目也应以它自己的 README 和测试结果为准。

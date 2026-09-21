@@ -1,65 +1,105 @@
-# 01 初识 LangGraph 与状态机
+# 10.1 初识 LangGraph 与状态机
 
-## 1. 为什么需要 LangGraph？（传统 Agent 的痛点）
+> **“模型负责在路口做判断，轨道必须由人来铺。”**  
+> 第九章已经能用 `create_agent` 跑通一轮工具循环。这一节先回答一个更扎心的问题：为什么很多“看起来很聪明”的 Agent，一进真实业务就脱缰？
 
-在用 LangChain（或其他框架）做 Agent 的时候，你可能遇到过这样的场景：Agent 在执行任务时像一头“脱缰的野马”。只要给它分配了任务，它就在后台狂奔，你既不知道它跑到哪了，也没法中途叫停。如果它不小心用错了工具，或者陷入了“死循环”（比如反复搜索同一个关键词却找不到结果），你只能眼睁睁看着它把 Token 烧光然后报错退出。
+---
 
-传统的 Agent 就像一个“一根筋的快递员”。你给了他一个地址，他骑着车就跑了。如果路上遇到修路（报错），他不知道绕路，只会在修路的地方一直撞墙；如果他送错小区的楼号了，你也没法中途打电话叫他回来，只能等他彻底失败或者超时。
+## 为什么单体 Agent 会变成脱缰野马
 
-为了解决这个问题，[LangGraph 1.x](https://docs.langchain.com/oss/python/langgraph/overview) 诞生了。它并不是一个全新的大模型框架，而是 LangChain 官方推出的**意图流（Workflow）与图编排框架**。
+用 LangChain 或其他框架写 Agent 时，最常见的体验是：你把任务一丢，它就在后台狂奔。你既看不到它走到哪一步，也没法中途叫停。一旦用错工具，或者反复搜索同一个关键词，你只能看着 Token 烧光，然后报错退出。
 
-## 2. 什么是状态机 (State Machine) 与图 (Graph)？
+这就像把一份出差任务交给一个只带手机、不带行程单的同事：
 
-LangGraph 的核心思想是将 Agent 的运行过程变成一个**“状态图” (State Graph)**。
+- 你让他“去一趟北京把合同签了”，他可能在机场反复改签，始终不上飞机；
+- 路上遇到闸机故障（接口报错），他不会绕路，只会在同一道闸前连续刷卡；
+- 真要动用公司账户订不可退票，他也没人签字，直接刷卡走人。
 
-你可以把 LangGraph 想象成一张“飞行棋的棋盘”：
-1. **State（状态）**：棋子当前走到哪一格，以及你手里现在有多少筹码（当前的对话上下文、提取到的实体变量等）。
-2. **Nodes（节点）**：棋盘上的格子。比如“调用大模型”是一个格子，“执行工具”是另一个格子。
-3. **Edges（边）**：格子之间的连线，决定了下一步该往哪里走。
-4. **Conditional Edges（条件边）**：走到十字路口时的“指路牌”。比如大模型说“我需要查天气”，路牌就指引你走到“天气工具”格子；如果大模型说“我已经知道答案了”，路牌就指引你走到“结束”格子。
+传统“一个大 Prompt + 一堆工具 + 一个 while 循环”的单体 Agent，本质就是这位同事。循环在代码里，决策在模型里，出了问题你只能看最终答案，中间过程像黑盒。
+
+[LangGraph 1.x](https://docs.langchain.com/oss/python/langgraph/overview) 要解决的，不是“让模型更聪明”，而是**让过程可见、可打断、可续跑**。官方把它定位成：**低层编排框架 + 有状态运行时**。你先画出轨道，再让模型在需要理解自然语言的路口做路由。
+
+---
+
+## 先建立一个最小心智模型：飞行棋棋盘
+
+LangGraph 的核心不是又一套 Chain，而是把一次运行变成**状态图（State Graph）**。四个零件对上日常直觉：
+
+| 零件 | 在图里是什么 | 可以怎么记 |
+| :--- | :--- | :--- |
+| **State（状态）** | 所有节点共享的一份快照 | 棋子走到哪一格，背包里现在有什么 |
+| **Nodes（节点）** | 真正干活的 Python 函数 | 棋盘上的格子：调模型、查接口、写摘要 |
+| **Edges（边）** | 格子之间的固定连线 | “这一格走完，下一格一定是它” |
+| **Conditional Edges（条件边）** | 看状态再决定去哪 | 十字路口的指路牌 |
 
 <!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
 <p align="center">
   <a href="img/diagrams/01-diagram-01.svg">
-    <img src="img/diagrams/01-diagram-01.svg" alt="2. 什么是状态机 (State Machine) 与图 (Graph)？" width="760">
+    <img src="img/diagrams/01-diagram-01.svg" alt="状态图：节点干活，边决定下一步" width="760">
   </a>
 </p>
 
-> **注意：** 在 LangGraph 中，数据是在这些节点中循环流动的。这使得我们可以构建非常复杂的**循环逻辑（Cyclic Graphs）**，这也是 LangGraph 相比于普通 LangChain Expression Language (LCEL) 最大的优势。LCEL 只能做单向流水线（DAG，有向无环图），而 LangGraph 可以做死循环和复杂的“反复推敲”。
+数据在这些节点之间循环流动。这也是它相对第九章 LCEL 最大的差别：LCEL 擅长单向管道（有向无环图），LangGraph 允许**循环**——模型调用工具，看结果，再决定要不要再调一次。没有循环，就没有真正的 Agent。
 
-## 3. LangGraph 1.x 的三大杀器
-
-LangGraph 1.x 引入了许多强大的特性，核心解决的是“可控性”：
-
-1. **State（全局状态共享）**：就像大家共同维护的一张“黑板”。无论流程怎么绕，所有的中间结果、对话记录都保存在这个状态字典里。
-2. **Persistence（记忆与持久化）**：自带的 Checkpointer（检查点机制）。就像单机游戏里的“自动存档”。如果跑到一半出错了，下次可以从存档点继续跑，而不是从头再来。
-3. **Human-in-the-loop（人类介入 / 拦截）**：可以在执行某个危险动作（比如“确认转账”或“预订不可退款酒店”）之前，自动暂停运行，把控制权交给人类。人类点击“同意”或修改参数后，再继续执行。
-
-## 4. 多智能体框架怎么选？LangGraph vs AutoGen vs CrewAI
-
-能做 Multi-Agent 的框架不止 LangGraph 一家。用开公司来比喻三家定位：
-
-| 框架 | 定位（一句话） | 直观说明 | 适合谁 |
-| :--- | :--- | :--- | :--- |
-| [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) | 把智能体系统建模为**有状态图**，节点、边、循环、并行全部显式可控 | **自建厂房 + 流水线**：轨道自己画，闸门自己装 | 要精确控制状态、路由、循环、并行、HITL 的生产级系统 |
-| [AutoGen](https://microsoft.github.io/autogen/stable/)（微软） | 多个 Agent **对话协作**完成任务，团队内置轮转/选主等聊天编队 | **圆桌会议**：一群专家围着桌子聊，聊着聊着任务就办了 | 研究、原型验证、以对话为主的协作场景 |
-| [CrewAI](https://github.com/crewAIInc/crewAI) | 角色分工的**班组（Crew）** + 事件驱动的**流程（Flow）** | **剧组制**：导演定角色（CEO 助理、研究员、写手），各演各的再合戏 | 快速搭建“角色扮演式”团队，上手门槛最低 |
-
-**怎么选**：如果你的系统是“几个 Agent 自由讨论、角色扮演、协作完成”，CrewAI / AutoGen 往往上手更直接；但如果流程长这样——Agent A 判断 → B/C 并行 → Reviewer 评审 → 不合格重试 → 人工审批 → 收尾——那本质已经不是一个“聊天群”，而是一台**需要状态机的 Agent 工作流**，LangGraph 的图编排、持久化与人工介入闸门就值回票价。
-
-> 💡 三者的边界也在打通。LangChain 当前用 Subagents、Handoffs、Skills、Router、Custom workflow 五种模式帮助选型（[Multi-Agent 文档](https://docs.langchain.com/oss/python/langchain/multi-agent)）。生态中仍有 [langgraph-supervisor-py](https://github.com/langchain-ai/langgraph-supervisor-py) 与 [langgraph-swarm-py](https://github.com/langchain-ai/langgraph-swarm-py)，但新项目应先按官方模式与上下文需求选型，12 节细讲。
+官方底层跑法借鉴了 Google 的 **Pregel** 消息传递：图按离散的**超步（super-step）**往前走。同一个超步里可以并行跑多个节点；这个超步全部结束后，才进入下一超步。你暂时不必记这个名字，只要知道一件事：**并行不是“线程随便抢”，而是同一拍里一起动。**
 
 ---
 
-**下一节：** 我们将通过代码真正构建一个简单的 LangGraph 状态图，看看状态（State）是如何在图中流动的。
-<!-- CH10-14_EXPANSION -->
+## LangGraph 真正值钱的三件事
+
+很多教程一上来堆 API。更值得先记住的是它解决的三类工程问题：
+
+1. **共享状态，而不是靠 Prompt 口头交接。**  
+   目的地、订单号、已经查过的航班，都写在 State 里。节点读的是同一份快照，不会靠“请模型回忆一下刚才说了什么”。
+
+2. **每一步都能存档。**  
+   Checkpointer 在每个超步结束时拍快照。会话要续聊、审批要暂停、进程要崩溃重启，靠的都是这份存档，而不是把历史重新塞进 Prompt。
+
+3. **人可以插进回路。**  
+   转账、订不可退票、清库之前，图可以停住，把“准备做什么”交给人类看一眼。同意或改参数后，从原地继续，而不是重开一轮聊天。
+
+这三件事加在一起，Agent 才从“会说话的脚本”变成“能跑长流程的程序”。
+
+---
+
+## 它在生态里站哪一层？
+
+LangChain 负责零件：模型、工具、提示词、中间件。LangGraph 负责运行时：状态怎么走、循环怎么停、失败怎么续。第九章的 `create_agent`，底层就是一张 LangGraph 图。你可以先走高层快车道；等需要自定义路由、子图、审批闸门时，再把同一张图摊开改。
+
+和另外两家常见的多智能体框架比，差别不在“谁更新鲜”，而在**控制权放在哪**：
+
+| 框架 | 一句话定位 | 更像什么 | 适合谁 |
+| :--- | :--- | :--- | :--- |
+| [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview) | 把系统建成**有状态的图**，节点、边、循环、并行全部显式 | 自己铺轨道、自己装闸门 | 要精确控制状态、路由、HITL、续跑的生产流程 |
+| [AutoGen](https://microsoft.github.io/autogen/stable/)（微软） | 多个 Agent **对话协作**，内置轮转 / 选主 | 圆桌讨论，聊着聊着把事办了 | 研究、原型、以对话为主的协作 |
+| [CrewAI](https://docs.crewai.com/) | 角色班组 + 事件驱动流程 | 剧组分工：导演定角色，各演各的再合戏 | 快速搭“角色扮演式”团队 |
+
+怎么选可以更直白一点：如果系统长这样——先判断意图，再让 B、C 并行，Reviewer 不过就打回，人签字后才落库——那已经不是聊天群，而是一台需要状态机的工作流。LangGraph 的图、存档和中断，就是为这种结构准备的。
+
+LangChain 当前用五种模式帮你选型（[Multi-Agent 文档](https://docs.langchain.com/oss/python/langchain/multi-agent)）：Subagents、Handoffs、Skills、Router、Custom workflow。生态里还有 [langgraph-supervisor-py](https://github.com/langchain-ai/langgraph-supervisor-py) 与 [langgraph-swarm-py](https://github.com/langchain-ai/langgraph-swarm-py)，但新项目应先按官方模式和上下文需求选，细节放在 12 节。
+
+---
 
 ## 先用一条最小路径理解状态图
 
-刚接触 LangGraph 时，不必先画一个十几个节点的 Agent。可以从“读取问题 → 判断是否需要查询 → 返回结果”这条路径开始，只在状态中保留 `messages` 和一个业务字段。运行后逐项回答：哪个节点读了什么、返回了什么、下一条边为何被选中。
+刚接触时，不必先画十几个节点。可以从“读取问题 → 判断要不要查询 → 返回结果”开始，状态里只留 `messages` 和一个业务字段。跑完后逐项回答：哪个节点读了什么、返回了什么、下一条边为何被选中。
 
-状态图带来的价值不是“节点越多越专业”，而是让关键决策有明确位置。固定规则能判断的事情，优先用普通函数；只有需要理解自然语言时，再让模型参与。每条循环还要有结束条件、最大步数或人工出口，否则画成图也不会自动避免死循环。
+状态图的价值不是“节点越多越专业”，而是让关键决策有明确位置：
 
-完成这个最小例子后，再加入检查点和工具调用。一次只加一个机制，出现问题时才能判断是状态更新、路由判断还是外部工具造成的。
+- 固定规则能判断的事，优先用普通函数；
+- 只有需要理解自然语言时，才让模型上场；
+- 每条循环都要有结束条件、最大步数或人工出口，画成图也不会自动避免死循环。
+
+完成这个最小例子后，再加入检查点和工具调用。一次只加一个机制，出了问题才能判断是状态更新、路由判断，还是外部工具造成的。
 
 ---
+
+## 扩展阅读
+
+- LangGraph 总览（官方定位：低层编排 + 有状态运行时）：[docs.langchain.com/oss/python/langgraph/overview](https://docs.langchain.com/oss/python/langgraph/overview)
+- 图 API 概念（节点、边、状态、超步）：[docs.langchain.com/oss/python/langgraph/graph-api](https://docs.langchain.com/oss/python/langgraph/graph-api)
+- Workflows and agents（工作流与 Agent 的分界）：[docs.langchain.com/oss/python/langgraph/workflows-agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)
+
+---
+
+**下一节：** 交接本到底长什么样？节点返回的字典如何合并进状态？以及 1.x 里经常被漏讲的 Runtime 上下文、输入输出 Schema。

@@ -3,9 +3,9 @@
 运行：python 12b_multiagent_paradigms_demo.py   （无需任何 API Key）
 
 三种实现各建一张图（真实项目由 LLM 做决策，这里用规则模拟）：
-- Router 路由分流：分诊台先把问题分类，再交给对应专员
+- Router 路由分流：分类后交给对应专员
 - Subagents（Supervisor 教学变体）：主管循环派活收活，专家各管一摊，最后汇总
-- Custom workflow：Planner → Executor → Reviewer，不通过打回重做（带重试上限保险丝）
+- Custom workflow：Planner → Executor → Reviewer，不通过打回重做（带重试上限）
 
 当前官方完整分类还包括 Handoffs 与 Skills；它们的差异与上下文工程见正文。
 """
@@ -17,32 +17,43 @@ from langgraph.graph import StateGraph, START, END
 # ============ 范式一：Router 路由分流 ============
 class RouteState(TypedDict):
     question: str
-    kind: str          # 分诊结论：sql / rag / code
+    kind: str          # 分类结论：sql / rag / code
     answer: str
 
 
 def reception(state: RouteState):
-    """分诊台：真实项目用廉价 LLM 做分类，这里按关键词模拟"""
+    """分类台：真实项目用廉价 LLM 做分类，这里按关键词模拟。"""
     q = state["question"]
-    cat = "sql" if "数据库" in q else ("rag" if "文档" in q or "知识库" in q else "code")
-    return {"kind": cat, "answer": f"[分诊:{cat}] "}
+    if any(key in q for key in ("数据库", "SQL", "订单量", "统计")):
+        cat = "sql"
+    elif any(key in q for key in ("文档", "知识库", "制度", "手册")):
+        cat = "rag"
+    else:
+        cat = "code"
+    return {"kind": cat, "answer": f"[分类:{cat}] "}
 
 
 def sql_agent(state: RouteState):
-    return {"answer": state["answer"] + "SQL 专员：连接订单库，查询结果已返回。"}
+    return {
+        "answer": state["answer"] + "SQL 专员：连接订单库，上月已支付订单 1,284 笔，合计 ￥2,176,000。"
+    }
 
 
 def rag_agent(state: RouteState):
-    return {"answer": state["answer"] + "RAG 专员：命中知识库 3 篇文档，已整理成答案。"}
+    return {
+        "answer": state["answer"] + "RAG 专员：命中《差旅管理办法》第 4.2 节与 FAQ-17，已整理成可引用答案。"
+    }
 
 
 def code_agent(state: RouteState):
-    return {"answer": state["answer"] + "Code 专员：代码片段已生成并跑通自测。"}
+    return {
+        "answer": state["answer"] + "Code 专员：已生成分页查询片段，并在本地用样例数据跑通自测。"
+    }
 
 
 def route_by_kind(state: RouteState) -> str:
-    """读分诊结论决定去哪个专员（ Conditional Edge 的标准用法）"""
-    return state["kind"]
+    """读分类结论决定去哪个专员。未知标签落到 code，避免指向不存在的节点。"""
+    return state["kind"] if state["kind"] in {"sql", "rag", "code"} else "code"
 
 
 def build_router_graph():
@@ -54,8 +65,11 @@ def build_router_graph():
         .add_node("rag_agent", rag_agent)
         .add_node("code_agent", code_agent)
         .add_edge(START, "reception")
-        .add_conditional_edges("reception", route_by_kind,
-                               {"sql": "sql_agent", "rag": "rag_agent", "code": "code_agent"})
+        .add_conditional_edges(
+            "reception",
+            route_by_kind,
+            {"sql": "sql_agent", "rag": "rag_agent", "code": "code_agent"},
+        )
         .add_edge("sql_agent", END)
         .add_edge("rag_agent", END)
         .add_edge("code_agent", END)
@@ -66,28 +80,34 @@ def build_router_graph():
 # ============ 实现二：Subagents（Supervisor 教学变体） ============
 class SupState(TypedDict):
     task: str
-    cursor: int                                # 派活进度游标
-    reports: Annotated[list, operator.add]     # 各专家交回的活
+    cursor: int
+    reports: Annotated[list, operator.add]
     final: str
 
 
 def supervisor(state: SupState):
-    """主管：真实项目由 LLM 决定下一步派给谁，这里只做中转站"""
+    """主管：真实项目由 LLM 决定下一步派给谁，这里只做中转站。"""
     return {}
 
 
 def route_supervisor(state: SupState) -> str:
-    """派活逻辑：游标没派完就派下一个专家，派完收总"""
+    """派活逻辑：游标没派完就派下一个专家，派完收总。"""
     workers = ["researcher", "writer"]
     return workers[state["cursor"]] if state["cursor"] < len(workers) else "aggregator"
 
 
 def researcher(state: SupState):
-    return {"reports": ["[调研工] 竞品与市场数据已备齐"], "cursor": state["cursor"] + 1}
+    return {
+        "reports": ["[调研] 竞品定价 99/199 两档，用户最关心退款时效与发票"],
+        "cursor": state["cursor"] + 1,
+    }
 
 
 def writer(state: SupState):
-    return {"reports": ["[写作工] 行业报告初稿已完成"], "cursor": state["cursor"] + 1}
+    return {
+        "reports": ["[写作] 已按调研结论写出行业报告初稿，含价格对照表与风险提示"],
+        "cursor": state["cursor"] + 1,
+    }
 
 
 def aggregator(state: SupState):
@@ -103,10 +123,16 @@ def build_supervisor_graph():
         .add_node("writer", writer)
         .add_node("aggregator", aggregator)
         .add_edge(START, "supervisor")
-        .add_conditional_edges("supervisor", route_supervisor,
-                               {"researcher": "researcher", "writer": "writer",
-                                "aggregator": "aggregator"})
-        .add_edge("researcher", "supervisor")   # 干完活交回主管，由主管决定下一步
+        .add_conditional_edges(
+            "supervisor",
+            route_supervisor,
+            {
+                "researcher": "researcher",
+                "writer": "writer",
+                "aggregator": "aggregator",
+            },
+        )
+        .add_edge("researcher", "supervisor")
         .add_edge("writer", "supervisor")
         .add_edge("aggregator", END)
         .compile()
@@ -122,24 +148,31 @@ class PerState(TypedDict):
     revision: int
 
 
+IMPLEMENTATIONS = {
+    1: "第1版：只有页面骨架，缺少筛选和导出。",
+    2: "第2版：补上日期筛选与 CSV 导出，仍缺权限校验。",
+    3: "第3版：补上角色权限与空数据兜底，达到发布线。",
+}
+
+
 def planner(state: PerState):
-    """规划师：把需求拆成步骤清单"""
-    return {"plan": "1.查资料 -> 2.写实现 -> 3.自查", "revision": 0}
+    return {
+        "plan": "1.列出指标  -> 2.写查询  -> 3.做看板  -> 4.补权限",
+        "revision": 0,
+    }
 
 
 def executor(state: PerState):
-    """执行者：按计划产出一版实现"""
     n = state["revision"] + 1
-    return {"draft": f"第{n}版实现", "revision": n}
+    return {"draft": IMPLEMENTATIONS.get(n, f"第{n}版实现"), "revision": n}
 
 
 MAX_REVISION = 3
 
 
 def reviewer(state: PerState):
-    """评审员：真实项目用 LLM 结构化输出（verdict + comment），这里用规则模拟"""
+    """评审员：真实项目用 LLM 结构化输出（verdict + comment），这里用规则模拟。"""
     if state["revision"] >= MAX_REVISION:
-        # 保险丝：重试达到上限强制放行，防止执行者被无限打回
         return {"verdict": "pass"}
     return {"verdict": "pass" if state["revision"] >= 2 else "needs_fix"}
 
@@ -158,8 +191,11 @@ def build_per_graph():
         .add_edge(START, "planner")
         .add_edge("planner", "executor")
         .add_edge("executor", "reviewer")
-        .add_conditional_edges("reviewer", route_after_review,
-                               {"executor": "executor", END: END})
+        .add_conditional_edges(
+            "reviewer",
+            route_after_review,
+            {"executor": "executor", END: END},
+        )
         .compile()
     )
 

@@ -47,12 +47,22 @@ class CorpusPage:
         return f"{self.doc_id}#p{self.page}"
 
 
-def _split_markdown_pages(path: Path) -> list[CorpusPage]:
-    """把「## 第 N 页：标题」结构的 Markdown 拆成页级 Chunk。"""
-    raw = path.read_text(encoding="utf-8")
+PAGE_HEADING = re.compile(r"(?m)^##\s*第\s*(\d+)\s*页：?([^\n]*)\n")
+CORPUS_SUFFIXES = (".md", ".pdf", ".docx", ".html", ".txt")
+REGRESSION_STEMS = (
+    "差旅管理制度_2026",
+    "差旅管理制度_2025_已废止",
+    "办公设备故障手册",
+    "外部网页快照_含注入样本",
+)
+
+
+def _split_pages(path: Path) -> list[CorpusPage]:
+    """先按后缀解析成文本，再按「## 第 N 页」切成页级 Chunk。md/pdf/docx/html 共用这一刀。"""
+    raw = s02.load_text_by_ext(path)
     doc_id_match = re.search(r"文档编号：([^\s　]+)", raw)
     doc_id = doc_id_match.group(1).strip() if doc_id_match else path.stem
-    parts = re.split(r"(?m)^## 第 (\d+) 页：?([^\n]*)\n", raw)
+    parts = PAGE_HEADING.split(raw)
     pages: list[CorpusPage] = []
     if len(parts) == 1:
         pages.append(CorpusPage(doc_id, "full", path.stem, path.name, s02.clean_text(raw)))
@@ -65,28 +75,36 @@ def _split_markdown_pages(path: Path) -> list[CorpusPage]:
     return pages
 
 
+def _iter_corpus_files(directory: Path, stems: tuple[str, ...] | None = None):
+    if stems:
+        for stem in stems:
+            yield s02.resolve_corpus_file(directory, stem)
+        return
+    for path in sorted(directory.iterdir()):
+        if path.is_file() and path.suffix.lower() in CORPUS_SUFFIXES:
+            yield path
+
+
 @lru_cache(maxsize=1)
 def demo_pages() -> tuple[CorpusPage, ...]:
-    """testdata/真实RAG演示文档 的 4 份案例文档，按「页」切成 16 个 Chunk。"""
+    """testdata/真实RAG演示文档 的 4 份案例文档，按「页」切成 45 个 Chunk。"""
     pages: list[CorpusPage] = []
-    for path in sorted(DEMO_DIR.glob("*.md")):
-        pages.extend(_split_markdown_pages(path))
+    for path in _iter_corpus_files(DEMO_DIR):
+        pages.extend(_split_pages(path))
     return tuple(pages)
 
 
 @lru_cache(maxsize=1)
 def regression_pages() -> tuple[CorpusPage, ...]:
-    """testdata 根目录的 4 份回归语料（现行/废止制度、故障手册、注入网页）。"""
-    names = ["差旅管理制度_2026.md", "差旅管理制度_2025_已废止.md", "办公设备故障手册.md", "外部网页快照_含注入样本.md"]
+    """testdata 根目录的 4 份回归语料（现行/废止制度、故障手册、注入网页），按「页」切成 41 个 Chunk。"""
     pages: list[CorpusPage] = []
-    for name in names:
-        path = TESTDATA_DIR / name
-        pages.extend(_split_markdown_pages(path))
+    for path in _iter_corpus_files(TESTDATA_DIR, REGRESSION_STEMS):
+        pages.extend(_split_pages(path))
     return tuple(pages)
 
 
 def all_pages() -> tuple[CorpusPage, ...]:
-    """全部 8 份真实文档的页级语料：演示文档 + 回归语料。"""
+    """全部 8 份真实文档的页级语料：演示 45 页 + 回归 41 页，共 86 页。"""
     return demo_pages() + regression_pages()
 
 

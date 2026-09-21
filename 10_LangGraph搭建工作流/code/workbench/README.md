@@ -7,8 +7,9 @@
 
 ```bash
 cd workbench
-uv venv --python 3.13 && uv pip install --python .venv/bin/python -r requirements.txt
+uv venv && uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python app.py        # 浏览器打开 http://127.0.0.1:7860
+.venv/bin/python smoke_test.py # 14 关零 Key 冒烟，不需要先开网页
 ```
 
 浏览器演示默认每个节点停留约 0.55 秒，便于观察“执行中 → 已完成”的变化。想加快或关闭动画可设置 `WORKBENCH_ANIMATION_DELAY`（单位：秒）：

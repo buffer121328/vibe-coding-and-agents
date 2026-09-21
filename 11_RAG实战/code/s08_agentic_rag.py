@@ -2,11 +2,12 @@
 s08_agentic_rag.py
 ==================
 11.8 配套代码：Agentic RAG 自省自校正
-痛点：答非所问与幻觉 → 用 LangGraph 构建「检索 → 分级 → 联网兜底 → 生成 → 幻觉复检」闭环，
-检索的不再是两句假文档，而是 testdata 里的真实制度库。
+痛点：答非所问与幻觉 → 用 LangGraph 构建「检索 → 分级 → 受控兜底 → 生成 → 幻觉复检」闭环，
+检索 testdata 真实制度库；复检失败只许有限重写，预算耗尽就拒答。
 """
 
 import os
+import time
 from functools import lru_cache
 
 from typing import List
@@ -43,7 +44,7 @@ class BatchedEmbeddings:
 
 @lru_cache(maxsize=1)
 def get_retriever():
-    """真实制度库检索器：testdata 8 份文档 28 页。"""
+    """真实制度库检索器：testdata 8 份文档 86 页。"""
     docs = page_documents(all_pages())
     vectorstore = Chroma.from_documents(docs, BatchedEmbeddings())
     return vectorstore.as_retriever(search_kwargs={"k": 3})
@@ -81,10 +82,12 @@ class GraphState(TypedDict):
     documents: List[str]
     generation: str
     needs_web_search: bool
+    status: str
+    budget: RunBudget
 
 
 def decide_after_verification(faithful: bool, answered: bool, budget: RunBudget) -> str:
-    """把停止条件写成代码：通过就交付；未通过只允许有限重写，否则拒答/转人工。"""
+    """药师复核通过就发药；剂量对不上只许医生改一次处方，再不行就停方转专科。"""
     if faithful and answered:
         return "deliver"
     if budget.consume("rewrite"):
@@ -94,13 +97,24 @@ def decide_after_verification(faithful: bool, answered: bool, budget: RunBudget)
 # ---------- 4. 节点 ----------
 def retrieve(state: GraphState) -> GraphState:
     print("→ [检索] 查询真实制度知识库")
+    budget = state.get("budget") or RunBudget()
+    if not budget.consume("retrieval"):
+        print("   ⚠️ 检索预算耗尽 → 拒答")
+        return {"status": "refuse", "generation": "抱歉，知识库中暂无可靠依据，已转人工。"}
     docs = get_retriever().invoke(state["question"])
     for d in docs:
         print(f"   · [{d.metadata['id']}]《{d.metadata['title']}》")
-    return {"documents": [f"[{d.metadata['id']}] {d.page_content}" for d in docs]}
+    return {
+        "documents": [f"[{d.metadata['id']}] {d.page_content}" for d in docs],
+        "budget": budget,
+        "status": "ok",
+        "needs_web_search": False,
+    }
 
 def grade_documents(state: GraphState) -> GraphState:
     """CRAG 核心：逐篇分级，过滤无关噪声"""
+    if state.get("status") == "refuse":
+        return state
     print("→ [分级] 裁判评估每篇文档")
     grader, _, _ = get_graders()
     filtered, need_web = [], False
@@ -120,12 +134,21 @@ def grade_documents(state: GraphState) -> GraphState:
     return {"documents": filtered, "needs_web_search": need_web}
 
 def web_search(state: GraphState) -> GraphState:
-    """联网兜底：生产环境可接入 Tavily/DuckDuckGo 真实搜索"""
-    print("→ [联网] 私有库不足，发起实时搜索")
-    web_doc = "【实时联网结果】2026 年最新 AI 编程范式综述..."
-    return {"documents": state["documents"] + [web_doc]}
+    """受控兜底：教学版不真的访问公网，只用标注来源的占位资料。
+
+    私有制度问题（年终奖、内部额度）不该靠公网编答案；这里演示的是
+    「库里没有 → 明确告诉生成层：这是外部占位，不要当内部制度」。
+    """
+    print("→ [兜底] 私有库不足，附加受控外部占位（教学版不发起真实联网）")
+    web_doc = (
+        "【外部占位·不可当作内部制度】公开技术新闻摘要：开源模型发布节奏需以厂商公告为准。"
+        "公司内部政策（年终奖、报销额度等）不在此列，资料不足时应拒答。"
+    )
+    return {"documents": state["documents"] + [web_doc], "needs_web_search": False}
 
 def generate(state: GraphState) -> GraphState:
+    if state.get("status") == "refuse":
+        return state
     print("→ [生成] 基于合格文档组织答案")
     prompt = ChatPromptTemplate.from_template(
         "严格基于以下资料回答问题，不得编造：\n{context}\n\n问题：{question}\n答案："
@@ -146,11 +169,21 @@ def check_hallucination(state: GraphState) -> GraphState:
     answered = answer_checker.invoke(
         f"问题：{state['question']}\n答案：{state['generation']}\n答案是否回答了问题？"
     )
-    if faithful.faithful == "yes" and answered.answered == "yes":
+    budget = state.get("budget") or RunBudget()
+    action = decide_after_verification(
+        faithful.faithful == "yes", answered.answered == "yes", budget)
+    if action == "deliver":
         print("   ✅ 忠实且已作答 → 交付")
-        return {"generation": state["generation"]}
-    print("   ❌ 存在幻觉/未作答 → 到达预算后必须拒答或转人工，不能无限自省")
-    return {"generation": state["generation"], "needs_web_search": True}
+        return {"generation": state["generation"], "status": "ok", "budget": budget}
+    if action == "retry":
+        print("   ❌ 存在幻觉/未作答 → 消耗一次重写预算，重新生成")
+        return {"generation": state["generation"], "status": "regen", "budget": budget}
+    print("   ❌ 预算耗尽 → 拒答/转人工，不能无限自省")
+    return {
+        "generation": "抱歉，知识库中暂无可靠依据，已转人工。",
+        "status": "refuse",
+        "budget": budget,
+    }
 
 # ---------- 5. 构图 ----------
 workflow = StateGraph(GraphState)
@@ -164,12 +197,27 @@ workflow.add_edge(START, "retrieve")
 workflow.add_edge("retrieve", "grade_documents")
 
 def after_grade(state: GraphState) -> str:
-    return "web_search" if state["needs_web_search"] else "generate"
+    if state.get("status") == "refuse":
+        return "end"
+    return "web_search" if state.get("needs_web_search") else "generate"
 
-workflow.add_conditional_edges("grade_documents", after_grade, {"web_search": "web_search", "generate": "generate"})
+
+def after_verify(state: GraphState) -> str:
+    if state.get("status") == "regen":
+        return "generate"
+    return "end"
+
+
+workflow.add_conditional_edges(
+    "grade_documents", after_grade,
+    {"web_search": "web_search", "generate": "generate", "end": END},
+)
 workflow.add_edge("web_search", "generate")
 workflow.add_edge("generate", "check_hallucination")
-workflow.add_edge("check_hallucination", END)
+workflow.add_conditional_edges(
+    "check_hallucination", after_verify,
+    {"generate": "generate", "end": END},
+)
 
 app = workflow.compile()
 
@@ -180,13 +228,124 @@ def main() -> None:
     print("预算演示:", decide_after_verification(False, False, budget), "→",
           decide_after_verification(False, False, budget))
     print("===== 场景 1：真实制度库命中 =====")
-    r1 = app.invoke({"question": "RX-9000 出现 ERR-404-X9 故障码应该怎么处理？"})
+    r1 = app.invoke({"question": "RX-9000 出现 ERR-404-X9 故障码应该怎么处理？",
+                     "budget": RunBudget(max_retrievals=2, max_rewrites=1)})
     print(f"💡 {r1['generation']}\n")
 
-    print("===== 场景 2：真实制度库缺失 → 联网兜底 =====")
-    r2 = app.invoke({"question": "2026 年最新开源大模型发布情况？"})
+    print("===== 场景 2：真实制度库缺失 → 受控兜底 =====")
+    r2 = app.invoke({"question": "2026 年最新开源大模型发布情况？",
+                     "budget": RunBudget(max_retrievals=2, max_rewrites=1)})
     print(f"💡 {r2['generation']}")
 
 
+class MemoryStore:
+    """长期记忆库：写入门槛 + 时间戳/来源 + TTL + 真删除（对应 11.8 “长期记忆式 RAG”）。
+
+    纯 Python 实现、不依赖模型与 API Key；时间用可注入的 ``now`` 参数，
+    便于测试，不依赖真实时间流逝。
+    """
+
+    def __init__(self, min_confidence: float = 0.6, default_ttl: float | None = None):
+        self.min_confidence = min_confidence
+        self.default_ttl = default_ttl
+        self._items: dict[str, dict] = {}
+
+    def add(
+        self,
+        key: str,
+        value: str,
+        source: str,
+        confidence: float = 1.0,
+        ttl: float | None = None,
+        now: float | None = None,
+    ) -> bool:
+        """写入一条记忆；置信度低于门槛则拒收（防止噪声进入记忆库）。
+
+        重复 key 按“后写覆盖”处理；返回是否写入成功。
+        """
+        if confidence < self.min_confidence:
+            return False
+        now = time.time() if now is None else now
+        effective_ttl = self.default_ttl if ttl is None else ttl
+        expires_at = None if effective_ttl is None else now + effective_ttl
+        self._items[key] = {
+            "key": key,
+            "value": value,
+            "source": source,
+            "confidence": confidence,
+            "created_at": now,
+            "expires_at": expires_at,
+        }
+        return True
+
+    def recall(self, query: str, top_k: int = 3, now: float | None = None) -> list[dict]:
+        """按字符重合度（Jaccard）对未过期记忆打分排序，返回前 top_k 条。"""
+        now = time.time() if now is None else now
+        query_chars = set(query)
+        scored: list[tuple[float, dict]] = []
+        for item in self._items.values():
+            if item["expires_at"] is not None and item["expires_at"] <= now:
+                continue
+            value_chars = set(item["value"])
+            union = query_chars | value_chars
+            score = len(query_chars & value_chars) / len(union) if union else 0.0
+            if score > 0:
+                scored.append((score, item))
+        scored.sort(key=lambda pair: pair[0], reverse=True)
+        return [
+            {
+                "key": item["key"],
+                "value": item["value"],
+                "source": item["source"],
+                "created_at": item["created_at"],
+            }
+            for _, item in scored[:top_k]
+        ]
+
+    def delete(self, key: str) -> bool:
+        """真删除：从存储里彻底移除（而非打删除标记），返回是否删到了。"""
+        return self._items.pop(key, None) is not None
+
+    def purge_expired(self, now: float | None = None) -> int:
+        """删除所有 expires_at <= now 的记忆，返回删除条数。"""
+        now = time.time() if now is None else now
+        expired = [
+            key
+            for key, item in self._items.items()
+            if item["expires_at"] is not None and item["expires_at"] <= now
+        ]
+        for key in expired:
+            del self._items[key]
+        return len(expired)
+
+    def snapshot(self, now: float | None = None) -> list[dict]:
+        """导出当前未过期记忆（含时间戳/来源/置信度），便于审计与展示。"""
+        now = time.time() if now is None else now
+        return [
+            dict(item)
+            for item in self._items.values()
+            if item["expires_at"] is None or item["expires_at"] > now
+        ]
+
+
+def demo_memory_store() -> None:
+    """演示记忆库：写入门槛拒收、召回、TTL 过期清理、真删除。"""
+    store = MemoryStore(min_confidence=0.6)
+    now = 1_000.0
+    print("\n=== 长期记忆库演示 ===")
+    print("写入高置信偏好:", store.add("k1", "用户偏好用表格", "chat", confidence=0.9, now=now))
+    print("写入低置信噪声:", store.add("k2", "用户说了句你好", "chat", confidence=0.2, now=now))
+    print("写入带 TTL 的结论:", store.add("k3", "已排除 MySQL 方案", "chat",
+                                          confidence=0.9, ttl=10, now=now))
+
+    print("召回『表格』:", [item["value"] for item in store.recall("表格", now=now)])
+    print("未过期快照条数:", len(store.snapshot(now=now)))
+
+    print("时间推进 20s 后清理过期:", store.purge_expired(now=now + 20), "条")
+    print("真删除 k1:", store.delete("k1"), "| 删除后召回『表格』:",
+          [item["value"] for item in store.recall("表格", now=now + 20)])
+
+
 if __name__ == "__main__":
+    demo_memory_store()   # 离线可跑：写入门槛 / TTL / 真删除，不需要 API Key
     main()

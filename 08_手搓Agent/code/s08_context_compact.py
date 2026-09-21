@@ -387,8 +387,11 @@ onUnmounted(() => { clearInterval(timer); });
     print("\n==================================================================")
     print("📦 4. 手写 /compact 深度历史压缩测试")
     print("==================================================================")
-    compact_msgs, compact_info = cm.compact_history(parsed_messages)
-    print(compact_info)
-    print("\n【压缩后上下文内容预览】:")
-    for i, m in enumerate(compact_msgs):
-        print(f"  [{i}] [{m['role']}] {str(m['content'])[:120]}...")
+    try:
+        compact_msgs, compact_info = cm.compact_history(parsed_messages)
+        print(compact_info)
+        print("\n【压缩后上下文内容预览】:")
+        for i, m in enumerate(compact_msgs):
+            print(f"  [{i}] [{m['role']}] {str(m['content'])[:120]}...")
+    except Exception as e:
+        print("⚠️ 深度压缩自测跳过 (若未配置 API Key 属正常):", e)

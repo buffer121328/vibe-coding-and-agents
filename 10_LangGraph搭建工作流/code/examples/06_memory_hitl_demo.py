@@ -4,6 +4,10 @@
 
 工作台入口：build_graph() / build_guarded() 返回编译后的图（普通版 / 带刹车版），
 供 ../workbench 直接 import 复用；每次调用都创建全新 MemorySaver，互不串台。
+
+演示两条路径：
+1. 同一 thread_id 续跑，Checkpointer 记住上一轮消息；
+2. interrupt_before 在敏感工具前暂停；批准传 None 续跑，驳回用 update_state 补 ToolMessage。
 """
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
@@ -16,16 +20,23 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
+CART_TOOL_ID = "call_clear_cart_001"
+
+
 def propose(state: State):
-    """实习生节点：生成一条带 tool_call_id 的敏感工具调用请求。"""
+    """模型节点的替身：生成一条带 tool_call_id 的敏感工具调用，等待审批。"""
+    user_text = state["messages"][-1].content
     return {
         "messages": [
             AIMessage(
-                content="我准备清空购物车，请审批。",
+                content=(
+                    f"收到「{user_text}」。购物车里有 3 件商品，合计 ￥1280。"
+                    "清空后无法恢复，需要你确认后我才会调用 clear_cart。"
+                ),
                 tool_calls=[{
                     "name": "clear_cart",
-                    "args": {},
-                    "id": "call_clear_cart_001",
+                    "args": {"item_count": 3, "total": 1280},
+                    "id": CART_TOOL_ID,
                     "type": "tool_call",
                 }],
             )
@@ -34,11 +45,15 @@ def propose(state: State):
 
 
 def sensitive_tool(state: State):
-    """敏感操作节点：执行后必须用匹配的 tool_call_id 回一条 ToolMessage。"""
+    """真正执行清空。正式驳回时这个节点不会跑到，而是被 update_state(as_node=...) 顶替。"""
     tool_call = state["messages"][-1].tool_calls[0]
+    args = tool_call.get("args") or {}
     return {
         "messages": [ToolMessage(
-            content="敏感操作已执行：购物车已清空。",
+            content=(
+                "敏感操作已执行：已清空购物车 "
+                f"（原 {args.get('item_count', '?')} 件，合计 ￥{args.get('total', '?')}）。"
+            ),
             tool_call_id=tool_call["id"],
         )]
     }
@@ -69,7 +84,10 @@ def build_graph():
 
 def build_guarded():
     """演示二：静态 interrupt_before 拦截版（用于理解存档与恢复）。"""
-    return _builder().compile(checkpointer=MemorySaver(), interrupt_before=["sensitive_tool"])
+    return _builder().compile(
+        checkpointer=MemorySaver(),
+        interrupt_before=["sensitive_tool"],
+    )
 
 
 def reject_pending(graph, config: dict, reason: str):
@@ -97,36 +115,29 @@ def reject_pending(graph, config: dict, reason: str):
 
 
 def main():
-    # ============ 演示一：Checkpointer 短期记忆（跨调用记住同一会话） ============
+    print("== 演示一：同一 thread_id 的短期记忆 ==")
     graph = build_graph()
     config = {"configurable": {"thread_id": "user_zhangsan_123"}}
-
     graph.invoke({"messages": [("user", "帮我清空购物车")]}, config)
-    # 只要 thread_id 不变，第二次调用能接上之前的话茬（这里模拟：直接追问）
     snap = graph.get_state(config)
-    print("== 演示一：短期记忆 ==")
     print("存档中的最后一条消息：", snap.values["messages"][-1].content)
 
-    # ============ 演示二：interrupt_before 敏感操作拦截 ============
+    print("\n== 演示二：interrupt_before 拦截后驳回 ==")
     guarded = build_guarded()
     config2 = {"configurable": {"thread_id": "user_lisi_456"}}
-
     guarded.invoke({"messages": [("user", "帮我清空购物车")]}, config2)
     state_now = guarded.get_state(config2)
-    print("\n== 演示二：HITL 拦截 ==")
-    print("程序停在了：", state_now.next, "（等待老板签字）")
-
-    # 老板不同意：用 update_state 写入匹配 tool_call_id 的拒绝回执，跳过真正工具节点。
+    print("程序停在了：", state_now.next, "（等待审批）")
     rejected = reject_pending(guarded, config2, "这是演示账号，不能清空购物车")
     print("驳回后最后一条消息：", rejected["messages"][-1].content)
 
-    # 再开一个线程演示批准：不传新消息，直接传 None，从同一个存档继续。
+    print("\n== 演示三：同一套刹车，批准后续跑 ==")
     config3 = {"configurable": {"thread_id": "user_wangwu_789"}}
     guarded.invoke({"messages": [("user", "帮我清空购物车")]}, config3)
     for _ in guarded.stream(None, config3):
         pass
     state_after = guarded.get_state(config3)
-    print("批准后执行完毕，最后一条消息：", state_after.values["messages"][-1].content)
+    print("批准后最后一条消息：", state_after.values["messages"][-1].content)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ import gradio as gr
 from dotenv import load_dotenv
 
 from s01_env_setup import ZhipuGLMClient
+from s09_memory_and_skills import SkillLoader
 from s11_session import SessionStore
 from s13_mini_agent import MiniAgent, polish_markdown
 
@@ -1020,10 +1021,12 @@ with gr.Blocks(
                     choices=["🧠 深度思考", "🔍 强制联网搜索"],
                     value=["🧠 深度思考"],
                 )
+                _s13_skill_names = SkillLoader("skills").list_skills()
                 skills = gr.CheckboxGroup(
                     label="技能挂载",
-                    choices=["git_expert", "python_cleaner"],
+                    choices=_s13_skill_names,
                     value=[],
+                    info="勾选后本轮会把对应 SKILL.md 拼进 System Prompt。仓库自带 git_expert 与 python_cleaner。",
                 )
             allow_memory = gr.Checkbox(
                 label="允许本轮保存个人偏好",

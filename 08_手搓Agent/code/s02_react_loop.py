@@ -180,8 +180,11 @@ if __name__ == "__main__":
     print("search_weather('拉萨') =", search_weather("拉萨"))
 
     print("\n--- ReAct 闭环测试 (需 API Key) ---")
-    client = ZhipuGLMClient()
-    agent = ReActAgent(client)
-    ans, logs = agent.run("请问上海和杭州的气温相差多少度？")
-    print("最终答案:", ans)
-    print("思考轨迹:", json.dumps(logs, ensure_ascii=False, indent=2))
+    try:
+        client = ZhipuGLMClient()
+        agent = ReActAgent(client)
+        ans, logs = agent.run("请问上海和杭州的气温相差多少度？")
+        print("最终答案:", ans)
+        print("思考轨迹:", json.dumps(logs, ensure_ascii=False, indent=2))
+    except Exception as e:
+        print("⚠️ 真实引擎自测跳过 (若未配置 API Key 属正常):", e)

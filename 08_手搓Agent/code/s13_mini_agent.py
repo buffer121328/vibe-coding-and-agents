@@ -805,6 +805,13 @@ if __name__ == "__main__":
 
     console = Console()
     client = ZhipuGLMClient()
+    if not client.api_key:
+        console.print(
+            "[yellow]⚠️ 未配置 ZHIPU_API_KEY，对话演示需要真实模型。"
+            "请先 `cp .env.example .env` 填入 Key；零 Key 机制请跑 "
+            "`uv run python -m unittest discover -s tests -v`。[/yellow]"
+        )
+        raise SystemExit(0)
 
     if args.repl:
         interactive_repl(client)
@@ -814,8 +821,11 @@ if __name__ == "__main__":
         agent.bus.subscribe("*", make_status_printer(console))
         console.print("[bold green]🤖 Mini-Agent 初始化完成！正在运行单轮演示…[/bold green]")
         console.print("[dim]💡 提示：运行 uv run python s13_mini_agent.py --repl 可进入交互式多轮对话[/dim]\n")
-        res = agent.chat("请帮我检索 2026 年前端开发趋势并给出 3 点核心建议", deep_think=True)
-        console.print("🤖 [bold]Agent>[/bold]")
-        console.print(Markdown(res["final_answer"]))
-        if res.get("usage_badge"):
-            console.print(f"[dim]{res['usage_badge']}[/dim]")
+        try:
+            res = agent.chat("请帮我检索 2026 年前端开发趋势并给出 3 点核心建议", deep_think=True)
+            console.print("🤖 [bold]Agent>[/bold]")
+            console.print(Markdown(res["final_answer"]))
+            if res.get("usage_badge"):
+                console.print(f"[dim]{res['usage_badge']}[/dim]")
+        except Exception as e:
+            console.print(f"[yellow]⚠️ 真实引擎演示跳过 (若未配置 API Key 属正常): {e}[/yellow]")

@@ -1,78 +1,85 @@
-# 06 Memory 记忆与 Human-in-the-loop (人类在环)
+# 10.6 Memory 记忆与 Human-in-the-loop
 
-在前面几节，我们已经让大模型在状态图里跑了起来，也学会了条件路由、并行分发与流式调试。但这里还有两个很要命的实际问题：
+前面几节，图已经能跑、能分叉、能并行。还剩两个很实际的问题：
 
-1. **健忘症**：如果程序结束了，或者用户过了半天再来问一句“那我刚刚说想去哪来着？”，大模型是不记得的，因为状态只在内存里短暂存活。
-2. **脱缰野马**：如果大模型决定调用一个工具“清空数据库”或“直接扣费订机票”，你敢让它直接执行吗？
+1. **健忘**：状态默认只活在这一次调用的内存里。用户过了半天再问“我刚才说想去哪”，模型两眼一抹黑。
+2. **没人签字**：模型决定清空数据库、扣费订机票时，你敢让它直接执行吗？
 
-LangGraph 1.x 用一个机制优雅地解决了这两个问题：**Checkpointer（检查点保存机制）**。
+LangGraph 用同一套机制回答这两个问题：**Checkpointer（检查点）**。有了它，会话能续上，流程也能在闸门前停住。
 
-## 1. Checkpointer - 自动存档的“记忆面包”
+---
 
-想象你在玩单机游戏《黑神话：悟空》。如果你每次被 Boss 打死都要从第一关重新玩，你一定会崩溃。所以游戏有“土地庙”给你上香存档。
+## 1. Checkpointer：每走一步拍一张快照
 
-在 LangGraph 里，每个执行步（super-step）结束时，Checkpointer 都会拍一张“快照”（保存当前的 State）。只要使用真正落盘的 Checkpointer，程序或机器重启后就能凭 `thread_id` 找回进度。
+可以把它想成单机游戏的存档点。每个超步结束，Checkpointer 就把当前 State 拍下来。只要用真正落盘的实现，进程重启后凭 `thread_id` 就能找回进度。
 
-最简单的是内存级保存（只适合教学和测试），生产环境应换成 Postgres 等持久化实现。`MemorySaver` 随进程消失，不能兑现“重启恢复”的承诺；11 节会专门拆解这条边界。
+教学里最常见的是内存版：
 
 ```python
 from langgraph.checkpoint.memory import MemorySaver
 
-# 1. 拿出一个记忆存储器
 memory = MemorySaver()
-
-# 2. 编译图的时候，把记忆存储器插进去
 graph = builder.compile(checkpointer=memory)
 
-# 3. 运行的时候，告诉它你是哪个存档（thread_id）
 config = {"configurable": {"thread_id": "user_zhangsan_123"}}
-
-# 即便这是第二次运行，只要 thread_id 不变，大模型就能接上之前的话茬
 graph.invoke({"messages": [("user", "我要订机票")]}, config)
 ```
 
-## 2. Human-in-the-loop (HITL) - “老板，请签字确认”
+同一 `thread_id` 再次调用，图会带着上次的消息和字段继续，而不是空白开局。
 
-既然我们有了存档能力，那我们就解锁了 LangGraph 中最实用的高级特性：**中断与人工干预**。
+官方现在也把内存实现叫作 `InMemorySaver`（与 `MemorySaver` 同类：都在 RAM 里，进程一停就没了）。它适合课堂和单测，**兑不了“机器重启还能恢复”的承诺**。生产请换：
 
-想象你在公司里是一个实习生（大模型），你可以自己查资料、写方案（安全工具）。但如果你要动用公司账户打款（敏感工具），财务系统（LangGraph）会拦截你，说：“这个动作太危险，必须等老板（人类）签字同意。”。老板去开会了，没关系，你的状态被存在了“存档文件”里。等老板开完会回来，看了方案觉得没问题，点个头，流程继续往下走。
+| 实现 | 放哪 | 什么时候用 |
+| :--- | :--- | :--- |
+| `MemorySaver` / `InMemorySaver` | 内存 | 教学、测试 |
+| [`SqliteSaver`](https://docs.langchain.com/oss/python/langgraph/persistence) | 本地文件 | 开发机、小流量 |
+| [`PostgresSaver`](https://docs.langchain.com/oss/python/langgraph/persistence) / `AsyncPostgresSaver` | PostgreSQL | 生产 |
 
-为了先看懂“停住—存档—恢复”的底层过程，本节使用静态断点 `interrupt_before`。它适合教学和调试；真正的生产审批应使用 13 节的节点内 `interrupt()`，因为它能按运行时数据决定是否暂停，并能携带结构化审批数据。
+`thread_id` 相当于办事单号。同一段会话继续用同一个；新任务误用旧号，会把历史状态带进来。服务端还要校验线程归属，不能只凭客户端传来的 ID 就允许读状态。
+
+长线程的检查点会一直涨。生产上要设保留策略或定期裁剪，Postgres 里 `thread_id` 长度也有限制（文档写明不超过 255 字符）。
+
+---
+
+## 2. 静态断点：先看懂“停住—存档—恢复”
+
+有了存档，就可以在危险节点前刹车。为了把底层过程看清楚，本节用编译期写死的 `interrupt_before`。它适合教学和调试；真正的生产审批应使用 13 节的节点内 `interrupt()`——那种能按运行时数据决定是否暂停，并能带上结构化审批包。
 
 ```python
-# 编译时，告诉图：在进入 "book_flight_sensitive_tools" 这个节点之前，必须踩刹车！
 graph = builder.compile(
     checkpointer=memory,
-    interrupt_before=["book_flight_sensitive_tools"]
+    interrupt_before=["book_flight_sensitive_tools"],
 )
 ```
 
-### 它是怎么运行的？
+运行过程是这样的：
 
-1. 大模型说：“我要调用订票工具。”
-2. 路线图指向了 `book_flight_sensitive_tools` 节点。
-3. LangGraph 发现这个节点在“刹车名单”里，于是保存当前存档，立刻结束程序并返回（处于暂停状态）。
-4. （老板的微信收到了一条审批消息）
-5. 老板点击了“同意”。
-6. 程序再次启动，传入同样的 `thread_id`，但**不需要传新的消息，直接传 `None`**：
-   `graph.stream(None, config)`
-7. LangGraph 会读取存档，发现上次停在了订票节点前，于是直接踩油门进入该节点，完成订票。
+1. 模型说“我要调用订票工具”；
+2. 边指向 `book_flight_sensitive_tools`；
+3. LangGraph 发现它在刹车名单里，保存快照，立刻返回（图处于暂停）；
+4. 审批人在界面上看到待执行动作；
+5. 点“同意”后，用**同一个** `thread_id` 再次调用，**不要传新消息，传 `None`**：
 
-### 如果老板不同意呢？（正式版：补回执 + 修改存档）
+```python
+graph.stream(None, config)
+```
 
-如果老板看了一眼说：“等一下，这个机票太贵了，你换个便宜的。”
-老板不需要执行危险工具，也不能随手把一份新输入塞给暂停中的图。此时历史里已经有一条 AI 工具调用；如果没有同 `tool_call_id` 配对的 `ToolMessage`，消息历史会残缺，后续模型可能直接报错。
+图读取存档，发现上次停在订票节点前，于是进入该节点，完成订票。
 
-正确动作分三步：找到待审批的工具调用、构造一一配对的拒绝回执、用 `update_state(..., as_node=...)` 把它记成“敏感工具节点的输出”，最后传 `None` 从下一节点继续。
+---
+
+## 3. 老板不同意：补回执，而不是塞一句新话
+
+历史里已经有一条带 `tool_calls` 的 AI 消息。如果没有同 `tool_call_id` 配对的 `ToolMessage`，消息历史会残缺，后续模型可能直接报错（官方错误码 [INVALID_CHAT_HISTORY](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY)）。
+
+正确动作分三步：取出待审批的工具调用 → 构造一一配对的拒绝回执 → 用 `update_state(..., as_node=...)` 把它记成“敏感工具节点的输出”，再传 `None` 从下一节点继续。
 
 ```python
 from langchain_core.messages import ToolMessage
 
-# 1. 从暂停快照中取出模型刚才发起的全部工具调用
 snapshot = graph.get_state(config)
 tool_calls = snapshot.values["messages"][-1].tool_calls
 
-# 2. 每个 tool_call_id 都补一条拒绝回执，不能漏配
 rejections = [
     ToolMessage(
         tool_call_id=call["id"],
@@ -81,42 +88,36 @@ rejections = [
     for call in tool_calls
 ]
 
-# 3. 把回执记成敏感工具节点的输出：真正的订票节点不会执行
 fork_config = graph.update_state(
     config,
     {"messages": rejections},
     as_node="book_flight_sensitive_tools",
 )
-
-# 4. 从新快照的下一节点继续，让助理读取拒绝原因并重新规划
 graph.invoke(None, fork_config)
 ```
 
-这里的 `as_node` 很关键：它告诉 LangGraph“这份更新相当于敏感工具节点已经返回”，图因此沿着该节点之后的边继续，却不会真的扣款或下单。`update_state` 会创建一个新检查点，不会偷偷篡改原历史。
+`as_node` 的意思是：“这份更新相当于敏感工具节点已经返回”。图沿着该节点之后的边继续，却不会真的扣款。`update_state` 会创建新检查点，不会偷偷改掉原历史。
 
-> ⚠️ **别混淆两种审批方式**：本节的 `interrupt_before + update_state` 是理解检查点和静态断点的教学路径；13 节的 `interrupt() + Command(resume=...)` 才是新项目做生产审批的首选。旅行助手实战已经采用后一种方式。
+> ⚠️ 两种审批不要混为一谈：本节的 `interrupt_before + update_state` 是理解检查点的教学路径；13 节的 `interrupt() + Command(resume=...)` 才是新项目做生产审批的首选。旅行助手实战已经采用后一种。
 
-<!-- CH10-14_EXPANSION -->
+---
 
 ## 检查点保存的是进度，不是业务事务
 
-`thread_id` 相当于一张办事单号。同一段会话要继续原来的状态，应使用同一标识；新任务如果误用旧标识，可能把历史状态带进来。服务端还要校验线程归属，不能只凭用户传来的 `thread_id` 就允许读取状态。
+检查点能让图从某一步继续，但**不会自动撤销**已经发出的邮件、已扣款订单、已写入外部系统的数据。中断前后的外部操作需要幂等键、事务或补偿，尤其要防止恢复时再执行一遍。
 
-检查点能够恢复图的执行进度，却不会自动撤销已经发出的邮件、已扣款订单或已经写入外部系统的数据。中断前后的外部操作需要幂等键、事务或补偿流程，尤其要防止恢复执行时重复发生。
+人工审批应展示将执行的动作、关键参数和影响范围。审批人改参数后，程序要重新校验；若等待期间库存或价格已经变了，也应重新确认，而不是机械执行旧计划。
 
-人工审批应展示将执行的动作、关键参数和影响范围。审批人修改参数后，程序要重新校验；若等待期间数据已经变化，也应重新确认，而不是机械地执行旧计划。
-
----
-
-## 3. 扩展阅读
-
-**官方文档**
-- Persistence（检查点、线程、`update_state` 与回放）：[docs.langchain.com/oss/python/langgraph/persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
-- Interrupts（静态断点与动态 `interrupt()` 的适用边界）：[docs.langchain.com/oss/python/langgraph/interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)
-- INVALID_CHAT_HISTORY（工具调用与 ToolMessage 必须配对）：[docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY)
-
-> 📁 **本节示例代码**：[code/examples/06_memory_hitl_demo.py](code/examples/06_memory_hitl_demo.py) —— 同时演示真实批准和 `update_state` 正式驳回，无需 API Key。
+> 📁 **本节示例代码**：[code/examples/06_memory_hitl_demo.py](code/examples/06_memory_hitl_demo.py) —— 同时演示批准续跑和 `update_state` 正式驳回。
 
 ---
 
-**下一节：** 一个 Agent 忙不过来怎么办？我们将引入“主助理 + 多个专家子助理”的 Multi-Agent 分层路由架构。
+## 扩展阅读
+
+- Persistence（检查点、线程、`update_state`）：[persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
+- Interrupts（静态断点与动态 `interrupt()` 的边界）：[interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)
+- 工具调用必须与 ToolMessage 配对：[INVALID_CHAT_HISTORY](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY)
+
+---
+
+**下一节：** 一个助理忙不过来、Prompt 也塞不下时，怎样用主助理 + 专业助理做控制权交接。

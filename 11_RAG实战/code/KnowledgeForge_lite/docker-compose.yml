@@ -1,0 +1,54 @@
+# docker-compose.yml —— 整套服务的“乐谱”：一条命令起 Neo4j + forge-lite（教程 11.15 Docker 小节）
+# 使用：把 OPENAI_API_KEY 写进本目录 .env，然后 docker compose up -d --build
+services:
+  neo4j:
+    image: neo4j:5
+    environment:
+      NEO4J_AUTH: neo4j/forge12345
+    ports:
+      - "7474:7474"   # 浏览器控制台
+      - "7687:7687"   # Bolt 协议
+    volumes:
+      - neo4j_data:/data
+    healthcheck:                       # compose 等“真健康”才起 lite，而不是“进程在”
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p forge12345 'RETURN 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  lite:
+    build: .
+    ports:
+      - "8800:8800"
+    environment:
+      # 密钥从本目录 .env 注入（compose 会自动拿来做 ${} 替换）。
+      # 对话和嵌入可以来自两家：只配 MIMO_* 也能起，不再强求 OPENAI_API_KEY。
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_API_BASE: ${OPENAI_API_BASE:-}
+      CHAT_MODEL: ${CHAT_MODEL:-}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-}
+      MIMO_API_KEY: ${MIMO_API_KEY:-}
+      MIMO_BASE_URL: ${MIMO_BASE_URL:-}
+      MIMO_MODEL: ${MIMO_MODEL:-}
+      ARK_API_KEY: ${ARK_API_KEY:-}
+      ARK_BASE_URL: ${ARK_BASE_URL:-}
+      FORGE_LITE_CHAT_MODEL: ${FORGE_LITE_CHAT_MODEL:-}
+      FORGE_LITE_CHAT_BASE: ${FORGE_LITE_CHAT_BASE:-}
+      FORGE_LITE_CHAT_KEY: ${FORGE_LITE_CHAT_KEY:-}
+      FORGE_LITE_THINKING_MODE: ${FORGE_LITE_THINKING_MODE:-}
+      LLM_THINKING_MODE: ${LLM_THINKING_MODE:-}
+      FORGE_LITE_JUDGE_MAX_TOKENS: ${FORGE_LITE_JUDGE_MAX_TOKENS:-}
+      FORGE_LITE_JUDGE_RELEVANCY_STRICTNESS: ${FORGE_LITE_JUDGE_RELEVANCY_STRICTNESS:-}
+      FORGE_LITE_NEO4J_URI: bolt://neo4j:7687   # 容器互访用服务名，不是 localhost
+      FORGE_LITE_NEO4J_USER: neo4j
+      FORGE_LITE_NEO4J_PASSWORD: forge12345
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    volumes:
+      - lite_runtime:/app/runtime        # 运行产物（向量库/图谱账本）放卷里，重建容器不丢
+
+volumes:
+  neo4j_data:
+  lite_runtime:

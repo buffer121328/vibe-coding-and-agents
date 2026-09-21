@@ -10,6 +10,7 @@ import os
 import base64
 from pathlib import Path
 
+from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
@@ -51,6 +52,68 @@ def validate_table_operation(operation: str) -> None:
     lowered = operation.lower()
     if any(token in lowered for token in forbidden):
         raise PermissionError("表格问答只允许只读计算")
+
+
+def rows_to_documents(rows: list[dict], table: str, primary_key: str, unit_note: str = "",
+                      updated_at: str = "") -> list[Document]:
+    """结构化数据 RAG 路线①：每行拼成「列名: 值；列名: 值」的一句话，元数据带回表坐标与口径。
+
+    空值列跳过；primary_key 列不存在时 metadata 里留空字符串，不抛异常。
+    """
+    docs = []
+    for row in rows:
+        sentence = "；".join(f"{col}: {val}" for col, val in row.items() if val)
+        docs.append(Document(
+            page_content=f"[表 {table}] {sentence}",
+            metadata={
+                "table": table,
+                "primary_key": str(row.get(primary_key, "")),
+                "unit_note": unit_note,
+                "updated_at": updated_at,
+                "columns": ",".join(row.keys()),
+            },
+        ))
+    return docs
+
+
+def flatten_json(obj, prefix: str = "") -> dict[str, str]:
+    """把嵌套 JSON 展平成「字段路径 → 值」字典：dict 递归、list 用 [i] 下标、标量转 str。
+
+    路径可写进元数据，引用「第 2 个商品的价格」时能顺着路径回到原始 JSON 核对；
+    空 dict/list 保留为 "{}"/"[]"，避免信息被吞掉。
+    """
+    if isinstance(obj, dict):
+        if not obj:
+            return {prefix: "{}"}
+        flat: dict[str, str] = {}
+        for key, value in obj.items():
+            flat.update(flatten_json(value, f"{prefix}.{key}" if prefix else str(key)))
+        return flat
+    if isinstance(obj, list):
+        if not obj:
+            return {prefix: "[]"}
+        flat = {}
+        for i, value in enumerate(obj):
+            flat.update(flatten_json(value, f"{prefix}[{i}]"))
+        return flat
+    return {prefix: str(obj)}
+
+
+def demo_structured_data() -> None:
+    """演示结构化数据入库：CSV 行变成句子文档 + 嵌套 JSON 展平成路径字典。"""
+    rows = [
+        {"部门": "研发", "金额": "1200", "备注": ""},
+        {"部门": "市场", "金额": "800", "备注": "客户招待"},
+        {"部门": "行政", "金额": "300", "备注": ""},
+    ]
+    print("\n=== 结构化数据 RAG（行 → 句子文档）===")
+    for doc in rows_to_documents(rows, table="报销明细", primary_key="部门", unit_note="金额单位：元"):
+        print(doc.page_content, "|", doc.metadata)
+
+    order = {"order_id": "SO-2026-0001", "order": {"items": [{"price": 19.9}, {"price": 5.0}]}}
+    print("=== 嵌套 JSON 展平（路径 → 值）===")
+    for path, value in flatten_json(order).items():
+        print(f"{path} = {value}")
 
 
 def demo_caption_image() -> None:
@@ -175,3 +238,4 @@ if __name__ == "__main__":
     demo_cross_lingual()
     demo_transcribe()
     demo_table_policy()
+    demo_structured_data()

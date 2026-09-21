@@ -857,7 +857,7 @@ with gr.Blocks(title="LangGraph 图工作台") as demo:
     with gr.Group(visible=True) as pg02:
         gr.HTML(head("10.2", "🧱", "State 图的构建与运行",
                      "StateGraph <b>|</b> add_node <b>|</b> add_edge <b>|</b> stream",
-                     "图 = 路线图，节点 = 打工人，State = 公共交接本。点击运行，看 greeter 与 echo 两个节点如何接力传递 messages。"))
+                     "图 = 路线图，节点 = 格子上的工序，State = 公共交接本。点击运行，看 greeter 与 echo 两个节点如何接力传递 messages。"))
         t02_graph = gr.HTML(load_svg("02-diagram"), elem_classes=["graph-box"])
         t02_chips = gr.HTML(chips_html(node_order(ex02.build_graph()), [], None))
         with gr.Column(elem_classes=["input-unit"]):
@@ -1079,16 +1079,16 @@ with gr.Blocks(title="LangGraph 图工作台") as demo:
     with gr.Group(visible=False) as pg07:
         gr.HTML(head("10.7", "🏨", "MultiAgent 分层架构与状态栈",
                      "dialog_state <b>|</b> 自定义 reducer <b>|</b> 压栈 / 弹栈",
-                     "大堂经理识别「机票」意图后压栈转交航班助理；航班助理干完活弹栈交还。下方栈条实时显示 dialog_state 的压栈/弹栈过程。"))
+                     "前台主助理识别「机票」意图后压栈转交航班专员；专员办完弹栈交还。下方栈条实时显示 dialog_state 的压栈/弹栈过程。"))
         t07_graph = gr.HTML(load_svg("07-diagram"), elem_classes=["graph-box"])
         t07_chips = gr.HTML(chips_html(node_order(ex07.build_graph()), [], None))
         t07_stack = gr.HTML('<div class="stack-visual"><span class="stack-cap">dialog_state →</span>'
                             '<span class="stack-cell empty">（空栈：主助理值班）</span></div>')
         with gr.Column(elem_classes=["input-unit"]):
-            t07_in = gr.Textbox(label="对大堂经理说点什么（含「机票」触发转交）",
+            t07_in = gr.Textbox(label="对前台主助理说点什么（含「机票」触发转交）",
                                 value="帮我订一张去东京的机票")
             with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
-                t07_btn = gr.Button("🏨 找大堂经理", variant="primary", size="sm")
+                t07_btn = gr.Button("🏨 找前台主助理", variant="primary", size="sm")
         with gr.Row(equal_height=True):
             with gr.Column(scale=1, elem_classes=["col-card"]):
                 t07_snap = gr.Code(label="📦 最终 State（dialog_state 应弹回空栈）", language="json")
@@ -1106,7 +1106,7 @@ with gr.Blocks(title="LangGraph 图工作台") as demo:
         def t07_run(user_text):
             graph = ex07.build_graph()
             order = node_order(graph)
-            state, done, lines = {}, [], [f"[{now()}] 用户开口，大堂经理接单…"]
+            state, done, lines = {}, [], [f"[{now()}] 用户开口，前台主助理接单…"]
             for done, cur, _lines, values, trace in run_stream_updates(graph, {"messages": [("user", user_text)]}):
                 state = values
                 ds = state.get("dialog_state", [])
@@ -1220,7 +1220,7 @@ with gr.Blocks(title="LangGraph 图工作台") as demo:
                 t09c_graph = gr.HTML(load_svg("09-eo-diagram"), elem_classes=["graph-box"])
                 t09c_chips = gr.HTML(chips_html(node_order(ex09.build_eo_graph()), [], None))
                 with gr.Column(elem_classes=["input-unit"]):
-                    gr.HTML('<div style="font-size:.86em;color:#63668a;padding:2px 4px">评估器规则：每改一版涨 60 分，满 90 分通过；最多改 3 版（保险丝）。</div>')
+                    gr.HTML('<div style="font-size:.86em;color:#63668a;padding:2px 4px">评估器规则：每改一版涨 40 分（上限 100），满 90 分通过；最多改 3 版（保险丝）。本演示第 3 版到 100 分过线。</div>')
                     with gr.Row(equal_height=False, elem_classes=["btn-row tail"]):
                         t09c_btn = gr.Button("🔁 启动写稿-评估循环", variant="primary", size="sm")
                 with gr.Row(equal_height=True):

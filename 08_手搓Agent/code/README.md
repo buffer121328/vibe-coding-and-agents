@@ -85,6 +85,7 @@ uv sync
 
 # 4a. 想用可视化网页（Gradio）：一键启动 13-Tab 工作台
 uv run python app.py
+# 无 Key 也能先点 8.5 / 8.6 / 8.7 / 8.9 / 8.11；8.9 的勾选项来自 skills/*.md
 
 # 4b. 想在终端直接跑某个章节（例如 8.1）：二选一
 uv run python s01_env_setup.py
@@ -157,3 +158,7 @@ uv run python s01_env_setup.py
    - 临时关闭 Dark Reader 等第三方暗黑网页强制反色插件。
 3. **`ModuleNotFoundError` 报错**：
    - 请务必在 `08_手搓Agent/code` 目录下执行 `uv sync`，并使用 `uv run python app.py` 运行。
+4. **8.9 技能勾选项是空的**：
+   - 工作台扫描的是 `code/skills/*.md`。仓库自带 `git_expert.md` 与 `python_cleaner.md`；自己加技能只要再丢一个 `.md` 进去，刷新页面即可。
+5. **零 Key 回归锁**：
+   - `uv run python -m unittest discover -s tests -v`（权限门禁、工作区边界、搜索失败明示、评测验证器、自带技能包）。

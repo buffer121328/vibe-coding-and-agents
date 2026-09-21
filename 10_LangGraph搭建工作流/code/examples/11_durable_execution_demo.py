@@ -30,27 +30,29 @@ def reset_flaky():
 
 
 def flaky_api(state: State):
-    """前两次调用抛超时，第三次成功——模拟不稳定的第三方接口"""
+    """模拟不稳定的航司查询接口：前两次超时，第三次成功。"""
     flaky_attempts["n"] += 1
-    flaky_trace.append({"attempt": flaky_attempts["n"], "result": "调用接口"})
-    print(f"    flaky_api 第 {flaky_attempts['n']} 次被调用")
-    if flaky_attempts["n"] < 3:
-        flaky_trace[-1]["result"] = "TimeoutError，交给 RetryPolicy"
-        raise TimeoutError("模拟接口超时")
-    flaky_trace[-1]["result"] = "成功，返回状态增量"
-    return {"steps": ["flaky_api 成功"]}
+    attempt = flaky_attempts["n"]
+    flaky_trace.append({"attempt": attempt, "result": "调用 query_flight_api"})
+    print(f"    flaky_api 第 {attempt} 次被调用")
+    if attempt < 3:
+        flaky_trace[-1]["result"] = f"第 {attempt} 次 TimeoutError，交给 RetryPolicy"
+        raise TimeoutError(f"模拟接口超时（第 {attempt} 次）")
+    flaky_trace[-1]["result"] = "第 3 次成功，返回 CA-1801 ￥1280"
+    return {"steps": ["flaky_api 成功：CA-1801 ￥1280"], "done": True}
 
 
 def build_retry_graph():
     """演示一：RetryPolicy 重试图（命令行与工作台共用）"""
     builder = StateGraph(State)
     builder.add_node(
-        "flaky_api", flaky_api,
+        "flaky_api",
+        flaky_api,
         retry_policy=RetryPolicy(
-            max_attempts=3,              # 最多试 3 次（含第一次）
-            initial_interval=0.1,        # 演示用短间隔
-            backoff_factor=2.0,          # 指数退避
-            retry_on=(TimeoutError,),    # 只对超时重试
+            max_attempts=3,
+            initial_interval=0.1,
+            backoff_factor=2.0,
+            retry_on=(TimeoutError,),
         ),
     )
     builder.add_edge(START, "flaky_api")
@@ -73,16 +75,16 @@ def disarm_boom():
 
 
 def step_1(state: State):
-    print("    step_1 执行")
-    return {"steps": state["steps"] + ["step_1"]}
+    print("    step_1 执行：写入订单草稿 order_1001")
+    return {"steps": state["steps"] + ["step_1 已写入订单草稿 order_1001"]}
 
 
 def boom(state: State):
-    """第一次运行在这里崩掉；恢复后引爆开关已被拆除，顺利通过"""
+    """第一次运行在这里崩掉；恢复后引爆开关已被拆除，顺利通过。"""
     if boom_flag["armed"]:
-        raise RuntimeError("模拟进程崩溃！")
-    print("    boom 执行（这次没崩）")
-    return {"steps": state["steps"] + ["boom"]}
+        raise RuntimeError("模拟进程崩溃：支付网关超时，订单草稿已在 step_1 落盘")
+    print("    boom 执行（这次没崩）：支付成功")
+    return {"steps": state["steps"] + ["boom 支付成功"], "done": True}
 
 
 def build_rescue_graph():
@@ -93,27 +95,29 @@ def build_rescue_graph():
     builder2.add_edge(START, "step_1")
     builder2.add_edge("step_1", "boom")
     builder2.add_edge("boom", END)
-    return builder2.compile(checkpointer=MemorySaver())   # 生产换 SqliteSaver/PostgresSaver
+    return builder2.compile(checkpointer=MemorySaver())
 
 
 def main():
+    reset_flaky()
     print("== 演示一：RetryPolicy ==")
     print(build_retry_graph().invoke({"steps": [], "done": False}))
-    print(f"（接口共被调用了 {flaky_attempts['n']} 次，前两次的报错被自动消化）")
+    print(f"（接口共被调用了 {flaky_attempts['n']} 次，前两次超时被自动消化）")
+    print("调用轨迹：", flaky_trace)
 
     config = {"configurable": {"thread_id": "job-1001"}}
     print("\n== 演示二：断点恢复 ==")
     rescue_graph = build_rescue_graph()
     try:
         rescue_graph.invoke({"steps": [], "done": False}, config)
-    except RuntimeError as e:
-        print("程序崩溃：", e)
+    except RuntimeError as exc:
+        print("程序崩溃：", exc)
+        print("崩溃时已保存的 steps：", rescue_graph.get_state(config).values["steps"])
 
-    # 程序恢复后：同一 thread_id 再次 invoke，从最近快照继续，已完成的 step_1 不会重跑
     disarm_boom()
     rescue_graph.invoke(None, config)
     print("恢复后的最终状态：", rescue_graph.get_state(config).values["steps"])
-    print("（注意输出：step_1 没有被重新执行）")
+    print("（注意：step_1 没有被重新执行，只重跑了 boom）")
 
 
 if __name__ == "__main__":

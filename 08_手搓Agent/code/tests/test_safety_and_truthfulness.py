@@ -12,6 +12,7 @@ if str(CODE_DIR) not in sys.path:
 
 from s05_terminal_and_edit import str_replace, view_file
 from s06_permissions_hitl import ActionRiskLevel, PermissionGuard
+from s09_memory_and_skills import SkillLoader
 from s10_subagents import DeepResearchPipeline
 from s12_observability import EvalCase, EvalSuite, TokenCostAudit
 from s13_mini_agent import WebSearch
@@ -77,6 +78,15 @@ class WorkspaceBoundaryTests(unittest.TestCase):
             self.assertEqual(target.read_text(encoding="utf-8"), "after")
 
 
+class SkillPackTests(unittest.TestCase):
+    def test_bundled_skills_are_scanned(self):
+        names = SkillLoader().list_skills()
+        self.assertIn("git_expert", names)
+        self.assertIn("python_cleaner", names)
+        git_text = SkillLoader().get_skill_content("git_expert") or ""
+        self.assertIn("git commit", git_text)
+
+
 class SearchTruthfulnessTests(unittest.TestCase):
     def test_network_failure_returns_explicit_error(self):
         with patch("urllib.request.urlopen", side_effect=TimeoutError("offline")):
@@ -106,6 +116,27 @@ class EvaluationTests(unittest.TestCase):
 
 
 class ResearchEvidenceTests(unittest.TestCase):
+    def test_pipeline_records_client_http_timeout(self):
+        class TimedClient:
+            timeout = 60.0
+
+        pipeline = DeepResearchPipeline(TimedClient())
+        self.assertEqual(pipeline.timeout, 60.0)
+        self.assertEqual(pipeline.writer.timeout, 60.0)
+
+    def test_subagent_exception_does_not_crash_pipeline(self):
+        class BoomClient:
+            timeout = 60.0
+
+            def chat(self, messages, **_kwargs):
+                raise TimeoutError("主力超时")
+
+        pipeline = DeepResearchPipeline(
+            BoomClient(), search_provider=lambda _query: "https://example.com"
+        )
+        report = pipeline.execute_research("任意课题")
+        self.assertIn("调用异常", report["final_report"])
+
     def test_pipeline_records_search_evidence(self):
         class FakeResponse:
             def __init__(self, content):

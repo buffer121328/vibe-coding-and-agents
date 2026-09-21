@@ -33,6 +33,10 @@ uv run python app.py
 
 启动后在浏览器打开 `http://127.0.0.1:7860` 即可在可视化界面中体验 13 个功能模块与终极实战项目！
 
+> 📦 **依赖只有一份**：`pyproject.toml` + `uv.lock`（uv 原生），`uv sync` 装、`uv run` 跑。本目录**不再保留 `requirements.txt`**——以前两份清单并存时已经跑偏过：清单里写的是旧包名 `duckduckgo-search`，而代码用的是它改名后的 `ddgs`（`from ddgs import DDGS`），照旧清单装会直接 ImportError。要给不用 uv 的读者一份传统清单就现场导出，别抄：`uv export --format requirements-txt --no-hashes > requirements.txt`（导出的那份别提交）。
+>
+> 例外只有一个：`smart_buyer/requirements.txt` 是**为「将来脱离本章独立部署」留的**清单（文件头写了用法），内容是新包名，现在直接复用本目录的 uv 环境即可，不用管它。
+
 ***
 
 ## 📂 代码文件结构索引

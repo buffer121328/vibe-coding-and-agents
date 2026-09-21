@@ -144,7 +144,7 @@ uv run python s01_env_setup.py
 uv run python s13_mini_agent.py --repl
 ```
 
-浏览器打开 `http://127.0.0.1:7860` 即可在可视化界面中体验 8.1~8.13 全部核心特性；打开 `http://127.0.0.1:7861` 则是专注 8.13 的独立 Mini-Agent 工作台（带实时状态时间线）。
+浏览器打开 `http://127.0.0.1:7860` 即可在可视化界面中体验 8.1~8.13 全部核心特性；打开 `http://127.0.0.1:7861` 则是专注 8.13 的独立 Mini-Agent 工作台（带实时状态时间线）。没有 Key 时先点 **8.5 / 8.6 / 8.7 / 8.9 / 8.11**：这些页不调模型。8.9 的勾选项来自 [`code/skills/`](code/skills/) 里的 Markdown（仓库自带 `git_expert` 与 `python_cleaner`）。零 Key 回归：`uv run python -m unittest discover -s tests -v`。
 
 > 💡 **IDE 提示**：在 VS Code / Trae 中打开 `08_手搓Agent/code` 后，请在右下角状态栏（或 `Cmd+Shift+P` → **Python: Select Interpreter**）选择解释器 `08_手搓Agent/code/.venv/bin/python`，即可消除“无法解析导入”标红并支持直接点 ▶ 运行。
 

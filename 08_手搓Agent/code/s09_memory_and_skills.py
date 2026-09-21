@@ -52,6 +52,9 @@ class MemoryStore:
 class SkillLoader:
     """🎒 动态技能安装包加载器 (扫描并挂载 ./skills/*.md)"""
     def __init__(self, skills_dir: str = "skills"):
+        # 相对路径按本文件所在目录解析：从任意 cwd 启动工作台，都能扫到 code/skills/
+        if not os.path.isabs(skills_dir):
+            skills_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), skills_dir)
         self.skills_dir = skills_dir
         self.loaded_skills: Dict[str, str] = {}
         self.reload_skills()

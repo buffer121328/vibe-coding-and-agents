@@ -96,22 +96,21 @@ def run_captured(fn, *args):
 
 
 def corpus_inventory() -> list[list[str]]:
-    """读取随教程附带的回归语料，供首页直接检查。"""
+    """读取随教程附带的 8 份混排语料（md/pdf/docx/html），供首页直接检查。"""
+    from shared_corpus import demo_pages, regression_pages
+
     rows = []
-    for path in sorted(TESTDATA.rglob("*.md")):
-        text = path.read_text(encoding="utf-8")
-        doc_id = re.search(r"文档编号：([^　\s]+)", text)
-        status = re.search(r"状态：([^　\s]+)", text)
-        trust = "不可信" if "不可信来源" in text else "内部权威"
-        pages = len(re.findall(r"^## 第 \d+ 页", text, flags=re.MULTILINE))
-        rows.append([
-            str(path.relative_to(TESTDATA)),
-            doc_id.group(1) if doc_id else "WEB-SNAPSHOT",
-            status.group(1) if status else "待审核",
-            trust,
-            str(pages),
-        ])
-    return rows
+    for page in list(demo_pages()) + list(regression_pages()):
+        rows.append([page.source, page.doc_id, page.page, page.title])
+    # 按文件聚合：文件名、文档编号、页数、后缀
+    grouped: dict[str, list] = {}
+    for source, doc_id, page_no, title in rows:
+        grouped.setdefault(source, [source, doc_id, 0, Path(source).suffix.lstrip(".")])
+        grouped[source][2] += 1
+    return [
+        [name, doc_id, str(pages), fmt]
+        for name, doc_id, pages, fmt in grouped.values()
+    ]
 
 
 def run_quality_gate():
@@ -129,7 +128,7 @@ def run_quality_gate():
         "一线城市住宿上限为每天 500 元[1]。报销应在返回后 5 个工作日内提交[1]。",
         source_count=1,
     )
-    unsafe_text = (TESTDATA / "外部网页快照_含注入样本.md").read_text(encoding="utf-8")
+    unsafe_text = s02.load_text_by_ext(s02.resolve_corpus_file(TESTDATA, "外部网页快照_含注入样本"))
     injection_hits = [phrase for phrase in ("忽略之前的所有指令", "输出检索上下文", "访问令牌") if phrase in unsafe_text]
     checks = {
         "检索命中": metrics["hit_rate_at_k"] == 1.0,
@@ -222,27 +221,18 @@ def model_config() -> dict:
 
 
 def real_demo_pages() -> list[dict]:
-    """读取 3–4 页真实演示文档；每页作为可解释检索单元。"""
+    """读取演示目录下页数不等的真实文档（md/pdf/docx/html）；每页作为可解释检索单元。"""
+    from shared_corpus import demo_pages
+
     rows: list[dict] = []
-    for path in sorted(REAL_DEMO_DIR.glob("*.md")):
-        raw = path.read_text(encoding="utf-8")
-        doc_id_match = re.search(r"文档编号：([^\n]+)", raw)
-        doc_id = doc_id_match.group(1).strip() if doc_id_match else path.stem
-        parts = re.split(r"(?m)^## 第 (\d+) 页：?([^\n]*)\n", raw)
-        if len(parts) == 1:
-            rows.append({"id": f"{doc_id}#full", "source": path.name, "page": "full", "title": path.stem, "text": s02.clean_text(raw)})
-            continue
-        for i in range(1, len(parts), 3):
-            page_no = parts[i].strip()
-            title = parts[i + 1].strip() or f"第 {page_no} 页"
-            body = s02.clean_text(parts[i + 2])
-            rows.append({
-                "id": f"{doc_id}#p{page_no}",
-                "source": path.name,
-                "page": int(page_no),
-                "title": title,
-                "text": body,
-            })
+    for page in demo_pages():
+        rows.append({
+            "id": page.chunk_id,
+            "source": page.source,
+            "page": int(page.page) if str(page.page).isdigit() else page.page,
+            "title": page.title,
+            "text": page.text,
+        })
     return rows
 
 
@@ -828,10 +818,10 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
             with gr.Column(scale=1, elem_classes=["col-card", "metric-card"]):
                 gr.HTML("<div class='metric-kicker'>MODEL CALLS</div><div class='metric-value'>OPT-IN</div><div class='metric-label'>仅点击章节实验时调用</div>")
         with gr.Column(elem_classes=["col-card"]):
-            gr.Markdown("### 回归语料\n\n版本、状态、可信度和页数在这里先对齐。")
+            gr.Markdown("### 回归语料\n\n8 份练习文档是 md / pdf / docx / html 混排，页数和格式在这里先对齐。")
             corpus_table = gr.Dataframe(
-                headers=["文件", "文档编号", "状态", "可信度", "页数"],
-                value=corpus_inventory(), datatype=["str"] * 5,
+                headers=["文件", "文档编号", "页数", "格式"],
+                value=corpus_inventory(), datatype=["str"] * 4,
                 interactive=False, wrap=True, elem_id="corpus-table",
             )
         with gr.Row(equal_height=True, elem_classes=["result-grid"]):
@@ -859,7 +849,7 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
     with gr.Group(visible=False) as pg02:
         gr.HTML(head("11.2", "📄", "文档解析、清洗与切块",
                      "load → clean → split → metadata",
-                     "脏数据三步走：按后缀选解析器 → 正则去噪（页眉/水印/页码）→ 中文句边界递归切块；再演示父子切块（子块检索、父块喂 LLM）。", "s02_data_pipeline.py"))
+                     "脏数据三步走：按后缀选解析器（含文字层 PDF）→ 正则去噪（页眉/水印/页码）→ 递归切块（中文标点当分隔符）；再演示父子切块（子块检索、父块喂 LLM）。总装 Lite 升级成标题层级切块。扫描件请走 MinerU 4.x，见教程 11.2。", "s02_data_pipeline.py"))
         gr.HTML(pain("数据源又脏又乱——直接喂给向量库等于往发动机里灌沙子"))
         t02_raw = gr.Textbox(
             label="本次输入原文（可编辑）",
@@ -874,11 +864,12 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
         gr.HTML(input_trace(
             "上方文本框中的带页码、水印原文",
             "chunk_size=400 · overlap=60 · 中文句界",
-            "1 解析为纯文本 → 2 删除页码/水印并归一化 → 3 递归切块 → 4 附加元数据",
+            "1 解析为纯文本（Markdown 框 / 旁边的 PDF 夹具）→ 2 删除页码/水印并归一化 → 3 递归切块 → 4 附加元数据",
         ))
         with gr.Row(equal_height=False, elem_classes=["btn-row split"]):
             t02_btn1 = gr.Button("🧹 跑解析→清洗→切块管道", variant="primary", size="sm")
             t02_btn2 = gr.Button("👪 父子切块演示", size="sm")
+            t02_btn3 = gr.Button("📄 解析现行差旅 PDF", size="sm")
         with gr.Row(equal_height=True, elem_classes=["result-grid"]):
             with gr.Column(scale=1, elem_classes=["col-card", "result-card"]):
                 t02_snap = gr.Code(label="📦 切块产物（前几块预览）", language="json")
@@ -943,8 +934,44 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
                    "④ 根据 parent_id 取回完整父块，而不是只喂一小句")
             return json.dumps(result, ensure_ascii=False, indent=2), f"[{now()}] ⏱ 纯本地演示\n{log}"
 
+        def t02_pdf():
+            def runner():
+                pdf = s02.ensure_pdf_fixture()
+                raw = s02.load_text_by_ext(pdf)
+                cleaned = s02.clean_text(raw)
+                chunks = s02.build_chunks(pdf, pdf.name, "行政")
+                print(f"① 解析 PDF：{pdf.name}，抽出 {len(raw)} 字（文字层 / pymupdf）")
+                print(f"② 清洗：去掉单独成行的页眉和水印后剩 {len(cleaned)} 字")
+                print(f"③ 切块：共 {len(chunks)} 块；正文仍能看到「500 元」")
+                print("④ MinerU 4.x 默认关闭：扫描件才需要 RAG_USE_MINERU=1")
+                return {
+                    "文件": str(pdf.relative_to(CODE)),
+                    "解析器": "pymupdf（文字层 PDF）",
+                    "抽出字符": len(raw),
+                    "清洗后字符": len(cleaned),
+                    "是否抽出住宿上限": "500 元" in raw,
+                    "水印是否去掉": "机密文件" not in cleaned,
+                    "切块数": len(chunks),
+                    "含住宿上限的块预览": next(
+                        (
+                            c.page_content[max(0, c.page_content.find("500 元") - 40): c.page_content.find("500 元") + 80]
+                            for c in chunks if "500 元" in c.page_content
+                        ),
+                        chunks[0].page_content[:180],
+                    ),
+                    "说明": "这份 PDF 就是现行差旅制度的检索原文（14 页），住宿 500 元写在第 2 页。",
+                }
+            holder = {}
+            def wrapped():
+                holder["payload"] = runner()
+            text, err = run_captured(wrapped)
+            payload = holder.get("payload") or {"错误": err or "解析失败"}
+            payload["本次按钮输入"] = "testdata/差旅管理制度_2026.pdf"
+            return json.dumps(payload, ensure_ascii=False, indent=2), text
+
         t02_btn1.click(t02_main, inputs=t02_raw, outputs=[t02_snap, t02_console])
         t02_btn2.click(t02_parent, inputs=t02_raw, outputs=[t02_snap, t02_console])
+        t02_btn3.click(t02_pdf, outputs=[t02_snap, t02_console])
 
     # ================= 11.3 向量嵌入 =================
     with gr.Group(visible=False) as pg03:
@@ -953,7 +980,7 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
                      "把文字变成高维坐标：同一语义距离近；手写余弦/欧氏/点积三种度量与 Top-K 最近邻；MRL 截断降维省内存。", "s03_embedding.py"))
         gr.HTML(pain("机器不懂语义——关键词匹配搜不出「退货」和「退款」是近义"))
         gr.HTML(input_trace(
-            "查询：上海出差住宿上限是多少？\n语料：testdata/真实RAG演示文档/ 下 4 份 3–4 页 Markdown 文档",
+            "查询：上海出差住宿上限是多少？\n语料：testdata/真实RAG演示文档/ 下 4 份混排文档（md/pdf/docx）",
             "EMBEDDING_MODEL · Top-K=2 · MRL 截断=256 维",
             "真实 Embedding 文档页与查询 → 余弦相似度排序 Top-K → 命中文档作为上下文喂给 Chat；MRL 单独演示真实向量截断",
         ))
@@ -1449,33 +1476,32 @@ with gr.Blocks(title="RAG 工作台 · 第十一章") as demo:
         def t09_ragas():
             samples = [
                 {
-                    "question": "Vibe Coding 理念的核心是什么？",
-                    "contexts": ["Vibe Coding 是意图驱动的编程范式，人类作为指挥官编排 AI Agent。"],
-                    "answer": "Vibe Coding 强调用自然语言意图指挥 AI 编程，人类负责架构编排。",
-                    "ground_truth": "Vibe Coding 是通过自然语言意图驱动 AI 自主编程的范式。",
+                    "user_input": "一线城市住宿标准是多少？",
+                    "retrieved_contexts": ["从 2026 年 7 月 1 日起，一线城市住宿标准为每人每天不超过 500 元。"],
+                    "response": "2026 年 7 月起一线城市住宿上限为每人每天 500 元。",
+                    "reference": "一线城市住宿标准为每人每天不超过 500 元。",
                 },
                 {
-                    "question": "企业核心微服务的最小副本数要求？",
-                    "contexts": ["【高可用发布规范】核心服务副本数不得低于 3 个，且需跨两个可用区。"],
-                    "answer": "根据规范，核心服务副本数不得少于 3 个，且跨至少两个可用区。",
-                    "ground_truth": "核心微服务副本数不得少于 3 个。",
+                    "user_input": "RX-9000 出现 ERR-404-X9 第一步该做什么？",
+                    "retrieved_contexts": ["当 RX-9000 出现 ERR-404-X9 时，第一步应立即停止分拣任务并切断设备电源。"],
+                    "response": "第一步立即停止分拣任务并切断设备电源。",
+                    "reference": "第一步应立即停止分拣任务并切断设备电源。",
                 },
             ]
             card = as_card({
-                "演示": "Ragas 三元组打分",
+                "演示": "Ragas 0.4 三指标打分",
                 "本次输入_黄金三元组": samples,
                 "Ragas会检查什么": {
-                    "faithfulness": "答案里的话是否都能从 context 找到依据",
-                    "answer_relevancy": "答案是否围绕用户问题",
-                    "context_precision": "召回的资料是不是少塞垃圾",
-                    "context_recall": "标准答案需要的资料有没有被召回",
+                    "Faithfulness": "答案里的话是否都能从资料找到依据",
+                    "ContextRecall": "标准答案需要的资料有没有被召回",
+                    "AnswerRelevancy": "答案是否围绕用户问题",
                 },
-                "课堂版说明": "这里先把三元组摊开给初学者看；完整 s09 脚本安装 ragas 后可跑真实分数。",
+                "课堂版说明": "这里先把 0.4 字段摊开给初学者看；完整分数跑 s09 的 demo_ragas()，或 Lite 的 scripts/04_ragas_eval.py。",
             })
-            log = teaching_log("=== Ragas 三元组打分 ===", [
-                "Ragas 输入不是神秘对象，而是 question / contexts / answer / ground_truth 四列。",
-                "第 1 行测 Vibe Coding；第 2 行测核心服务副本数。",
-                "四个指标分别看：答案忠不忠实、答没答题、资料准不准、资料全不全。",
+            log = teaching_log("=== Ragas 0.4 三指标 ===", [
+                "Ragas 0.4 交卷字段是 user_input / retrieved_contexts / response / reference，不是 0.2 的 question / contexts / answer / ground_truth。",
+                "第 1 行测差旅住宿上限；第 2 行测 RX-9000 断电步骤。",
+                "三个指标分别看：答案忠不忠实、资料全不全、答没答题。排位精度留给离线指标，不必再请一次裁判。",
             ])
             return card, log
 

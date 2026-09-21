@@ -19,6 +19,7 @@ site-packages/
 
 # 运行时 SQLite 数据库
 *.db
+**/.web_sessions.json
 
 # Agent 演示运行时产物：记忆文件与 Gradio 会话数据（不入库）
 agent_memory.json
@@ -27,6 +28,9 @@ gradio_sessions/
 
 # RAG 教程运行时产物：11 章 s11 脚本生成的检索索引（删掉重跑即重建）
 11_RAG实战/code/indexes/
+# s02 清洗演示写的临时脏文档（跑完会删；旧版曾误写成仓库根下的 demo.md）
+11_RAG实战/code/_demo_dirty.md
+11_RAG实战/code/demo.md
 
 # VitePress 文档站：docs 章节内容为 sync 脚本生成的产物（不入库），配置/首页/脚本入库
 docs/[0-9][0-9]_*/
@@ -37,3 +41,36 @@ docs/.vitepress/cache/
 # 8.13 Mini-Agent CLI 运行时产物：会话存档与输入历史（不入库）
 08_手搓Agent/code/sessions/
 08_手搓Agent/code/.s13_repl_history
+# 8.5 / 8.9 / 8.11 自测临时文件（脚本正常会删；崩溃时可能残留）
+temp_memory.json
+demo_temp.py
+demo_dup.py
+sessions_demo/
+.zcode/
+# 设计流程产物：评审截图与表面简报（本地工作用，不入库）
+.impeccable/
+# 代码图谱本地索引（体积大，且可能扫到工作区）
+.codegraph/
+
+# 应用运行期的 SQLite（种子库由 infra/scripts/seed_cn_data.py 重建，不入库）
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+
+# 浏览器自动化调试产物（截图、页面快照、控制台日志）
+.playwright-mcp/
+# 根目录误落的调试图（章节正式截图在各章 img/ 下）
+/forge-01-empty.png
+
+# 运行期日志目录（loguru 目前只挂控制台 handler；将来挂文件 handler 会往这里写）
+logs/
+
+# 重构过程文档：改造计划 / 实测记录这类工作稿不入库（结论已落在代码与第 16 章正文里）
+10_LangGraph搭建工作流/code/docs/
+
+# 16 节旅行助手的依赖清单走 pyproject.toml + uv.lock（uv 原生）。
+# 用 `uv export --format requirements-txt` 给 pip 读者现导一份可以，别提交——
+# 同一份依赖两份清单，迟早各写各的。
+10_LangGraph搭建工作流/code/travel_agent_v2/requirements.txt

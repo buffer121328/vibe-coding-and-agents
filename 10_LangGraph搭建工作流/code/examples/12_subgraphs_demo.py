@@ -18,7 +18,12 @@ class FlightState(TypedDict):
 
 
 def book_flight(state: FlightState):
-    return {"ticket": "CA-1801", "messages": [("assistant", "[子图] 已出票 CA-1801")]}
+    """子图内部只关心出票。ticket 是共享键，父图的 report 节点稍后能直接读到。"""
+    ticket = "CA-1801 北京→东京 08:40 ￥1280"
+    return {
+        "ticket": ticket,
+        "messages": [("assistant", f"[子图·航班部门] 已出票：{ticket}")],
+    }
 
 
 def build_flight_subgraph():
@@ -28,7 +33,7 @@ def build_flight_subgraph():
         .add_node("book_flight", book_flight)
         .add_edge(START, "book_flight")
         .add_edge("book_flight", END)
-        .compile()          # 先独立编译
+        .compile()
     )
 
 
@@ -39,18 +44,30 @@ class ParentState(TypedDict):
 
 
 def primary(state: ParentState):
-    return {"messages": [("assistant", "[父图] 识别到订票意图，委派给航班部门子图。")]}
+    return {
+        "messages": [
+            (
+                "assistant",
+                "[父图·主助理] 识别到订票意图，把整张航班子图当作一个部门节点来调用。",
+            )
+        ]
+    }
 
 
 def report(state: ParentState):
-    return {"messages": [("assistant", f"[父图] 收到子图结果：{state['ticket']}，汇报完毕。")]}
+    ticket = state.get("ticket") or "（子图没有写回 ticket）"
+    return {
+        "messages": [
+            ("assistant", f"[父图·主助理] 收到子图共享键 ticket={ticket}，向用户汇报完毕。")
+        ]
+    }
 
 
 def build_graph():
     """装配并编译父图（把编译后的子图整个当一个节点接入）"""
     parent_builder = StateGraph(ParentState)
     parent_builder.add_node("primary", primary)
-    parent_builder.add_node("flight_department", build_flight_subgraph())   # 编译后的图 = 节点
+    parent_builder.add_node("flight_department", build_flight_subgraph())
     parent_builder.add_node("report", report)
     parent_builder.add_edge(START, "primary")
     parent_builder.add_edge("primary", "flight_department")
@@ -68,10 +85,8 @@ def main():
     for msg in result["messages"]:
         print(msg.content)
 
-    # 父图看不到子图的私有内部，但能看到共享键 ticket
     print("父图视角的共享键 ticket：", result["ticket"])
 
-    # 用 xray 透视子图内部结构（对比 xray=False 只能看到一个黑盒节点）
     print("\n== xray=False（默认，子图是黑盒） ==")
     print(" -> ".join(n.name for n in graph.get_graph().nodes.values()))
     print("== xray=True（透视子图内部） ==")

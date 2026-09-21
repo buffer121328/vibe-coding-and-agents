@@ -6,6 +6,7 @@ s04_vector_db.py
 真实制度文档建库、配 HNSW 索引参数、按元数据（部门/年份/信任级别）过滤检索。
 """
 
+import re
 import time
 
 import numpy as np
@@ -62,9 +63,15 @@ def build_kb_points(pages=None, vectors=None):
     points = []
     for i, p in enumerate(pages):
         # 给真实文档打上业务过滤字段：来源分类、年份、信任级别
-        category = "ops" if ("RX9000" in p.doc_id or "OPS-HELP" in p.doc_id) else "policy"
-        year = 2025 if "2025" in p.doc_id else 2026
         trust = "external" if "外部网页" in p.source else "internal"
+        if "RX9000" in p.doc_id or "OPS-HELP" in p.doc_id:
+            category = "ops"
+        elif trust == "external":
+            category = "web"
+        else:
+            category = "policy"
+        year_match = re.search(r"(20\d{2})", p.doc_id)
+        year = int(year_match.group(1)) if year_match else None
         payload = {
             "text": p.text,
             "doc_id": p.doc_id,
@@ -72,7 +79,7 @@ def build_kb_points(pages=None, vectors=None):
             "title": p.title,
             "source": p.source,
             "category": category,
-            "year": year,
+            "year": year or 0,
             "trust": trust,
         }
         points.append(qm.PointStruct(id=i, vector=vectors[i].tolist(), payload=payload))

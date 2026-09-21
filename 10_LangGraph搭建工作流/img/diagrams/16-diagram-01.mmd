@@ -1,0 +1,44 @@
+graph TD
+    User["旅客窗口"] --> Fetch["读取旅客档案"]
+    Fetch --> Primary["主助理 前台调度"]
+
+    subgraph DESK ["主图：前台与平铺专员"]
+        Primary -->|"转交 ToFlight"| Flight["航班助理"]
+        Primary -->|"转交 ToHotel"| Hotel["酒店助理"]
+        Primary -->|"转交 ToExcursion"| Tour["游览助理"]
+        Primary -->|"工具：政策 / 偏好 / 搜索"| Tools["主助理工具池"]
+        Tools --> Primary
+    end
+
+    subgraph CAR ["真子图：租车部"]
+        CarEntry["进入租车部"] --> CarAgent["租车助理"]
+        CarAgent --> CarSafe["查询租车"]
+        CarAgent --> CarGate["interrupt 审批闸门"]
+        CarGate -->|"批准"| CarWrite["执行预订 / 变更"]
+        CarGate -->|"驳回"| CarAgent
+        CarWrite --> CarAgent
+        CarSafe --> CarAgent
+    end
+
+    subgraph QUOTE ["真子图：Send 并行比价"]
+        QuoteEntry["分发入口"] -->|"Send 四路"| W1["查机票"]
+        QuoteEntry -->|"Send 四路"| W2["查酒店"]
+        QuoteEntry -->|"Send 四路"| W3["查租车"]
+        QuoteEntry -->|"Send 四路"| W4["查游览"]
+        W1 --> Agg["aggregate 汇总"]
+        W2 --> Agg
+        W3 --> Agg
+        W4 --> Agg
+    end
+
+    Primary -->|"转交 ToBookCarRental"| CarEntry
+    Primary -->|"转交 ToMultiQuote"| QuoteEntry
+    Flight --> GateF["航班审批闸门"]
+    Hotel --> GateH["酒店审批闸门"]
+    Tour --> GateT["游览审批闸门"]
+    CarAgent -.->|"CompleteOrEscalate"| Leave["交还主助理"]
+    Agg --> Leave
+    Leave --> Primary
+
+    CK["Checkpointer 会话存档"] -.-> Fetch
+    ST["Store 跨会话档案"] -.-> Tools

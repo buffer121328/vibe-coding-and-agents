@@ -1446,10 +1446,12 @@ onUnmounted(() => { clearInterval(timer); });
                 t9_mem_status = gr.HTML('<div class="status-pill status-info">记忆状态：就绪</div>')
                 
                 gr.Markdown("#### 🧩 2. 动态技能包挂载")
+                t9_skill_names = skill_ldr.list_skills()
                 t9_skills = gr.CheckboxGroup(
-                    label="勾选动态挂载的技能包 (Skills)", 
-                    choices=skill_ldr.list_skills(), 
-                    value=skill_ldr.list_skills()
+                    label="勾选动态挂载的技能包 (Skills)",
+                    choices=t9_skill_names,
+                    value=t9_skill_names,
+                    info="勾选项来自 skills/*.md 扫描。仓库自带 git_expert 与 python_cleaner。",
                 )
                 t9_gen_btn = gr.Button("⚡ 生成组装后的增强 System Prompt", variant="primary")
                 t9_preview = gr.Textbox(label="增强型 System Prompt 最终预览", lines=6)
@@ -1632,10 +1634,12 @@ onUnmounted(() => { clearInterval(timer); });
                             choices=["🧠 深度思考", "🔍 强制联网搜索"], 
                             value=["🧠 深度思考"]
                         )
+                        t13_skill_names = SkillLoader("skills").list_skills()
                         t13_skills = gr.CheckboxGroup(
-                            label="技能挂载", 
-                            choices=["git_expert", "python_cleaner"], 
-                            value=[]
+                            label="技能挂载",
+                            choices=t13_skill_names,
+                            value=[],
+                            info="勾选后本轮会把对应 SKILL.md 拼进 System Prompt。",
                         )
                     with gr.Row(elem_classes=["mini-memory-row"]):
                         t13_allow_memory = gr.Checkbox(

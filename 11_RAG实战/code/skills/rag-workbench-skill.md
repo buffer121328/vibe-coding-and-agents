@@ -36,8 +36,8 @@ load_dotenv(../.env)
 | :--- | :--- | :--- |
 | `No module named 'langchain.retrievers'` | langchain 1.x 经典层搬进 `langchain_classic` | `from langchain_classic.retrievers import ...`（storage 同理） |
 | `QdrantClient has no attribute 'search'` | qdrant-client 新版移除 `.search` | `query_points(query=..., search_params=SearchParams(hnsw_ef=...)).points`；`HnswConfigDiff` 已无 `ef` 字段 |
-| ragas 导入报 vertexai | ragas 0.2.6 硬 import 已被 langchain-community 0.4 移除的模块 | 给 site-packages 里 `ragas/llms/base.py` 的该 import 打 try/except 补丁（见 rag_workbench README 环境段） |
-| ragas 结果取列 KeyError | 0.2.x 结果列名 v2 化 | `question→user_input / contexts→retrieved_contexts / answer→response` |
+| ragas 导入报 vertexai | ragas 0.4.3 顶层硬 import 已被 langchain-community 0.4 移除的 `ChatVertexAI` | 不要改 site-packages。`s09_evaluation.py` / Lite `evaluate.py` 的 `_patch_vertexai()` 在 import ragas 前补占位类 |
+| ragas 结果取列 KeyError | 0.4 字段名已经换了，旧列名不会再翻译 | 交卷用 `user_input / retrieved_contexts / response / reference`；指标走 `ragas.metrics.collections` + `ascore` |
 
 ## 3. 关卡回调规范（run_captured 模式）
 

@@ -56,11 +56,10 @@ def demo_pylate() -> None:
     ids = [p.chunk_id for p in pages if not p.source.startswith("外部网页")]
 
     colbert = models.ColBERT(model_name_or_path="lightonai/GTE-ModernColBERT-v1")
-    # 新版 pylate：先建索引再检索（旧版 docs_embeddings= 直传已被移除）
+    # 先建 PLAID 索引再检索；add_documents 只收 id 和 token 向量
     index = indexes.PLAID(index_folder="indexes", index_name="regression_kb", override=True)
     index.add_documents(
         documents_ids=ids,
-        documents_texts=docs,
         documents_embeddings=list(colbert.encode(docs, is_query=False)),
     )
     retriever = retrieve.ColBERT(index=index)
@@ -111,9 +110,9 @@ def demo_triage() -> None:
     triage_llm = make_llm(temperature=0).with_structured_output(Triage)
     ROUTER_PROMPT = ChatPromptTemplate.from_template(
         "你是知识库分诊台。可用知识库：\n"
-        "- product：产品功能、参数、价格\n"
-        "- policy：公司制度、报销、考勤\n"
-        "- ticket：历史工单、故障案例\n"
+        "- product：协作手册、产品工作方式（本演示用语料里的 VibeCoding 协作手册代替产品库）\n"
+        "- policy：公司制度、报销、考勤、年假\n"
+        "- ticket：设备运维、故障码、工单案例\n"
         "用户问题：{question}\n输出目标库与置信度。拿不准就输出 unknown。"
     )
 

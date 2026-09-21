@@ -20,6 +20,15 @@ from rag_quality import CacheScope, IndexManifest
 from shared_corpus import all_pages, embed_pages_batched, find_page, make_embeddings
 
 
+def align_vectors(subset, pages, vectors):
+    """按页 ID 取向量。筛过的子集不能再用 0、1、2 去对全库下标。"""
+    by_id = {p.chunk_id: i for i, p in enumerate(pages)}
+    try:
+        return [vectors[by_id[p.chunk_id]] for p in subset]
+    except KeyError as exc:
+        raise KeyError(f"语料中找不到对应向量：{exc}") from exc
+
+
 def demo_semantic_cache() -> None:
     """语义缓存：措辞不同、意思相同的问题，不重复烧 LLM；答案来自真实制度页。"""
     class SemanticCache:
@@ -99,15 +108,23 @@ def demo_acl() -> None:
             collection_name="kb",
             vectors_config=qm.VectorParams(size=dim, distance=qm.Distance.COSINE),
         )
+        hr_vecs = align_vectors(hr_docs, pages, vectors)
+        rd_vecs = align_vectors(rd_docs, pages, vectors)
         points = []
-        for i, p in enumerate(hr_docs):
-            points.append(qm.PointStruct(id=i, vector=vectors[i].tolist(),
-                                         payload={"tenant": "hr", "acl": ["employee", "manager"], "text": p.text,
-                                                  "doc_id": p.chunk_id}))
-        for j, p in enumerate(rd_docs):
-            points.append(qm.PointStruct(id=100 + j, vector=vectors[len(hr_docs) + j].tolist(),
-                                         payload={"tenant": "rd", "acl": ["manager"], "text": p.text,
-                                                  "doc_id": p.chunk_id}))
+        for i, (p, vec) in enumerate(zip(hr_docs, hr_vecs)):
+            points.append(qm.PointStruct(
+                id=i,
+                vector=vec.tolist(),
+                payload={"tenant": "hr", "acl": ["employee", "manager"], "text": p.text,
+                         "doc_id": p.chunk_id},
+            ))
+        for j, (p, vec) in enumerate(zip(rd_docs, rd_vecs)):
+            points.append(qm.PointStruct(
+                id=100 + j,
+                vector=vec.tolist(),
+                payload={"tenant": "rd", "acl": ["manager"], "text": p.text,
+                         "doc_id": p.chunk_id},
+            ))
         client.upsert(collection_name="kb", points=points)
 
     question = "年假有多少天，怎么申请？"
@@ -136,7 +153,54 @@ def demo_injection_scan() -> None:
         if alert or "外部网页" in p.source:
             print(f"{tag}：[{p.chunk_id}]《{p.title}》")
     flagged = sum(any(re.search(pat, p.text) for pat in SUSPICIOUS) for p in pages)
-    print(f"共扫描 {len(pages)} 页，命中注入 {flagged} 页（应命中「恶意内容样本」1 页）")
+    print(f"共扫描 {len(pages)} 页，命中注入 {flagged} 页（外部快照里至少两页带指令句）")
+
+
+def scan_poisoning(text: str, trust_level: str = "internal") -> list[str]:
+    """知识投毒扫描（纯规则、离线）：返回命中的可疑信号中文列表，无命中返回空列表。
+
+    覆盖四类信号：① 指令句式；② 越权/外泄诱导；③ 异常新来源（无出处断言）；
+    ④ 信任级别提示——低信任来源一律追加一条人工复核提醒。
+    """
+    signals: list[str] = []
+    rules = [
+        (r"忽略(之前|上面|以上|先前).{0,6}(指令|规则|要求)|ignore\s+(all\s+)?previous\s+instructions|你现在是",
+         "指令句式：疑似 Prompt 注入"),
+        (r"(把|将).{0,6}(全部|所有).{0,8}(资料|内容|上下文).{0,8}(原样)?(输出|导出|打印|发送)|泄露|导出所有",
+         "越权/外泄诱导：疑似诱导数据外泄"),
+        (r"据可靠消息|内部渠道|据知情人士|据非公开",
+         "异常新来源：无出处断言，需人工溯源核实"),
+    ]
+    for pattern, label in rules:
+        if re.search(pattern, text, flags=re.IGNORECASE):
+            signals.append(label)
+    if trust_level in ("external", "unknown"):
+        signals.append("低信任来源，需人工复核")
+    return signals
+
+
+def mask_pii(text: str) -> str:
+    """隐私脱敏（纯正则）：把手机号、邮箱、身份证、银行卡替换为占位标签，其余文本保持不变。"""
+    masked = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "[邮箱已脱敏]", text)
+    # 先处理带校验位的 18 位身份证，再处理纯数字银行卡，避免长数字被误判
+    masked = re.sub(r"(?<!\d)\d{17}[\dXx](?!\d)", "[身份证已脱敏]", masked)
+    masked = re.sub(r"(?<!\d)\d{16,19}(?!\d)", "[银行卡已脱敏]", masked)
+    masked = re.sub(r"(?<!\d)1[3-9]\d{9}(?!\d)", "[手机号已脱敏]", masked)
+    return masked
+
+
+def demo_poisoning_and_pii() -> None:
+    """知识投毒扫描 + 隐私脱敏：扫描真实注入样本，脱敏一段含多种 PII 的文本。"""
+    from shared_corpus import regression_pages
+    print("\n=== 知识投毒扫描（真实注入样本）===")
+    for p in regression_pages():
+        trust = "external" if "外部" in p.source else "internal"
+        hits = scan_poisoning(p.text, trust_level=trust)
+        if hits:
+            print(f"⚠️ [{p.chunk_id}]《{p.title}》 " + "；".join(hits))
+    sample = "客服电话 13812345678，邮箱 ops@example.com，联系人身份证 11010119900307123X，退款卡号 6222021234567890。"
+    print("脱敏前:", sample)
+    print("脱敏后:", mask_pii(sample))
 
 
 def demo_incremental_sync() -> None:
@@ -181,10 +245,11 @@ def demo_incremental_sync() -> None:
             stats["deleted"] += 1
         return stats
 
-    # 真实文档原文：直接读 testdata，模拟「制度改版 → 增量同步」
+    # 真实文档原文：按后缀解析 testdata（现行制度是 PDF，废止旧版是 Word）
     testdata = Path(__file__).with_name("testdata")
-    travel_2026 = (testdata / "差旅管理制度_2026.md").read_text(encoding="utf-8")
-    travel_2025 = (testdata / "差旅管理制度_2025_已废止.md").read_text(encoding="utf-8")
+    import s02_data_pipeline as s02
+    travel_2026 = s02.load_text_by_ext(s02.resolve_corpus_file(testdata, "差旅管理制度_2026"))
+    travel_2025 = s02.load_text_by_ext(s02.resolve_corpus_file(testdata, "差旅管理制度_2025_已废止"))
 
     store = FakeVectorStore()
     print("=== 增量同步（真实制度文档）===")
@@ -232,3 +297,4 @@ if __name__ == "__main__":
     demo_incremental_sync()
     demo_blue_green_index()
     demo_grounded_prompt()
+    demo_poisoning_and_pii()

@@ -1,0 +1,42 @@
+# Trip Assistant 依赖清单（uv 原生：这是唯一一份）
+#
+# 用法（在本目录内）：
+#   uv sync                 # 按 uv.lock 建/更新 .venv，装齐依赖
+#   uv add <包>             # 加依赖，同时改这里并更新 uv.lock
+#   uv lock                 # 只更新锁文件
+#
+# 为什么不再放 requirements.txt：同一份依赖写两遍，迟早各写各的。
+# 需要传统清单给 pip 用可以直接导出，不用手抄：
+#   uv export --format requirements-txt --no-hashes > requirements.txt
+#
+# 注意：Web 层（FastAPI + Air）要求 Python >= 3.13（Air 0.48 的硬约束，<3.15）。
+
+[project]
+name = "trip-assistant"
+version = "1.0.0"
+description = "第十六章：LangGraph 1.x 多智能体国内旅行助手（FastAPI + Air 工作台）"
+readme = "README.md"
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    # 核心框架：LangGraph 1.x 图编排 + LangChain 1.x 生态
+    "langgraph>=1.0,<2.0",
+    "langchain>=1.0,<2.0",
+    "langchain-core>=1.0,<2.0",
+    "langchain-openai>=1.0,<2.0",
+    "langchain-community>=0.4,<1.0",
+    # 对话存档持久化：SQLite Checkpointer。内存版 MemorySaver 随进程消失，
+    # 换成落盘实现重启后历史还在；生产换 PostgresSaver 时接口一致。
+    "langgraph-checkpoint-sqlite>=3.0",
+    # 环境变量管理：支持从项目根目录 .env 自动加载
+    "python-dotenv>=1.0",
+    # 数据处理与工具函数（政策检索的向量计算、业务库日期平移、日志等用到）
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "pytz>=2024.1",
+    "loguru>=0.7",
+    # Web 层：FastAPI 后端 + Air 前端。air 处于 alpha，锁小版本；
+    # Air 构建在 FastAPI 之上，会自动带入 fastapi / uvicorn。
+    "air>=0.48,<0.49",
+    # 登录认证：HS256 签名会话令牌
+    "PyJWT>=2.9",
+]

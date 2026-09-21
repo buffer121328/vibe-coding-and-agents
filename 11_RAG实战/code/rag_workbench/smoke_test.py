@@ -76,7 +76,13 @@ def main():
         snap, console = app.t02_parent(raw)
         obj = snap_obj(snap)
         assert "父块" in snap and "命中的子块" in snap and "父块" in console
-    check("11.2 数据管道：切块 + 父子切块", t02)
+        snap, console = app.t02_pdf()
+        obj = snap_obj(snap)
+        assert obj.get("是否抽出住宿上限") is True
+        preview = obj.get("含住宿上限的块预览") or obj.get("第一块预览") or ""
+        assert "500 元" in preview
+        assert "pymupdf" in console or "PDF" in console
+    check("11.2 数据管道：切块 + 父子切块 + PDF", t02)
 
     def t03():
         obj, console = assert_callback("11.3 度量", app.t03_main)
