@@ -154,6 +154,20 @@ Lite 的前端不是另立门户，而是**完整版 KnowledgeForge 的课堂版
 （公司管理员 / 财务负责人 / IT 员工 / 人事员工），想看"换个身份就换可见范围"就多注册一个。
 不想注册就点「以访客身份看看」。
 
+浏览器里的画面（截图来自本机 `uvicorn forge_lite.web.app:app --host 127.0.0.1 --port 8800`，访客进控制台后切公司管理员工牌，1440×900）。章节正文对应位置在 [`15_端到端综合实战_KnowledgeForge_lite.md`](../../15_端到端综合实战_KnowledgeForge_lite.md)。
+
+<!-- 实拍：../../img/screenshots/15-login.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="../../img/screenshots/15-login.png">
+    <img src="../../img/screenshots/15-login.png" alt="登录页：居中一张卡，底下可以不注册、以访客身份看看" width="760">
+  </a>
+</p>
+<p align="center">
+  <a href="../../img/screenshots/15-register.png">
+    <img src="../../img/screenshots/15-register.png" alt="注册页：身份从四张工牌里挑一张" width="760">
+  </a>
+</p>
+
 > 为什么表单是"挑身份"而不是分开选"角色 + 部门"：权限由 (角色, 部门) 这一对决定，
 > 而工牌空间里只有四种组合。让用户自由拼 3×4 = 12 种，其中 8 种查不到、只能回落——
 > 我们真踩过：选「公司管理员 + IT」（IT 还是部门下拉的默认值）回落到 IT 员工的工牌，
@@ -178,6 +192,27 @@ Lite 的前端不是另立门户，而是**完整版 KnowledgeForge 的课堂版
 | **智能问答** | 左历史会话卡（与右栏**等高**）· 右对话卡：头像 + 气泡（用户靠右蓝底、助手靠左白底）· `[N]` 角标 · 状态标签 · 推理步骤与引用来源折叠 · 反馈 · 连体输入框 · 证据抽屉（目录 / 出处 / 轨迹） | `pages/QAChat.tsx` + `components/ChatHistory.tsx` |
 | **知识文档** | 上传（拖拽或选择，逐篇入库）、统计卡、文档表（两行首列 / 状态标签 / 文字链操作）、隔离原因可展开、查看分块抽屉、**切块实验台** | `pages/DocList.tsx` + `components/DocumentTable.tsx` |
 | **评测治理** | 说明条、统计卡、用例表（点行开详情抽屉）、Ragas 0.4 三指标、历史报告 | `pages/EvaluationGovernance.tsx` |
+
+<p align="center">
+  <a href="../../img/screenshots/15-qa.png">
+    <img src="../../img/screenshots/15-qa.png" alt="智能问答：四张工牌对照条、历史会话、带角标的住宿上限作答" width="760">
+  </a>
+</p>
+<p align="center">
+  <a href="../../img/screenshots/15-qa-evidence.png">
+    <img src="../../img/screenshots/15-qa-evidence.png" alt="点角标打开证据抽屉：出处页是差旅制度原文" width="760">
+  </a>
+</p>
+<p align="center">
+  <a href="../../img/screenshots/15-docs.png">
+    <img src="../../img/screenshots/15-docs.png" alt="知识文档：7 篇里 1 篇投毒网页被隔离" width="760">
+  </a>
+</p>
+<p align="center">
+  <a href="../../img/screenshots/15-eval.png">
+    <img src="../../img/screenshots/15-eval.png" alt="评测治理：8 条黄金用例，门禁和 Ragas 分开跑" width="760">
+  </a>
+</p>
 
 界面语言上，这几处和完整版是同一套语法：
 

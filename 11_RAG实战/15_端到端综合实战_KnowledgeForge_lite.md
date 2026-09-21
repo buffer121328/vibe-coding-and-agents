@@ -148,6 +148,22 @@ uvicorn forge_lite.web.app:app --port 8800         # ⑫ 起服务：浏览器�
 
 注意第 ⑤、⑥ 个问题的设计：**知识库里故意没有年终奖**，投毒网页会被入库扫描隔离；**薪酬带宽写在财务密级文档里**，IT 员工工牌在打分前就被裁掉，所以拒答不是模型“懂礼貌”，是检索层根本没看见。第 ④ 题是口语改写，用来验证 11.6 的护栏。一个没装闸门的 RAG 会一本正经地编数字或把密级文档念出来；Lite 会返回“暂无可靠依据，已转人工”。这就是 11.12 / 11.13 说的：企业要的不是聪明，是可追责。
 
+第 ⑫ 步打开浏览器，先看到的是这张登录卡——**库是空的，谁用谁注册，没有预置账号**。课堂上不想建账号，点底下那行「不注册，以访客身份看看」就能进控制台。注册页从四张工牌里挑一张（角色和部门不分开选，就不会拼出不存在的组合）。
+
+<!-- 实拍：img/screenshots/15-login.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-login.png">
+    <img src="img/screenshots/15-login.png" alt="登录页：居中一张卡，底下可以不注册、以访客身份看看" width="760">
+  </a>
+</p>
+
+<!-- 实拍：img/screenshots/15-register.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-register.png">
+    <img src="img/screenshots/15-register.png" alt="注册页：用户名、密码、显示名，身份从四张工牌里挑一张" width="760">
+  </a>
+</p>
+
 ---
 
 ## 顺便补课：Docker 五个核心概念
@@ -253,6 +269,36 @@ cd code/KnowledgeForge_lite && docker compose up -d --build
 | **智能问答** | 左历史会话卡；右对话卡（问句气泡、答案正文、`[n]` 角标、状态标签、推理步骤与引用来源折叠、反馈）；证据抽屉分目录/出处/轨迹三页 | `pages/QAChat.tsx` + `components/ChatHistory.tsx` |
 | **知识文档** | 统计卡、文档表（两行首列、状态标签、文字链操作）、隔离原因可展开、查看分块抽屉、切块实验台 | `pages/DocList.tsx` + `components/DocumentTable.tsx` |
 | **评测治理** | 说明条、统计卡、用例表（点行开详情抽屉）、Ragas 三指标、历史报告 | `pages/EvaluationGovernance.tsx` |
+
+浏览器里这四个画面就是上面那张表。问答页顶部那条工牌对照条是课堂教具：换一张牌再问同一句，答案会从作答变成拒答。点答案里的 `[n]` 角标，右侧抽屉打开出处原文——员工能看见「有这么篇文档」，但读不到密级正文。
+
+<!-- 实拍：img/screenshots/15-qa.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-qa.png">
+    <img src="img/screenshots/15-qa.png" alt="智能问答：四张工牌对照条、历史会话、带角标的住宿上限作答" width="760">
+  </a>
+</p>
+
+<!-- 实拍：img/screenshots/15-qa-evidence.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-qa-evidence.png">
+    <img src="img/screenshots/15-qa-evidence.png" alt="点角标打开证据抽屉：出处页是差旅制度原文和图谱邻接" width="760">
+  </a>
+</p>
+
+<!-- 实拍：img/screenshots/15-docs.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-docs.png">
+    <img src="img/screenshots/15-docs.png" alt="知识文档：7 篇里 6 篇已索引、1 篇投毒网页被隔离，底下是切块实验台" width="760">
+  </a>
+</p>
+
+<!-- 实拍：img/screenshots/15-eval.png；浏览器工作台 1440×900 -->
+<p align="center">
+  <a href="img/screenshots/15-eval.png">
+    <img src="img/screenshots/15-eval.png" alt="评测治理：8 条黄金用例按作答/拒答分列，门禁和 Ragas 分开跑" width="760">
+  </a>
+</p>
 
 有几处是**照完整版的语法来**，值得单独认一下：
 
