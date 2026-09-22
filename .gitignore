@@ -61,6 +61,8 @@ sessions_demo/
 
 # 浏览器自动化调试产物（截图、页面快照、控制台日志）
 .playwright-mcp/
+# 旅行助手 GUI 走查截图（自动化界面测试产物，需要时重跑生成，不入库）
+gui-test-screenshots/
 # 根目录误落的调试图（章节正式截图在各章 img/ 下）
 /forge-01-empty.png
 
