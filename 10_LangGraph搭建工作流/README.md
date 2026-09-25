@@ -73,13 +73,17 @@
 
 ## 🚀 环境与示例
 
-Python 3.10+。教学示例全部**零 API Key**，需要“模型出场”的地方用 `langchain-core` 的假模型按剧本说话，图的机制和真模型一致。
+Python 3.10+。教学示例默认**零 API Key**，需要“模型出场”的地方用 `langchain-core` 的假模型按剧本说话，图的机制和真模型一致。只有 08 节带 `--real` 开关，可以换成 `.env` 里的真模型，看模型自己决定调不调工具。
 
 ```bash
 # 分节示例（02～14）：本目录自带 pyproject.toml，零 API Key
 cd 10_LangGraph搭建工作流/code/examples
 uv sync
 uv run python 02_state_graph_demo.py
+
+# 08 专属：换真模型（读 .env 的 OPENAI_*，先按 .env.example 填好）
+uv sync --extra real
+uv run python 08_tool_loop_demo.py --real
 
 # 图工作台：把同一份示例点亮（默认 http://127.0.0.1:7860）
 cd ../workbench

@@ -12,7 +12,7 @@
 | `05_streaming_debug_demo.py` | 05 图的可视化与流式调试 | Mermaid 可视化 + `updates` / `values` 对照 |
 | `06_memory_hitl_demo.py` | 06 Memory 与 Human-in-the-loop | `interrupt_before` 教学断点 + 同检查点批准 + `update_state` 正式驳回 |
 | `07_multiagent_stack_demo.py` | 07 MultiAgent 分层架构 | `dialog_state` 状态栈压栈/弹栈（Handoffs 入门） |
-| `08_tool_loop_demo.py` | 08 工具调用循环与预构建组件 | 完整 ReAct 闭环（假模型 + ToolNode + tools_condition） |
+| `08_tool_loop_demo.py` | 08 工具调用循环与预构建组件 | 完整 ReAct 闭环（假模型 + ToolNode + tools_condition）；加 `--real` 换真模型 |
 | `09_workflow_patterns_demo.py` | 09 工作流设计模式 | Routing / Orchestrator-Worker / Evaluator-Optimizer |
 | `10_memory_timetravel_demo.py` | 10 长期记忆与 Time Travel | Store 跨线程档案 + 回放与改道 |
 | `11_durable_execution_demo.py` | 11 持久执行与容错 | `RetryPolicy` 重试 + 断点恢复 |
@@ -28,6 +28,8 @@ cd 10_LangGraph搭建工作流/code/examples
 uv sync                         # 按本目录 pyproject.toml 装 langgraph + langchain-core
 uv run python 02_state_graph_demo.py
 ```
+
+想看真模型自己决定调不调工具：`uv sync --extra real`，把 `.env.example` 复制成 `.env` 填上 `OPENAI_*`，再 `uv run python 08_tool_loop_demo.py --real`。只有 08 带这个开关——其余示例演示的是图的机制，换不换真模型结果都一样。
 
 没有 `uv` 时：`python -m venv .venv && .venv/bin/pip install -e . && .venv/bin/python 02_state_graph_demo.py`。不要拿系统 Python 直接 `pip install`——那是「这台机器碰巧有包」，换机器就红。
 

@@ -76,3 +76,8 @@ logs/
 # 用 `uv export --format requirements-txt` 给 pip 读者现导一份可以，别提交——
 # 同一份依赖两份清单，迟早各写各的。
 10_LangGraph搭建工作流/code/travel_agent_v2/requirements.txt
+
+# 本地工具配置：根目录的 AI 协作规范与 ZCode 忽略清单只保留在工作区，不入库。
+# 注意用「/」锚定仓库根——05/06 章内的 agents.md 是教学内容，仍正常跟踪。
+/agents.md
+/.zcodeignore

@@ -18,6 +18,12 @@ uv venv && uv pip install --python .venv/bin/python -r requirements.txt
 WORKBENCH_ANIMATION_DELAY=0 .venv/bin/python app.py
 ```
 
+**端口撞车时换个门牌号**：本台默认 7860，16 节的旅行助手也默认 7860，两个同时开会有一个起不来（Gradio 会报 `Cannot find empty port`）。换个端口起工作台即可，工作台是无状态的，换哪个都不影响：
+
+```bash
+GRADIO_SERVER_PORT=7863 .venv/bin/python app.py   # 浏览器开 http://127.0.0.1:7863
+```
+
 ## 新手读图法
 
 - **START / END 不是你写的业务函数**：它们是 LangGraph 自动加的图边界。START 点亮表示流程进入图，END 点亮表示流程离开图。工作台故意把它们也点亮，是为了让初学者看清“从哪里开始、在哪里结束”。
@@ -47,8 +53,11 @@ WORKBENCH_ANIMATION_DELAY=0 .venv/bin/python app.py
 
 ```
 workbench/
-├── app.py            # Gradio 6 单文件主程序（版式沿用 09 章实验台 indigo 体系）
-├── assets/           # 20 组 {节号}-diagram.mmd + .svg（House 风格，scripts/render-house.mjs 渲染；
+├── app.py            # 主程序：import 14 个示例 → 每页布局 + 回调（Gradio 6）
+├── kit.py            # 各页共用零件：节点徽章 / SVG 高亮 / State 摘要 / 逐节点流式驱动
+├── assets/
+│   ├── workbench.css # 全站样式（版式沿用 09 章实验台 indigo 体系）
+│   └── …             # 20 组 {节号}-diagram.mmd + .svg（House 风格，scripts/render-house.mjs 渲染；
 │                     #   12-diagram-02/03/04 与章级 img/diagrams 同源，用于 10.12b 三种重点实现）
 ├── gen_assets.py     # 从示例图对象导出 mermaid 源码（改图后重跑 + 重渲染）
 ├── smoke_test.py     # 无 Key 冒烟：直调各关运行逻辑（.venv/bin/python smoke_test.py）

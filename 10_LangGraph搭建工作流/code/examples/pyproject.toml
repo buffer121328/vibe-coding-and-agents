@@ -7,3 +7,10 @@ dependencies = [
     "langgraph>=1.2,<2.0",
     "langchain-core>=1.6,<2.0",
 ]
+
+[project.optional-dependencies]
+# 只有 08_tool_loop_demo.py --real 用得到：uv sync --extra real
+real = [
+    "langchain-openai>=1.0,<2.0",
+    "python-dotenv>=1.0",
+]
