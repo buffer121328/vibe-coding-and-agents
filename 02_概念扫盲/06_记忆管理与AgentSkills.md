@@ -8,7 +8,7 @@
 
 可以借用人类记忆的分类来理解智能体保存的信息，但具体系统未必按同一方式实现：
 
-<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-01.svg">
     <img src="img/diagrams/06-diagram-01.svg" alt="概念与流程示意图" width="860">
@@ -57,7 +57,7 @@
 
 **Agent Skill（技能）** 就是把某个特定专业任务的**规章制度、执行脚本、模板和工具打包成一个可插拔的模块**：
 
-<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-02.svg">
     <img src="img/diagrams/06-diagram-02.svg" alt="概念与流程示意图" width="960">
@@ -155,3 +155,7 @@ description: 对本次代码改动进行系统性审查，输出分级问题清�
 - [LangChain 官方 Memory 模块文档](https://python.langchain.com/docs/concepts/memory/)
 - [Anthropic 官方 Agent Skills 文档](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview) —— 技能包规范与最佳实践
 - [Anthropic Building Effective Agents 研究报告](https://www.anthropic.com/research/building-effective-agents)
+
+## 记忆写入也要有门槛
+
+不是所有对话都值得进入长期记忆。适合保存的是稳定偏好、项目约定、已经确认的决定和可复用的操作步骤；一次性的猜测、临时错误和未经确认的个人信息应当被排除。技能文件也应写清适用范围、输入输出和失败处理，避免把一段临时提示伪装成通用能力。

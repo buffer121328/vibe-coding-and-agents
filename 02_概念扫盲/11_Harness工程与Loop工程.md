@@ -1,4 +1,4 @@
-# 2.11 Harness 工程与 Loop 工程：从单次问答到自主工业级闭环
+# 2.11 Harness 工程与 Loop 工程：从单次问答到可验证的自主闭环
 
 发动机需要车身、转向和刹车才能成为可用的车，行驶时还要持续根据路况调整。模型周围的运行系统与任务循环可以分别用 Harness 和 Loop 来理解：前者提供工具、状态与执行约束，后者组织一步步行动及其反馈。
 
@@ -10,7 +10,7 @@
 1. **光有聪明的大脑（模型）远远不够**：如果没有隔离的沙箱、没有工具拦截网关、没有科学的评测基准，模型就会成为“不可控的黑盒”；
 2. **真实任务必须多步循环**：解决一个真实系统的 Bug，往往需要 10~30 步“探索代码 ➔ 尝试修改 ➔ 运行报错 ➔ 自我反思 ➔ 再次测试”的闭环迭代。
 
-<!-- 图表源文件：img/diagrams/11-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/11-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/11-diagram-01.svg">
     <img src="img/diagrams/11-diagram-01.svg" alt="概念与流程示意图" width="760">
@@ -43,7 +43,7 @@
 
 **Loop 工程（循环工程）** 专注于设计 Agent 的自我修正机制与生命周期控制：
 
-<!-- 图表源文件：img/diagrams/11-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/11-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/11-diagram-02.svg">
     <img src="img/diagrams/11-diagram-02.svg" alt="概念与流程示意图" width="760">
@@ -98,3 +98,7 @@
 - [Reflexion: Language Agents with Verbal Reinforcement Learning (经典论文)](https://arxiv.org/abs/2303.11366)
 - [Anthropic Building Effective Agents 研究报告](https://www.anthropic.com/research/building-effective-agents)
 - [OpenHands (原 OpenDevin) 架构与 Harness 设计文档](https://docs.openhands.ai)
+
+## 一条执行记录应能复盘
+
+至少记录任务输入、模型和工具版本、执行步骤、修改文件、测试命令、失败原因、停止原因和最终状态。把“未运行”“运行失败”“运行通过但未覆盖目标”分开写，才能知道下一轮该补环境、补测试还是调整任务边界。

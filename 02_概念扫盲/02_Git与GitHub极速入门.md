@@ -40,7 +40,7 @@
 
 很多新手被 `git add`、`git commit`、`git push` 搞得晕头转向，其实它的过程和**日常网购退货打包**一模一样：
 
-<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-01.svg">
     <img src="img/diagrams/02-diagram-01.svg" alt="概念与流程示意图" width="760">
@@ -130,7 +130,7 @@ HTTPS 可以配合凭据管理器或令牌使用，SSH 则使用公钥认证。�
 
 ### 1. 分支（Branch）与合并冲突（Merge Conflict）
 
-- - 你和小明要共同策划一份《日本旅游攻略》。为了不互相打扰，你俩各自复印了一份草稿（拉出各自的 **分支**）。
+- 你和小明要共同策划一份《日本旅游攻略》。为了不互相打扰，你俩各自复印了一份草稿（拉出各自的 **分支**）。
   - 你在第 10 行写上了“住东京希尔顿酒店”，小明在第 10 行写上了“住新宿民宿”。
   - 当你们要把两份草稿合并（**Merge**）成终稿时，Git 就会亮起红灯报警：**“发生冲突（Conflict）了。第 10 行你俩写的不一样，请人类自己商量决定留哪一个。”**
 - **Git 冲突解决说明**：
@@ -148,7 +148,7 @@ HTTPS 可以配合凭据管理器或令牌使用，SSH 则使用公钥认证。�
 
 ### 2. GitHub 社交三剑客：Fork、PR 与 Issue
 
-<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-02.svg">
     <img src="img/diagrams/02-diagram-02.svg" alt="概念与流程示意图" width="760">
@@ -213,3 +213,7 @@ git status
 - [Git 官方中文手册 (Pro Git 电子书)](https://git-scm.com/book/zh/v2)
 - [GitHub Desktop 官方可视化客户端下载](https://desktop.github.com)
 - [GitHub Skills 官方互动式入门学习实验场](https://skills.github.com)
+
+## 把 Git 用成 AI 协作的检查点
+
+让工具改代码前，先确认工作区状态并建立一个容易回退的提交或分支；让工具完成后，先看 `git diff`，再运行检查，最后用一条清楚的提交说明记录原因。不要把“有提交”当成“代码正确”，提交只是保存变化，正确性仍由测试、评审和实际行为决定。

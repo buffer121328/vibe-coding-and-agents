@@ -1,20 +1,17 @@
 # 3.1 Python 编程基础：读懂并检查 Agent 代码
 
-> ⚠️ **写在最前面的一记当头棒喝**：
-> **“没有内功是万万不能的！在 AI 时代，最危险的就是沦为一个只会疯狂点击‘Accept / 接受’的 YES 工程师！”**
-> 
-> 如果你连最基础的变量、字典、循环和异常处理都看不懂，当 AI 产生幻觉、写出死循环或者把数据库删库代码递给你时，你只会傻傻地点 YES，直到整个系统当场爆炸。
-> **AI 是你的副驾驶，但你必须握紧方向盘！**
+> **先把最小的 Python 基础补起来。** 如果看不懂变量、字典、循环和异常处理，就很难判断 AI 生成的代码是否合理，也难以定位死循环、权限误用或数据处理错误。
+> AI 可以辅助实现，但需求判断、权限边界和结果验收仍需要由你负责。
 
 ---
 
 ## 🥋 为什么必须掌握 Python？
 
 在 AI 与 Agent 项目中，Python 是最常见的开发语言之一：
-- 几乎所有的大模型 SDK（OpenAI、Anthropic、DeepSeek）、主流 Agent 框架（LangChain、LangGraph、CrewAI、AutoGen）、向量数据库驱动和开源微调工具，都是以 Python 为第一优先级支持的。
-- 掌握 Python 核心语法，你才能在 Agent 写完代码后，一眼看穿“这里的逻辑对不对”、“这个参数有没有传反”。
+- 常见的大模型 SDK（OpenAI、Anthropic、DeepSeek）、Agent 框架（LangChain、LangGraph、CrewAI、AutoGen）、向量数据库驱动和微调工具，通常都会提供 Python SDK 或示例。
+- 即使主要由 Agent 生成实现，也需要掌握 Python 核心语法，才能判断“这里的逻辑对不对”“这个参数有没有传反”，并在必要时直接修正局部代码。
 
-<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-01.svg">
     <img src="img/diagrams/01-diagram-01.svg" alt="🥋 为什么必须掌握 Python？" width="960">
@@ -23,7 +20,7 @@
 
 ---
 
-## ⚡ Python 核心内功极速通关（13 个必会知识点）
+## Python 核心知识（13 个需要会读、会改的知识点）
 
 ### 1. 变量与基本数据类型（贴标签比喻）
 - 变量就像给现实中的物品贴上一个名字标签：
@@ -44,7 +41,7 @@ is_vip_member = True
 
 ### 2. 列表（List）与字典（Dictionary）—— 购物清单与查字典
 - **列表 `[]`**：有序的抽屉，按顺序放东西；
-- **字典 `{}`**：带名字的档案袋（键值对 Key-Value），根据名字秒查数据。
+- **字典 `{}`**：带名字的档案袋（键值对 Key-Value），按键查找数据。
 
 ```python
 # 列表：像买菜清单，可以用下标 0, 1, 2 访问
@@ -352,7 +349,7 @@ def load_user(user_id: str) -> dict[str, str] | None:
 
 ## 🔍 AI 代码审查清单
 
-> 学会了语法，还要学会"审 AI"。AI 生成代码后，先花 3 秒核对这几点，能拦下 80% 的坑：
+> 学会语法后，还要学会“审 AI”。AI 生成代码后，先核对下面这些常见问题：
 
 | 检查项 | 一眼看什么 | 典型翻车案例 |
 | :--- | :--- | :--- |
@@ -365,14 +362,18 @@ def load_user(user_id: str) -> dict[str, str] | None:
 
 ---
 
-## 📚 免费优质 Python 学习资源宝库（推荐收藏）
+## 📚 Python 学习资源
 
-如果你想系统性夯实 Python 语法内功，强烈推荐以下完全免费的官方与中文名校教程：
+如果想系统补齐 Python 语法，可以从下面这些包含免费内容的官方与社区教程开始；具体授权和内容范围以各站点当前说明为准。
 
 | 平台 / 教程名称 | 官方直达链接 | 核心特色与适用人群 |
 | :--- | :--- | :--- |
 | **Python 官方中文文档** | [https://docs.python.org/zh-cn/3/](https://docs.python.org/zh-cn/3/) | 最权威、最标准的官方技术参考词典 |
 | **菜鸟教程 (Runoob) Python 3** | [https://www.runoob.com/python3/](https://www.runoob.com/python3/python3-tutorial.html) | 国内新手普及度最高、支持在线运行代码的零基础教程 |
-| **廖雪峰 Python 极速教程** | [https://www.liaoxuefeng.com](https://www.liaoxuefeng.com) | 口碑爆棚的经典实战教程，条理清晰、直击重点 |
-| **Python-100-Days (GitHub ⭐150k+)** | [https://github.com/jackfrued/Python-100-Days](https://github.com/jackfrued/Python-100-Days) | GitHub 上最火的 Python 100 天从新手到大师全开源路线 |
+| **廖雪峰 Python 教程** | [https://www.liaoxuefeng.com](https://www.liaoxuefeng.com) | 社区使用较广的中文教程，适合按章节阅读和练习 |
+| **Python-100-Days** | [https://github.com/jackfrued/Python-100-Days](https://github.com/jackfrued/Python-100-Days) | 社区维护的 Python 100 天学习路线，适合按天练习并回看代码 |
 | **W3Schools Python 中文教程** | [https://www.w3school.com.cn/python/](https://www.w3school.com.cn/python/index.asp) | 极其简单直观的网页互动式入门手册 |
+
+## 用 Python 基础审查生成代码
+
+看到 Agent 生成的 Python 文件时，可以先沿着一条数据路径阅读：输入从哪里来，类型在哪里检查，异常怎样处理，结果由谁消费。优先检查可变状态、文件和网络访问、循环终止条件以及环境变量读取。能回答这几个问题，就已经具备了修改局部实现和判断验证结果的基础。

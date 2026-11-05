@@ -8,7 +8,7 @@
 
 [VS Code](https://code.visualstudio.com)适合通过扩展配置不同语言；[PyCharm](https://www.jetbrains.com/pycharm/)围绕 Python 项目提供集成开发功能。若已经在使用 [Cursor](https://cursor.com) 或 [Trae](https://www.trae.ai)，也可以先在现有工具中完成练习，无需重复安装所有编辑器。
 
-<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-01.svg">
     <img src="img/diagrams/03-diagram-01.svg" alt="本节概念与流程示意图 1" width="960">
@@ -45,7 +45,7 @@ py --version
 
 虚拟环境主要隔离依赖包，避免项目 A 升级一个库后影响项目 B。它不像虚拟机那样提供独立操作系统，也不会阻止程序读写电脑上的其他文件。
 
-<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-02.svg">
     <img src="img/diagrams/03-diagram-02.svg" alt="本节概念与流程示意图 2" width="960">
@@ -124,3 +124,7 @@ uv run python -c "import sys; print(sys.executable)"
 | 终端关闭后服务停止 | 服务就是该终端启动的进程 | 按项目部署方式管理长期进程 |
 
 完成后应能解释三件事：代码由谁执行，依赖装在哪里，文件从哪个目录读取。这比把所有扩展都装齐更重要。
+
+## 环境问题先做三项确认
+
+运行代码前打印解释器路径、当前工作目录和关键依赖版本；编辑器、终端和自动化任务都应指向同一个项目环境。遇到导入错误时，先确认执行者和安装位置，再决定是否重装依赖。把这些信息写进项目 README，能减少“换一台电脑就重新猜一遍”的成本。

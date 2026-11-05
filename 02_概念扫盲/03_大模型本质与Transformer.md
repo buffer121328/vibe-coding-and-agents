@@ -8,7 +8,7 @@
 
 很多初学者觉得大模型，其实它的成长过程和一个人类专家的求学之路相似：
 
-<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-01.svg">
     <img src="img/diagrams/03-diagram-01.svg" alt="概念与流程示意图" width="860">
@@ -31,7 +31,7 @@
 
 你在调用 API 或在写提示词时经常会看到 `temperature` 参数：
 
-<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-02.svg">
     <img src="img/diagrams/03-diagram-02.svg" alt="概念与流程示意图" width="760">
@@ -44,11 +44,11 @@
 
 2017 年 Google 发布的 [《Attention Is All You Need》](https://arxiv.org/abs/1706.03762) 论文之所以能颠覆整个 AI 界，核心全在“注意力机制”上：
 
-- - 想象你正在一个 100 人的嘈杂酒吧派对上，周围所有人都在大声碰杯说话（背景噪音海量输入）；
+- 想象你正在一个 100 人的嘈杂酒吧派对上，周围所有人都在大声碰杯说话（背景噪音海量输入）；
   - 突然，远处的吧台有人轻声喊了一句：**“小明，你的外卖到了。”**
   - 虽然现场声浪震天，但小明的耳朵雷达把注意力转向这几个字，并立刻把“外卖”和“自己（小明）”关联在一起。
 
-<!-- 图表源文件：img/diagrams/03-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/03-diagram-03.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-03.svg">
     <img src="img/diagrams/03-diagram-03.svg" alt="概念与流程示意图" width="760">
@@ -81,7 +81,7 @@ embedding_of_car = [-0.90, 0.44, 0.10, -0.77, ...]  # “汽车”（和猫狗�
 - 像学霸现场写作文——一个字一个字写，每写一个字都要回头看看前面写过的内容，再决定下一个字写什么。
 - 生成时模型每次只预测“**下一个 Token**”的概率分布，按解码策略选择一个，拼回原文再继续预测，循环往复直到输出结束符。
 
-<!-- 图表源文件：img/diagrams/03-diagram-04.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/03-diagram-04.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-04.svg">
     <img src="img/diagrams/03-diagram-04.svg" alt="概念与流程示意图" width="860">
@@ -176,3 +176,7 @@ embedding_of_car = [-0.90, 0.44, 0.10, -0.77, ...]  # “汽车”（和猫狗�
 - [Hugging Face 官方全球开源大模型库](https://huggingface.co)
 - [OpenAI 官方研究与技术博客](https://openai.com/research)
 - [Anthropic 官方研究与安全文档](https://www.anthropic.com/research)
+
+## 从“会生成”到“有依据”
+
+模型能根据上下文生成合理文本，不等于它拥有可直接查询的事实数据库。需要精确数字、最新状态或私有资料时，应提供来源并要求输出依据；需要稳定格式时，再用结构化输出和程序校验。理解这一边界，有助于区分是模型能力问题、上下文缺失，还是验证流程没有建立。

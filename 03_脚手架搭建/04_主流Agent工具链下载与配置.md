@@ -4,7 +4,7 @@
 
 本节提供入口与通用检查方法，后续章节再分别开展项目实战。按钮名称、订阅范围和安装方式可能变化，具体操作应以当前官方文档为准。
 
-<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/04-diagram-01.svg">
     <img src="img/diagrams/04-diagram-01.svg" alt="本节概念与流程示意图 1" width="760">
@@ -76,3 +76,7 @@ OpenCode 按其[官方入门文档](https://opencode.ai/docs/)安装并连接提
 - 把稳定的运行方法与约定写进项目文档，减少重复说明。
 
 后续可继续阅读 [OpenCode 实战](../05_OpenCode实战/README.md)、[Trae 实战](../06_Trae实战/README.md)和 [Codex 实战](../07_Codex实战/README.md)。选一个完成完整练习，再根据需要比较其他工具。
+
+## 第一次接入只做低风险任务
+
+先让工具读取一个小文件、运行一条已有检查或修改一处无敏感数据的文案，观察它请求了哪些权限、改了哪些文件、是否能说明验证结果。确认执行边界后，再逐步开放写入、安装依赖和联网能力。工具能执行命令，不代表它理解了项目目标。

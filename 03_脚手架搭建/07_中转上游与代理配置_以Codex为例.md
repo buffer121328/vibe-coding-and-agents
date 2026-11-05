@@ -10,7 +10,7 @@
 | 本地网关地址 | 在本机接收请求并转发到上游 | 管理工具实际监听的地址 |
 | 网络代理地址 | 转发网络连接 | 所在网络提供的代理端口 |
 
-<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-01.svg">
     <img src="img/diagrams/07-diagram-01.svg" alt="本节概念与流程示意图 1" width="960">
@@ -29,7 +29,7 @@
 
 [CC-Switch 官方仓库](https://github.com/farion1231/cc-switch)提供多个编码工具的配置管理功能。它可以帮助管理提供方与相关设置，但不是模型服务本身，也不会自动提供 API 余额或账户权限。
 
-<!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-02.svg">
     <img src="img/diagrams/07-diagram-02.svg" alt="本节概念与流程示意图 2" width="760">
@@ -109,3 +109,7 @@ codex
 | Certificate verify failed | 系统时间、证书链或代理证书问题 | 修复时间与证书信任，按组织网络要求配置 |
 
 证书问题应从证书链和网络配置排查，不把关闭证书校验作为常规解决办法。连接恢复后，保留一份不含密钥的配置说明，记录上游、接口类型与验证过的功能。
+
+## 按层次验证上游连接
+
+先验证网络和证书，再验证认证，再验证模型列表或最小请求，最后验证流式输出、工具调用和超时处理。每一步只改变一个变量，并记录最终生效的配置来源。不要为了绕过 401、403 或证书错误直接关闭校验，否则问题会被隐藏到更难排查的地方。

@@ -10,7 +10,7 @@ Spec 是 specification 的简称，可以译为规格说明。规格驱动开发
 
 聊天适合讨论；确定的规则适合写入项目。规格应说明系统应该怎样表现，设计说明解释如何实现，任务清单安排具体工作，测试则检查是否达到要求。
 
-<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/05-diagram-01.svg">
     <img src="img/diagrams/05-diagram-01.svg" alt="本节概念与流程示意图 1" width="960">
@@ -57,7 +57,7 @@ openspec/
 
 `specs` 记录当前约定，`changes` 记录一次变更及其过程。变更完成后再按工作流归档与同步，使后续任务能找到现行规则，而不是在一堆历史讨论中猜测。
 
-<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：Macaron 马卡龙 -->
+<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/05-diagram-02.svg">
     <img src="img/diagrams/05-diagram-02.svg" alt="本节概念与流程示意图 2" width="760">
@@ -115,3 +115,7 @@ openspec/
 文档格式校验通过，只说明文件结构符合工具要求，不代表功能已经正确实现。反过来，功能暂时能运行，文档没同步，也会让下一次修改失去可靠依据。
 
 其他带规格或任务模式的工具也可以采用同样思路，例如 [Qoder](https://docs.qoder.com/)。无论使用哪种产品，重点都是把目标、约束、实现和验收对应起来。
+
+## 规格文档要与实现保持双向对应
+
+每条行为规则都应能找到实现位置和验收场景；每个重要实现决定也应能回到需求或设计说明。修改范围变化时，先更新规格和任务清单，再让工具继续执行。这样规格不是一次性生成的文档，而是帮助人和 Agent 对齐工作的索引。

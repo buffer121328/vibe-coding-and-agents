@@ -8,7 +8,7 @@
 
 ## 智能管家做大餐：一图看懂 Agent 运作机制
 
-<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/04-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/04-diagram-01.svg">
     <img src="img/diagrams/04-diagram-01.svg" alt="概念与流程示意图" width="760">
@@ -36,7 +36,7 @@
 
 在 Agent 自主解决问题时，有三种最主流的思考架构：
 
-<!-- 图表源文件：img/diagrams/04-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/04-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/04-diagram-02.svg">
     <img src="img/diagrams/04-diagram-02.svg" alt="概念与流程示意图" width="960">
@@ -170,3 +170,7 @@ CoT 是一种分步推导思路，ToT 涉及候选路径的搜索与评估，ReA
 - [Tree of Thoughts: Deliberate Problem Solving (ToT 论文)](https://arxiv.org/abs/2305.10601)
 - [Anthropic Claude Code 官方文档](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code)
 - [Cursor 官方 Agent 开发手册](https://docs.cursor.com)
+
+## 先画状态，再决定是否需要 Agent
+
+如果任务只有一次模型调用和一次确定的程序处理，普通函数或固定工作流通常更容易测试。只有当任务需要根据中间结果选择下一步、调用多个工具或循环修正时，Agent 的状态、工具和停止条件才有明确价值。设计时先画出状态变化，再决定哪些步骤交给模型，哪些步骤必须由程序控制。

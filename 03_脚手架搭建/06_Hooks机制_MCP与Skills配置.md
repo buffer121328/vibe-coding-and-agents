@@ -14,7 +14,7 @@
 
 例如提交代码前执行一次格式检查，和餐厅出餐前核对订单类似：到了那个步骤，就执行预先安排的动作。[Git Hooks](https://git-scm.com/docs/githooks)属于版本控制事件，[Claude Code Hooks](https://code.claude.com/docs/en/hooks-guide)则属于智能体的运行事件，配置位置和触发时机不同。
 
-<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Vercel 黑白 -->
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-01.svg">
     <img src="img/diagrams/06-diagram-01.svg" alt="本节概念与流程示意图 1" width="860">
@@ -75,7 +75,7 @@ MCP 官方仓库中的部分早期参考服务已经归档，包括 GitHub、Pos
 
 技能更像操作手册，通常包含适用条件、步骤与配套资料。[Agent Skills 规范](https://agentskills.io/specification)说明了 `SKILL.md` 的元数据和目录结构，加载方式则由宿主工具决定。
 
-<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-02.svg">
     <img src="img/diagrams/06-diagram-02.svg" alt="本节概念与流程示意图 2" width="760">
@@ -114,3 +114,7 @@ description: 审查项目 Markdown 文档的术语、链接与操作步骤
 例如文档整理任务可以用技能规定审查步骤，通过 MCP 读取外部资料，再由钩子在文件修改后运行格式检查。任务方法、数据访问和自动检查各有责任。
 
 出现问题时，先定位属于哪一层：技能未触发、服务没连接，还是钩子命令失败。保留各层的执行结果，通常比把三个机制同时重新安装更有效。
+
+## 三种机制要分别验证
+
+先单独确认 Hook 是否在预期事件触发，再确认 MCP 服务能否连接并只访问允许的目录，最后确认 Skill 是否被加载且步骤适用于当前项目。每层都保留成功、失败和权限范围的记录，排错时就能知道问题来自触发、连接还是方法文件。

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420.861 654.3" width="420.861" height="654.3" style="--bg:#FFFFFF;--fg:#27272A;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 428.861 662.3" width="428.861" height="662.3" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,46 +27,46 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="IDE" data-label="1. AI-Native 编辑器门派 (开箱即用)">
-  <rect x="36" y="36" width="231.783" height="218.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="36" width="231.783" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. AI-Native 编辑器门派 (开箱即用)</text>
+  <rect x="40" y="40" width="231.783" height="218.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="231.783" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. AI-Native 编辑器门派 (开箱即用)</text>
 </g>
 <g class="subgraph" data-id="CLI" data-label="2. 终端命令行 Agent 门派 (极客全自主)">
-  <rect x="36" y="278.70000000000005" width="348.861" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="278.70000000000005" width="348.861" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="292.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 终端命令行 Agent 门派 (极客全自主)</text>
+  <rect x="40" y="282.70000000000005" width="348.861" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="282.70000000000005" width="348.861" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="296.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 终端命令行 Agent 门派 (极客全自主)</text>
 </g>
 <g class="subgraph" data-id="Ext" data-label="3. VS Code 开源插件门派 (高自由度 + MCP)">
-  <rect x="36" y="460.5" width="273.279" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="460.5" width="273.279" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="474.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. VS Code 开源插件门派 (高自由度 + MCP)</text>
+  <rect x="40" y="464.5" width="273.279" height="157.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="464.5" width="273.279" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="478.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. VS Code 开源插件门派 (高自由度 + MCP)</text>
 </g>
 <g class="node" data-id="T1" data-label="Trae (字节跳动免费神器)" data-shape="rectangle">
-  <rect x="66.63475" y="140.9" width="199.783" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="166.52625" y="159.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Trae (字节跳动免费神器)</text>
+  <rect x="70.63475" y="144.9" width="199.783" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="170.52625" y="163.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Trae (字节跳动免费神器)</text>
 </g>
 <g class="node" data-id="T2" data-label="Cursor (行业标杆)" data-shape="rectangle">
-  <rect x="66.63475" y="201.8" width="153.84099999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="143.55525" y="220.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Cursor (行业标杆)</text>
+  <rect x="70.63475" y="205.8" width="153.84099999999998" height="36.900000000000006" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="147.55525" y="224.25" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Cursor (行业标杆)</text>
 </g>
 <g class="node" data-id="T3" data-label="Windsurf (沉浸体验)" data-shape="rectangle">
-  <rect x="66.63475" y="80" width="163.474" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="148.37175" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Windsurf (沉浸体验)</text>
+  <rect x="70.63475" y="84" width="163.474" height="36.900000000000006" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="152.37175" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Windsurf (沉浸体验)</text>
 </g>
 <g class="node" data-id="C1" data-label="Claude Code (Anthropic 官方终端智能体)" data-shape="rectangle">
-  <rect x="66.63475" y="322.70000000000005" width="290.18499999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="211.72724999999997" y="341.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Claude Code (Anthropic 官方终端智能体)</text>
+  <rect x="70.63475" y="326.70000000000005" width="290.18499999999995" height="36.900000000000006" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="215.72724999999997" y="345.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Claude Code (Anthropic 官方终端智能体)</text>
 </g>
 <g class="node" data-id="C2" data-label="OpenCode / Codex CLI (开源命令行代码助手)" data-shape="rectangle">
-  <rect x="66.63475" y="383.6" width="316.861" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="225.06525" y="402.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">OpenCode / Codex CLI (开源命令行代码助手)</text>
+  <rect x="70.63475" y="387.6" width="316.861" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="229.06525" y="406.05" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">OpenCode / Codex CLI (开源命令行代码助手)</text>
 </g>
 <g class="node" data-id="E1" data-label="Cline (透明工具流 + 自定义模型)" data-shape="rectangle">
-  <rect x="66.63475" y="504.5" width="241.279" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="187.27425" y="522.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Cline (透明工具流 + 自定义模型)</text>
+  <rect x="70.63475" y="508.5" width="241.279" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="191.27425" y="526.95" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Cline (透明工具流 + 自定义模型)</text>
 </g>
 <g class="node" data-id="E2" data-label="Roo Code (多角色定制)" data-shape="rectangle">
-  <rect x="66.63475" y="565.4" width="182.73999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="158.00475" y="583.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Roo Code (多角色定制)</text>
+  <rect x="70.63475" y="569.4" width="182.73999999999998" height="36.900000000000006" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="162.00475" y="587.85" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">Roo Code (多角色定制)</text>
 </g>
 </svg>

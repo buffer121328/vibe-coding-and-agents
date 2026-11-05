@@ -8,7 +8,7 @@
 
 很多新手以为大模型自己可以直接操作电脑硬件，**其实完全不是**。这里讨论的工具调用中，模型输出的是调用请求，实际操作由宿主程序执行。
 
-- - 你去高档餐厅对服务员说：“给我来一份微辣的宫保鸡丁，顺便打包带走”。
+- 你去高档餐厅对服务员说：“给我来一份微辣的宫保鸡丁，顺便打包带走”。
   - 服务员（大模型）不会亲自去炒菜，而是立刻打印出一张**格式严谨的标准点单小票（JSON 数据）**：
     ```json
     {
@@ -19,7 +19,7 @@
     ```
   - 后厨大厨（真实 Python/Node 程序）接过小票，照着参数开火爆炒，炒好后把成品端给服务员，服务员再笑脸相迎地端给你。
 
-<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-01.svg">
     <img src="img/diagrams/07-diagram-01.svg" alt="概念与流程示意图" width="960">
@@ -66,19 +66,19 @@ def get_weather(city: str) -> str:
 
 ---
 
-## 说明 MCP（Model Context Protocol）协议的三大支柱
+## 说明 MCP（Model Context Protocol）协议的三类能力
 
 - **官方网站**: [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
-- **发起方**: Anthropic（已被 Claude、Cursor、Cline、Windsurf 全面采纳）
+- **发起方**: Anthropic；目前已有多种客户端和服务支持 MCP，具体能力仍要按版本与实现核对。
 
-<!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/07-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-02.svg">
     <img src="img/diagrams/07-diagram-02.svg" alt="概念与流程示意图" width="860">
   </a>
 </p>
 
-### 为什么 MCP 是 AI 界的“通用连接 接口”？
+### 为什么 MCP 可以作为通用连接接口？
 - 没有统一连接协议时，同一工具经常需要为不同客户端编写适配代码；
 - MCP 制定了全世界通用的协议标准，现在**符合相应协议的 Server 可以被兼容客户端复用；认证方式、协议版本和具体能力仍需要匹配。**
 
@@ -90,17 +90,17 @@ def get_weather(city: str) -> str:
 | **MCP Client** | 房间墙上的插座孔 | Host 内部的连接器，负责与每个 Server 建立一对一连接 |
 | **MCP Server** | 插进去的电器（外部能力） | 对外提供 Prompts / Resources / Tools 的中介程序 |
 
-> 🧩 一个 Host 可以同时连很多个 Server（就像墙上一排插座孔，插满各种电器）。MCP 的“万能”就在于：**插头规格全球统一，即插即用**。
+> 🧩 一个 Host 可以同时连接多个 Server。MCP 统一了发现能力和调用的协议形式，但并不意味着所有客户端都支持同一组功能，也不等于自动获得数据权限。
 
 **配置应以客户端和服务端的现行文档为准。** 本节先理解连接关系，第三章再用本地文件服务演示。早期示例中的 GitHub 与 PostgreSQL 参考服务器已经归档，不应继续作为默认安装方案。参见 [MCP 参考服务器维护列表](https://github.com/modelcontextprotocol/servers)。
 
 ---
 
-## A2A（Agent-to-Agent）三大团队协作拓扑
+## 多智能体常见协作拓扑与 A2A 的边界
 
-多智能体可以采用下面几种组织方式，但这些并不是 A2A 协议规定的三种拓扑。A2A 关注跨系统的能力描述、任务与消息交换：
+多智能体可以采用下面几种组织方式，但这些并不是 A2A 协议规定的三种拓扑。A2A 关注跨系统的能力描述、任务与消息交换。Google 于 2025 年发布 A2A 的初始版本，用于让不同框架或供应商的智能体交换任务、消息和结果；协议本身不替应用决定内部采用哪种工作流：
 
-<!-- 图表源文件：img/diagrams/07-diagram-03.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/07-diagram-03.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-03.svg">
     <img src="img/diagrams/07-diagram-03.svg" alt="概念与流程示意图" width="760">
@@ -118,7 +118,7 @@ def get_weather(city: str) -> str:
 | | MCP（Model Context Protocol） | A2A（Agent-to-Agent） |
 | :--- | :--- | :--- |
 | **连接对象** | 大模型 ↔ 外部工具 / 数据 | AI 智能体 ↔ AI 智能体 |
-| **生活比喻** | 通用连接 接口（人机工具） | 会议室开会（智能体与智能体） |
+| **生活比喻** | 通用连接接口（人机工具） | 会议室开会（智能体与智能体） |
 | **解决什么问题** | “AI 怎么调外部工具” | “多个 AI 怎么协作分工” |
 | **发起方** | Anthropic | Google |
 
@@ -131,10 +131,12 @@ def get_weather(city: str) -> str:
 | 层级 | 解决的问题 | 生活比喻 | 代表 |
 | :--- | :--- | :--- | :--- |
 | **Function Calling** | 单个模型怎么“递小票”调用函数 | 服务员写点单小票 | OpenAI / 各家 SDK |
-| **MCP** | 工具接口怎么标准化、即插即用 | 通用连接 接口 | Anthropic |
+| **MCP** | 工具接口怎么标准化、即插即用 | 通用连接接口 | Anthropic |
 | **A2A** | 多个智能体怎么组队协作 | 会议室分工开会 | Google |
 
 > 💡 三者可以配合使用，但并非必须逐层采用：**先学会“单点调用工具” → 再统一“工具接口标准” → 最后实现“智能体之间的团队协作”**。单个应用内部的多智能体也可以通过函数和共享状态协作，不一定需要 A2A。
+
+截至 2026 年 11 月，MCP 官方已发布 `2026-07-28` 规范版本；不同客户端和 SDK 可能仍在兼容较早版本。学习基础概念时可以忽略版本差异，实际接入时应先确认双方协商的协议版本、传输方式和认证要求。[规范发布说明](https://blog.modelcontextprotocol.io/posts/2026-07-28/)
 
 ---
 
@@ -170,3 +172,7 @@ def get_weather(city: str) -> str:
 - [Model Context Protocol (MCP) 官方标准文档](https://modelcontextprotocol.io)
 - [官方开源 MCP Servers 仓库 (GitHub)](https://github.com/modelcontextprotocol/servers)
 - [OpenAI 官方 Function Calling 开发手册](https://platform.openai.com/docs/guides/function-calling)
+
+## 接入协议后仍要做三层校验
+
+工具定义要校验参数结构，业务代码要校验权限和范围，调用方还要处理超时、重复请求和错误状态。MCP 或 A2A 解决的是连接与通信约定，不会替你完成这三层业务校验。开发时先用一个只读工具跑通发现、调用和结果回传，再逐步增加写入和跨系统协作能力。
