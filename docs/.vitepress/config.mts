@@ -15,7 +15,11 @@ function firstHeading(file: string): string {
 
 // 自动扫描 docs/ 下已同步的章节，生成单个章节的侧边栏分组（新增章节/文章无需改配置）
 const chapterDirs = readdirSync(docsRoot)
-  .filter((d: string) => /^\d{2}_/.test(d) && statSync(join(docsRoot, d)).isDirectory())
+  .filter((d: string) => {
+    if (!/^\d{2}_/.test(d) || !statSync(join(docsRoot, d)).isDirectory()) return false
+    // 空章节目录（例如仅保留占位的 FastMCP 目录）不进入导航，也不阻断构建。
+    return readdirSync(join(docsRoot, d)).some((f: string) => f.endsWith('.md'))
+  })
   .sort()
 
 function chapterGroup(dir: string) {
@@ -31,14 +35,13 @@ function chapterGroup(dir: string) {
   return { text: dir.replace(/^\d{2}_/, ''), items }
 }
 
-// 学习路径六大类（与根 README「章节导览：按学习路径分类」保持一致）
+// 学习路径五大类（与根 README「章节导览：按学习路径分类」保持一致）
 const categories = [
   { text: '🧭 入门概念', full: '🧭 入门概念（打地基）', link: '/01_发展之路/', prefixes: ['01_', '02_', '03_'] },
   { text: '🛠️ 主流工具实战', full: '🛠️ 主流工具实战（多备几把趁手的刀）', link: '/04_Dify实战/', prefixes: ['04_', '05_', '06_', '07_'] },
-  { text: '🤖 从底层理解 Agent', full: '🤖 从底层理解 Agent（开天眼）', link: '/08_手搓Agent/', prefixes: ['08_'] },
-  { text: '🏭 主流 Agent 框架', full: '🏭 主流 Agent 框架（最成熟的生产方案）', link: '/09_LangChain搭建Agent/', prefixes: ['09_', '10_'] },
-  { text: '📚 RAG 实战', full: '📚 RAG 实战（知识库长期工程）', link: '/11_RAG实战/', prefixes: ['11_'] },
+  { text: '🏭 主流 Agent 框架', full: '🏭 主流 Agent 框架（底层实现、框架编排与知识库工程）', link: '/08_手搓Agent/', prefixes: ['08_', '09_', '10_', '11_'] },
   { text: '💆 对 Agent 与 AI 的思考', full: '💆 对 Agent 与 AI 的思考与高效驾驭（认知碰撞与实战指南）', link: '/12_如何做一个自己的项目/', prefixes: ['12_', '13_', '14_'] },
+  { text: '🧪 Agent 开发面试题', full: '🧪 Agent 开发面试题（基础内功与业务选型）', link: '/15_面试题/', prefixes: ['15_'] },
 ]
 
 // 某个分类的侧边栏（仅该分类下的各章节子页）
