@@ -4,7 +4,7 @@
 > ① **假召回**：检索回 3 篇文档但通篇跑题，系统也硬着头皮编答案；
 > ② **知识缺失**：库里根本没收录，系统只能回一句冷冰冰的“不知道”；
 > ③ **幻觉**：生成完后没人核对，答案里“赔偿 1000 元”而原文明明是“100 元”。
-> **Agentic RAG 就是给这条流水线装上“分诊台 + 化验室 + 药师”**：标本溶血了退回重抽（重检索）、本院查不到就按规定转外院（联网兜底）、发药前药师再核一次剂量（幻觉检测）。
+> **Agentic RAG 在检索后增加查询判断、证据评分和回答复核**：证据不足时重新检索，无法覆盖问题时按策略联网或转人工，回答生成后再做引用和事实核对。
 
 ---
 
@@ -35,7 +35,7 @@
 
 完整脚本见 [`code/s08_agentic_rag.py`](./code/s08_agentic_rag.py)，检索的是 `testdata/` 里的真实制度页。这里只把**最容易装反的两段路**拎出来：分级之后往哪走，复检失败之后往哪走。
 
-把一次问答想成医院开处方：抽血化验（检索）→ 化验单质检（分级）→ 医生开方（生成）→ 药师审方（复检）。化验单写着“标本溶血”，你不会按这份单子开药；药师说“剂量对不上病历原文”，你最多让医生改一次处方，不会让他改到天亮。代码里的条件边就是这两条院规。
+一次问答可以拆成检索、证据评分、生成和复核四步。证据不足时重新检索，复核仍不通过时拒答或转人工；每个分支都应有最大重试次数。
 
 ```python
 from typing import List, TypedDict
@@ -52,7 +52,7 @@ class GraphState(TypedDict):
     budget: RunBudget
 
 def decide_after_verification(faithful: bool, answered: bool, budget: RunBudget) -> str:
-    """药师复核通过就发药；没过只许改一次处方，再不行就停方转专科。"""
+    """证据复核通过才返回；未通过时最多重新生成一次，否则返回拒答或转人工。"""
     if faithful and answered:
         return "deliver"
     if budget.consume("rewrite"):
@@ -89,13 +89,13 @@ workflow.add_conditional_edges(
 
 教学版的 `web_search` **不发起真实联网**。外院能查到公开的临床指南，查不到你们公司年终奖标准——私有问题靠公网补，补来的多半是幻觉。
 
-**这段代码比“玩具版”强在哪？**
+**这段代码比“演示项目版”强在哪？**
 1. **真实检索**，命中哪一页能用页 ID 对上 testdata，不是内存里两句假文档；
 2. **分级是独立节点**：相关就生成，全跑题才走兜底，库里没有就停；
 3. **复检有刹车**：`RunBudget` 把“最多再写一次”写成可测试的数字，而不是注释里的“注意别死循环”；
 4. **拒答是一等公民**：复检失败、预算耗尽，答案必须换成转人工，不能把半成品端上桌。
 
-总装项目 Lite 还多了一刀确定性资格（`EvidenceQualifier`）：资料已经够答时，**不再让分级模型一票否决**。课堂黄金集里「打印机 E3」曾经同一题两次跑、一次过一次挂，就是模型分级把已经放行的证据又否了。CRAG 的模型分级只在资格没结论时当兜底。完整闭环见 [`code/KnowledgeForge_lite/forge_lite/answer/agent.py`](code/KnowledgeForge_lite/forge_lite/answer/agent.py)。
+综合项目 Lite 还多了一刀确定性资格（`EvidenceQualifier`）：资料已经够答时，**不再让分级模型一票否决**。课堂黄金集里「打印机 E3」曾经同一题两次跑、一次过一次挂，就是模型分级把已经放行的证据又否了。CRAG 的模型分级只在资格没结论时当兜底。完整闭环见 [`code/KnowledgeForge_lite/forge_lite/answer/agent.py`](code/KnowledgeForge_lite/forge_lite/answer/agent.py)。
 
 ---
 
@@ -135,7 +135,7 @@ workflow.add_conditional_edges(
 预算耗尽 / 裁判低置信      → 拒答或转人工
 ```
 
-配套 `RunBudget` 把这条纪律写成了可测试代码。脚本演示里 `max_rewrites=1`：第一次复检不过，允许再生成一轮；第二轮还不过，直接拒答。你可以把它想成门诊的“免费复诊一次”——剂量对不上可以改一次方，不会让医生通宵试药。
+配套 `RunBudget` 把这条纪律写成了可测试代码。脚本演示里 `max_rewrites=1`：第一次复检不过，允许再生成一轮；第二轮还不过，直接拒答。这里把重试次数限制为一次，避免模型在同一问题上无限循环。
 
 ## 联网兜底不是默认答案
 
@@ -230,6 +230,14 @@ while todo and 预算未耗尽:
 > 📄 参考实现：[assafelovic/gpt-researcher](https://github.com/assafelovic/gpt-researcher)、[langchain-ai/open_deep_research](https://github.com/langchain-ai/open_deep_research)。
 
 ---
+
+<!-- SHUORENHUA_CHECK -->
+
+## 本节核对清单
+
+- 准备一组带标准答案和来源页码的固定问题，改参数前后使用同一组样例；
+- 分开记录解析、召回、重排、生成和引用核对结果，先定位失败环节再调整模型或索引；
+- 保存每次实验的语料版本、索引版本、模型与 Prompt 版本，避免只凭主观感受判断效果。
 
 ## 权威官方参考
 

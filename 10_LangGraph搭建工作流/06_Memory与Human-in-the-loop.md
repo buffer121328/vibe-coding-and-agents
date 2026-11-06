@@ -112,6 +112,14 @@ graph.invoke(None, fork_config)
 
 ---
 
+<!-- SHUORENHUA_CHECK -->
+
+## 本节核对清单
+
+- 把本节流程写成 `State → 节点 → 边 → 结束条件`，并标出每个节点实际读写的字段；
+- 用一个正常输入和一个失败输入各跑一次，记录路由、重试、中断或并行合并的结果；
+- 为循环设置最大步数、超时或人工出口，确认异常时能返回可解释的状态而不是静默卡住。
+
 ## 扩展阅读
 
 - Persistence（检查点、线程、`update_state`）：[persistence](https://docs.langchain.com/oss/python/langgraph/persistence)

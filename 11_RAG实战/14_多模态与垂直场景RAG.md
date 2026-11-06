@@ -276,6 +276,14 @@ def csv_to_docs(path: str, table: str, pk: str, unit_note: str = "") -> list[Doc
 
 ---
 
+<!-- SHUORENHUA_CHECK -->
+
+## 本节核对清单
+
+- 准备一组带标准答案和来源页码的固定问题，改参数前后使用同一组样例；
+- 分开记录解析、召回、重排、生成和引用核对结果，先定位失败环节再调整模型或索引；
+- 保存每次实验的语料版本、索引版本、模型与 Prompt 版本，避免只凭主观感受判断效果。
+
 ## 权威官方参考
 
 - [BGE-M3：多语言多粒度嵌入（BAAI FlagEmbedding）](https://github.com/FlagOpen/FlagEmbedding)

@@ -1,6 +1,6 @@
 # 10.2 State 图的构建与运行
 
-上一节把 LangGraph 比作一张飞行棋棋盘。这一节把棋盘画出来，并让数据在格子之间跑起来。构建图的四步曲几乎永远不变：
+上一节介绍了状态图。这一节把节点、边和状态定义写成代码，并让数据在节点之间流动。构建图的四步通常不变：
 
 **定义 State → 添加 Node → 画 Edge → `compile()`。**
 
@@ -217,6 +217,14 @@ graph.invoke(inputs, config={"recursion_limit": 25, "configurable": {"thread_id"
 > 📁 **本节示例代码**：[code/examples/02_state_graph_demo.py](code/examples/02_state_graph_demo.py) —— 无需 API Key。第一次先在 `code/examples` 里 `uv sync`，再 `uv run python 02_state_graph_demo.py`。
 
 ---
+
+<!-- SHUORENHUA_CHECK -->
+
+## 本节核对清单
+
+- 把本节流程写成 `State → 节点 → 边 → 结束条件`，并标出每个节点实际读写的字段；
+- 用一个正常输入和一个失败输入各跑一次，记录路由、重试、中断或并行合并的结果；
+- 为循环设置最大步数、超时或人工出口，确认异常时能返回可解释的状态而不是静默卡住。
 
 ## 扩展阅读
 

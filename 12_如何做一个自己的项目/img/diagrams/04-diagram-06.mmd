@@ -1,3 +1,4 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#F8FAFC","primaryColor":"#DCEAF7","primaryTextColor":"#17324D","primaryBorderColor":"#2F6F9F","lineColor":"#6B7A90","secondaryColor":"#DDF3F0","tertiaryColor":"#FFF2CC","clusterBkg":"#EEF4F8","clusterBorder":"#6B7A90","edgeLabelBackground":"#F8FAFC","fontFamily":"Noto Sans SC, Inter, Arial"}}}%%
 graph LR
     subgraph InterviewDefense ["🛡️ 面试官高频连环追问应对策略"]
         Q1["Q: 大模型输出 JSON 格式解析失败怎么办？"] --> A1["A: 采用 Pydantic 双重校验 + 自动将错误栈回填大模型进行 1 次自愈修复 + 兜底人工规则降级。"]

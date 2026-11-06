@@ -91,7 +91,7 @@ Functional API 有一条必须遵守的纪律：中断或失败后恢复时，**
 
 | 维度 | Graph API（StateGraph） | Functional API（@entrypoint / @task） |
 | :--- | :--- | :--- |
-| 心智模型 | 画一张轨道图，节点在轨道上跑 | 写普通 Python，给函数加超能力 |
+| 基本结构 | 画一张轨道图，节点在轨道上跑 | 写普通 Python，给函数加超能力 |
 | 控制流 | 边、条件边、Send、Command 显式定义 | 就是普通 Python（if / for / try） |
 | 并行 | 多出边 / Send 动态分发 | future 先发后取 |
 | 存档颗粒度 | 每个超步 | 每个 `@task` |
@@ -109,6 +109,14 @@ Functional API 有一条必须遵守的纪律：中断或失败后恢复时，**
 > 📁 **本节示例代码**：[code/examples/14_functional_api_demo.py](code/examples/14_functional_api_demo.py)
 
 ---
+
+<!-- SHUORENHUA_CHECK -->
+
+## 本节核对清单
+
+- 把本节流程写成 `State → 节点 → 边 → 结束条件`，并标出每个节点实际读写的字段；
+- 用一个正常输入和一个失败输入各跑一次，记录路由、重试、中断或并行合并的结果；
+- 为循环设置最大步数、超时或人工出口，确认异常时能返回可解释的状态而不是静默卡住。
 
 ## 扩展阅读
 
