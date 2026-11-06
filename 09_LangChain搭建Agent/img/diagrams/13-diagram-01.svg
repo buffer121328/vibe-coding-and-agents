@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1557 814.8" width="1557" height="814.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1209.2749999999999 842.8" width="1209.2749999999999" height="842.8" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,100 +27,113 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="GuardLayer" data-label="🛡️ 护栏层 (9.12 纵深防御)">
-  <rect x="20" y="120.9" width="357" height="113.79999999999998" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="120.9" width="357" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="134.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🛡️ 护栏层 (9.12 纵深防御)</text>
+  <rect x="436.8757499999999" y="116.9" width="395.54499999999996" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="436.8757499999999" y="116.9" width="395.54499999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="448.8757499999999" y="130.9" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🛡️ 护栏层 (9.12 纵深防御)</text>
 </g>
 <g class="subgraph" data-id="CtxLayer" data-label="🧭 上下文工程 (9.10 三数据源动态注入)">
-  <rect x="20" y="266.70000000000005" width="517" height="215.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="266.70000000000005" width="517" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="280.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🧭 上下文工程 (9.10 三数据源动态注入)</text>
+  <rect x="353.8832499999999" y="270.70000000000005" width="561.53" height="207.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="353.8832499999999" y="270.70000000000005" width="561.53" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="365.8832499999999" y="284.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🧭 上下文工程 (9.10 三数据源动态注入)</text>
 </g>
 <g class="subgraph" data-id="AgentCore" data-label="🧠 智能体中枢 (9.9 create_agent + 9.11 中间件栈)">
-  <rect x="20" y="514.3000000000001" width="1014" height="130.69999999999993" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="514.3000000000001" width="1014" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="528.3000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🧠 智能体中枢 (9.9 create_agent + 9.11 中间件栈)</text>
+  <rect x="125.65474999999998" y="518.3000000000001" width="1017.9869999999999" height="130.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="125.65474999999998" y="518.3000000000001" width="1017.9869999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="137.65474999999998" y="532.3000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🧠 智能体中枢 (9.9 create_agent + 9.11 中间件栈)</text>
 </g>
 <g class="subgraph" data-id="ToolEcosystem" data-label="🛠️ 工具生态 (9.5 @tool 装饰器)">
-  <rect x="20" y="677" width="579" height="113.79999999999995" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="677" width="579" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="691" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🛠️ 工具生态 (9.5 @tool 装饰器)</text>
+  <rect x="40" y="689" width="612.6589999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="689" width="612.6589999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="703" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🛠️ 工具生态 (9.5 @tool 装饰器)</text>
 </g>
 <g class="subgraph" data-id="OutputModes" data-label="📋 双模交互输出">
-  <rect x="1058" y="677" width="475" height="96.89999999999998" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="1058" y="677" width="475" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="1070" y="691" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">📋 双模交互输出</text>
+  <rect x="676.6589999999999" y="689" width="492.616" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="676.6589999999999" y="689" width="492.616" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="688.6589999999999" y="703" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">📋 双模交互输出</text>
 </g>
-<polyline class="edge" data-from="RC" data-to="DP" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="106,364.50000000000006 106,388.50000000000006 278.5,388.50000000000006 278.5,412.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="SO" data-to="DP" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="271.5,364.50000000000006 271.5,388.50000000000006 278.5,388.50000000000006 278.5,412.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="ST" data-to="DP" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="444,364.50000000000006 444,388.50000000000006 278.5,388.50000000000006 278.5,412.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="User" data-to="GuardLayer" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="200,72.9 198.5,120.9" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="GuardLayer" data-to="CtxLayer" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="198.5,234.7 198.5,250.70000000000002 278.5,250.70000000000002 278.5,266.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="CtxLayer" data-to="AgentCore" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="278.5,482.30000000000007 278.5,498.30000000000007 527,498.30000000000007 527,514.3000000000001" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="AgentCore" data-to="ToolEcosystem" data-style="thick" data-arrow-start="true" data-arrow-end="true" points="527,645 527,661 309.5,661 309.5,677" fill="none" stroke="var(--_line)" stroke-width="2" marker-start="url(#arrowhead-start)" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="AgentCore" data-to="OutputModes" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="527,645 527,661 1295.5,661 1295.5,677" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="User" data-to="GuardLayer" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="634.64825,76.9 634.64825,116.9" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="GuardLayer" data-to="CtxLayer" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="634.64825,230.70000000000002 634.64825,270.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CtxLayer" data-to="AgentCore" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="634.64825,478.30000000000007 634.64825,518.3000000000001" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AgentCore" data-to="ToolEcosystem" data-style="thick" data-arrow-start="true" data-arrow-end="true" points="464.98374999999993,649 464.98374999999993,677 346.32949999999994,677 346.32949999999994,689" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-start)" />
+<polyline class="edge" data-from="AgentCore" data-to="OutputModes" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="804.3127499999998,649 804.3127499999998,677 922.9669999999999,677 922.9669999999999,689" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="RC" data-to="DP" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="823.2337499999999,368.50000000000006 823.2337499999999,388.50000000000006 646.1337499999998,388.50000000000006 646.1337499999998,408.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SO" data-to="DP" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="646.13375,368.50000000000006 646.13375,388.50000000000006 646.1337499999998,388.50000000000006 646.1337499999998,408.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="ST" data-to="DP" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="457.54824999999994,368.50000000000006 457.54824999999994,388.50000000000006 646.1337499999998,388.50000000000006 646.1337499999998,408.50000000000006" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="node" data-id="User" data-label="👤 用户选购诉求 (如：预算 5000 选轻薄编程本)" data-shape="rectangle">
-  <rect x="36" y="36" width="328" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="200" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="200" dy="4.55">👤 用户选购诉求 (如：预算 5000 选轻薄编程本)</tspan></text>
+  <rect x="464.7322499999999" y="40" width="339.832" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="634.64825" y="58.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">👤 用户选购诉求 (如：预算 5000 选轻薄编程本)</text>
 </g>
-<g class="node" data-id="GF" data-label="before_agent\n黑名单关键词拦截" data-shape="rectangle">
-  <rect x="36" y="164.9" width="140" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="106" y="191.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="106" dy="-3.8999999999999995">before_agent</tspan><tspan x="106" dy="16.9">黑名单关键词拦截</tspan></text>
+<g class="node" data-id="GF" data-label="before_agent
+黑名单关键词拦截" data-shape="rectangle">
+  <rect x="452.8757499999999" y="160.9" width="160.51" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="533.1307499999999" y="187.8" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="533.1307499999999" dy="-3.9000000000000012">before_agent</tspan><tspan x="533.1307499999999" dy="16.900000000000002">黑名单关键词拦截</tspan></text>
 </g>
-<g class="node" data-id="PII" data-label="PIIMiddleware\n邮箱/信用卡输入脱敏" data-shape="rectangle">
-  <rect x="200" y="164.9" width="161" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="280.5" y="191.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="280.5" dy="-3.8999999999999995">PIIMiddleware</tspan><tspan x="280.5" dy="16.9">邮箱/信用卡输入脱敏</tspan></text>
+<g class="node" data-id="PII" data-label="PIIMiddleware
+邮箱/信用卡输入脱敏" data-shape="rectangle">
+  <rect x="637.3857499999999" y="160.9" width="179.03499999999997" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="726.9032499999998" y="187.8" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="726.9032499999998" dy="-3.9000000000000012">PIIMiddleware</tspan><tspan x="726.9032499999998" dy="16.900000000000002">邮箱/信用卡输入脱敏</tspan></text>
 </g>
-<g class="node" data-id="RC" data-label="Runtime Context\n顾客身份: user_id" data-shape="rectangle">
-  <rect x="36" y="310.70000000000005" width="140" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="106" y="337.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="106" dy="-3.8999999999999995">Runtime Context</tspan><tspan x="106" dy="16.9">顾客身份: user_id</tspan></text>
+<g class="node" data-id="RC" data-label="Runtime Context
+顾客身份: user_id" data-shape="rectangle">
+  <rect x="747.0542499999999" y="314.70000000000005" width="152.359" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="823.2337499999999" y="341.6" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="823.2337499999999" dy="-3.9000000000000012">Runtime Context</tspan><tspan x="823.2337499999999" dy="16.900000000000002">顾客身份: user_id</tspan></text>
 </g>
-<g class="node" data-id="SO" data-label="Store 长期画像\n沟通风格 / 关注点" data-shape="rectangle">
-  <rect x="200" y="310.70000000000005" width="143" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="271.5" y="337.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="271.5" dy="-3.8999999999999995">Store 长期画像</tspan><tspan x="271.5" dy="16.9">沟通风格 / 关注点</tspan></text>
+<g class="node" data-id="SO" data-label="Store 长期画像
+沟通风格 / 关注点" data-shape="rectangle">
+  <rect x="569.2132499999999" y="314.70000000000005" width="153.841" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="646.13375" y="341.6" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="646.13375" dy="-3.9000000000000012">Store 长期画像</tspan><tspan x="646.13375" dy="16.900000000000002">沟通风格 / 关注点</tspan></text>
 </g>
-<g class="node" data-id="ST" data-label="State 会话消息\n聊得久自动长话短说" data-shape="rectangle">
-  <rect x="367" y="310.70000000000005" width="154" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="444" y="337.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="444" dy="-3.8999999999999995">State 会话消息</tspan><tspan x="444" dy="16.9">聊得久自动长话短说</tspan></text>
+<g class="node" data-id="ST" data-label="State 会话消息
+聊得久自动长话短说" data-shape="rectangle">
+  <rect x="369.8832499999999" y="314.70000000000005" width="175.32999999999998" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="457.54824999999994" y="341.6" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="457.54824999999994" dy="-3.9000000000000012">State 会话消息</tspan><tspan x="457.54824999999994" dy="16.900000000000002">聊得久自动长话短说</tspan></text>
 </g>
-<g class="node" data-id="DP" data-label="@dynamic_prompt\n动态拼装系统提示" data-shape="rectangle">
-  <rect x="203.5" y="412.50000000000006" width="150" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="278.5" y="439.40000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="278.5" dy="-3.8999999999999995">@dynamic_prompt</tspan><tspan x="278.5" dy="16.9">动态拼装系统提示</tspan></text>
+<g class="node" data-id="DP" data-label="@dynamic_prompt
+动态拼装系统提示" data-shape="rectangle">
+  <rect x="565.8787499999999" y="408.50000000000006" width="160.51" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="646.1337499999998" y="435.40000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="646.1337499999998" dy="-3.9000000000000012">@dynamic_prompt</tspan><tspan x="646.1337499999998" dy="16.900000000000002">动态拼装系统提示</tspan></text>
 </g>
-<g class="node" data-id="MW" data-label="LoggingMiddleware 日志\nCallCounterMiddleware 调用限流\nretry_model 自动重试 (9.11)" data-shape="rectangle">
-  <rect x="36" y="558.3000000000001" width="242" height="70.69999999999999" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="157" y="593.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="157" dy="-12.349999999999998">LoggingMiddleware 日志</tspan><tspan x="157" dy="16.9">CallCounterMiddleware 调用限流</tspan><tspan x="157" dy="16.9">retry_model 自动重试 (9.11)</tspan></text>
+<g class="node" data-id="MW" data-label="LoggingMiddleware 日志
+CallCounterMiddleware 调用限流
+retry_model 自动重试 (9.11)" data-shape="rectangle">
+  <rect x="386.9267499999999" y="570.75" width="242.02" height="70.7" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="507.9367499999999" y="606.1" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="507.9367499999999" dy="-12.350000000000001">LoggingMiddleware 日志</tspan><tspan x="507.9367499999999" dy="16.900000000000002">CallCounterMiddleware 调用限流</tspan><tspan x="507.9367499999999" dy="16.900000000000002">retry_model 自动重试 (9.11)</tspan></text>
 </g>
-<g class="node" data-id="CP" data-label="Checkpointer\nthread_id 会话记忆隔离 (9.6)" data-shape="rectangle">
-  <rect x="302" y="558.3000000000001" width="212" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="408" y="585.2" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="408" dy="-3.8999999999999995">Checkpointer</tspan><tspan x="408" dy="16.9">thread_id 会话记忆隔离 (9.6)</tspan></text>
+<g class="node" data-id="CP" data-label="Checkpointer
+thread_id 会话记忆隔离 (9.6)" data-shape="rectangle">
+  <rect x="652.9467499999998" y="570.7500000000001" width="216.82599999999994" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="761.3597499999998" y="597.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="761.3597499999998" dy="-3.9000000000000012">Checkpointer</tspan><tspan x="761.3597499999998" dy="16.900000000000002">thread_id 会话记忆隔离 (9.6)</tspan></text>
 </g>
-<g class="node" data-id="CB" data-label="PerformanceAndCostCallback\nToken 成本审计 (9.7)" data-shape="rectangle">
-  <rect x="538" y="558.3000000000001" width="226" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="651" y="585.2" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="651" dy="-3.8999999999999995">PerformanceAndCostCallback</tspan><tspan x="651" dy="16.9">Token 成本审计 (9.7)</tspan></text>
+<g class="node" data-id="CB" data-label="PerformanceAndCostCallback
+Token 成本审计 (9.7)" data-shape="rectangle">
+  <rect x="141.65474999999998" y="570.7500000000001" width="221.27199999999993" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="252.29074999999995" y="597.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="252.29074999999995" dy="-3.9000000000000012">PerformanceAndCostCallback</tspan><tspan x="252.29074999999995" dy="16.900000000000002">Token 成本审计 (9.7)</tspan></text>
 </g>
 <g class="node" data-id="Plan" data-label="⚡ Tool Calling 自主推理与规划" data-shape="rectangle">
-  <rect x="788" y="558.3000000000001" width="230" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="903" y="576.7500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="903" dy="4.55">⚡ Tool Calling 自主推理与规划</tspan></text>
+  <rect x="893.7727499999999" y="570.75" width="233.869" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="1010.7072499999998" y="589.2" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">⚡ Tool Calling 自主推理与规划</text>
 </g>
-<g class="node" data-id="T1" data-label="📚 内置数码避坑宝典\nChroma 向量检索 (9.8)" data-shape="rectangle">
-  <rect x="36" y="721" width="175" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="123.5" y="747.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="123.5" dy="-3.8999999999999995">📚 内置数码避坑宝典</tspan><tspan x="123.5" dy="16.9">Chroma 向量检索 (9.8)</tspan></text>
+<g class="node" data-id="T1" data-label="📚 内置数码避坑宝典
+Chroma 向量检索 (9.8)" data-shape="rectangle">
+  <rect x="257.553" y="733" width="177.55299999999997" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="346.3295" y="759.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="346.3295" dy="-3.9000000000000012">📚 内置数码避坑宝典</tspan><tspan x="346.3295" dy="16.900000000000002">Chroma 向量检索 (9.8)</tspan></text>
 </g>
-<g class="node" data-id="T2" data-label="🌐 全网真实差评搜索\nDDGS 联网检索" data-shape="rectangle">
-  <rect x="235" y="721" width="162" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="316" y="747.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="316" dy="-3.8999999999999995">🌐 全网真实差评搜索</tspan><tspan x="316" dy="16.9">DDGS 联网检索</tspan></text>
+<g class="node" data-id="T2" data-label="🌐 全网真实差评搜索
+DDGS 联网检索" data-shape="rectangle">
+  <rect x="459.1059999999999" y="733" width="177.55299999999997" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="547.8824999999998" y="759.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="547.8824999999998" dy="-3.9000000000000012">🌐 全网真实差评搜索</tspan><tspan x="547.8824999999998" dy="16.900000000000002">DDGS 联网检索</tspan></text>
 </g>
-<g class="node" data-id="T3" data-label="🧮 硬件参数与性价比\n精准测算器" data-shape="rectangle">
-  <rect x="421" y="721" width="162" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="502" y="747.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="502" dy="-3.8999999999999995">🧮 硬件参数与性价比</tspan><tspan x="502" dy="16.9">精准测算器</tspan></text>
+<g class="node" data-id="T3" data-label="🧮 硬件参数与性价比
+精准测算器" data-shape="rectangle">
+  <rect x="56" y="733" width="177.55299999999997" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="144.7765" y="759.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="144.7765" dy="-3.9000000000000012">🧮 硬件参数与性价比</tspan><tspan x="144.7765" dy="16.900000000000002">精准测算器</tspan></text>
 </g>
 <g class="node" data-id="Mode1" data-label="💬 多轮交互式选购问诊" data-shape="rectangle">
-  <rect x="1074" y="721" width="176" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="1162" y="739.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1162" dy="4.55">💬 多轮交互式选购问诊</tspan></text>
+  <rect x="692.6589999999999" y="733" width="192.373" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="788.8454999999999" y="751.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">💬 多轮交互式选购问诊</text>
 </g>
 <g class="node" data-id="Mode2" data-label="📑 Pydantic 结构化决策报表 (9.4)" data-shape="rectangle">
-  <rect x="1274" y="721" width="243" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="1395.5" y="739.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1395.5" dy="4.55">📑 Pydantic 结构化决策报表 (9.4)</tspan></text>
+  <rect x="909.0319999999999" y="733" width="244.243" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="1031.1535" y="751.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">📑 Pydantic 结构化决策报表 (9.4)</text>
 </g>
 </svg>

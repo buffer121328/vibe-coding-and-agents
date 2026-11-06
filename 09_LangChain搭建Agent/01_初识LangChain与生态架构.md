@@ -1,11 +1,11 @@
 # 🧩 9.1 初识 LangChain 1.4 与生态架构
 
-> **“标准化与乐高积木化，是软件工程从手工作坊走向工业化大生产的必由之路。”**  
+> **“标准化与乐高积木化，是软件工程从手工作坊走向工业化大生产的必由之路。”**
 > 在手写了原生 Agent 之后，本节我们将推开现代化 LLM 框架的大门，探索 LangChain 1.4 是如何通过标准协议与模块化拆分，让 AI 应用开发像搭积木一样高效稳健。
 
 ---
 
-## 💡 为什么需要 LangChain？（生活比喻篇）
+## 为什么需要 LangChain？
 
 ### 1. 手写代码的痛点：自制万能充电线
 在第八章中，我们通过原生 Python 一行行手搓了 Agent 的思考循环、工具分发和记忆管理。这非常有助于我们理解底层逻辑，但如果到了真实商业化开发中：
@@ -13,14 +13,14 @@
 - 想把“提示词 ➔ 模型 ➔ 解析器 ➔ 工具 ➔ 记忆”串联起来，需要写大量嵌套的胶水代码（Glue Code）；
 - 每次写异常重试、流式输出、Token 计费，都要重复造轮子。
 
-### 2. 生活比喻：万能转换插头与标准化乐高积木
+### 概念说明：万能转换插头与标准化乐高积木
 - **原生调用**：就像去不同国家旅行，每个国家的插座形状、电压都不一样，你得带十几种不同的插头和变压器；
-- **LangChain**：就像一个**工业级万能转换插头**和一套**标准化乐高卡扣积木**。无论底层接入的是 DeepSeek、GPT 系列还是 Claude 系列（甚至本地 Ollama），对外暴露的调用方法全部统一为 `invoke()`、`stream()`、`batch()`；无论何种组件，只要符合 `Runnable` 协议，就能像乐高积木一样用一个管道符 `|` 咔哒一声拼装在一起！
+- **LangChain**：提供统一调用接口和可组合的 Runnable 组件。无论底层接入的是 DeepSeek、GPT 系列还是 Claude 系列（甚至本地 Ollama），对外暴露的调用方法常见调用方式包括 `invoke()`、`stream()` 和 `batch()`；符合 `Runnable` 协议的组件可以通过 `|` 组合。
 
-<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-01.svg">
-    <img src="img/diagrams/01-diagram-01.svg" alt="2. 生活比喻：万能转换插头与标准化乐高积木" width="760">
+    <img src="img/diagrams/01-diagram-01.svg" alt="2. LangChain 组件与 Runnable 组合" width="760">
   </a>
 </p>
 
@@ -28,7 +28,7 @@
 
 ## 🏛️ LangChain 1.4 的架构演进与包拆分
 
-在早期（0.0.x ~ 0.1.x 版本），LangChain 常被社区诟病“过于臃肿、黑盒过深、API 变动频繁”。  
+在早期（0.0.x ~ 0.1.x 版本），LangChain 常被社区诟病“过于臃肿、黑盒过深、API 变动频繁”。
 自 **LangChain 0.3** 起官方进行了彻底的解耦重构，**2025 年 10 月正式发布 1.0**（要求 **Python 3.10+**），确立了“小而精的核心 + 独立伙伴包”的清晰架构：
 
 | 核心组件库 | 官方定位与职责 | 核心作用与包含内容 |
@@ -125,12 +125,12 @@ print(profile["max_input_tokens"])    # 128000 —— 上下文窗口
 
 1.3 起 `create_agent` / `init_chat_model` 统一了**跨厂商异常分类**（Standard Model Exceptions），异常处理不再需要 catch 各种厂商私有错误。`langchain-openai` 还支持**显式 Prompt Caching**（提示词缓存，配合 9.7 成本审计更省钱）。
 
-### 6. 动态模型选择与路由：同一套代码，按需切换大脑（1.4 进阶）
+### 6. 动态模型选择与路由：同一套代码，按条件选择模型（1.4 进阶）
 
 `create_agent(model=...)` 的 `model` 参数非常灵活——既可以传字符串标识符（`"openai:gpt-4o-mini"`），也可以传已初始化好的模型实例。更进一步，结合 **9.11 自定义中间件**，我们还能在**运行中按任务难度、成本预算或用户等级动态切换模型**——"简单问题用便宜小模型，复杂问题才出动旗舰模型"：
 
 ```python
-# 示意：在 wrap_model_call 中间件里按需"换大脑"（完整机制见 9.11）
+# 示意：在 wrap_model_call 中间件里按需"选择模型"（完整机制见 9.11）
 from langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse
 from langchain.chat_models import init_chat_model
 
@@ -152,7 +152,7 @@ def route_by_complexity(request: ModelRequest, handler) -> ModelResponse:
 > | **`ModelFallbackMiddleware`**（9.7） | 主模型**调用失败后** | 中间件版的备胎兜底 |
 > | **动态模型选择**（本节） | **每次调用前**按策略主动挑选 | 按需点将，未雨绸缪 |
 
-### 7. 🆕 1.4 新特性：`langchain.mcp` 命名空间与 MCPAdapter——一键接入 MCP 工具生态（2026-09-03 发布）
+### 7. 🆕 1.4 新特性：`langchain.mcp` 命名空间与 MCPAdapter——接入 MCP 工具生态（2026-09-03 发布）
 
 **MCP（Model Context Protocol）**是 Anthropic 发起的模型上下文协议（类比"AI 界的 USB-C 接口"），让任何大模型应用都能用同一套标准连接外部工具与数据源。1.4 起官方把 MCP 支持收编进**一等公民命名空间 `langchain.mcp`**：新增 `MCPAdapter` 适配器，一个入口搞定多服务器连接、鉴权与工具发现——以前要自己装 `langchain-mcp-adapters` 第三方包拼胶水代码，现在框架原生吃下：
 
@@ -189,5 +189,9 @@ LangChain 提供模型、提示词、工具和 Runnable 等通用接口；LangGr
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：掌握了 LangChain 1.4 的解耦架构哲学，学会了使用统一标准接口调用大模型并提取元数据，掌握了按需动态切换模型的"路由"思路，并认识了 1.4 新增的 `langchain.mcp` 命名空间与 `MCPAdapter`（MCP 工具生态一键接入）。
+1. **核心收获**：掌握了 LangChain 1.4 的组件解耦方式，学会了使用统一标准接口调用大模型并提取元数据，理解了按条件选择模型的实现方式，并认识了 1.4 新增的 `langchain.mcp` 命名空间与 `MCPAdapter`（MCP 工具生态一键接入）。
 2. **下一步探索**：模型已经跑通，如何优雅地组织 System 角色、用户输入与多轮对话历史？下一节我们深入学习 **9.2 Prompt 模板与上下文消息流**。
+
+## 最小验证
+
+用同一个模型分别测试 `invoke`、`stream` 和 `batch`，记录输入、输出格式和异常行为。更换模型或伙伴包时，先确认兼容版本和配置来源，再判断问题来自 LangChain 组件还是供应商端点。

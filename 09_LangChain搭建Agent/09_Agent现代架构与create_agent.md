@@ -1,18 +1,18 @@
 # 🤖 9.9 Agent 现代架构与 create_agent
 
-> **“Chain 是按固定路线行驶的火车，而 Agent 是拥有 GPS、方向盘和随时变道能力的自动驾驶汽车。”**  
-> 在 LangChain 1.4 中，Agent 的构建方式迎来了彻底的现代化变革：基于底座模型的 Tool Calling 协议与 LangGraph 运行时，实现高可靠的自主推理与工具调用闭环。
+> **“Chain 是按固定路线行驶的火车，而 Agent 是拥有 GPS、方向盘和随时变道能力的自动驾驶汽车。”**
+> 在 LangChain 1.4 中，Agent 的构建方式调整了默认的 Agent 构建方式：基于底座模型的 Tool Calling 协议与 LangGraph 运行时，实现高可靠的自主推理与工具调用闭环。
 
 ---
 
-## 💡 先看一个直观例子：固定铁轨与自动驾驶汽车
+## 运行流程示例：固定工作流与动态工具调用
 
 ### 1. Chain 链与 Agent 智能体的本质区别
 - **Chain（固定流水线）**：步骤是人类写死的（先翻译 ➔ 再摘要 ➔ 再存库）。无论遇到什么输入，都必须机械执行这三步；
 - **Agent（自主决策体）**：大模型根据用户的具体目标，自主规划“第一步调用什么工具、看结果再决定第二步调用什么工具、何时得出结论并向人类汇报”。
 
-### 2. 生活比喻：高级私人秘书与他的工作草稿本
-- **`create_agent`（秘书总监）**：1.4 的标准入口，一条命令就把“大脑（模型）+ 双手（工具）+ 记忆（checkpointer）+ 规则（system_prompt）”装配成一位能自主办事的秘书；
+### 概念说明：create_agent 的组件关系
+- **`create_agent`（秘书总监）**：1.4 的标准入口，一条命令就把“模型、工具、记忆（checkpointer）和规则（system_prompt）”装配成一位能自主办事的秘书；
 - **LangGraph 状态机（秘书的办公流程）**：秘书的每一步（思考 → 动手 → 看结果 → 再思考）都由底层状态图自动循环驱动，无需手工写 while 循环；
 - **`messages` 消息流水线（秘书的工作日志）**：每次调用的结果是一条完整消息流水线 —— `HumanMessage`（老板吩咐）→ `AIMessage.tool_calls`（秘书决定叫哪个部门）→ `ToolMessage`（部门回执）→ `AIMessage`（最终汇报）。审计只需逐条阅读这条流水线；
 - **ReAct 推理循环**：
@@ -20,10 +20,10 @@
   2. **Action（行动）**：决定调用哪个具体工具并传递参数；
   3. **Observation（观察）**：读取工具返回的结果，合并进上下文，决定是否继续循环或输出最终答案。
 
-<!-- 图表源文件：img/diagrams/09-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/09-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/09-diagram-01.svg">
-    <img src="img/diagrams/09-diagram-01.svg" alt="2. 生活比喻：高级私人秘书与他的工作草稿本" width="760">
+    <img src="img/diagrams/09-diagram-01.svg" alt="2. create_agent 的组件关系" width="760">
   </a>
 </p>
 
@@ -142,7 +142,7 @@ system_prompt = SystemMessage(
 agent = create_agent(model=llm, tools=tools, system_prompt=system_prompt)
 ```
 
-### 6. 中间件：给 Agent 一键加装生产级可靠性（1.1）
+### 6. 中间件：给 Agent 增加可靠性控制（1.1）
 
 配合 9.7 讲到的官方预置中间件，`create_agent` 可直接装配 `ModelRetryMiddleware`（弱网/429/5xx 自动重试），不再需要手写重试逻辑：
 
@@ -267,11 +267,11 @@ result = agent.invoke(
 
 > 💡 **三句话记忆**：`interrupt_on` 是"审批白名单"；`checkpointer + thread_id` 是"中断后的存档点"；`Command(resume=...)` 是"签字后的放行条"。
 
-### 12. 🤿 deepagents：站在 create_agent 肩膀上的"深度智能体"整机
+### 12. 🤿 deepagents：基于 create_agent 的扩展组件
 
 如果说 `create_agent` 给你的是一台**裸机发动机**（模型 + 工具 + 循环），那官方另一开源库 **deepagents**（`pip install deepagents`，本书实测 `0.7.14`）就是**整车厂**：它把第九章散装的中件间预装成一套"深度工作体"，专治"规划不清、上下文爆炸、单兵作战"三大癌症。它的定位类似 Claude Code 这类编码 Agent 的通用版——**虚拟文件系统 + 任务规划 + 子智能体委派 + 长期记忆 + 技能库**五件套开箱即用。
 
-一个生活比喻：`create_agent` 是**一个能干的店员**；deepagents 是**一家带后厨、储藏室和分店调度台的总店**——店员（主 Agent）可以把大活写进**工单**（`write_todos`）、去**储藏室**（虚拟文件系统）翻资料存档、把专项任务**外包**给分店（`task` 子智能体），还能把老顾客的偏好记在**门店记忆本**（`AGENTS.md` 式 Memory）里。
+从组件关系看，`create_agent` 是**一个能干的店员**；deepagents 是**一家带后厨、储藏室和分店调度台的总店**——店员（主 Agent）可以把大活写进**工单**（`write_todos`）、去**储藏室**（虚拟文件系统）翻资料存档、把专项任务**外包**给分店（`task` 子智能体），还能把老顾客的偏好记在**门店记忆本**（`AGENTS.md` 式 Memory）里。
 
 | 五大能力 | 底层实现（全是 9.7/9.11 学过的中间件！） | 提供的工具 |
 | :--- | :--- | :--- |
@@ -341,7 +341,7 @@ agent = create_deep_agent(
 
 每条规则声明"对哪些路径的读/写操作，采取哪种处置"，在调用后端**之前**拦截。三种模式对应三种管理风格：
 
-| `mode` | 行为 | 生活比喻 |
+| `mode` | 行为 |
 | :--- | :--- | :--- |
 | `allow` | 放行 | 工牌刷开门禁 |
 | `deny` | 直接拒绝（结构化错误，不抛异常） | 红线区域，刷卡也不开 |
@@ -401,7 +401,7 @@ agent = create_deep_agent(
 
 三种作用域通过 Store 的 namespace 设计实现（对接 9.6 的"记忆三数据源"）：`namespace=(assistant_id,)` **Agent 级**（一个共享人格）、`namespace=(user_identity,)` **用户级**（Alice/Bob 记忆互不可见）、组织级建议设为**只读**（防共享记忆被注入恶意指令——官方的安全建议，与 9.12 的 Prompt 注入防线呼应）。
 
-> 🔑 **学习路径闭环**：deepagents 没有任何"新魔法"——文件系统是 `FilesystemMiddleware`、摘要瘦身是 `SummarizationMiddleware`、子代理是 `SubAgentMiddleware`、记忆注入是 `MemoryMiddleware`，全部构建在第九章的 `AgentMiddleware` 体系之上。**看懂 9.7~9.11，你就具备了给 deepagents 这类"整机"拆机改造的能力**（源码仓库：[github.com/langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)）。
+> 🔑 **学习路径**：deepagents 没有任何"新魔法"——文件系统是 `FilesystemMiddleware`、摘要瘦身是 `SummarizationMiddleware`、子代理是 `SubAgentMiddleware`、记忆注入是 `MemoryMiddleware`，全部构建在第九章的 `AgentMiddleware` 体系之上。**看懂 9.7~9.11，你就具备了给 deepagents 这类"扩展方案"拆机改造的能力**（源码仓库：[github.com/langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)）。
 
 > 💡 **旧代码迁移对照（0.3 → 1.4）**：
 > | 0.3 写法 | 1.4 写法 |
@@ -440,5 +440,9 @@ agent = create_deep_agent(
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：掌握了 LangChain 1.4 标准 Agent 入口 `create_agent`（`model` + `tools` + `system_prompt` + 可选 `checkpointer` / `middleware` / `response_format` / `state_schema`），学会了通过 `messages` 消息流水线进行工具调用链推理审计，掌握了 `AgentState` 自定义状态与 HITL 人类在环的完整审批流程，认识了基于同一中间件体系的"深度智能体整机" deepagents（虚拟文件系统 / 任务规划 / 子代理 / 记忆 / 技能五件套），以及 0.3 → 1.4 的完整迁移对照。
+1. **核心收获**：掌握了 LangChain 1.4 标准 Agent 入口 `create_agent`（`model` + `tools` + `system_prompt` + 可选 `checkpointer` / `middleware` / `response_format` / `state_schema`），学会了通过 `messages` 消息流水线进行工具调用链推理审计，掌握了 `AgentState` 自定义状态与 HITL 人类在环的完整审批流程，认识了基于同一中间件体系的"深度智能体扩展方案" deepagents（虚拟文件系统 / 任务规划 / 子代理 / 记忆 / 技能五件套），以及 0.3 → 1.4 的完整迁移对照。
 2. **下一步探索**：现在我们已经掌握了 LangChain 1.4 的全部核心零件！下一节我们将继续深入**上下文工程与动态上下文注入**——如何给 Agent 在正确时机递上正确的上下文。
+
+## Agent 入口要明确停止条件
+
+测试正常工具调用、工具错误、人工审批、最大步数和恢复流程。`create_agent` 能组织循环，不代表循环一定会停；工具权限、超时和最终输出格式仍需在应用层约束。

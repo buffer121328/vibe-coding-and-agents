@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420.11999999999995 540.5" width="420.11999999999995" height="540.5" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 428.11999999999995 484.5" width="428.11999999999995" height="484.5" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,32 +27,32 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="PromptTemplate" data-label="🎬 ChatPromptTemplate 动态组装流水线">
-  <rect x="36" y="36" width="348.11999999999995" height="282.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="36" width="348.11999999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🎬 ChatPromptTemplate 动态组装流水线</text>
+  <rect x="40" y="40" width="348.11999999999995" height="250.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="348.11999999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🎬 ChatPromptTemplate 动态组装流水线</text>
 </g>
-<polyline class="edge" data-from="PromptTemplate" data-to="LLM" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="210.05999999999997,318.70000000000005 210.05999999999997,374.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="LLM" data-to="Out" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="210.05999999999997,411.6 210.05999999999997,467.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S" data-to="H" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="210.05999999999997,116.9 210.05999999999997,172.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="H" data-to="U" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="210.05999999999997,209.8 210.05999999999997,265.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PromptTemplate" data-to="LLM" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="214.05999999999997,290.70000000000005 214.05999999999997,330.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLM" data-to="Out" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="214.05999999999997,367.6 214.05999999999997,407.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S" data-to="H" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="214.05999999999997,120.9 214.05999999999997,160.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H" data-to="U" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="214.05999999999997,197.8 214.05999999999997,237.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="node" data-id="LLM" data-label="🧠 LLM 中枢决策大脑" data-shape="rectangle">
-  <rect x="120.54249999999999" y="374.70000000000005" width="179.03499999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.05999999999997" y="393.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 LLM 中枢决策大脑</text>
+  <rect x="124.54249999999999" y="330.70000000000005" width="179.03499999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="214.05999999999997" y="349.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🧠 LLM 中枢决策大脑</text>
 </g>
 <g class="node" data-id="Out" data-label="AIMessage: 模型生成的思考与响应" data-shape="rectangle">
-  <rect x="78.67599999999996" y="467.6" width="262.76800000000003" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.05999999999997" y="486.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">AIMessage: 模型生成的思考与响应</text>
+  <rect x="82.67599999999996" y="407.6" width="262.76800000000003" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="214.05999999999997" y="426.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">AIMessage: 模型生成的思考与响应</text>
 </g>
 <g class="node" data-id="S" data-label="SystemMessage: 角色定义与人设规则" data-shape="rectangle">
-  <rect x="70.525" y="80" width="279.06999999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.05999999999997" y="98.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">SystemMessage: 角色定义与人设规则</text>
+  <rect x="74.525" y="84" width="279.06999999999994" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="214.05999999999997" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">SystemMessage: 角色定义与人设规则</text>
 </g>
 <g class="node" data-id="H" data-label="MessagesPlaceholder: 历史多轮对话活页夹" data-shape="rectangle">
-  <rect x="52" y="172.9" width="316.11999999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.05999999999997" y="191.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">MessagesPlaceholder: 历史多轮对话活页夹</text>
+  <rect x="56" y="160.9" width="316.11999999999995" height="36.900000000000006" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="214.05999999999997" y="179.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">MessagesPlaceholder: 历史多轮对话活页夹</text>
 </g>
 <g class="node" data-id="U" data-label="HumanMessage: 用户当期动态提问 {input}" data-shape="rectangle">
-  <rect x="60.5215" y="265.8" width="299.07699999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.05999999999997" y="284.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">HumanMessage: 用户当期动态提问 {input}</text>
+  <rect x="64.5215" y="237.8" width="299.07699999999994" height="36.900000000000006" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="214.05999999999997" y="256.25" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">HumanMessage: 用户当期动态提问 {input}</text>
 </g>
 </svg>

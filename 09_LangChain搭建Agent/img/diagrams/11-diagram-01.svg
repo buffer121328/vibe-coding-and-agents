@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 369.7078399658203 638.8" width="369.7078399658203" height="638.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 638.6081666666666 569" width="638.6081666666666" height="569" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,42 +27,48 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="AgentLoop" data-label="🔄 Agent 生命周期 (两类钩子插桩点)">
-  <rect x="53.23594665527344" y="-8" width="236.47189331054688" height="622.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="53.23594665527344" y="-8" width="236.47189331054688" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="65.23594665527344" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🔄 Agent 生命周期 (两类钩子插桩点)</text>
+  <rect x="40" y="40" width="558.6081666666666" height="489.00000000000006" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="558.6081666666666" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🔄 Agent 生命周期 (两类钩子插桩点)</text>
 </g>
-<polyline class="edge" data-from="BA" data-to="BM" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="154.23594665527344,89.8 154.23594665527344,137.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="BM" data-to="MC" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="154.23594665527344,191.60000000000002 154.23594665527344,239.60000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="MC" data-to="AM" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="154.23594665527344,293.40000000000003 154.23594665527344,341.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="AM" data-to="TC" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="154.23594665527344,395.20000000000005 154.23594665527344,443.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="TC" data-to="BM" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="231.73594665527344,470.1 305.7078399658203,470.1 305.7078399658203,164.70000000000002 213.73594665527344,164.70000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BA" data-to="BM" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="487.5331666666667,325.40000000000003 487.5331666666667,337.40000000000003 321.2823333333333,337.40000000000003 321.2823333333333,365.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BM" data-to="MC" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="300.7056666666667,419.20000000000005 300.7056666666667,431.20000000000005 287.14033333333333,431.20000000000005 287.14033333333333,459.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MC" data-to="AM" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="229.43800000000002,459.20000000000005 229.43800000000002,431.20000000000005 56,431.20000000000005 56,149.8 127.61175,149.8 127.61175,137.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AM" data-to="TC" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="168.76508333333334,137.8 168.76508333333334,149.8 193.63066666666668,149.8 193.63066666666668,177.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="TC" data-to="BM" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="需要更多工具" points="167.00250000000003,231.60000000000002 167.00250000000003,243.60000000000002 113.87816666666669,243.60000000000002 113.87816666666669,337.40000000000003 280.129,337.40000000000003 280.129,365.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="TC" data-to="AA" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="220.25883333333337,231.60000000000002 220.25883333333337,243.60000000000002 273.3831666666667,243.60000000000002 273.3831666666667,271.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="TC" data-to="BM" data-label="需要更多工具">
-  <rect x="265.7078399658203" y="306.40000000000003" width="80" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="305.7078399658203" y="317.40000000000003" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">需要更多工具</text>
+  <rect x="69.37816666666669" y="283.35" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="113.84316666666669" y="298.5" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">需要更多工具</text>
 </g>
-<polyline class="edge" data-from="TC" data-to="AA" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="154.23594665527344,497.00000000000006 154.23594665527344,545" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<g class="node" data-id="BA" data-label="before_agent\n(启动前·每次调用一次)" data-shape="rectangle">
-  <rect x="69.23594665527344" y="36" width="170" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">before_agent</tspan><tspan x="154.23594665527344" dy="16.9">(启动前·每次调用一次)</tspan></text>
+<g class="node" data-id="BA" data-label="before_agent
+(启动前·每次调用一次)" data-shape="rectangle">
+  <rect x="392.45816666666667" y="271.6" width="190.14999999999998" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="487.53316666666666" y="298.5" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="487.53316666666666" dy="-3.9000000000000012">before_agent</tspan><tspan x="487.53316666666666" dy="16.900000000000002">(启动前·每次调用一次)</tspan></text>
 </g>
-<g class="node" data-id="BM" data-label="before_model\n(模型调用前)" data-shape="rectangle">
-  <rect x="94.73594665527344" y="137.8" width="119" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="164.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">before_model</tspan><tspan x="154.23594665527344" dy="16.9">(模型调用前)</tspan></text>
+<g class="node" data-id="BM" data-label="before_model
+(模型调用前)" data-shape="rectangle">
+  <rect x="238.97566666666668" y="365.40000000000003" width="123.46" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="300.7056666666667" y="392.3" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="300.7056666666667" dy="-3.9000000000000012">before_model</tspan><tspan x="300.7056666666667" dy="16.900000000000002">(模型调用前)</tspan></text>
 </g>
-<g class="node" data-id="MC" data-label="🧠 模型调用\nwrap_model_call 包裹" data-shape="rectangle">
-  <rect x="69.23594665527344" y="239.60000000000002" width="170" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="266.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">🧠 模型调用</tspan><tspan x="154.23594665527344" dy="16.9">wrap_model_call 包裹</tspan></text>
+<g class="node" data-id="MC" data-label="🧠 模型调用
+wrap_model_call 包裹" data-shape="rectangle">
+  <rect x="171.73566666666667" y="459.20000000000005" width="173.107" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="258.2891666666667" y="486.1" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="258.2891666666667" dy="-3.9000000000000012">🧠 模型调用</tspan><tspan x="258.2891666666667" dy="16.900000000000002">wrap_model_call 包裹</tspan></text>
 </g>
-<g class="node" data-id="AM" data-label="after_model\n(模型响应后)" data-shape="rectangle">
-  <rect x="100.23594665527344" y="341.40000000000003" width="108" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="368.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">after_model</tspan><tspan x="154.23594665527344" dy="16.9">(模型响应后)</tspan></text>
+<g class="node" data-id="AM" data-label="after_model
+(模型响应后)" data-shape="rectangle">
+  <rect x="86.45841666666666" y="84" width="123.46" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="148.18841666666665" y="110.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="148.18841666666665" dy="-3.9000000000000012">after_model</tspan><tspan x="148.18841666666665" dy="16.900000000000002">(模型响应后)</tspan></text>
 </g>
-<g class="node" data-id="TC" data-label="⚙️ 工具调用\nwrap_tool_call 包裹" data-shape="rectangle">
-  <rect x="76.73594665527344" y="443.20000000000005" width="155" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="470.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">⚙️ 工具调用</tspan><tspan x="154.23594665527344" dy="16.9">wrap_tool_call 包裹</tspan></text>
+<g class="node" data-id="TC" data-label="⚙️ 工具调用
+wrap_tool_call 包裹" data-shape="rectangle">
+  <rect x="113.74616666666668" y="177.8" width="159.769" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="193.63066666666668" y="204.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="193.63066666666668" dy="-3.9000000000000012">⚙️ 工具调用</tspan><tspan x="193.63066666666668" dy="16.900000000000002">wrap_tool_call 包裹</tspan></text>
 </g>
-<g class="node" data-id="AA" data-label="after_agent\n(结束后·每次调用一次)" data-shape="rectangle">
-  <rect x="69.23594665527344" y="545" width="170" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="154.23594665527344" y="571.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="154.23594665527344" dy="-3.8999999999999995">after_agent</tspan><tspan x="154.23594665527344" dy="16.9">(结束后·每次调用一次)</tspan></text>
+<g class="node" data-id="AA" data-label="after_agent
+(结束后·每次调用一次)" data-shape="rectangle">
+  <rect x="178.3081666666667" y="271.6" width="190.14999999999998" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="273.3831666666667" y="298.5" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="273.3831666666667" dy="-3.9000000000000012">after_agent</tspan><tspan x="273.3831666666667" dy="16.900000000000002">(结束后·每次调用一次)</tspan></text>
 </g>
 </svg>

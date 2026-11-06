@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.11795806884766 862.8" width="300.11795806884766" height="862.8" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320.67499999999995 926.8000000000001" width="320.67499999999995" height="926.8000000000001" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,57 +27,61 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="Input" data-label="🚪 输入侧 (确定性护栏)">
-  <rect x="20" y="-8" width="221" height="300.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="-8" width="221" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🚪 输入侧 (确定性护栏)</text>
+  <rect x="45.92800000000001" y="40" width="228.81899999999996" height="284.5" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="45.92800000000001" y="40" width="228.81899999999996" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="57.92800000000001" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🚪 输入侧 (确定性护栏)</text>
 </g>
 <g class="subgraph" data-id="Core" data-label="🤖 Agent 执行">
-  <rect x="20" y="324.5" width="236" height="198.7" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="324.5" width="236" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="338.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🤖 Agent 执行</text>
+  <rect x="40" y="376.5" width="240.67499999999998" height="190.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="376.5" width="240.67499999999998" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="390.5" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🤖 Agent 执行</text>
 </g>
 <g class="subgraph" data-id="Output" data-label="🚪 输出侧 (确定性 + 模型性护栏)">
-  <rect x="26.117958068847656" y="555.2" width="234" height="283.5999999999999" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="26.117958068847656" y="555.2" width="234" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="38.117958068847656" y="569.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🚪 输出侧 (确定性 + 模型性护栏)</text>
+  <rect x="41.852500000000035" y="619.2" width="236.9699999999999" height="267.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="41.852500000000035" y="619.2" width="236.9699999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="53.852500000000035" y="633.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🚪 输出侧 (确定性 + 模型性护栏)</text>
 </g>
-<polyline class="edge" data-from="IN" data-to="BF" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="130.5,72.9 130.5,120.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="BF" data-to="PII1" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="130.5,174.7 130.5,222.7" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="PII1" data-to="AG" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="130.5,276.5 130.5,322.5 272,322.5 272,386.95 203,386.95" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="AG" data-to="HITL" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="138,405.4 138,453.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="HITL" data-to="PII2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="138,507.2 138,553.2 276.11795806884766,553.2 276.11795806884766,617.6500000000001 233.61795806884766,617.6500000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="PII2" data-to="AF" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="143.11795806884766,636.1 143.11795806884766,684.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="AF" data-to="OUT" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="143.11795806884766,737.9 143.11795806884766,785.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PII1" data-to="AG" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,308.5 160.33749999999998,420.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="HITL" data-to="PII2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,551.2 160.33749999999998,663.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="IN" data-to="BF" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,120.9 160.33749999999998,160.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="BF" data-to="PII1" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,214.70000000000002 160.33749999999998,254.70000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AG" data-to="HITL" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,457.4 160.33749999999998,497.4" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PII2" data-to="AF" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,700.1 160.33749999999998,740.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AF" data-to="OUT" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="160.33749999999998,793.9000000000001 160.33749999999998,833.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="node" data-id="IN" data-label="用户输入" data-shape="rectangle">
-  <rect x="85.5" y="36" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="130.5" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="130.5" dy="4.55">用户输入</tspan></text>
+  <rect x="109.7225" y="84" width="101.22999999999999" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="160.33749999999998" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">用户输入</text>
 </g>
-<g class="node" data-id="BF" data-label="before_agent 黑名单拦截\n(关键词命中即收尾)" data-shape="rectangle">
-  <rect x="36" y="120.9" width="189" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="130.5" y="147.8" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="130.5" dy="-3.8999999999999995">before_agent 黑名单拦截</tspan><tspan x="130.5" dy="16.9">(关键词命中即收尾)</tspan></text>
+<g class="node" data-id="BF" data-label="before_agent 黑名单拦截
+(关键词命中即收尾)" data-shape="rectangle">
+  <rect x="61.92800000000001" y="160.9" width="196.81899999999996" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="160.33749999999998" y="187.8" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="160.33749999999998" dy="-3.9000000000000012">before_agent 黑名单拦截</tspan><tspan x="160.33749999999998" dy="16.900000000000002">(关键词命中即收尾)</tspan></text>
 </g>
-<g class="node" data-id="PII1" data-label="PIIMiddleware 输入脱敏\n(邮箱/信用卡/API Key)" data-shape="rectangle">
-  <rect x="40" y="222.7" width="181" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="130.5" y="249.6" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="130.5" dy="-3.8999999999999995">PIIMiddleware 输入脱敏</tspan><tspan x="130.5" dy="16.9">(邮箱/信用卡/API Key)</tspan></text>
+<g class="node" data-id="PII1" data-label="PIIMiddleware 输入脱敏
+(邮箱/信用卡/API Key)" data-shape="rectangle">
+  <rect x="66.7445" y="254.70000000000002" width="187.18599999999998" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="160.33749999999998" y="281.6" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="160.33749999999998" dy="-3.9000000000000012">PIIMiddleware 输入脱敏</tspan><tspan x="160.33749999999998" dy="16.900000000000002">(邮箱/信用卡/API Key)</tspan></text>
 </g>
 <g class="node" data-id="AG" data-label="模型 + 工具调用" data-shape="rectangle">
-  <rect x="73" y="368.5" width="130" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="138" y="386.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="138" dy="4.55">模型 + 工具调用</tspan></text>
+  <rect x="88.97449999999999" y="420.5" width="142.726" height="36.900000000000006" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="160.33749999999998" y="438.95" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">模型 + 工具调用</text>
 </g>
-<g class="node" data-id="HITL" data-label="HumanInTheLoop 高危审批\n(发邮件/删库需人工签字)" data-shape="rectangle">
-  <rect x="36" y="453.4" width="204" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="138" y="480.29999999999995" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="138" dy="-3.8999999999999995">HumanInTheLoop 高危审批</tspan><tspan x="138" dy="16.9">(发邮件/删库需人工签字)</tspan></text>
+<g class="node" data-id="HITL" data-label="HumanInTheLoop 高危审批
+(发邮件/删库需人工签字)" data-shape="rectangle">
+  <rect x="56" y="497.4" width="208.67499999999998" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="160.33749999999998" y="524.3" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="160.33749999999998" dy="-3.9000000000000012">HumanInTheLoop 高危审批</tspan><tspan x="160.33749999999998" dy="16.900000000000002">(发邮件/删库需人工签字)</tspan></text>
 </g>
 <g class="node" data-id="PII2" data-label="PIIMiddleware 输出脱敏" data-shape="rectangle">
-  <rect x="52.617958068847656" y="599.2" width="181" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="143.11795806884766" y="617.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143.11795806884766" dy="4.55">PIIMiddleware 输出脱敏</tspan></text>
+  <rect x="66.7445" y="663.2" width="187.18599999999998" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="160.33749999999998" y="681.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">PIIMiddleware 输出脱敏</text>
 </g>
-<g class="node" data-id="AF" data-label="after_agent 安全复核\n(LLM 判定 SAFE/UNSAFE)" data-shape="rectangle">
-  <rect x="42.117958068847656" y="684.1" width="202" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="143.11795806884766" y="711" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143.11795806884766" dy="-3.8999999999999995">after_agent 安全复核</tspan><tspan x="143.11795806884766" dy="16.9">(LLM 判定 SAFE/UNSAFE)</tspan></text>
+<g class="node" data-id="AF" data-label="after_agent 安全复核
+(LLM 判定 SAFE/UNSAFE)" data-shape="rectangle">
+  <rect x="57.852500000000035" y="740.1" width="204.9699999999999" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="160.33749999999998" y="767" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="160.33749999999998" dy="-3.9000000000000012">after_agent 安全复核</tspan><tspan x="160.33749999999998" dy="16.900000000000002">(LLM 判定 SAFE/UNSAFE)</tspan></text>
 </g>
 <g class="node" data-id="OUT" data-label="最终回复" data-shape="rectangle">
-  <rect x="98.11795806884766" y="785.9" width="90" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="143.11795806884766" y="804.35" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="143.11795806884766" dy="4.55">最终回复</tspan></text>
+  <rect x="109.7225" y="833.9000000000001" width="101.22999999999999" height="36.900000000000006" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="160.33749999999998" y="852.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">最终回复</text>
 </g>
 </svg>

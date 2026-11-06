@@ -1,24 +1,24 @@
 # 🔍 9.7 Callbacks 回调与可观测性中间件
 
-> **“在未建立可观测性之前，不要将任何 AI Agent 推向生产环境。”**  
-> 大模型的调用就像一个黑盒，何时发起请求、消耗了多少 Token、耗时多久、有没有报错？LangChain 的 Callbacks 机制就是为大模型应用量身定制的“飞机黑匣子”与“安检探针”。
+> **“在未建立可观测性之前，不要将任何 AI Agent 推向生产环境。”**
+> 没有调用记录时，很难知道请求何时发起、消耗多少 Token、耗时多久或在哪里报错。Callbacks 用于记录和处理这些事件。
 
 ---
 
-## 💡 先看一个直观例子：飞机黑匣子与安检探针
+## 运行流程示例：运行记录与敏感信息检查
 
-### 1. 生产环境的黑盒危机
-当你把一个复杂的 Agent 系统上线后，用户突然反馈：“这个请求卡了 30 秒”、“为什么回答报错了”、“这个月账单为什么暴涨了 1 万美元？”  
+### 1. 生产环境缺少调用记录的问题
+当你把一个复杂的 Agent 系统上线后，用户突然反馈：“这个请求卡了 30 秒”、“为什么回答报错了”、“这个月账单为什么暴涨了 1 万美元？”
 如果没有回调监控系统，你只能面对空荡荡的日志发呆。
 
-### 2. 生活比喻：航班黑匣子与安检 X 光机
+### 概念说明：航班黑匣子与安检 X 光机
 - **`BaseCallbackHandler`**：就像飞机的**飞行数据记录仪（黑匣子）**，飞机起飞（`on_llm_start`）、巡航（`on_tool_start`）、降落（`on_llm_end`）、发生颠簸异常（`on_llm_error`）时，黑匣子都会自动记录下每一个毫秒级时间戳与参数；
 - **敏感数据脱敏探针**：就像机场的**安检 X 光机**，在乘客登机（Prompt 发送给大模型）前，自动扫描并把打火机和违禁品（手机号、身份证、API Key）自动用 `[REDACTED]` 保护起来！
 
-<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-01.svg">
-    <img src="img/diagrams/07-diagram-01.svg" alt="2. 生活比喻：航班黑匣子与安检 X 光机" width="760">
+    <img src="img/diagrams/07-diagram-01.svg" alt="2. 回调记录与敏感信息检查" width="760">
   </a>
 </p>
 
@@ -38,7 +38,7 @@ from langchain_core.outputs import LLMResult
 
 class PerformanceAndCostCallback(BaseCallbackHandler):
     """自定义性能监控与 Token 财务审计处理器"""
-    
+
     def __init__(self, input_cost_per_1k: float = 0.002, output_cost_per_1k: float = 0.008):
         super().__init__()
         self.input_cost_per_1k = input_cost_per_1k
@@ -70,7 +70,7 @@ class PerformanceAndCostCallback(BaseCallbackHandler):
         self.prompt_tokens = token_usage.get("prompt_tokens", 0)
         self.completion_tokens = token_usage.get("completion_tokens", 0)
         self.total_tokens = token_usage.get("total_tokens", self.prompt_tokens + self.completion_tokens)
-        
+
         # 估算成本 (USD)
         self.total_cost = (
             (self.prompt_tokens / 1000.0) * self.input_cost_per_1k +
@@ -142,9 +142,9 @@ agent = create_agent(model=get_chat_model(), tools=[], middleware=[AuditMiddlewa
 
 ---
 
-## 🆕 1.1+ 官方预置中间件全家桶：零手写，即插即用
+## 🆕 1.1+ 官方预置中间件预置中间件：减少重复实现
 
-上面我们手写了 `AgentMiddleware`，适合深度定制；而 1.1 起官方直接内置了一批高频中间件，一行装配即可获得生产级可靠性。到 **1.4（2026-09-03 发布）** 为止，`langchain.agents.middleware` 顶层已内置 **16 个预置中间件**，按"防线"分成四类，全部本地实测核对过签名：
+上面我们手写了 `AgentMiddleware`，适合深度定制；而 1.1 起官方直接内置了一批高频中间件，按需组合中间件并验证其行为。到 **1.4（2026-09-03 发布）** 为止，`langchain.agents.middleware` 顶层已内置 **16 个预置中间件**，按"防线"分成四类，全部本地实测核对过签名：
 
 **第一类 · 稳如老狗（重试 / 容灾）**——快递送不到就换家物流再试：
 
@@ -212,7 +212,7 @@ middleware = [
 ]
 ```
 
-> 📌 **导入路径提醒**：官方预置中间件统一从 `langchain.agents.middleware` **顶层导入**（如 `from langchain.agents.middleware import ModelRetryMiddleware, PIIMiddleware`）。手写 Callbacks/自定义 `AgentMiddleware` 与官方预置中间件**并不冲突**——前者用于深度定制探针，后者用于一键装备高频能力。
+> 📌 **导入路径提醒**：官方预置中间件统一从 `langchain.agents.middleware` **顶层导入**（如 `from langchain.agents.middleware import ModelRetryMiddleware, PIIMiddleware`）。手写 Callbacks/自定义 `AgentMiddleware` 与官方预置中间件**并不冲突**——前者用于深度定制探针，后者用于快速组合常用能力。
 >
 > 🔎 **1.4 全量清单速查**：除上表 16 个外，同一命名空间还导出 `HumanInTheLoopMiddleware` 配套类型（`InterruptOnConfig`）、`ClearToolUsesEdit`（上下文清除策略）、`TriggerClause`（摘要触发子句）、`PIIMatch` / `PIIDetectionError`（自定义检测器返回类型）与 `TracePolicy`（中间件链路脱敏，见 9.11）。以 `dir(langchain.agents.middleware)` 实测输出为准，升级版本后跑一下即可看到最新全家桶。
 
@@ -235,5 +235,9 @@ middleware = [
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：掌握了 `BaseCallbackHandler` 的生命周期切面机制，实现了 Token 财务账单审计与敏感隐私拦截；学会了 1.4 的 `AgentMiddleware`（`before_model` / `after_model`）内聚观测钩子；同时盘点了 **1.4 全量 16 个官方预置中间件**（重试容灾 / 限额脱敏 / 上下文管家 / 审批执行四大防线）——LangSmith / Langfuse 等云端可观测平台的定位本教程暂不接入，需要时再单独成节。
+1. **核心收获**：掌握了 `BaseCallbackHandler` 的生命周期切面机制，实现了 Token 财务账单审计与敏感隐私拦截；学会了 1.4 的 `AgentMiddleware`（`before_model` / `after_model`）内聚观测钩子；同时盘点了 **1.4 官方预置中间件**（重试容灾 / 限额脱敏 / 上下文管家 / 审批执行四大防线）——LangSmith / Langfuse 等云端可观测平台的定位本教程暂不接入，需要时再单独成节。
 2. **下一步探索**：大模型拥有了强大的逻辑推理能力，但它的训练数据停留在过去，且不知道企业内部的私有文档。如何给大模型配备海量知识库？下一节我们学习 **9.8 RAG 核心链路与向量检索增强**。
+
+## 观测数据要避免泄露
+
+记录运行 ID、模型、耗时、Token 和错误类型，但在写日志前脱敏密钥、令牌和个人信息。回调失败时明确是阻断主流程还是只记录告警，并用一次真实失败请求验证日志仍然完整。

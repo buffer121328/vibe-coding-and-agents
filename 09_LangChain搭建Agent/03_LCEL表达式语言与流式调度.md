@@ -4,7 +4,7 @@
 
 ---
 
-## 💡 为什么需要 LCEL？（生活比喻篇）
+## 💡 为什么需要 LCEL？
 
 ### 1. 传统嵌套调用的地狱
 在早期的 AI 应用开发中，代码往往是层层嵌套的：
@@ -17,15 +17,15 @@ db_result = save_to_db(parsed_result)
 ```
 如果要在中间加入**流式打字机输出、多分支并行执行、异步并发、调用失败自动切换备用模型**，代码量会瞬间膨胀上百行。
 
-### 2. 生活比喻：自动化工厂传送带与双路备用发电机
+### 概念说明：自动化工厂传送带与双路备用发电机
 - **管道符 `|`**：就像工厂里的**标准化传送带**。上一个工位（Prompt 模板）加工完的半成品，通过传送带自动推给下一个工位（LLM 模型），再推给质检工位（解析器）；
 - **`RunnableParallel`**：主传送带分叉出两条副线，一条做红烧、一条做清蒸，最后在打包台汇合；
 - **`with_fallbacks`**：主发电机（例如 GPT-4o / 主接口）一旦跳闸断电，工厂毫秒级自动切换到备用柴油发电机（DeepSeek 备用线路），生产线绝不停工！
 
-<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-01.svg">
-    <img src="img/diagrams/03-diagram-01.svg" alt="2. 生活比喻：自动化工厂传送带与双路备用发电机" width="760">
+    <img src="img/diagrams/03-diagram-01.svg" alt="2. LCEL 组合、并行与回退" width="760">
   </a>
 </p>
 
@@ -116,13 +116,13 @@ backup_llm = ChatOpenAI(
 resilient_llm = primary_llm.with_fallbacks([backup_llm])
 
 safe_chain = ChatPromptTemplate.from_template("解释高可用架构：{topic}") | resilient_llm | parser
-# 若 primary_llm 报错，内部自动捕获并无缝由 backup_llm 补位执行
+# 若 primary_llm 报错，内部捕获异常后改用 backup_llm 执行
 print(safe_chain.invoke({"topic": "金融支付网关"}))
 ```
 
 ### 4. LCEL 进阶补充：分支路由、自动重试与事件流（1.4 依旧核心）
 
-LCEL 在 1.4 中依然是编排的灵魂（`create_agent` 底层同样是 LangGraph 状态机，但链式场景仍首选 LCEL）。以下三个高频武器建议一并掌握：
+LCEL 在 1.4 中仍用于组合调用流程（`create_agent` 底层同样是 LangGraph 状态机，但链式场景仍首选 LCEL）。以下三个高频武器建议一并掌握：
 
 ```python
 from langchain_core.runnables import RunnableBranch, RunnableLambda
@@ -164,5 +164,9 @@ async for event in chain.astream_events({"concept": "递归"}, version="v2"):
 
 ## 🎯 本节小结与思考
 
-1. **核心收获**：理解了 LCEL 管道符 `|` 的底层哲学，掌握了 `RunnableParallel` 并行分支与 `with_fallbacks` 企业级高可用容灾。
+1. **核心收获**：理解了 LCEL 管道符 `|` 的组合方式，掌握了 `RunnableParallel` 并行分支与 `with_fallbacks` 回退和错误处理。
 2. **下一步探索**：大模型吐出的文本虽然生动，但后端代码往往需要严格的 JSON 或强类型对象（如获取结构化财报、用户信息）。下一节我们学习 **9.4 结构化输出与容错解析**。
+
+## Runnable 组合要测失败路径
+
+分别验证串行、并行、流式和 fallback 路径。记录每个 Runnable 的输入输出，确认 fallback 只处理约定的异常，不会吞掉参数错误或把部分结果误当成完整结果。

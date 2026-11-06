@@ -23,7 +23,7 @@
 
 ## 🗺️ 13 步进阶全景路线图 (Roadmap)
 
-<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/overview-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/overview-diagram-01.svg">
     <img src="img/diagrams/overview-diagram-01.svg" alt="🗺️ 13 步进阶全景路线图 (Roadmap)" width="860">
@@ -34,21 +34,21 @@
 
 ## 📑 章节目录与核心攻关目标
 
-| 章节编号 | 文档名称 | 对应生活比喻 | 核心攻关目标与产出 |
+| 章节编号 | 文档名称 | 核心攻关目标与产出 |
 | :--- | :--- | :--- | :--- |
-| **9.1** | [初识LangChain与生态架构](01_初识LangChain与生态架构.md) | 万能转换插头与乐高卡扣 | 掌握 `langchain-core` 拆分、统一模型工厂与 invoke/stream/batch 调用 |
-| **9.2** | [Prompt模板与上下文消息流](02_Prompt模板与上下文消息流.md) | 剧组提词器与对话场记本 | 掌握四大消息模型、`ChatPromptTemplate` 与 `MessagesPlaceholder` 动态注入 |
-| **9.3** | [LCEL表达式语言与流式调度](03_LCEL表达式语言与流式调度.md) | 自动化传送带与双路备用发电机 | 掌握 LCEL 管道符 `\|`、`RunnableParallel` 并行分支与 `with_fallbacks` 容灾 |
-| **9.4** | [结构化输出与容错解析](04_结构化输出与容错解析.md) | 海关标准报关单与质检机器人 | 掌握 `.with_structured_output()` 与 Pydantic 强类型数据校验提取 |
-| **9.5** | [自定义工具生态与参数校验](05_自定义工具生态与参数校验.md) | 瑞士军刀卡槽与带卡尺接头 | 掌握 `@tool` 装饰器、Pydantic `args_schema` 约束与 `llm.bind_tools()` 底层机制 |
-| **9.6** | [记忆管理与会话状态持久化](06_记忆管理与会话状态持久化.md) | 办公桌抽屉与智能历史剪报员 | 掌握 `create_agent` + LangGraph `Checkpointer` 线程级记忆与 `trim_messages` 窗口裁剪 |
-| **9.7** | [Callbacks回调与可观测性中间件](07_Callbacks回调与可观测性中间件.md) | 航班黑匣子与安检 X 光机 | 掌握 `BaseCallbackHandler` 切面、Token 账单自动审计与隐私正则脱敏 |
-| **9.8** | [RAG核心链路与向量检索增强](08_RAG核心链路与向量检索增强.md) | 智能图书索引员与开卷参考书 | 掌握 TextSplitter 切块、`langchain-chroma` 向量入库与标准 LCEL RAG 检索问答管道 |
-| **9.9** | [Agent现代架构与create_agent](09_Agent现代架构与create_agent.md) | 高级私人秘书与他的工作草稿本 | 掌握 1.4 标准 `create_agent` 智能体、Tool Calling 与消息流水线推理审计 + deepagents 深度智能体整机 |
-| **9.10** | [上下文工程与动态上下文注入](10_上下文工程与动态上下文注入.md) | 导演的剧本、道具与幕间调度 | 掌握 Model/Tool/Life-cycle 三类上下文与 Runtime Context/State/Store 三数据源动态注入 |
-| **9.11** | [自定义中间件与生命周期钩子](11_自定义中间件与生命周期钩子.md) | 流水线质检员与包裹代收点 | 掌握 Node-style 4 钩子 + Wrap-style 2 钩子、state_schema 自定义状态、`@dynamic_prompt` 与 `TracePolicy`（1.4） |
-| **9.12** | [生产级防护：护栏安全与测试评估](12_生产级防护_护栏安全与测试评估.md) | 安检门与安检员 | 掌握确定性/模型性护栏、PII 脱敏、Prompt 注入防护与测试评估 |
-| **9.13** | [综合实战：AI智能数码选购与避坑决策Agent](13_综合实战_AI智能数码选购与避坑决策Agent.md) | 装机佬的整机总装（SmartBuyer 参谋） | 9.1~9.12 全零件融会贯通：避坑 RAG + 差评搜索 + 画像动态注入 + 中间件栈 + 护栏 + Pydantic 选购报告 |
+| **9.1** | [初识LangChain与生态架构](01_初识LangChain与生态架构.md) | 掌握 `langchain-core` 拆分、统一模型工厂与 invoke/stream/batch 调用 |
+| **9.2** | [Prompt模板与上下文消息流](02_Prompt模板与上下文消息流.md) | 掌握四大消息模型、`ChatPromptTemplate` 与 `MessagesPlaceholder` 动态注入 |
+| **9.3** | [LCEL表达式语言与流式调度](03_LCEL表达式语言与流式调度.md) | `、`RunnableParallel` 并行分支与 `with_fallbacks` 容灾 |
+| **9.4** | [结构化输出与容错解析](04_结构化输出与容错解析.md) | 掌握 `.with_structured_output()` 与 Pydantic 强类型数据校验提取 |
+| **9.5** | [自定义工具生态与参数校验](05_自定义工具生态与参数校验.md) | 掌握 `@tool` 装饰器、Pydantic `args_schema` 约束与 `llm.bind_tools()` 底层机制 |
+| **9.6** | [记忆管理与会话状态持久化](06_记忆管理与会话状态持久化.md) | 掌握 `create_agent` + LangGraph `Checkpointer` 线程级记忆与 `trim_messages` 窗口裁剪 |
+| **9.7** | [Callbacks回调与可观测性中间件](07_Callbacks回调与可观测性中间件.md) | 掌握 `BaseCallbackHandler` 切面、Token 账单自动审计与隐私正则脱敏 |
+| **9.8** | [RAG核心链路与向量检索增强](08_RAG核心链路与向量检索增强.md) | 掌握 TextSplitter 切块、`langchain-chroma` 向量入库与标准 LCEL RAG 检索问答管道 |
+| **9.9** | [Agent现代架构与create_agent](09_Agent现代架构与create_agent.md) | 掌握 1.4 标准 `create_agent` 智能体、Tool Calling 与消息流水线推理审计 + deepagents 深度智能体整机 |
+| **9.10** | [上下文工程与动态上下文注入](10_上下文工程与动态上下文注入.md) | 掌握 Model/Tool/Life-cycle 三类上下文与 Runtime Context/State/Store 三数据源动态注入 |
+| **9.11** | [自定义中间件与生命周期钩子](11_自定义中间件与生命周期钩子.md) | 掌握 Node-style 4 钩子 + Wrap-style 2 钩子、state_schema 自定义状态、`@dynamic_prompt` 与 `TracePolicy`（1.4） |
+| **9.12** | [生产级防护：护栏安全与测试评估](12_生产级防护_护栏安全与测试评估.md) | 掌握确定性/模型性护栏、PII 脱敏、Prompt 注入防护与测试评估 |
+| **9.13** | [综合实战：AI智能数码选购与避坑决策Agent](13_综合实战_AI智能数码选购与避坑决策Agent.md) | 9.1~9.12 全零件融会贯通：避坑 RAG + 差评搜索 + 画像动态注入 + 中间件栈 + 护栏 + Pydantic 选购报告 |
 
 > 💡 **版本说明**：全章基于 **LangChain 1.4**（本地实测 `langchain==1.4.0` + `deepagents==0.7.14`），1.1~1.4 新特性（模型能力档案、`MCPAdapter`、工具 `extras`、官方 16 个预置中间件、`SummarizationMiddleware` 精读、`response_format`、v3 流式、deepagents 等）已分散融入 9.1 / 9.5 / 9.6 / 9.7 / 9.9 / 9.11 各节，跟随章节顺序即可完整掌握，无需单独的速览章节。
 

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1722 343.6" width="1722" height="343.6" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1095.763 484.5" width="1095.763" height="484.5" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,49 +27,50 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="LLMLifecycle" data-label="🔄 LLM / Agent 执行生命周期事件流">
-  <rect x="20" y="-8" width="630" height="327.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="-8" width="630" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🔄 LLM / Agent 执行生命周期事件流</text>
+  <rect x="221.54549999999995" y="40" width="652.672" height="250.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="221.54549999999995" y="40" width="652.672" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="233.54549999999995" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🔄 LLM / Agent 执行生命周期事件流</text>
 </g>
 <g class="subgraph" data-id="CustomCallbacks" data-label="🔍 BaseCallbackHandler 监听探针">
-  <rect x="674" y="-8" width="1024" height="113.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="674" y="-8" width="1024" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="686" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🔍 BaseCallbackHandler 监听探针</text>
+  <rect x="40" y="330.70000000000005" width="1015.7629999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="330.70000000000005" width="1015.7629999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="344.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🔍 BaseCallbackHandler 监听探针</text>
 </g>
-<polyline class="edge" data-from="E1" data-to="E2" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="335,72.9 335,127.35000000000001 204.5,127.35000000000001 204.5,181.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="E2" data-to="E3" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="204.5,218.70000000000002 204.5,242.70000000000005 335,242.70000000000005 335,266.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="E1" data-to="E4" data-style="dotted" data-arrow-start="false" data-arrow-end="true" points="335,72.9 335,127.35000000000001 515.5,127.35000000000001 515.5,181.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="LLMLifecycle" data-to="CustomCallbacks" data-style="thick" data-arrow-start="true" data-arrow-end="true" points="547.8815,290.70000000000005 547.8815,330.70000000000005" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-start)" />
+<polyline class="edge" data-from="E1" data-to="E2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="513.2258333333332,120.9 513.2258333333332,132.9 413.3894999999999,132.9 413.3894999999999,160.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E2" data-to="E3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="413.3894999999999,197.8 413.3894999999999,237.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E1" data-to="E4" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="异常" points="635.8891666666666,120.9 635.8891666666666,132.9 735.7254999999999,132.9 735.7254999999999,237.8" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="E1" data-to="E4" data-label="异常">
-  <rect x="407.25" y="116.35000000000001" width="36" height="22" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="425.25" y="127.35000000000001" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.85">异常</text>
+  <rect x="714.7254999999999" y="164.2" width="41.41" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="735.4304999999999" y="179.35" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">异常</text>
 </g>
-<polyline class="edge" data-from="LLMLifecycle" data-to="CustomCallbacks" data-style="thick" data-arrow-start="true" data-arrow-end="true" points="650,40 674,40" fill="none" stroke="var(--_line)" stroke-width="2" marker-start="url(#arrowhead-start)" marker-end="url(#arrowhead)" />
 <g class="node" data-id="E1" data-label="1. on_llm_start (发起请求，触发敏感信息脱敏与计时)" data-shape="rectangle">
-  <rect x="156.5" y="36" width="357" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="335" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="335" dy="4.55">1. on_llm_start (发起请求，触发敏感信息脱敏与计时)</tspan></text>
+  <rect x="390.5624999999999" y="84" width="367.98999999999995" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="574.5574999999999" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">1. on_llm_start (发起请求，触发敏感信息脱敏与计时)</text>
 </g>
 <g class="node" data-id="E2" data-label="2. on_tool_start / end (工具调用拦截与参数审计)" data-shape="rectangle">
-  <rect x="36" y="181.8" width="337" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="204.5" y="200.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="204.5" dy="4.55">2. on_tool_start / end (工具调用拦截与参数审计)</tspan></text>
+  <rect x="246.06699999999992" y="160.9" width="334.645" height="36.900000000000006" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="413.3894999999999" y="179.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">2. on_tool_start / end (工具调用拦截与参数审计)</text>
 </g>
 <g class="node" data-id="E3" data-label="3. on_llm_end (请求完毕，捕获 Token 消耗与计费)" data-shape="rectangle">
-  <rect x="161" y="266.70000000000005" width="348" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="335" y="285.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="335" dy="4.55">3. on_llm_end (请求完毕，捕获 Token 消耗与计费)</tspan></text>
+  <rect x="237.54549999999995" y="237.8" width="351.68799999999993" height="36.900000000000006" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="413.3894999999999" y="256.25" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">3. on_llm_end (请求完毕，捕获 Token 消耗与计费)</text>
 </g>
 <g class="node" data-id="E4" data-label="4. on_llm_error (异常捕获与报警)" data-shape="rectangle">
-  <rect x="397" y="181.8" width="237" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="515.5" y="200.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="515.5" dy="4.55">4. on_llm_error (异常捕获与报警)</tspan></text>
+  <rect x="613.2334999999998" y="237.8" width="244.984" height="36.900000000000006" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="735.7254999999998" y="256.25" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">4. on_llm_error (异常捕获与报警)</text>
 </g>
 <g class="node" data-id="C1" data-label="📊 PerformanceAndCostCallback (耗时与 Token 账单)" data-shape="rectangle">
-  <rect x="690" y="36" width="379" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="879.5" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="879.5" dy="4.55">📊 PerformanceAndCostCallback (耗时与 Token 账单)</tspan></text>
+  <rect x="310.905" y="378.92500000000007" width="365.02599999999995" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="493.41799999999995" y="397.37500000000006" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">📊 PerformanceAndCostCallback (耗时与 Token 账单)</text>
 </g>
 <g class="node" data-id="C2" data-label="🛡️ SensitiveDataRedactCallback (隐私正则脱敏)" data-shape="rectangle">
-  <rect x="1093" y="36" width="340" height="36.9" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="1263" y="54.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1263" dy="4.55">🛡️ SensitiveDataRedactCallback (隐私正则脱敏)</tspan></text>
+  <rect x="699.931" y="378.92500000000007" width="339.83199999999994" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="869.847" y="397.37500000000006" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🛡️ SensitiveDataRedactCallback (隐私正则脱敏)</text>
 </g>
-<g class="node" data-id="C3" data-label="🎛️ AgentMiddleware 观测钩子\n(before_model / after_model)" data-shape="rectangle">
-  <rect x="1457" y="36" width="225" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="1569.5" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="1569.5" dy="-3.8999999999999995">🎛️ AgentMiddleware 观测钩子</tspan><tspan x="1569.5" dy="16.9">(before_model / after_model)</tspan></text>
+<g class="node" data-id="C3" data-label="🎛️ AgentMiddleware 观测钩子
+(before_model / after_model)" data-shape="rectangle">
+  <rect x="56" y="378.92500000000007" width="230.90499999999997" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="171.4525" y="405.82500000000005" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="171.4525" dy="-3.9000000000000012">🎛️ AgentMiddleware 观测钩子</tspan><tspan x="171.4525" dy="16.900000000000002">(before_model / after_model)</tspan></text>
 </g>
 </svg>

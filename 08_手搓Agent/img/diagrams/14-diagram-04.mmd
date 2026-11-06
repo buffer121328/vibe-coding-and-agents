@@ -4,3 +4,6 @@ flowchart TD
     Main -->|"正常响应"| Success(["返回 Token 流"])
     Main -->|"网络超时 / 5xx 服务宕机"| Fallback["自动无缝降级：火山方舟 DeepSeek-V4-Flash"]
     Fallback --> Success
+
+%% Academic palette: restrained blue, teal, gold, violet, and coral accents.
+style Req fill:#E8F1FB,stroke:#3A6EA5,color:#17324D

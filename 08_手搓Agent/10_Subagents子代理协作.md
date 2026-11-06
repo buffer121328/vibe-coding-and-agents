@@ -12,7 +12,7 @@
 - **上下文彻底隔离（Context Isolation）**：每个子代理拥有完全属于自己的全新 `messages[]`，它内部查了几十次网页、产生了上万 Token 的中间试错，都不会污染主 Agent 的主线程；
 - **只返回纯净交付物（Clean Text Back）**：子代理完成任务后，仅将提炼后的最终文本结论返回给父级。
 
-<!-- 图表源文件：img/diagrams/10-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/10-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/10-diagram-01.svg">
     <img src="img/diagrams/10-diagram-01.svg" alt="👥 为什么单 Agent 会遇到瓶颈？Subagent 的核心价值" width="760">
@@ -97,5 +97,9 @@ class DeepResearchPipeline:
 ## 📝 本节小结
 
 - **分而治之**：复杂任务拆解给垂直专家子代理，各自拥有独立上下文，主线程轻装上阵；
-- **流水线闭环**：通过 Planner ➔ Researcher ➔ Critic ➔ Writer 链条，大幅提升生成质量并杜绝单模型自说自话的盲区；
+- **分阶段协作**：通过 Planner ➔ Researcher ➔ Critic ➔ Writer 链条，便于独立收集和复核证据，但不能保证结果正确；
 - **后续实践**：现在，我们已经掌握了环境、思考、规划、工具、文件、权限、切面、压缩、记忆、子代理全部 10 大核心模块！下一节，我们要把所有模块精密组装成最终的完整形态——**[8.13 综合实战：打造个人 Mini-Agent](13_综合实战_打造个人MiniAgent.md)**！
+
+## 拆分子任务前先确定证据标准
+
+每个子代理都要有独立输入、输出格式和来源要求。汇总时保留原始证据和冲突，不把多个相同猜测当成相互验证。先比较单代理和多代理在正确率、耗时、费用上的差异，再决定是否并行。

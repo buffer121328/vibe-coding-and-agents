@@ -4,3 +4,6 @@ flowchart TD
     Pre --> Exec["2. ⚡ 纯粹的业务工具函数执行\n(例如: 查询数据库 / 请求外部 API)"]
     Exec --> Post["3. 🪝 PostToolUse Hooks\n- 自动正则脱敏 (隐藏 sk-xxx / password)\n- 计算耗时并追加遥测标记"]
     Post --> Return["4. 📦 清洗后的安全结果回填模型上下文"]
+
+%% Academic palette: restrained blue, teal, gold, violet, and coral accents.
+style Call fill:#E8F1FB,stroke:#3A6EA5,color:#17324D

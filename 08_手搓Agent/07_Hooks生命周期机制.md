@@ -13,7 +13,7 @@
 2. **性能与耗时遥测**：精确记录每个工具的执行毫秒数；
 3. **审计与合规**：完整记录所有调用的输入输出流水。
 
-<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/07-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/07-diagram-01.svg">
     <img src="img/diagrams/07-diagram-01.svg" alt="🪝 为什么成熟的 Agent 框架必须具备 Hooks 机制？" width="760">
@@ -51,7 +51,7 @@ class HookManager:
         return result
 ```
 
-### 生产级实用 Hook：敏感 Key 自动脱敏
+### 常用 Hook：敏感 Key 自动脱敏
 
 ```python
 def sensitive_masking_post_hook(tool_name: str, args: Dict[str, Any], result: Any) -> Any:
@@ -111,3 +111,7 @@ Hook 最好具备幂等性，同一事件重复投递时不会重复扣费或写
 - **逻辑解耦**：业务工具只关心功能实现，日志、鉴权、脱敏、监控全部由 Hooks 切面统一接管；
 - **防护屏障**：确保任何通过工具读到的敏感配置文件（如 `.env`）在喂回大模型前完成清洗，防止二次泄露；
 - **新挑战**：当 Agent 运行了 20 轮对话，工具返回了大量日志，上下文即将把模型窗口塞爆时该怎么办？请进入——**[8.8 上下文工程与压缩](08_上下文工程与压缩.md)**！
+
+## Hook 顺序也要测试
+
+为每个 Hook 记录触发事件、输入输出和失败策略。至少测试脱敏发生在日志写入前、拒绝 Hook 能阻止后续执行，以及 Hook 自身失败时主流程是停止、跳过还是降级。

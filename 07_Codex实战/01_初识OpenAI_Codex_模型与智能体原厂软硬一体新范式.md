@@ -286,3 +286,7 @@ Codex 可以承担大量重复工作，但以下事情仍需要人的判断：
 - [Codex AGENTS.md 说明](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Codex 沙盒说明](https://learn.chatgpt.com/docs/permissions/sandboxing)
 - [CC-Switch 项目仓库](https://github.com/farion1231/cc-switch)（第三方项目）
+
+## 最小验证
+
+先用只读任务确认工作目录、模型、权限和沙盒状态，再让 Codex 修改一个可回退的小文件。完成后查看差异、运行一条已有检查，并把“已修改、已执行、已验证”分开记录。账号套餐、可用模型和网络入口按当前官方页面核对。

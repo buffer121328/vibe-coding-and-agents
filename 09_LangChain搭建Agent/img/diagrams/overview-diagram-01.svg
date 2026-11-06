@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 449 1571.3999999999996" width="449" height="1571.3999999999996" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 487.4 1619.4" width="487.4" height="1619.4" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,97 +27,110 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="Phase1" data-label="🌱 第一阶段：基础基建与管道编排 (9.1 - 9.3)">
-  <rect x="20" y="-8" width="375" height="317.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="-8" width="375" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🌱 第一阶段：基础基建与管道编排 (9.1 - 9.3)</text>
+  <rect x="64.82350000000005" y="40" width="357.7529999999999" height="301.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="64.82350000000005" y="40" width="357.7529999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="76.82350000000005" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🌱 第一阶段：基础基建与管道编排 (9.1 - 9.3)</text>
 </g>
 <g class="subgraph" data-id="Phase2" data-label="🛠️ 第二阶段：精准控制与手脚工具 (9.4 - 9.5)">
-  <rect x="20" y="341.40000000000003" width="333" height="215.59999999999997" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="341.40000000000003" width="333" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="355.40000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🛠️ 第二阶段：精准控制与手脚工具 (9.4 - 9.5)</text>
+  <rect x="84.08950000000002" y="381.40000000000003" width="319.22099999999995" height="207.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="84.08950000000002" y="381.40000000000003" width="319.22099999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="96.08950000000002" y="395.40000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🛠️ 第二阶段：精准控制与手脚工具 (9.4 - 9.5)</text>
 </g>
 <g class="subgraph" data-id="Phase3" data-label="🧠 第三阶段：长效状态与可观测性 (9.6 - 9.7)">
-  <rect x="20" y="589" width="365" height="215.5999999999999" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="589" width="365" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="603" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🧠 第三阶段：长效状态与可观测性 (9.6 - 9.7)</text>
+  <rect x="58.154499999999985" y="629" width="371.091" height="207.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="58.154499999999985" y="629" width="371.091" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="70.15449999999998" y="643" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🧠 第三阶段：长效状态与可观测性 (9.6 - 9.7)</text>
 </g>
 <g class="subgraph" data-id="Phase4" data-label="🚀 第四阶段：知识检索与现代智能体 (9.8 - 9.9)">
-  <rect x="20" y="836.5999999999999" width="405" height="215.5999999999999" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="836.5999999999999" width="405" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="850.5999999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🚀 第四阶段：知识检索与现代智能体 (9.8 - 9.9)</text>
+  <rect x="40" y="876.6000000000001" width="407.4" height="207.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="876.6000000000001" width="407.4" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="890.6000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🚀 第四阶段：知识检索与现代智能体 (9.8 - 9.9)</text>
 </g>
 <g class="subgraph" data-id="Phase5" data-label="🛡️ 第五阶段：上下文工程与生产级防护 (9.10 - 9.12)">
-  <rect x="61.737945556640625" y="1084.1999999999998" width="319.47589111328125" height="317.39999999999986" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="61.737945556640625" y="1084.1999999999998" width="319.47589111328125" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="73.73794555664062" y="1098.1999999999998" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🛡️ 第五阶段：上下文工程与生产级防护 (9.10 - 9.12)</text>
+  <rect x="100.762" y="1124.2" width="285.876" height="301.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="100.762" y="1124.2" width="285.876" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="112.762" y="1138.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🛡️ 第五阶段：上下文工程与生产级防护 (9.10 - 9.12)</text>
 </g>
 <g class="subgraph" data-id="Phase6" data-label="🏁 终极交付：综合实战 (9.13)">
-  <rect x="20" y="1433.5999999999997" width="381" height="113.79999999999995" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="20" y="1433.5999999999997" width="381" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="32" y="1447.5999999999997" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.2">🏁 终极交付：综合实战 (9.13)</text>
+  <rect x="60.00700000000003" y="1465.6000000000001" width="367.3859999999999" height="113.80000000000001" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="60.00700000000003" y="1465.6000000000001" width="367.3859999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="72.00700000000003" y="1479.6000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">🏁 终极交付：综合实战 (9.13)</text>
 </g>
-<polyline class="edge" data-from="S01" data-to="S02" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="207.5,89.8 207.5,137.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S02" data-to="S03" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="207.5,191.60000000000002 207.5,239.60000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S04" data-to="S05" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="186.5,439.20000000000005 186.5,487.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S06" data-to="S07" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="202.5,686.8 202.5,734.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S08" data-to="S09" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="222.5,934.3999999999999 222.5,982.3999999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S10" data-to="S11" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="195.73794555664062,1181.9999999999998 195.73794555664062,1229.9999999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="S11" data-to="S12" data-style="normal" data-arrow-start="false" data-arrow-end="true" points="195.73794555664062,1283.7999999999997 195.73794555664062,1331.7999999999997" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase1" data-to="Phase2" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="207.5,309.40000000000003 207.5,325.40000000000003 186.5,325.40000000000003 186.5,341.40000000000003" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase2" data-to="Phase3" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="186.5,557 186.5,573 202.5,573 202.5,589" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase3" data-to="Phase4" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="202.5,804.5999999999999 202.5,820.5999999999999 222.5,820.5999999999999 222.5,836.5999999999999" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase4" data-to="Phase5" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="222.5,1052.1999999999998 221.47589111328125,1084.1999999999998" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase5" data-to="Phase6" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="221.47589111328125,1401.5999999999997 221.47589111328125,1417.5999999999997 210.5,1417.5999999999997 210.5,1433.5999999999997" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
-<g class="node" data-id="S01" data-label="9.1 初识生态与统一 I/O\n(langchain-core 拆分与 invoke/stream/batch)" data-shape="rectangle">
-  <rect x="44" y="36" width="327" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="207.5" y="62.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="207.5" dy="-3.8999999999999995">9.1 初识生态与统一 I/O</tspan><tspan x="207.5" dy="16.9">(langchain-core 拆分与 invoke/stream/batch)</tspan></text>
+<polyline class="edge" data-from="Phase1" data-to="Phase2" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="243.7,341.40000000000003 243.7,381.40000000000003" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase2" data-to="Phase3" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="243.7,589 243.7,629" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase3" data-to="Phase4" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="243.7,836.6000000000001 243.7,876.6000000000001" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase4" data-to="Phase5" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="243.7,1084.2 243.7,1124.2" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase5" data-to="Phase6" data-style="thick" data-arrow-start="false" data-arrow-end="true" points="243.7,1425.6000000000001 243.7,1465.6000000000001" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S01" data-to="S02" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,137.8 243.7,177.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S02" data-to="S03" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,231.60000000000002 243.7,271.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S04" data-to="S05" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,479.20000000000005 243.7,519.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S06" data-to="S07" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,726.8 243.7,766.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S08" data-to="S09" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,974.4000000000001 243.7,1014.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S10" data-to="S11" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,1222 243.7,1262" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="S11" data-to="S12" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="243.7,1315.8000000000002 243.7,1355.8000000000002" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="node" data-id="S01" data-label="9.1 初识生态与统一 I/O
+(langchain-core 拆分与 invoke/stream/batch)" data-shape="rectangle">
+  <rect x="89.71550000000002" y="84" width="307.96899999999994" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="243.7" y="110.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.1 初识生态与统一 I/O</tspan><tspan x="243.7" dy="16.900000000000002">(langchain-core 拆分与 invoke/stream/batch)</tspan></text>
 </g>
-<g class="node" data-id="S02" data-label="9.2 Prompt 模板与上下文流\n(ChatPromptTemplate 与 MessagesPlaceholder)" data-shape="rectangle">
-  <rect x="36" y="137.8" width="343" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="207.5" y="164.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="207.5" dy="-3.8999999999999995">9.2 Prompt 模板与上下文流</tspan><tspan x="207.5" dy="16.9">(ChatPromptTemplate 与 MessagesPlaceholder)</tspan></text>
+<g class="node" data-id="S02" data-label="9.2 Prompt 模板与上下文流
+(ChatPromptTemplate 与 MessagesPlaceholder)" data-shape="rectangle">
+  <rect x="80.82350000000005" y="177.8" width="325.7529999999999" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="243.7" y="204.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.2 Prompt 模板与上下文流</tspan><tspan x="243.7" dy="16.900000000000002">(ChatPromptTemplate 与 MessagesPlaceholder)</tspan></text>
 </g>
-<g class="node" data-id="S03" data-label="9.3 LCEL 表达式语言与调度\n(管道符 '|'、RunnableParallel 与 Fallbacks)" data-shape="rectangle">
-  <rect x="56.5" y="239.60000000000002" width="302" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="207.5" y="266.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="207.5" dy="-3.8999999999999995">9.3 LCEL 表达式语言与调度</tspan><tspan x="207.5" dy="16.9">(管道符 '|'、RunnableParallel 与 Fallbacks)</tspan></text>
+<g class="node" data-id="S03" data-label="9.3 LCEL 表达式语言与调度
+(管道符 '|'、RunnableParallel 与 Fallbacks)" data-shape="rectangle">
+  <rect x="93.42050000000003" y="271.6" width="300.5589999999999" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="243.7" y="298.5" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.3 LCEL 表达式语言与调度</tspan><tspan x="243.7" dy="16.900000000000002">(管道符 &#39;|&#39;、RunnableParallel 与 Fallbacks)</tspan></text>
 </g>
-<g class="node" data-id="S04" data-label="9.4 结构化输出与容错解析\n(with_structured_output 与 Pydantic 约束)" data-shape="rectangle">
-  <rect x="36" y="385.40000000000003" width="301" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="186.5" y="412.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="186.5" dy="-3.8999999999999995">9.4 结构化输出与容错解析</tspan><tspan x="186.5" dy="16.9">(with_structured_output 与 Pydantic 约束)</tspan></text>
+<g class="node" data-id="S04" data-label="9.4 结构化输出与容错解析
+(with_structured_output 与 Pydantic 约束)" data-shape="rectangle">
+  <rect x="100.08950000000002" y="425.40000000000003" width="287.22099999999995" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="243.7" y="452.3" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.4 结构化输出与容错解析</tspan><tspan x="243.7" dy="16.900000000000002">(with_structured_output 与 Pydantic 约束)</tspan></text>
 </g>
-<g class="node" data-id="S05" data-label="9.5 自定义工具生态与校验\n(@tool 装饰器与 Pydantic 参数防御)" data-shape="rectangle">
-  <rect x="58.5" y="487.20000000000005" width="256" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="186.5" y="514.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="186.5" dy="-3.8999999999999995">9.5 自定义工具生态与校验</tspan><tspan x="186.5" dy="16.9">(@tool 装饰器与 Pydantic 参数防御)</tspan></text>
+<g class="node" data-id="S05" data-label="9.5 自定义工具生态与校验
+(@tool 装饰器与 Pydantic 参数防御)" data-shape="rectangle">
+  <rect x="115.65050000000002" y="519.2" width="256.09899999999993" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="243.7" y="546.1" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.5 自定义工具生态与校验</tspan><tspan x="243.7" dy="16.900000000000002">(@tool 装饰器与 Pydantic 参数防御)</tspan></text>
 </g>
-<g class="node" data-id="S06" data-label="9.6 记忆管理与会话状态持久化\n(Checkpointer 短期记忆 + Store 长期记忆)" data-shape="rectangle">
-  <rect x="53.5" y="633" width="298" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="202.5" y="659.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="202.5" dy="-3.8999999999999995">9.6 记忆管理与会话状态持久化</tspan><tspan x="202.5" dy="16.9">(Checkpointer 短期记忆 + Store 长期记忆)</tspan></text>
+<g class="node" data-id="S06" data-label="9.6 记忆管理与会话状态持久化
+(Checkpointer 短期记忆 + Store 长期记忆)" data-shape="rectangle">
+  <rect x="95.273" y="673" width="296.854" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="243.7" y="699.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.6 记忆管理与会话状态持久化</tspan><tspan x="243.7" dy="16.900000000000002">(Checkpointer 短期记忆 + Store 长期记忆)</tspan></text>
 </g>
-<g class="node" data-id="S07" data-label="9.7 Callbacks 与可观测性中间件\n(BaseCallbackHandler、Token 账单与脱敏探针)" data-shape="rectangle">
-  <rect x="36" y="734.8" width="333" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="202.5" y="761.6999999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="202.5" dy="-3.8999999999999995">9.7 Callbacks 与可观测性中间件</tspan><tspan x="202.5" dy="16.9">(BaseCallbackHandler、Token 账单与脱敏探针)</tspan></text>
+<g class="node" data-id="S07" data-label="9.7 Callbacks 与可观测性中间件
+(BaseCallbackHandler、Token 账单与脱敏探针)" data-shape="rectangle">
+  <rect x="74.15449999999998" y="766.8" width="339.091" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="243.7" y="793.6999999999999" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.7 Callbacks 与可观测性中间件</tspan><tspan x="243.7" dy="16.900000000000002">(BaseCallbackHandler、Token 账单与脱敏探针)</tspan></text>
 </g>
-<g class="node" data-id="S08" data-label="9.8 RAG 核心链路与向量检索\n(文档切块、langchain-chroma 向量入库与 LCEL 问答)" data-shape="rectangle">
-  <rect x="36" y="880.5999999999999" width="373" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="222.5" y="907.4999999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="222.5" dy="-3.8999999999999995">9.8 RAG 核心链路与向量检索</tspan><tspan x="222.5" dy="16.9">(文档切块、langchain-chroma 向量入库与 LCEL 问答)</tspan></text>
+<g class="node" data-id="S08" data-label="9.8 RAG 核心链路与向量检索
+(文档切块、langchain-chroma 向量入库与 LCEL 问答)" data-shape="rectangle">
+  <rect x="56" y="920.6000000000001" width="375.4" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="243.7" y="947.5000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.8 RAG 核心链路与向量检索</tspan><tspan x="243.7" dy="16.900000000000002">(文档切块、langchain-chroma 向量入库与 LCEL 问答)</tspan></text>
 </g>
-<g class="node" data-id="S09" data-label="9.9 Agent 现代架构与闭环\n(create_agent、Tool Calling 与消息流水线审计)" data-shape="rectangle">
-  <rect x="57.5" y="982.3999999999999" width="330" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="222.5" y="1009.2999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="222.5" dy="-3.8999999999999995">9.9 Agent 现代架构与闭环</tspan><tspan x="222.5" dy="16.9">(create_agent、Tool Calling 与消息流水线审计)</tspan></text>
+<g class="node" data-id="S09" data-label="9.9 Agent 现代架构与闭环
+(create_agent、Tool Calling 与消息流水线审计)" data-shape="rectangle">
+  <rect x="77.48900000000006" y="1014.4000000000001" width="332.42199999999985" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="243.7" y="1041.3000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.9 Agent 现代架构与闭环</tspan><tspan x="243.7" dy="16.900000000000002">(create_agent、Tool Calling 与消息流水线审计)</tspan></text>
 </g>
-<g class="node" data-id="S10" data-label="9.10 上下文工程\n(三类上下文 + 三数据源动态注入)" data-shape="rectangle">
-  <rect x="77.73794555664062" y="1128.1999999999998" width="236" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="195.73794555664062" y="1155.1" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="195.73794555664062" dy="-3.8999999999999995">9.10 上下文工程</tspan><tspan x="195.73794555664062" dy="16.9">(三类上下文 + 三数据源动态注入)</tspan></text>
+<g class="node" data-id="S10" data-label="9.10 上下文工程
+(三类上下文 + 三数据源动态注入)" data-shape="rectangle">
+  <rect x="116.762" y="1168.2" width="253.87599999999998" height="53.800000000000004" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="243.7" y="1195.1000000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.10 上下文工程</tspan><tspan x="243.7" dy="16.900000000000002">(三类上下文 + 三数据源动态注入)</tspan></text>
 </g>
-<g class="node" data-id="S11" data-label="9.11 自定义中间件\n(Node/Wrap 钩子与状态更新)" data-shape="rectangle">
-  <rect x="87.73794555664062" y="1229.9999999999998" width="216" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="195.73794555664062" y="1256.8999999999999" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="195.73794555664062" dy="-3.8999999999999995">9.11 自定义中间件</tspan><tspan x="195.73794555664062" dy="16.9">(Node/Wrap 钩子与状态更新)</tspan></text>
+<g class="node" data-id="S11" data-label="9.11 自定义中间件
+(Node/Wrap 钩子与状态更新)" data-shape="rectangle">
+  <rect x="132.69349999999997" y="1262" width="222.013" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="243.7" y="1288.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.11 自定义中间件</tspan><tspan x="243.7" dy="16.900000000000002">(Node/Wrap 钩子与状态更新)</tspan></text>
 </g>
-<g class="node" data-id="S12" data-label="9.12 生产级防护\n(护栏、PII 脱敏与测试评估)" data-shape="rectangle">
-  <rect x="97.23794555664062" y="1331.7999999999997" width="197" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="195.73794555664062" y="1358.6999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="195.73794555664062" dy="-3.8999999999999995">9.12 生产级防护</tspan><tspan x="195.73794555664062" dy="16.9">(护栏、PII 脱敏与测试评估)</tspan></text>
+<g class="node" data-id="S12" data-label="9.12 生产级防护
+(护栏、PII 脱敏与测试评估)" data-shape="rectangle">
+  <rect x="136.3985" y="1355.8000000000002" width="214.60299999999998" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="243.7" y="1382.7000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.12 生产级防护</tspan><tspan x="243.7" dy="16.900000000000002">(护栏、PII 脱敏与测试评估)</tspan></text>
 </g>
-<g class="node" data-id="S13" data-label="9.13 综合实战：SmartBuyer 融会贯通版\n(9.1~9.12 全零件整机总装 + 13-Tab Gradio 工作台)" data-shape="rectangle">
-  <rect x="36" y="1477.5999999999997" width="349" height="53.8" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="210.5" y="1504.4999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="210.5" dy="-3.8999999999999995">9.13 综合实战：SmartBuyer 融会贯通版</tspan><tspan x="210.5" dy="16.9">(9.1~9.12 全零件整机总装 + 13-Tab Gradio 工作台)</tspan></text>
+<g class="node" data-id="S13" data-label="9.13 综合实战：SmartBuyer 融会贯通版
+(9.1~9.12 全零件整机总装 + 13-Tab Gradio 工作台)" data-shape="rectangle">
+  <rect x="76.00700000000003" y="1509.6000000000001" width="335.3859999999999" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="243.7" y="1536.5000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="243.7" dy="-3.9000000000000012">9.13 综合实战：SmartBuyer 融会贯通版</tspan><tspan x="243.7" dy="16.900000000000002">(9.1~9.12 全零件整机总装 + 13-Tab Gradio 工作台)</tspan></text>
 </g>
 </svg>
