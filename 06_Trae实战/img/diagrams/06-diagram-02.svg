@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.106 760.4000000000001" width="380.106" height="760.4000000000001" style="--bg:#eceff4;--fg:#2e3440;--line:#aab1c0;--accent:#5e81ac;--muted:#7b88a1;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 388.106 732.4000000000001" width="388.106" height="732.4000000000001" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,49 +27,49 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="FlatChaos" data-label="痛点: 扁平目录与上帝文件">
-  <rect x="41.557500000000005" y="36" width="296.991" height="313.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="41.557500000000005" y="36" width="296.991" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="53.557500000000005" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">痛点: 扁平目录与上帝文件</text>
+  <rect x="45.557500000000005" y="40" width="296.991" height="301.40000000000003" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="45.557500000000005" y="40" width="296.991" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="57.557500000000005" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">痛点: 扁平目录与上帝文件</text>
 </g>
 <g class="subgraph" data-id="GovernedOrder" data-label="治理后: 模块化工程体系">
-  <rect x="36" y="461.70000000000005" width="308.106" height="262.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="461.70000000000005" width="308.106" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="475.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">治理后: 模块化工程体系</text>
+  <rect x="40" y="441.70000000000005" width="308.106" height="250.70000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="441.70000000000005" width="308.106" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="455.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">治理后: 模块化工程体系</text>
 </g>
-<polyline class="edge" data-from="FlatChaos" data-to="GovernedOrder" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="目录治理重构" points="190.053,349.40000000000003 190.053,461.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="F1" data-to="F2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="190.053,133.8 190.053,179.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="F2" data-to="F3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="190.053,233.60000000000002 190.053,279.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="G1" data-to="G2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="190.053,542.6 190.053,588.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="G2" data-to="G3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="190.053,625.5 190.053,671.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="FlatChaos" data-to="GovernedOrder" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="目录治理重构" points="194.053,341.40000000000003 194.053,441.70000000000005" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F1" data-to="F2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="194.053,137.8 194.053,177.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="F2" data-to="F3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="194.053,231.60000000000002 194.053,271.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G1" data-to="G2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="194.053,522.6 194.053,562.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="G2" data-to="G3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="194.053,599.5 194.053,639.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="edge-label" data-from="FlatChaos" data-to="GovernedOrder" data-label="目录治理重构">
-  <rect x="145.553" y="390.40000000000003" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
-  <text x="190.018" y="405.55" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">目录治理重构</text>
+  <rect x="149.553" y="376.40000000000003" width="88.93" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="194.018" y="391.55" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">目录治理重构</text>
 </g>
 <g class="node" data-id="F1" data-label="根目录堆积数十个文件
 (职责边界模糊 / 找代码如大海捞针)" data-shape="rectangle">
-  <rect x="57.557500000000005" y="80" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.053" dy="-3.9000000000000012">根目录堆积数十个文件</tspan><tspan x="190.053" dy="16.900000000000002">(职责边界模糊 / 找代码如大海捞针)</tspan></text>
+  <rect x="61.557500000000005" y="84" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="194.053" y="110.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="194.053" dy="-3.9000000000000012">根目录堆积数十个文件</tspan><tspan x="194.053" dy="16.900000000000002">(职责边界模糊 / 找代码如大海捞针)</tspan></text>
 </g>
 <g class="node" data-id="F2" data-label="AI 倾向在单个文件疯狂追加
 (几千行上帝文件 God File)" data-shape="rectangle">
-  <rect x="80.52850000000001" y="179.8" width="219.04899999999998" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="206.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.053" dy="-3.9000000000000012">AI 倾向在单个文件疯狂追加</tspan><tspan x="190.053" dy="16.900000000000002">(几千行上帝文件 God File)</tspan></text>
+  <rect x="84.52850000000001" y="177.8" width="219.04899999999998" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="194.053" y="204.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="194.053" dy="-3.9000000000000012">AI 倾向在单个文件疯狂追加</tspan><tspan x="194.053" dy="16.900000000000002">(几千行上帝文件 God File)</tspan></text>
 </g>
 <g class="node" data-id="F3" data-label="超长上下文消耗海量 Token
 (推理变慢 / 频繁触发幻觉与误删)" data-shape="rectangle">
-  <rect x="64.96750000000002" y="279.6" width="250.17099999999996" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="306.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="190.053" dy="-3.9000000000000012">超长上下文消耗海量 Token</tspan><tspan x="190.053" dy="16.900000000000002">(推理变慢 / 频繁触发幻觉与误删)</tspan></text>
+  <rect x="68.96750000000002" y="271.6" width="250.17099999999996" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="194.053" y="298.5" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="194.053" dy="-3.9000000000000012">超长上下文消耗海量 Token</tspan><tspan x="194.053" dy="16.900000000000002">(推理变慢 / 频繁触发幻觉与误删)</tspan></text>
 </g>
 <g class="node" data-id="G1" data-label="分层清晰 (api / core / services / models)" data-shape="rectangle">
-  <rect x="52" y="505.70000000000005" width="276.106" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="524.1500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">分层清晰 (api / core / services / models)</text>
+  <rect x="56" y="485.70000000000005" width="276.106" height="36.900000000000006" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="194.053" y="504.15000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">分层清晰 (api / core / services / models)</text>
 </g>
 <g class="node" data-id="G2" data-label="单文件保持 100~300 行极简高内聚" data-shape="rectangle">
-  <rect x="61.63299999999998" y="588.6" width="256.84000000000003" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="607.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">单文件保持 100~300 行极简高内聚</text>
+  <rect x="65.63299999999998" y="562.6" width="256.84000000000003" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="194.053" y="581.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">单文件保持 100~300 行极简高内聚</text>
 </g>
 <g class="node" data-id="G3" data-label="AI 读写极精准 / 秒级定位 / 零冲突" data-shape="rectangle">
-  <rect x="64.96750000000002" y="671.5" width="250.17099999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="190.053" y="689.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">AI 读写极精准 / 秒级定位 / 零冲突</text>
+  <rect x="68.96750000000002" y="639.5" width="250.17099999999996" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="194.053" y="657.95" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">AI 读写极精准 / 秒级定位 / 零冲突</text>
 </g>
 </svg>

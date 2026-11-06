@@ -8,7 +8,7 @@
 
 按照在 `docs/` 中确立的极简 5 文件分工，我们将分步推进实现：
 
-<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Notion 简洁 -->
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-01.svg">
     <img src="img/diagrams/06-diagram-01.svg" alt="🗺️ 一、全栈编码推进路线图" width="860">
@@ -188,7 +188,7 @@ uv run uvicorn main:app --reload --port 8000
 
 整个博客系统仅由 5 个核心文件构成，结构扁平清爽。我们来重点剖析其最新的核心代码实现细节：
 
-<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-02.svg">
     <img src="img/diagrams/06-diagram-02.svg" alt="🔍 七、核心代码解析与极简架构解析" width="860">
@@ -515,3 +515,7 @@ CORS 只涉及浏览器对跨来源请求的访问限制。同一个来源提供
 - **Highlight.js 官方代码仓**：<https://highlightjs.org/>
 - **Astral uv 快速包管理器**：<https://docs.astral.sh/uv/>
 - **OpenSpec 官方开源规范**：<https://github.com/Fission-AI/openspec>
+
+## 交付前区分自动检查与人工验收
+
+自动化测试用于检查稳定规则，浏览器操作用于检查真实交互，人工验收用于确认文案、权限和异常提示。三者结果应分别记录；接口测试通过，不代表页面能用，页面能用，也不代表数据迁移和错误恢复已经验证。

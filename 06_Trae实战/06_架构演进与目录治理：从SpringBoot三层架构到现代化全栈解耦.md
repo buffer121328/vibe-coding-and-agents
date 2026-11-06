@@ -10,7 +10,7 @@
 
 我们用一个**餐厅的运转流程**来形象理解三层架构的设计要点：
 
-<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-01.svg">
     <img src="img/diagrams/06-diagram-01.svg" alt="💡 一、SpringBoot 三层架构的工程美学" width="760">
@@ -39,7 +39,7 @@
 
 但一旦项目继续演进，这种扁平结构就会暴露出致命的痛点：
 
-<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：Macaron 马卡龙 -->
+<!-- 图表源文件：img/diagrams/06-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-02.svg">
     <img src="img/diagrams/06-diagram-02.svg" alt="🌪️ 二、为什么要进行目录治理？" width="760">
@@ -196,7 +196,7 @@ project_01_个人博客系统二次开发/
 
 ### 2. 三层架构、六边形架构与洋葱架构的比较
 
-<!-- 图表源文件：img/diagrams/06-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/06-diagram-03.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-03.svg">
     <img src="img/diagrams/06-diagram-03.svg" alt="三层架构、六边形架构与洋葱架构的比较" width="960">
@@ -270,9 +270,13 @@ project_01_个人博客系统二次开发/
 
 本章从已有博客出发，依次加入账号权限、互动功能和 AI 辅助写作。后续继续增加功能时，可以沿用“确认现状、约定范围、分步实现、检查结果”的顺序。
 
-<!-- 图表源文件：img/diagrams/06-diagram-04.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/06-diagram-04.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/06-diagram-04.svg">
     <img src="img/diagrams/06-diagram-04.svg" alt="🚀 五、第六章本章回顾" width="760">
   </a>
 </p>
+
+## 目录治理先看依赖方向和外部行为
+
+重构前记录启动命令、接口契约、数据库迁移和关键页面行为；重构后用同一组测试和手工路径比较。目录变得更整齐，不代表耦合已经减少。只要外部行为发生变化，就应明确说明是需求调整还是重构引入的回归。

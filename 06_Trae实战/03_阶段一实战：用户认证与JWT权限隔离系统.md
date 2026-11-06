@@ -8,7 +8,7 @@
 
 在给已有博客系统引入用户认证前，我们先通过日常场景理解核心机制：
 
-<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：Cyberpunk -->
+<!-- 图表源文件：img/diagrams/03-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-01.svg">
     <img src="img/diagrams/03-diagram-01.svg" alt="💡 一、门禁卡、防伪手环与权限守卫" width="860">
@@ -241,7 +241,7 @@ def create_post(post_in: PostCreate, db: Session = Depends(database.get_db), _: 
 
 JWT 本质上是一串被 `.` 分成三段的 Base64 字符串：**`Header.Payload.Signature`**（形如 `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.xxxx`）。
 
-<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/03-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/03-diagram-02.svg">
     <img src="img/diagrams/03-diagram-02.svg" alt="1. 🪪 JWT 的“三段式”结构：为什么改一个字节都会被识破？" width="860">
@@ -373,3 +373,7 @@ JWT 的签名用于检查凭据是否被改动，载荷通常可以解码查看�
 认证确认身份，授权限制操作与数据范围。检查后端接口之外，还要核对列表、详情和前端提示是否保持一致。
 
 继续阅读：[6.4 评论、点赞与分页改造](./04_阶段二实战：评论点赞系统与接口分页重构.md)。
+
+## 认证授权要按请求路径验收
+
+分别测试未登录、普通用户、管理员、过期令牌和越权访问，并同时检查列表、详情、创建、修改和删除接口。JWT 能证明令牌签名有效，不会自动证明用户仍有当前资源权限；权限判断仍需结合服务端数据和角色规则。

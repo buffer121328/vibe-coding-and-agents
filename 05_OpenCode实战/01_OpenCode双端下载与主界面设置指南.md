@@ -13,7 +13,7 @@ OpenCode 可以通过终端或桌面界面操作项目。两种入口都需要�
 
 CLI 与桌面端可以使用 OpenCode 配置。切换入口后，仍应确认当前项目目录、配置来源和模型选择，尤其是连接了不同服务或运行环境时。
 
-<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-01.svg">
     <img src="img/diagrams/01-diagram-01.svg" alt="💡 一、什么是 OpenCode 的双端体验？" width="760">
@@ -26,7 +26,7 @@ CLI 与桌面端可以使用 OpenCode 配置。切换入口后，仍应确认当
 
 ### 1. 终端命令行版（CLI）快速安装
 
-OpenCode CLI 支持全平台一键安装，你可以根据自己的操作系统选择最便捷的方式：
+OpenCode CLI 提供多平台安装方式，可以根据操作系统和已有工具链选择合适的方式：
 
 #### macOS & Linux
 
@@ -248,3 +248,7 @@ OpenCode 拥有极度开放的模型生态，支持主流官方模型、订阅�
 - **OpenCode 学习指南（推荐必读教程）**：<https://learnopencode.com/>
 - **OpenCode 中文网配置文档**：<https://www.opencodecn.com/docs/config>
 - **OpenCode 官方 GitHub 仓库**：<https://github.com/sst/opencode>
+
+## 安装完成后先确认三件事
+
+确认命令行版本、当前登录身份和模型提供方，再让工具读取一个无敏感信息的小文件。不要一开始就执行安装依赖、删除文件或大规模重构。不同安装渠道的版本和配置路径可能不同，遇到问题时先记录安装来源和实际输出。

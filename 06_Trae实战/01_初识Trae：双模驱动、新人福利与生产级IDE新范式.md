@@ -28,7 +28,7 @@
 
 Trae 的不同入口面向不同任务：代码工作区用于编辑和审查项目，其他工作区侧重通用任务或设计相关流程。具体入口和开放范围可能随版本变化，应以当前客户端与官方说明为准。
 
-<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/01-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-01.svg">
     <img src="img/diagrams/01-diagram-01.svg" alt="🎭 二、Trae 的双模引擎（Work vs. Code）" width="760">
@@ -179,7 +179,7 @@ Solo 模式用于连续推进包含多个步骤的任务，例如先读取项目
 
 已有项目往往已经包含接口、数据和使用习惯。新增功能时，需要同时理解这些约束，确认原来的操作仍然可用。
 
-<!-- 图表源文件：img/diagrams/01-diagram-02.mmd；视觉风格：Stripe 紫蓝 -->
+<!-- 图表源文件：img/diagrams/01-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-02.svg">
     <img src="img/diagrams/01-diagram-02.svg" alt="🎯 六、为什么后续章节我们要基于已有项目做“二次开发”？" width="960">
@@ -199,7 +199,7 @@ Solo 模式用于连续推进包含多个步骤的任务，例如先读取项目
 
 选择入口时可以先看任务是否围绕代码仓库，以及是否需要逐文件审查：
 
-<!-- 图表源文件：img/diagrams/01-diagram-03.mmd；视觉风格：Stripe 紫蓝 -->
+<!-- 图表源文件：img/diagrams/01-diagram-03.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/01-diagram-03.svg">
     <img src="img/diagrams/01-diagram-03.svg" alt="🧭 七、场景化工具选型指南：你该怎么选？" width="760">
@@ -294,3 +294,7 @@ Solo 模式用于连续推进包含多个步骤的任务，例如先读取项目
 本章接下来先导入博客并确认运行基线，再依次加入权限、评论点赞和 AI 生成。代码审查贯穿这些步骤，模式选择则按任务是否明确来决定。
 
 继续阅读：[6.2 导入已有项目并建立开发基线](./02_环境基建与项目导入：在Trae中建立上下文与依赖安装.md)。
+
+## 先用同一任务比较 Work 与 Code
+
+选择一个范围明确的小任务，分别观察两种模式如何读取上下文、提出修改、执行检查和展示差异。比较重点是可控性、证据和返工成本，而不是界面动画或宣传功能。涉及项目写入时，先确认版本控制状态和可回退路径。

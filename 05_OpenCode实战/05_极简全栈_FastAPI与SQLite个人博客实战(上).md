@@ -8,7 +8,7 @@
 
 如果把传统的全栈写代码比作**街头泥瓦匠盖房子**（想到哪砌到哪，改二楼客厅时把一楼承重墙砸穿了都没发觉），那么我们这一套结合了 OpenSpec 与 CodeGraph 的 Vibe Coding 全栈工作流就是**现代化数字装配式建筑工程队**：
 
-<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/05-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/05-diagram-01.svg">
     <img src="img/diagrams/05-diagram-01.svg" alt="💡 一、从“街头泥瓦匠盲盖”到“现代化数字装配式建筑”" width="860">
@@ -141,7 +141,7 @@ codegraph init
 `codegraph init` 完成首次全量扫描后，并不会就此“一锤子买卖”。CodeGraph 会在后台常驻一个**守护进程（Daemon）**，并开启**文件监听（File Watcher）**，之后你（或 AI）每保存一次代码，它都会自动把变更增量同步进代码图谱：
 
 - 🕵️ **文件监听常驻**：守护进程会实时监听项目内文件的新增、修改与删除，日志中会输出 `File watcher active — graph will auto-sync on changes`；
-- ⚡ **毫秒级增量同步**：每次代码变更只重扫受影响的文件，日志输出形如 `Auto-synced 1 file(s) in 5ms`，几乎无感，完全无需手动重建索引；
+- ⚡ **增量同步**：代码变更后只重扫受影响的文件；是否需要手动重建索引，应以当前 CodeGraph 版本的日志和状态为准；
 - 🔁 **确认图谱与代码一致**：同步完成后再通过 `codegraph_explore` 查询；若结果与当前文件不符，应先检查索引状态并重新构建。
 
 初始化后，项目根目录下会生成如下 `.codegraph/` 目录：
@@ -168,7 +168,7 @@ codegraph init
 - **核心优势**：
   - 🏎️ **性能**：由知名团队 Astral（Ruff 的作者）采用 **Rust** 从零重构，包解析与安装速度比传统 `pip` / `pip-tools` 快 **10 到 100 倍**；
   - 🧰 **通用合一**：集 Python 版本管理、虚拟环境创建、依赖锁定（`pyproject.toml` + `uv.lock`）、脚本运行于一体；
-  - 🪄 **零激活门槛**：告别 `source .venv/bin/activate` 或 Windows 下繁琐的脚本激活，直接通过 `uv run <命令>` 即可在隔离环境中秒级执行。
+  - 🪄 **减少环境切换步骤**：可以通过 `uv run <命令>` 在项目环境中执行命令，不必把环境激活方式写进每条操作说明。
 
 ### 2. uv 跨平台快速安装
 
@@ -204,7 +204,7 @@ winget install --id=astral-sh.uv -e
 # 1. 初始化 Python 3.12 项目
 uv init --python 3.12
 
-# 2. 极速添加项目核心依赖（FastAPI、Uvicorn、SQLAlchemy）
+# 2. 添加项目核心依赖（FastAPI、Uvicorn、SQLAlchemy）
 uv add fastapi uvicorn sqlalchemy
 ```
 
@@ -252,7 +252,7 @@ uv add fastapi uvicorn sqlalchemy
 
 一次要求完成所有阶段，会让需求、接口和验收混在一起。这里引入 `docs/` 分阶段推进，主要基于两项原则：
 
-<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：Stripe 紫蓝 -->
+<!-- 图表源文件：img/diagrams/05-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/05-diagram-02.svg">
     <img src="img/diagrams/05-diagram-02.svg" alt="🧠 六、核心：为什么要对全栈项目进行「阶段拆分」？" width="960">
@@ -338,3 +338,7 @@ project_03_个人博客系统/
 四个阶段分别留下接口约定、后端实现、页面交互和联调结果。需求变化时更新受影响的约定，再继续实现。
 
 继续阅读：[5.6 个人博客（下）：实现、联调与交付](./06_极简全栈_FastAPI与SQLite个人博客实战%28下%29.md)。
+
+## 阶段计划要留下可交接的契约
+
+每个阶段至少固定接口、数据结构、启动命令和验收方式。CodeGraph、OpenSpec 和 uv 解决的是不同层次的问题，不能因为索引或规格生成成功就跳过接口测试。涉及真实数据时，先使用脱敏样本和独立数据库。

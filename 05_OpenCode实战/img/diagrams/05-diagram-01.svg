@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.681 1048.6" width="435.681" height="1048.6" style="--bg:#eff1f5;--fg:#4c4f69;--line:#9ca0b0;--accent:#8839ef;--muted:#9ca0b0;background:var(--bg)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 443.681 976.6" width="443.681" height="976.6" style="--bg:#F8FAFC;--fg:#17324D;--line:#6B7A90;--accent:#2F6F9F;--muted:#52667A;--surface:#EAF2FB;--border:#6B8FB3;background:var(--bg)">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter%2C%20PingFang%20SC%2C%20Microsoft%20YaHei%2C%20sans-serif:wght@400;500;600;700&amp;display=swap');
-  text { font-family: 'Inter, PingFang SC, Microsoft YaHei, sans-serif', system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20SC:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Noto Sans SC', system-ui, sans-serif; }
   svg {
     /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
     --_text:          var(--fg);
@@ -27,67 +27,67 @@
   </marker>
 </defs>
 <g class="subgraph" data-id="Foundation" data-label="1. 基建与规则中枢 (Infrastructure &amp; Brain)">
-  <rect x="43.41" y="36" width="348.861" height="335.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="43.41" y="36" width="348.861" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="55.41" y="50" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. 基建与规则中枢 (Infrastructure &amp; Brain)</text>
+  <rect x="47.41" y="40" width="348.861" height="335.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="47.41" y="40" width="348.861" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="59.41" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. 基建与规则中枢 (Infrastructure &amp; Brain)</text>
 </g>
 <g class="subgraph" data-id="PhaseStrategy" data-label="2. 阶段拆分推进体系 (docs/ 阶段蓝图)">
-  <rect x="36" y="427.20000000000005" width="363.681" height="375.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="36" y="427.20000000000005" width="363.681" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="48" y="441.20000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 阶段拆分推进体系 (docs/ 阶段蓝图)</text>
+  <rect x="40" y="415.20000000000005" width="363.681" height="327.6" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="415.20000000000005" width="363.681" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="429.20000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. 阶段拆分推进体系 (docs/ 阶段蓝图)</text>
 </g>
 <g class="subgraph" data-id="Deliverables" data-label="3. 全栈交付物 (Full-Stack Application)">
-  <rect x="70.08600000000004" y="858.8000000000001" width="295.5089999999999" height="153.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="70.08600000000004" y="858.8000000000001" width="295.5089999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="82.08600000000004" y="872.8000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. 全栈交付物 (Full-Stack Application)</text>
+  <rect x="74.08600000000004" y="782.8000000000001" width="295.5089999999999" height="153.8" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="74.08600000000004" y="782.8000000000001" width="295.5089999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="86.08600000000004" y="796.8000000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. 全栈交付物 (Full-Stack Application)</text>
 </g>
-<polyline class="edge" data-from="Foundation" data-to="PhaseStrategy" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.8405,371.20000000000005 217.8405,427.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="PhaseStrategy" data-to="Deliverables" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.8405,802.8000000000001 217.8405,858.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase1" data-to="Phase2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.8405,508.1 217.8405,564.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase2" data-to="Phase3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.8405,601 217.8405,657" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
-<polyline class="edge" data-from="Phase3" data-to="Phase4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="217.8405,693.9000000000001 217.8405,749.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Foundation" data-to="PhaseStrategy" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="221.8405,375.20000000000005 221.8405,415.20000000000005" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PhaseStrategy" data-to="Deliverables" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="221.8405,742.8000000000001 221.8405,782.8000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase1" data-to="Phase2" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="221.8405,496.1 221.8405,536.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase2" data-to="Phase3" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="221.8405,573 221.8405,613" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Phase3" data-to="Phase4" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="221.8405,649.9000000000001 221.8405,689.9000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
 <g class="node" data-id="AgentsMD" data-label="📜 AGENTS.md 规则大脑
 (统一技术栈 / 红线纪律 / Skills 按需加载)" data-shape="rectangle">
-  <rect x="59.41" y="227.60000000000002" width="293.149" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="205.9845" y="254.50000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="205.9845" dy="-3.9000000000000012">📜 AGENTS.md 规则大脑</tspan><tspan x="205.9845" dy="16.900000000000002">(统一技术栈 / 红线纪律 / Skills 按需加载)</tspan></text>
+  <rect x="63.41" y="231.60000000000002" width="293.149" height="53.800000000000004" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="209.9845" y="258.5" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="209.9845" dy="-3.9000000000000012">📜 AGENTS.md 规则大脑</tspan><tspan x="209.9845" dy="16.900000000000002">(统一技术栈 / 红线纪律 / Skills 按需加载)</tspan></text>
 </g>
 <g class="node" data-id="OpenSpecTool" data-label="📐 OpenSpec 规格驱动框架
 (施工蓝图与阶段规程 / 规划四件套)" data-shape="rectangle">
-  <rect x="59.41" y="80" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="191.9055" y="106.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="191.9055" dy="-3.9000000000000012">📐 OpenSpec 规格驱动框架</tspan><tspan x="191.9055" dy="16.900000000000002">(施工蓝图与阶段规程 / 规划四件套)</tspan></text>
+  <rect x="63.41" y="84" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="195.9055" y="110.9" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="195.9055" dy="-3.9000000000000012">📐 OpenSpec 规格驱动框架</tspan><tspan x="195.9055" dy="16.900000000000002">(施工蓝图与阶段规程 / 规划四件套)</tspan></text>
 </g>
 <g class="node" data-id="CodeGraphTool" data-label="🛰️ CodeGraph 语义图谱
 (高精度代码雷达 / 命中符号即已读)" data-shape="rectangle">
-  <rect x="59.41" y="153.8" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="191.9055" y="180.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="191.9055" dy="-3.9000000000000012">🛰️ CodeGraph 语义图谱</tspan><tspan x="191.9055" dy="16.900000000000002">(高精度代码雷达 / 命中符号即已读)</tspan></text>
+  <rect x="63.41" y="157.8" width="264.991" height="53.800000000000004" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="195.9055" y="184.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="195.9055" dy="-3.9000000000000012">🛰️ CodeGraph 语义图谱</tspan><tspan x="195.9055" dy="16.900000000000002">(高精度代码雷达 / 命中符号即已读)</tspan></text>
 </g>
 <g class="node" data-id="UVTool" data-label="⚡ uv 极速包管理器
 (Rust 驱动 / 秒级依赖装配 / 零配置虚拟环境)" data-shape="rectangle">
-  <rect x="59.41" y="301.40000000000003" width="316.861" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="328.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="217.8405" dy="-3.9000000000000012">⚡ uv 极速包管理器</tspan><tspan x="217.8405" dy="16.900000000000002">(Rust 驱动 / 秒级依赖装配 / 零配置虚拟环境)</tspan></text>
+  <rect x="63.41" y="305.40000000000003" width="316.861" height="53.800000000000004" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="221.8405" y="332.3" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D"><tspan x="221.8405" dy="-3.9000000000000012">⚡ uv 极速包管理器</tspan><tspan x="221.8405" dy="16.900000000000002">(Rust 驱动 / 秒级依赖装配 / 零配置虚拟环境)</tspan></text>
 </g>
 <g class="node" data-id="Phase1" data-label="📐 Phase 1: 极简目录结构与 API 契约" data-shape="rectangle">
-  <rect x="84.60400000000001" y="471.20000000000005" width="266.47299999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="489.65000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">📐 Phase 1: 极简目录结构与 API 契约</text>
+  <rect x="88.60400000000001" y="459.20000000000005" width="266.47299999999996" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="221.8405" y="477.65000000000003" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">📐 Phase 1: 极简目录结构与 API 契约</text>
 </g>
 <g class="node" data-id="Phase2" data-label="🐍 Phase 2: 后端 CRUD 与 SQLite 持久化" data-shape="rectangle">
-  <rect x="74.97100000000003" y="564.1" width="285.7389999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="582.5500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🐍 Phase 2: 后端 CRUD 与 SQLite 持久化</text>
+  <rect x="78.97100000000003" y="536.1" width="285.7389999999999" height="36.900000000000006" rx="0" ry="0" fill="#E8F1FB" stroke="#3A6EA5" stroke-width="0.75" />
+  <text x="221.8405" y="554.5500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🐍 Phase 2: 后端 CRUD 与 SQLite 持久化</text>
 </g>
 <g class="node" data-id="Phase3" data-label="🎨 Phase 3: TailwindCSS 前端与 Markdown 渲染" data-shape="rectangle">
-  <rect x="52" y="657" width="331.681" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="675.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎨 Phase 3: TailwindCSS 前端与 Markdown 渲染</text>
+  <rect x="56" y="613" width="331.681" height="36.900000000000006" rx="0" ry="0" fill="#E7F5F1" stroke="#2B8A78" stroke-width="0.75" />
+  <text x="221.8405" y="631.45" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🎨 Phase 3: TailwindCSS 前端与 Markdown 渲染</text>
 </g>
 <g class="node" data-id="Phase4" data-label="🚀 Phase 4: 全链路联调与功能自测" data-shape="rectangle">
-  <rect x="87.56800000000001" y="749.9000000000001" width="260.54499999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="768.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🚀 Phase 4: 全链路联调与功能自测</text>
+  <rect x="91.56800000000001" y="689.9000000000001" width="260.54499999999996" height="36.900000000000006" rx="0" ry="0" fill="#FFF4DC" stroke="#B47A1F" stroke-width="0.75" />
+  <text x="221.8405" y="708.3500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🚀 Phase 4: 全链路联调与功能自测</text>
 </g>
 <g class="node" data-id="Backend" data-label="🐍 FastAPI + SQLite (blog.db)" data-shape="rectangle">
-  <rect x="86.08600000000004" y="902.8000000000001" width="210.89799999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="191.53500000000003" y="921.2500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🐍 FastAPI + SQLite (blog.db)</text>
+  <rect x="90.08600000000004" y="826.8000000000001" width="210.89799999999997" height="36.900000000000006" rx="0" ry="0" fill="#F0EBFA" stroke="#7357A6" stroke-width="0.75" />
+  <text x="195.53500000000003" y="845.2500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🐍 FastAPI + SQLite (blog.db)</text>
 </g>
 <g class="node" data-id="Frontend" data-label="🎨 TailwindCSS 暗黑单页 (index.html)" data-shape="rectangle">
-  <rect x="86.08600000000004" y="959.7" width="263.5089999999999" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="217.8405" y="978.1500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">🎨 TailwindCSS 暗黑单页 (index.html)</text>
+  <rect x="90.08600000000004" y="883.7" width="263.5089999999999" height="36.900000000000006" rx="0" ry="0" fill="#FCE9E6" stroke="#B65C4A" stroke-width="0.75" />
+  <text x="221.8405" y="902.1500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="#17324D" dy="4.55">🎨 TailwindCSS 暗黑单页 (index.html)</text>
 </g>
 </svg>

@@ -8,7 +8,7 @@
 
 如果把我们在第五章中用 OpenCode 构建的代码比作**一支刚刚结束野外拉练的特种作战小队**，那么本次将项目导入 Trae，就相当于**将小队进驻到现代化高科技作战总指挥部**：
 
-<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-01.svg">
     <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、项目迁移与上下文建立" width="760">
@@ -18,7 +18,7 @@
 - 🗺️ **CodeGraph MCP**：就像是**基地的项目地图**。它把整个博客系统的路由（Router）、数据模型（Model）、输入校验（Schema）以及数据库连接（Database）的关系绘制成一张拓扑网，让 AI 不需要每次把所有代码从头读到尾，就能定位相关逻辑；
 - 📋 **OpenSpec + `reference/` 归档**：就像是**战役任务书的归档与立项机制**。把上一阶段已经完成验收的 4 份文档移入 `reference/` 作为参考资料，保持当前 `docs/` 纯净，让 Trae Agent 能够一眼看清“什么是已经做完的既有资产，什么是接下来要迭代的全新需求”；
 - **`AGENTS.md` + `.trae/rules/` 模块化规则**：`AGENTS.md` 保存项目共同约定，前端、后端等细化规则按任务加载，避免把无关说明全部塞进同一次上下文；
-- ⚡ **`uv` 快速包管理**：就像是**统一的工具箱**，告别传统 pip 慢吞吞的下载和容易冲突的环境。
+- ⚡ **`uv` 包与环境管理**：用统一命令管理项目环境和依赖，具体速度与网络、缓存和项目规模有关。
 
 ***
 
@@ -87,7 +87,7 @@
 # 1. 同步并安装项目依赖
 uv sync
 
-# 2. 运行自动化测试套件，确认上一章遗留功能 100% 绿灯健康！
+# 2. 运行自动化测试套件，确认上一章遗留功能通过当前测试基线。
 uv run pytest -v
 ```
 
@@ -99,7 +99,7 @@ uv run uvicorn main:app --reload --port 8000
 ```
 在浏览器访问 `http://127.0.0.1:8000`，即可看到我们熟悉的玻璃拟态暗黑风个人博客。
 
-> ⚡ **为什么 `uv` 能快到“秒级”？（背后原理）**
+> ⚡ **为什么 `uv` 通常能较快完成依赖操作？（背后原理）**
 > 传统 `pip` 装依赖慢，是因为它每次都去远程索引重新解析依赖树、逐包下载。而 `uv` 采用三大“提速实现方法”：
 > 1. **全局缓存复用（Global Cache）**：同一份包只在本地缓存一份，可在适用时复用缓存，减少重复下载；
 > 2. **超并行下载 + 硬链接**：并发拉取所有依赖包，并用文件系统硬链接瞬间“复制”进虚拟环境；
@@ -327,7 +327,7 @@ project_01_个人博客系统二次开发/
 
 CodeGraph 是一款开源的 **代码知识图谱（Codebase Knowledge Graph）** 工具，它的核心思想是：**在 AI 开始干活之前，先把整个代码库的地形勘察好**。工作链路如下：
 
-<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：GitHub Dark -->
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-02.svg">
     <img src="img/diagrams/02-diagram-02.svg" alt="🧬 原理说明：CodeGraph 是如何给 AI 画“代码地图”的？" width="1100">
@@ -357,7 +357,7 @@ MCP（Model Context Protocol）是 Anthropic 提出的**开放标准协议**，�
 
 这里特地为大家精选了 **5 款提升 10 倍开发幸福感的扩展**，强烈建议新手同学点击安装：
 
-<!-- 图表源文件：img/diagrams/02-diagram-03.mmd；视觉风格：Linear 紫色科技感 -->
+<!-- 图表源文件：img/diagrams/02-diagram-03.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-03.svg">
     <img src="img/diagrams/02-diagram-03.svg" alt="🛠️ 四、Trae Code 新手必装扩展推荐（幸福感倍增）" width="960">
@@ -445,3 +445,7 @@ MCP（Model Context Protocol）是 Anthropic 提出的**开放标准协议**，�
 项目导入后的第一份成果是可信的运行基线和简短交接说明。有了这两项，后续出现问题才容易判断影响来自哪里。
 
 继续阅读：[6.3 用户登录与操作权限](./03_阶段一实战：用户认证与JWT权限隔离系统.md)。
+
+## 导入完成的标准是可复现
+
+完成导入后，应能在新终端中按 README 安装依赖、运行测试和启动服务；Trae、命令行和 MCP 使用同一项目路径与解释器。CodeGraph 索引和规则文件用于帮助理解项目，不能替代运行基线和真实测试。

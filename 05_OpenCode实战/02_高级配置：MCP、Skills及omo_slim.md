@@ -9,7 +9,7 @@
 我一般将opencode视作轻量级开发的主力，所以安装的配件和mcp不多，但都是真正好用的，同学们可以先看一下。\
 配置扩展之前，需要先理解以下四个核心组件的分工与协作：
 
-<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/02-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-01.svg">
     <img src="img/diagrams/02-diagram-01.svg" alt="💡 一、OpenCode 的高级生态体系" width="860">
@@ -181,7 +181,7 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 }
 ```
 
-> 💡 **CodeGraph 自动同步（Auto-Sync）**：挂载 MCP 前，请先在项目根目录执行一次 `codegraph init` 完成索引初始化（详见 [5.5 节](./05_极简全栈_FastAPI与SQLite个人博客实战%28上%29.md)）。初始化完成后，CodeGraph 会在后台启动守护进程（Daemon）并开启文件监听（File Watcher），每次代码保存都会**毫秒级增量同步**到 `.codegraph/codegraph.db`，全程无需手动重建索引。
+> 💡 **CodeGraph 自动同步（Auto-Sync）**：挂载 MCP 前，请先在项目根目录执行一次 `codegraph init` 完成索引初始化（详见 [5.5 节](./05_极简全栈_FastAPI与SQLite个人博客实战%28上%29.md)）。初始化完成后，CodeGraph 会在后台启动守护进程（Daemon）并监听文件变化；是否需要手动重建索引，应以当前版本的状态和日志为准。
 
 ### 2. 远程 MCP 挂载（Remote SSE / HTTP）
 
@@ -300,7 +300,7 @@ opencode models --refresh
 
 ### 3. 六大专家角色协作矩阵与权限分配：
 
-<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：Pastel 多巴胺 -->
+<!-- 图表源文件：img/diagrams/02-diagram-02.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">
   <a href="img/diagrams/02-diagram-02.svg">
     <img src="img/diagrams/02-diagram-02.svg" alt="3. 六大专家角色协作矩阵与权限分配：" width="760">
@@ -363,3 +363,7 @@ opencode models --refresh
 - **Oh My OpenCode Slim 代码仓**：<https://github.com/code-any-way/oh-my-opencode-slim>
 - **Model Context Protocol (MCP) 官方规范**：<https://modelcontextprotocol.io/>
 - **Agent Skills 官方主页**：<https://agentskills.io>
+
+## 配置排错要沿着实际生效来源
+
+先确认 OpenCode 读取了哪个配置文件，再检查模型、超时、MCP 和 Skills 的单项配置。MCP 服务连接成功不等于工具具备写权限，Skill 被加载也不等于它的依赖已经安装。每次只改一个配置项，并用最小任务验证结果。
