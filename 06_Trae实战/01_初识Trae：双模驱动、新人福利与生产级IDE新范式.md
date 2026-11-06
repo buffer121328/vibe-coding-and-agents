@@ -55,7 +55,7 @@ Trae 的不同入口面向不同任务：代码工作区用于编辑和审查项
 <img src="./img/trae_work_home.png" alt="Trae Work 主界面" width="90%" style="border: 1px solid #d9d9d9; border-radius: 6px; box-sizing: border-box;">
 
 - **应用开发 / 项目理解 / 游戏创意 / 工具脚本**：快捷标签提供相应的任务入口或提示模板；
-- **智能模型中枢**：原生接入多款主流大模型（国内版内置豆包 Doubao、DeepSeek、Kimi、通义千问、GLM 等，国际版另有 Claude / GPT 可选），可用模型以当前账号显示为准。
+- **模型选择**：可用模型以当前账号和地区显示为准（国内版内置豆包 Doubao、DeepSeek、Kimi、通义千问、GLM 等，国际版另有 Claude / GPT 可选），可用模型以当前账号显示为准。
 
 ### 2. 模型管理与能力外挂中心
 

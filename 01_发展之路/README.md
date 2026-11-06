@@ -37,7 +37,7 @@
    - Cursor、Windsurf、Trae 凭什么能“理解整个项目”而不是眼前一个文件？
    - 全项目语义索引、Cmd+K 行内对话、跨文件 Composer 面板。
 
-5. **[1.5 Coding Agent 自主编程时代：招了个自带手脚、能跑腿排错的“实习生”](./05_CodingAgent自主编程时代.md)**
+5. **[1.5 Coding Agent 自主编程时代：从生成代码到执行和验证](./05_CodingAgent自主编程时代.md)**
    - 什么是 Agent（智能体）？不仅能思考，还能自己翻文件、跑终端、修 Bug！
    - Claude Code、Devin、Aider，以及用于连接外部工具的 MCP 协议。
 
@@ -45,7 +45,7 @@
    - Dify、Coze（拖拽编排流程）与 Bolt.new、Lovable.dev（在浏览器中用自然语言生成网页原型）。
    - ⚠️ 注意：这是**并行支线 / 工具形态**，不是时间主线里的“下一代”。
 
-7. **[1.7 Vibe Coding 思维方式：从“苦力码农”到“交响乐指挥官”](./07_VibeCoding思维方式与终极演进.md)**
+7. **[1.7 Vibe Coding 思维方式：说清目标，小步实现，持续验证](./07_VibeCoding思维方式与终极演进.md)**
    - Andrej Karpathy 在 2025 年公开讨论的 Vibe Coding 到底是什么？
    - 意图讲清楚、上下文喂饱、验证自动化，新手也能顺利推进并减少返工！
 

@@ -144,7 +144,7 @@ OpenCode 采用统一的全局配置文件管理所有模型、插件、MCP 与�
 
 #### 4. `lsp: true`（代码语言服务）
 
-开启 LSP 后，OpenCode 会在后台自动调用项目语言的原生 Language Server（如 TypeScript LSP、Pyright、gopls 等），使 AI 在写完代码后能像人类 IDE 一样自动捕获语法错误和类型不匹配，极大提高生成代码的编译通过率。
+开启 LSP 后，OpenCode 会在后台自动调用项目语言的原生 Language Server（如 TypeScript LSP、Pyright、gopls 等），使 AI 在写完代码后能像人类 IDE 一样自动捕获语法错误和类型不匹配，有助于较早发现语法错误和类型不匹配。
 
 #### 5. 环境变量与密钥安全要求
 

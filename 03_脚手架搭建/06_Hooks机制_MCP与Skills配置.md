@@ -12,7 +12,7 @@
 
 ## Hooks：把重复检查放到事件前后
 
-例如提交代码前执行一次格式检查，和餐厅出餐前核对订单类似：到了那个步骤，就执行预先安排的动作。[Git Hooks](https://git-scm.com/docs/githooks)属于版本控制事件，[Claude Code Hooks](https://code.claude.com/docs/en/hooks-guide)则属于智能体的运行事件，配置位置和触发时机不同。
+例如提交代码前执行一次格式检查：事件发生时运行预先配置的动作。[Git Hooks](https://git-scm.com/docs/githooks)属于版本控制事件，[Claude Code Hooks](https://code.claude.com/docs/en/hooks-guide)则属于智能体的运行事件，配置位置和触发时机不同。
 
 <!-- 图表源文件：img/diagrams/06-diagram-01.mmd；视觉风格：学术彩色版（蓝、青、金、紫、珊瑚） -->
 <p align="center">

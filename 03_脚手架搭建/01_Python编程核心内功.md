@@ -22,7 +22,7 @@
 
 ## Python 核心知识（13 个需要会读、会改的知识点）
 
-### 1. 变量与基本数据类型（贴标签比喻）
+### 1. 变量与基本数据类型
 - 变量就像给现实中的物品贴上一个名字标签：
 
 ```python
@@ -48,7 +48,7 @@ is_vip_member = True
 tools = ["search_web", "read_file", "run_terminal"]
 print(tools[0])  # 输出: search_web
 
-# 字典：像个人档案，极其常用！在 AI Agent 传递参数时 90% 都在用字典
+# 字典：像个人档案，极其常用！在 AI Agent 传递结构化参数时经常使用字典
 agent_config = {
     "name": "Claude-Code",
     "version": "3.7",
@@ -60,7 +60,7 @@ print(agent_config["name"])  # 输出: Claude-Code
 
 ---
 
-### 3. 条件判断与循环（红绿灯与传送带）
+### 3. 条件判断与循环
 
 ```python
 # 条件判断 if - else
@@ -80,8 +80,8 @@ for task in tasks:
 
 ---
 
-### 4. 函数（面包机大比喻）
-- **函数 `def`** 就像一台面包机：放入面粉和水（输入参数），经过机器内部加工，吐出烤好的吐司（返回值 `return`）。
+### 4. 函数
+- **函数 `def`** 接收输入参数，执行一段可复用逻辑，并通过 `return` 返回结果。
 
 ```python
 def calculate_discount(price: float, discount: float) -> float:
@@ -191,7 +191,7 @@ print(name_len)          # {'alex': 4, 'bob': 3, 'carol': 5}
 
 ---
 
-### 9. 函数进阶：默认参数、*args / **kwargs 与 lambda（真正的瑞士军刀）
+### 9. 函数进阶：默认参数、*args / **kwargs 与 lambda
 - **默认参数**：不传就用兜底值，接口更友好；
 - **`*args` / `**kwargs`**：一把梭收下任意数量的参数，写通用函数/框架的基石；
 - **`lambda`**：一行匿名函数，配合 `sorted` / `max` 排序筛选特别好用。
@@ -372,7 +372,7 @@ def load_user(user_id: str) -> dict[str, str] | None:
 | **菜鸟教程 (Runoob) Python 3** | [https://www.runoob.com/python3/](https://www.runoob.com/python3/python3-tutorial.html) | 国内新手普及度最高、支持在线运行代码的零基础教程 |
 | **廖雪峰 Python 教程** | [https://www.liaoxuefeng.com](https://www.liaoxuefeng.com) | 社区使用较广的中文教程，适合按章节阅读和练习 |
 | **Python-100-Days** | [https://github.com/jackfrued/Python-100-Days](https://github.com/jackfrued/Python-100-Days) | 社区维护的 Python 100 天学习路线，适合按天练习并回看代码 |
-| **W3Schools Python 中文教程** | [https://www.w3school.com.cn/python/](https://www.w3school.com.cn/python/index.asp) | 极其简单直观的网页互动式入门手册 |
+| **W3Schools Python 中文教程** | [https://www.w3school.com.cn/python/](https://www.w3school.com.cn/python/index.asp) | 适合快速查阅和运行示例的网页教程 |
 
 ## 用 Python 基础审查生成代码
 

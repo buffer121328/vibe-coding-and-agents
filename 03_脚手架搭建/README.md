@@ -25,7 +25,7 @@
    - 先掌握变量、字典、函数和异常处理，再用小练习验证自己能否读懂并修改 AI 生成的代码。
 
 2. **[3.2 API Key 原理、主流申请与安全防泄露指南](./02_APIKey原理申请与安全防泄露.md)**
-   - 什么是 VIP 门禁卡？OpenAI/Anthropic/DeepSeek/硅基流动申请步骤，`.env` 防盗号核心铁律。
+   - API Key 的用途、申请入口、环境变量保存方式和泄露后的处理步骤。
 
 3. **[3.3 IDE 开发环境配置：VS Code 与 PyCharm](./03_IDE开发环境配置_VSCode与PyCharm.md)**
    - 介绍常用插件（Pylance、Error Lens、GitLens）与虚拟环境（venv、uv、conda）的选择和初始化。
